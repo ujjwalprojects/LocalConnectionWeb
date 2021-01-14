@@ -1,0 +1,55 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.BannerVM
+<div id="DataGrid">
+    @if (Model.BannerList.Count() > 0)
+    {
+
+       foreach (var item in Model.BannerList)
+        {
+            <div class="card" style="margin-bottom:5px;">
+                <div class="card-body">
+                    <div style="width: 130px; float:left;" class="text-center hidden-xs">
+                        @if (item.BannerPath == null || item.BannerPath == "")
+                        {
+                            <img src="~/Content/image/no-dp.png" class="img-thumbnail img-circle" style="width: 100px; height: 100px; " />
+                        }
+                        else
+                        {
+                            <img src="@item.BannerPath" class="img-thumbnail img-circle" style="width: 100px; height: 100px; " />
+                        }
+                    </div>
+                    <div class="pull-right" style="padding:20px; margin-left:130px;">
+                        <div class="">
+                            <form method="get" action="@Url.Action("EditBanner", "Employee", new { Area = "Admin" })" data-otf-ajax="true" data-otf-target="#DataGrid" style="display:inline-block">
+                                @Html.Hidden("BannerID", item.BannerPath)
+                                <a class=" text-success" title="Edit Banner Information" name="@item.BannerID" href="@Url.Action("EditBanner", "Banner", new { Area = "Admin", id = item.BannerID })">
+                                    <small> <i class="fa fa-edit"></i>&nbsp; Edit</small>
+                                </a>
+                            </form>
+                        </div>
+                        <div class="">
+                            <form method="get" action="@Url.Action("DeleteBanner", "Banner", new { Area = "Admin" })" data-otf-ajax="true" data-otf-target="#DataGrid" style="display:inline-block">
+                                @Html.Hidden("BannerID", item.BannerID)
+                                <a class=" text-success" title="Delete Banner Information" name="@item.BannerID" href="@Url.Action("DeleteBanner", "Banner", new { Area = "Admin", BannerID = item.BannerID })">
+                                    <small> <i class="fa fa-trash"></i>&nbsp; Delete</small>
+                                </a>
+                            </form>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+    else
+    {
+        <div class="text-center p-2">
+            <img src="~/Content/img/no_record.png" /><br />
+            <span class="text-muted">No records available or your searched record in not available..</span>
+        </div>
+    }
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>

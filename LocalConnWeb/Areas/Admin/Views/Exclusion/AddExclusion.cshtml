@@ -1,0 +1,42 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.ExclusionSave
+@{
+    ViewBag.Title = "AddExclusion";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Exclusions</span>&nbsp;
+    <small>Add</small>
+</div>
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="text-center">
+            <label class="alert alert-info p-2"><small> Fields marked * are mandatory</small></label>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Exclusion.ExclusionName, new { @class = "required" })
+                <div class="col-md p-0">
+                    @Html.TextBoxFor(m => m.Exclusion.ExclusionName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Exclusion.ExclusionName)
+                </div>
+            </div>
+
+            <div class="action-div">
+                @Html.ActionLink("Back To List", "exclusionlist", "exclusion", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })
+                <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
+            </div>
+        }
+    </div>
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

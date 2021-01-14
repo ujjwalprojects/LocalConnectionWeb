@@ -1,0 +1,295 @@
+﻿@model LocalConnWeb.CustomModels.GenTourPackageAPIVM
+@{
+    ViewBag.Title = "Client Details";
+    Layout = "~/Views/Shared/_LayoutGeneral.cshtml";
+}
+
+<link href="~/Content/timeline.css" rel="stylesheet" />
+<link href="~/Content/datetimepicker/jquery.datetimepicker.min.css" rel="stylesheet" />
+<link href="~/Content/Select2/select2.min.css" rel="stylesheet" />
+
+<div class="container-fluid border-bottom">
+    <div class="container mt-3 mb-2">
+        <h5>View Similar Packages in your budget for :</h5>
+        <ul class="package-tags pt-2">
+            <li class="text-info">
+                <h6>4-9 days</h6>
+            </li>
+            <li class="text-info">
+                <h6>7-9 days</h6>
+            </li>
+            <li class="text-info">
+                <h6>10-12 days</h6>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="container pt-2">
+    <div class=" clearfix row">
+        <div class="col-lg-8 col-sm-8 col-xl-8">
+            <div class="clearfix pt-2 pb-2">
+                <div class="clearfix p-0">
+                    <div class="clearfix">
+                        <ol class="package-tag" style="font-size:10px;">
+                            <li itemprop="isBasedOnUrl"><a class="text-primary" target="_blank" itemprop="image" href="#"><span itemprop="name">Home></span></a></li>
+                            <li itemprop="isBasedOnUrl"><a class="text-primary" target="_blank" itemprop="image" href="#"><span itemprop="name"> >Tour Package</span></a></li>
+                            <li itemprop="isBasedOnUrl"><a class="text-primary" target="_blank" itemprop="image" href="#"><span itemprop="name"> >Tour-Type</span></a></li>
+                            <li itemprop="isBasedOnUrl"><a class="text-primary" target="_blank" itemprop="image" href="#"><span itemprop="name"> >Destination</span></a></li>
+                            <li itemprop="isBasedOnUrl"><a target="_blank" itemprop="image" href="#"><span itemprop="name"> >Customize Package</span></a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-4 col-xl-4">
+            <div class="clearfix pt-2 pb-2">
+                <div class="clearfix p-0">
+                    <div class="clearfix">
+                        <div class="package-tag float-right">
+                            <span><i class="fa fa-phone"></i> Call Us</span>
+                            <h5 class="text-info">&nbsp; 888 666 6666</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix row">
+        <div class="col-xl-12 border-bottom pt-1">
+            Reference Package :<span class="text-danger text-bold"> Test</span><span class="text-secondary">&nbsp;&nbsp; Customizable</span>
+        </div>
+    </div>
+</div>
+<div class="container pt-2">
+    <div class="clearfix row">
+        <div class="col-lg-4 col-sm-4 col-xl-4">
+            <div class="sidebar-widget">
+                <div class="single-sidebar">
+                    <h3>Plan your Trip</h3>
+                    <div class="tour-filter clearfix">
+                        <form>
+                            <p>
+                                <input type="search" placeholder="Search Tour..." />
+                                <i class="fa fa-search"></i>
+                            </p>
+                            <p>
+                                <input type="search" placeholder="Where To?" />
+                                <i class="fa fa-tags"></i>
+                            </p>
+                            <p>
+                                <select class="wide form-control form-control-sm">
+                                    <option>Month</option>
+                                    <option>January</option>
+                                    <option>February</option>
+                                    <option>March</option>
+                                    <option>April</option>
+                                    <option>May</option>
+                                    <option>June</option>
+                                    <option>July</option>
+                                    <option>August</option>
+                                    <option>September</option>
+                                    <option>October</option>
+                                    <option>November</option>
+                                    <option>December</option>
+                                </select>
+                            </p>
+                            <p>
+                                <select class="wide form-control form-control-sm">
+                                    <option>Tour Type</option>
+                                    <option>Adventure</option>
+                                    <option>Romantic</option>
+                                    <option>Vacation</option>
+                                    <option>Explore</option>
+                                    <option>Trendy</option>
+                                </select>
+                            </p>
+                            <ul class="ceckbox_filter">
+                                <li class="checkbox">
+                                    <input class="checkbox-spin" type="checkbox" id="Freelance">
+                                    <label for="Freelance"><span></span>Action</label>
+                                </li>
+                                <li class="checkbox">
+                                    <input class="checkbox-spin" type="checkbox" id="Full_Time">
+                                    <label for="Full_Time"><span></span>Commedy</label>
+                                </li>
+                                <li class="checkbox">
+                                    <input class="checkbox-spin" type="checkbox" id="Internship">
+                                    <label for="Internship"><span></span>Sci-fi</label>
+                                </li>
+                                <li class="checkbox">
+                                    <input class="checkbox-spin" type="checkbox" id="Part_Time">
+                                    <label for="Part_Time"><span></span>Adventure</label>
+                                </li>
+                                <li class="checkbox">
+                                    <input class="checkbox-spin" type="checkbox" id="Temporary">
+                                    <label for="Temporary"><span></span>Historical</label>
+                                </li>
+                                <li class="checkbox">
+                                    <input class="checkbox-spin" type="checkbox" id="Crime">
+                                    <label for="Crime"><span></span>Crime</label>
+                                </li>
+                                <li class="checkbox">
+                                    <input class="checkbox-spin" type="checkbox" id="Drama">
+                                    <label for="Drama"><span></span>Drama</label>
+                                </li>
+                                <li class="checkbox">
+                                    <input class="checkbox-spin" type="checkbox" id="animation">
+                                    <label for="animation"><span></span>animation</label>
+                                </li>
+                            </ul>
+                            <p>
+                                <button type="submit">Search Trip </button>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+                <div class="single-sidebar">
+                    <div class="quick_contact">
+                        <h4>Quick Contact</h4>
+                        <p>
+                            <i class="fa fa-phone"></i>
+                            1 562 867 5309
+                        </p>
+                        <p>
+                            <i class="fa fa-envelope"></i>
+                            info@example.com
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-sm-8 col-xl-8">
+            <div class="card">
+                <div class="">
+                    <div class="sidebar-widget">
+                        <div class="single-sidebar">
+                            <div class="quick-contact">
+                                <h3>Client Details</h3>
+                                @using (Html.BeginForm("clientdetails", "gentourpackage", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(model=> model.ClientEnquiry.EnquiryCode)
+                                    @Html.HiddenFor(model => model.ClientEnquiry.RefPackageID)
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(m => m.ClientEnquiry.ClientName, new { @class = "form-control", placeholder = "Your Name" })
+                                        @Html.ValidationMessageFor(m => m.ClientEnquiry.ClientName)
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <div class="form-group">
+                                                @Html.TextBoxFor(m => m.ClientEnquiry.ClientEmail, new { @class = "form-control", placeholder = "Email Address" })
+                                                @Html.ValidationMessageFor(m => m.ClientEnquiry.ClientEmail)
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="form-group">
+                                                @Html.TextBoxFor(m => m.ClientEnquiry.ClientPhoneNo, new { @class = "form-control", placeholder = "Phone Number" })
+                                                @Html.ValidationMessageFor(m => m.ClientEnquiry.ClientPhoneNo)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <div class="form-group">
+                                                @Html.TextBoxFor(model => model.ClientEnquiry.DateOfArrival, new { @class = "form-control", id = "reservation_date", placeholder = "Travel Date" })
+                                                @Html.ValidationMessageFor(model => model.ClientEnquiry.DateOfArrival)
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="form-group">
+                                                <div class="book-tour-field clearfix">
+                                                    @Html.DropDownListFor(x => x.ClientEnquiry.NoOfAdult, new SelectListItem[]{
+                                                    new SelectListItem(){Text="No of Adults", Value=""},
+                                                    new SelectListItem(){Text="1", Value="1"},
+                                                    new SelectListItem(){Text="2",Value="2"},
+                                                    new SelectListItem(){Text="3",Value="3"},
+                                                    new SelectListItem(){Text="4+",Value="4+"}}, new { @class = "wide dd-select", id = "NoofAdults", name = "NoofAdults" })
+                                                    @Html.ValidationMessageFor(model => model.ClientEnquiry.NoOfAdult)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <div class="form-group">
+                                                @Html.DropDownListFor(x => x.ClientEnquiry.NoOfChildren, new SelectListItem[]{
+                                            new SelectListItem(){Text="No of Children", Value=""},
+                                            new SelectListItem(){Text="0", Value="0"},
+                                            new SelectListItem(){Text="1", Value="1"},
+                                            new SelectListItem(){Text="2",Value="2"},
+                                            new SelectListItem(){Text="3+",Value="3+"}, }, new { @class = "wide dd-select", id = "NoOfChildren", name = "NoOfChildren" })
+                                                @Html.ValidationMessageFor(model => model.ClientEnquiry.NoOfChildren)
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="form-group">
+                                                @Html.DropDownListFor(model => model.ClientEnquiry.HotelTypeID, new SelectList(Model.HotelTypes, "HotelTypeID", "HotelTypeName"), "Preferred Hotel Type", new { id = "HotelType", @class = "dd-select wide" })
+                                                @Html.ValidationMessageFor(model => model.ClientEnquiry.HotelTypeID)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <div class="form-group">
+                                                @Html.DropDownListFor(model => model.ClientEnquiry.CabTypeID, new SelectList(Model.CabTypes, "CabTypeID", "CabTypeName"), "Preferred Cab Type", new { id = "CabType", @class = "wide dd-select" })
+                                                @Html.ValidationMessageFor(model => model.ClientEnquiry.CabTypeID)
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="form-group">
+                                                @Html.DropDownListFor(x => x.ClientEnquiry.NoOfDays, new SelectListItem[]{
+                                            new SelectListItem(){Text="No of Days", Value=""},
+                                            new SelectListItem(){Text="0", Value="0"},
+                                            new SelectListItem(){Text="1", Value="1"},
+                                            new SelectListItem(){Text="2",Value="2"},
+                                            new SelectListItem(){Text="3",Value="3"},
+                                            new SelectListItem(){Text="4",Value="4"},
+                                            new SelectListItem(){Text="5",Value="5"},
+                                            new SelectListItem(){Text="6",Value="6"},
+                                            new SelectListItem(){Text="7",Value="7"},
+                                            new SelectListItem(){Text="8",Value="8"},
+                                            new SelectListItem(){Text="9",Value="9"},
+                                            new SelectListItem(){Text="10",Value="10"},
+                                            new SelectListItem(){Text="11",Value="11"},
+                                            new SelectListItem(){Text="12",Value="12"},}, new { @class = "wide dd-select", id = "NoOfDays", name = "NoOfDays" })
+                                                @Html.ValidationMessageFor(model => model.ClientEnquiry.NoOfDays)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="action-div row">
+                                        @*<a href="/admin/tourpackage" class="btn btn-secondary">Back To List</a>*@
+                                        <div class="col-md">
+                                            <button class="btn btn-warning btn-sm float-right" type="submit">Next &nbsp;<i class="fa fa-arrow-circle-o-right"></i></button>
+                                        </div>
+                                    </div>
+                                    @*<div class="book-tour-field">
+                                            <button type="submit">Book Now</button>
+                                        </div>*@
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/Content/Select2/select2.min.js"></script>
+    <script src="~/Content/datetimepicker/jquery.datetimepicker.full.min.js"></script>
+    <script type="text/javascript">
+        $('.dd-select').select2({
+            width: '100%',
+        });
+        $('#reservation_date').datetimepicker({
+            theme: 'light',
+            timepicker: false,
+            format: 'd M Y',
+            minDate: 'today'
+        });
+    </script>
+}
+

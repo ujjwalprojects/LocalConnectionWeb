@@ -1,0 +1,79 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.CabSaveModel
+@{
+    ViewBag.Title = "Edit Cab";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link href="~/Content/Select2/select2.min.css" rel="stylesheet" />
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Cabs</span>&nbsp;
+    <small>Edit</small>
+</div>
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="text-center">
+            <label class="alert alert-info p-2"><small> Fields marked * are mandatory</small></label>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Cab.CabID)
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Cab.CabTypeID, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.Cab.CabTypeID, new SelectList(Model.CabTypes, "CabTypeID", "CabTypeName"), "-- Select Cab Type --", new { @class = "form-control dd-Select" })
+                        @Html.ValidationMessageFor(m => m.Cab.CabTypeID)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Cab.CabHeadID, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.Cab.CabHeadID, new SelectList(Model.CabHeads, "CabHeadID", "CabHeadName"), "-- Select Cab Head --", new { @class = "form-control dd-Select" })
+                        @Html.ValidationMessageFor(m => m.Cab.CabHeadID)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Cab.CabName, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.Cab.CabName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Cab.CabName)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Cab.CabNo, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.Cab.CabNo, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Cab.CabNo)
+                    </div>
+                </div>
+            </div>
+            <div class="action-div">
+                @Html.ActionLink("Back To List", "index", "Cab", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })
+                <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
+            </div>
+        }
+    </div>
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Content/Select2/select2.min.js"></script>
+    <script>
+        $.validator.setDefaults({
+            ignore: ''
+        });
+        $(document).ready(function () {
+            $('.dd-select').select2({
+                width: '100%',
+            });
+        });
+
+    </script>
+}

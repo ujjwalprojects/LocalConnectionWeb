@@ -1,0 +1,40 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using TourTravel_Web.Controllers;
+using TourTravel_Web.Helpers;
+using TourTravel_Web.Areas.Admin.CustomModels;
+using TourTravel_Web.Areas.Admin.Models;
+
+namespace TourTravel_Web.Areas.Admin.Controllers
+{
+    public class ActivityController : BaseController
+    {
+        ApiConnection objAPI = new ApiConnection("Admin");
+
+        public ActionResult ActivityList(int PageNo = 1, int PageSize = 10, string SearchTerm = "")
+        {
+            try
+            {
+                ViewBag.ActiveURL = "/Admin/ActivityList";
+                string query = "PageNo=" + PageNo + "&PageSize=" + PageSize + "&SearchTerm=" + SearchTerm;
+                ActivityAPIVM apiModel = objAPI.GetRecordByQueryString<ActivityAPIVM>("configuration", "inclusionlist", query);
+                InclusionVM model = new InclusionVM();
+                model.InclusionList = apiModel.InclusionList;
+                model.PagingInfo = new PagingInfo { CurrentPage = PageNo, ItemsPerPage = PageSize, TotalItems = apiModel.TotalRecords };
+                if (Request.IsAjaxRequest())
+                {
+                    return PartialView("_pvInclusionList", model);
+                }
+                return View(model);
+            }
+            catch (AuthorizationException)
+            {
+                TempData["ErrMsg"] = "Your Login Session has expired. Please Login Again";
+                return RedirectToAction("Login", "Account", new { Area = "" });
+            }
+        }
+	}
+}

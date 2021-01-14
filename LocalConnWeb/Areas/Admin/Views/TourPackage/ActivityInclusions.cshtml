@@ -1,0 +1,181 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.TourPackageManageModel3
+@{
+    ViewBag.Title = "Package - Activity & Inclusions";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    .txt-fare {
+        width: 140px;
+        height: 35px;
+        text-align: center;
+        border-radius: 20px;
+        font-size: 17px;
+        font-weight: 800;
+    }
+
+        .txt-fare:disabled {
+            cursor: not-allowed;
+        }
+</style>
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Tour Package - Activities &amp; Inclusions</span>&nbsp;
+    <small>Step 4 of 5</small>
+</div>
+<div class="card ">
+    <div class="card-header bg-head">
+        <div class="pb-2">
+            <span class="display-5 text-white">@Model.Package.PackageName</span> &nbsp;&nbsp;<b class="text-muted">@Model.Package.TotalDays&nbsp;Days/@(Model.Package.TotalDays - 1)&nbsp;Nights</b>
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Package.PackageID)
+            <h4>Select activities for the package</h4>
+            <hr />
+            if (Model.Activities.Count() > 0)
+            {
+                <div class="d-flex justify-content-center flex-wrap">
+                    @{
+                int i = 0;
+                foreach (var item in Model.Activities)
+                {
+                    @Html.HiddenFor(m => Model.Activities[i].PackageActivityID)
+                        @Html.HiddenFor(m => Model.Activities[i].PackageID)
+                        @Html.HiddenFor(m => Model.Activities[i].ActivityID)
+                        <div class="mb-1">
+                            <div class="card bg-info">
+                                <div class="card-body">
+                                    <h4>@item.ActivityName</h4>
+                                    <small>@item.ActivityDesc</small>
+                                    <hr />
+                                    <div class="text-center">
+                                        <label class="fancy">@Html.CheckBox("Activities[" + i + "].IsSelected", Model.Activities[i].IsSelected, new { @class = "chkActivity", @id = "chkAct_" + @i }) &nbsp;&nbsp; Include in package</label><br />
+                                        @if (item.IsSelected)
+                                        {
+                                            <span>
+                                                <i class="fa fa-rupee"></i>&nbsp;&nbsp; @Html.TextBoxFor(m => Model.Activities[i].ActivityFare, new { @class = "txt-fare", @id = "txtAct_" + @i, Value = item.ActivityFare.ToString("G29") })
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span>
+                                                <i class="fa fa-rupee"></i>&nbsp;&nbsp; @Html.TextBoxFor(m => Model.Activities[i].ActivityFare, new { @class = "txt-fare", @id = "txtAct_" + @i, Value = item.ActivityFare.ToString("G29"), disabled = "disabled" })
+                                            </span>
+                                        }
+                                    </div>
+                                    <div class="text-center">
+                                        @Html.ValidationMessageFor(m => Model.Activities[i].ActivityFare)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.HiddenFor(m => Model.Activities[i].ActivityName)
+                        @Html.HiddenFor(m => Model.Activities[i].ActivityDesc)
+                    i++;
+                }
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div class="text-center p-3">
+                    <img src="~/Content/img/no_record.png" /><br />
+                    <span class="text-muted">No activites found in the activity master. Add activities and then select.</span>
+                </div>
+            }
+            <hr />
+            <h4 class="mt-2">Select inclusions for the package</h4>
+            <hr />
+            if (Model.Inclusions.Count() > 0)
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th class="text-center">Select</th>
+                            <th class="text-center">Inclusions</th>
+                            <th class="text-center">Fare (if applicable)</th>
+                        </tr>
+                        @{
+                int i = 0;
+                foreach (var item in Model.Inclusions)
+                {
+                    @Html.HiddenFor(m => Model.Inclusions[i].PackageInclusionID)
+                            @Html.HiddenFor(m => Model.Inclusions[i].PackageID)
+                            @Html.HiddenFor(m => Model.Inclusions[i].InclusionID)
+                            <tr>
+                                <td class="text-center">
+                                    <label class="fancy">@Html.CheckBox("Inclusions[" + i + "].IsSelected", Model.Inclusions[i].IsSelected, new { @class = "chkInclusion", @id = "chkIn_" + @i })</label>
+                                </td>
+                                <td class="text-center">
+                                    @item.InclusionName
+                                </td>
+                                <td class="text-center">
+                                    @if (item.IsSelected)
+                                    {
+                                        <span>
+                                            <i class="fa fa-rupee"></i>&nbsp;&nbsp; @Html.TextBoxFor(m => Model.Inclusions[i].InclusionFare, new { @class = "txt-fare", @id = "txtIn_" + @i, Value = item.InclusionFare.ToString("G29") })
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span>
+                                            <i class="fa fa-rupee"></i>&nbsp; &nbsp; @Html.TextBoxFor(m => Model.Inclusions[i].InclusionFare, new { @class = "txt-fare", @id = "txtIn_" + @i, Value = item.InclusionFare.ToString("G29"), disabled = "disabled" })
+                                        </span>
+                                    }
+                                    <br />
+                                    @Html.ValidationMessageFor(m => Model.Inclusions[i].InclusionFare)
+                                </td>
+                            </tr>
+                            @Html.HiddenFor(m => Model.Inclusions[i].InclusionName)
+                                    i++;
+                }
+
+                        }
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center p-3">
+                    <img src="~/Content/img/no_record.png" /><br />
+                    <span class="text-muted">No inclusions found in the inclusions master. Add inclusions and then select.</span>
+                </div>
+            }
+            <div class="action-div">
+                <a href="/admin/tourpackage/images/@Model.Package.PackageID" class="btn btn-secondary">Back To Images</a>
+                <button class="btn btn-success pull-right" type="submit">Save &amp; Continue</button>
+            </div>
+        }
+    </div>
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $('.chkActivity').on('change', function () {
+            var chkid = $(this).attr('id').split('_');
+            if (this.checked) {
+                $('#txtAct_' + chkid[1]).removeAttr('disabled');
+            } else {
+                $('#txtAct_' + chkid[1]).prop('disabled', 'true');
+
+            }
+        });
+        $('.chkInclusion').on('change', function () {
+            var chkid = $(this).attr('id').split('_');
+            if (this.checked) {
+                $('#txtIn_' + chkid[1]).removeAttr('disabled');
+            } else {
+                $('#txtIn_' + chkid[1]).prop('disabled', 'true');
+
+            }
+        });
+    </script>
+}

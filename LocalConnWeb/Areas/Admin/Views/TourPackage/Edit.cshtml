@@ -1,0 +1,123 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.TourPackageManageModel1
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<string> fareper = new List<string>() { "Person", "Couple" };
+}
+
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Tour Package - Configuration</span>&nbsp;
+    <small>Step 1 of 5</small>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="text-center">
+            <label class="alert alert-info p-2"><small> Fields marked * are mandatory</small></label>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Package.PackageID)
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Package.PackageName, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.Package.PackageName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Package.PackageName)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Package.PackageTypeID, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.Package.PackageTypeID, new SelectList(Model.PackageTypes, "PackageTypeID", "PackageTypeName"), "-- Select Package Type --", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Package.PackageTypeID)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Package.PickupPoint, new { @class = "" })
+                        @Html.TextBoxFor(m => m.Package.PickupPoint, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Package.PickupPoint)
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Package.DropPoint, new { @class = "" })
+                        @Html.TextBoxFor(m => m.Package.DropPoint, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Package.DropPoint)
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Package.TotalDays, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.Package.TotalDays, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Package.TotalDays)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Package.PackageRouting, new { @class = "" }) &nbsp;&nbsp;
+                <small class="text-muted">e.g. Destination A > Destination B > ...</small>
+                @Html.TextBoxFor(m => m.Package.PackageRouting, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Package.PackageRouting)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Package.PackageDesc, new { @class = "" })
+                @Html.TextAreaFor(m => m.Package.PackageDesc, new { Value = Model.Package != null ? Html.Raw(HttpUtility.HtmlDecode(Model.Package.PackageDesc)).ToHtmlString() : "", @class = "form-control", @id = "cmscontent", @name = "cmscontent" })
+                @Html.ValidationMessageFor(m => m.Package.PackageDesc)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Package.MetaText, new { @class = "" })
+                @Html.TextBoxFor(m => m.Package.MetaText, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Package.MetaText)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Package.MetaDesc, new { @class = "" })
+                @Html.TextAreaFor(m => m.Package.MetaDesc, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Package.MetaDesc)
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Package.BaseFare, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.Package.BaseFare, new { @class = "form-control", Value = Model.Package.BaseFare.ToString("G29") })
+                        @Html.ValidationMessageFor(m => m.Package.BaseFare)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Package.FarePer, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.Package.FarePer, new SelectList(fareper), "-- Select Fare Per --", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Package.FarePer)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.CheckBoxFor(m => m.Package.ShowPackage) &nbsp;&nbsp;<label>Show Package in HomePage?</label>
+            </div>
+            <div class="action-div">
+                <a href="/admin/tourpackage" class="btn btn-secondary">Back To List</a>
+                <button class="btn btn-success pull-right" type="submit">Save &amp; Continue</button>
+            </div>
+        }
+    </div>
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            CKEDITOR.replace('cmscontent', { height: '300px' });
+            CKEDITOR.disableAutoInline = true;
+        });
+    </script>
+}
+

@@ -1,0 +1,70 @@
+﻿@model LocalConnWeb.Areas.Admin.Models.utblTourGuide
+@{
+    ViewBag.Title = "Add Tour Guide";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Tour Guides</span>&nbsp;
+    <small>Add</small>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="text-center">
+            <label class="alert alert-info p-2"><small> Fields marked * are mandatory</small></label>
+        </div>
+        <div>
+            <form method="post" action="/admin/tourguide/add" id="cmsForm">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label class="required">Tour Guide Name</label>
+                    @Html.TextBoxFor(m => m.TourGuideName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.TourGuideName)
+                </div>
+                <div class="form-group">
+                    <label class="required">Description</label>
+                    @Html.TextAreaFor(m => m.TourGuideDesc, new { Value = Model != null ? Html.Raw(HttpUtility.HtmlDecode(Model.TourGuideDesc)).ToHtmlString() : "", @class = "form-control input-sm", @id = "cmscontent", @name = "cmscontent" })
+                    @Html.ValidationMessageFor(m => m.TourGuideDesc)
+                </div>
+                <div class="action-div">
+                    <a href="/admin/tourguide" class="btn btn-secondary">Back To List</a>
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                    <div class="clearfix"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            CKEDITOR.replace('cmscontent', { height: '400px' });
+            CKEDITOR.disableAutoInline = true;
+
+            $('#cmsForm').on('submit', function (e) {
+                if (!check_form())
+                    e.preventDefault();
+            });
+        });
+        function check_form() {
+            var editor_val = CKEDITOR.instances.cmscontent.document.getBody().getText()
+            var new_val = editor_val.replace(/(\r\n\t|\n|\r\t)/gm, "");
+            if (new_val == '') {
+                $('span[data-valmsg-for="TourGuideDesc"]').removeClass('field-validation-valid').addClass('field-validation-error').text('Content value cannot be empty');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+}
+
+
+

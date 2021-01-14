@@ -1,0 +1,202 @@
+﻿@model LocalConnWeb.CustomModels.GenTourPackageSearchModel
+@{
+    ViewBag.Title = "Search Package";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="peulis-breadcrumb-area">
+    <div class="breadcrumb-top">
+        <div class="container">
+            <div class="col-lg-12">
+                <div class="breadcrumb-box">
+                    <h2>Search Tour Packages</h2>
+                    <ul class="breadcrumb-inn">
+                        <li><a href="/">Home</a></li>
+                        <li class="active"><a href="#">Search Tour Packages</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="peulis-tour-page-area section_70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="sidebar-widget">
+                    <div class="single-sidebar">
+                        <h3>Plan your Trip</h3>
+                        <div class="tour-filter clearfix">
+                            <form method="get" action="/gentourpackage/searchpackage" data-otf-ajax="true" data-otf-target="#DataGrid">
+                                @*<p>
+                                        <input type="search" placeholder="Search Tour..." />
+                                        <i class="fa fa-search"></i>
+                                    </p>*@
+                                <p>
+                                    <input type="search" name="Where" placeholder="Where To?" id="whereto" value="@Model.Search.Where" autocomplete="off"/>
+                                    <i class="fa fa-search"></i>
+                                </p>
+                                @*<p>
+                                        <select class="wide">
+                                            <option>Tour Type</option>
+                                            <option>Adventure</option>
+                                            <option>Romantic</option>
+                                            <option>Vacation</option>
+                                            <option>Explore</option>
+                                            <option>Trendy</option>
+                                        </select>
+                                    </p>*@
+                                <ul class="ceckbox_filter">
+                                    @foreach (var item in Model.TourTypes)
+                                    {
+                                        if (Model.Search.TourType != null)
+                                        {
+                                            if (Model.Search.TourType.IndexOf(item.PackageTypeID) != -1)
+                                            {
+                                                <li class="checkbox">
+                                                    <input class="checkbox-spin" type="checkbox" id="@item.PackageTypeID" value="@item.PackageTypeID" name="TourType" checked>
+                                                    <label for="@item.PackageTypeID"><span></span>@item.PackageTypeName</label>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                 <li class="checkbox">
+                                                <input class="checkbox-spin" type="checkbox" id="@item.PackageTypeID" value="@item.PackageTypeID" name="TourType">
+                                                <label for="@item.PackageTypeID"><span></span>@item.PackageTypeName</label>
+                                            </li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li class="checkbox">
+                                                <input class="checkbox-spin" type="checkbox" id="@item.PackageTypeID" value="@item.PackageTypeID" name="TourType">
+                                                <label for="@item.PackageTypeID"><span></span>@item.PackageTypeName</label>
+                                            </li>
+                                        }
+
+                                    }
+                                    @*<li class="checkbox">
+                                            <input class="checkbox-spin" type="checkbox" id="Freelance">
+                                            <label for="Freelance"><span></span>Action</label>
+                                        </li>
+                                        <li class="checkbox">
+                                            <input class="checkbox-spin" type="checkbox" id="Full_Time">
+                                            <label for="Full_Time"><span></span>Commedy</label>
+                                        </li>
+                                        <li class="checkbox">
+                                            <input class="checkbox-spin" type="checkbox" id="Internship">
+                                            <label for="Internship"><span></span>Sci-fi</label>
+                                        </li>
+                                        <li class="checkbox">
+                                            <input class="checkbox-spin" type="checkbox" id="Part_Time">
+                                            <label for="Part_Time"><span></span>Adventure</label>
+                                        </li>
+                                        <li class="checkbox">
+                                            <input class="checkbox-spin" type="checkbox" id="Temporary">
+                                            <label for="Temporary"><span></span>Historical</label>
+                                        </li>
+                                        <li class="checkbox">
+                                            <input class="checkbox-spin" type="checkbox" id="Crime">
+                                            <label for="Crime"><span></span>Crime</label>
+                                        </li>
+                                        <li class="checkbox">
+                                            <input class="checkbox-spin" type="checkbox" id="Drama">
+                                            <label for="Drama"><span></span>Drama</label>
+                                        </li>
+                                        <li class="checkbox">
+                                            <input class="checkbox-spin" type="checkbox" id="animation">
+                                            <label for="animation"><span></span>animation</label>
+                                        </li>*@
+                                </ul>
+                                <p>
+                                    <button type="submit">Search Trip </button>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="single-sidebar">
+                        <div class="quick_contact">
+                            <h4>Quick Contact</h4>
+                            <p>
+                                <i class="fa fa-phone"></i>
+                                1 562 867 5309
+                            </p>
+                            <p>
+                                <i class="fa fa-envelope"></i>
+                                info@example.com
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="tour-page-right">
+                    @Html.Partial("_pvPackageList", Model)
+                </div>
+                @if (Model.TotalRecords > 10)
+                {
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="pagination-box-row">
+                                <ul class="pagination">
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    .autocomplete {
+        /*the container must be positioned relative:*/
+        position: relative;
+        display: inline-block;
+    }
+
+    .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 86%;
+        left: -10px;
+        right: 0;
+    }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+            .autocomplete-items div:hover {
+                /*when hovering an item:*/
+                background-color: #e9e9e9;
+            }
+
+    .autocomplete-active {
+        /*when navigating through the items using the arrow keys:*/
+        background-color: DodgerBlue !important;
+        color: #ffffff;
+    }
+</style>
+@section Scripts{
+    <script src="~/Scripts/autocomplete.js"></script>
+    <script>
+        var model = '@Html.Raw(Json.Encode(ViewBag.Where))';
+        var wheres = JSON.parse(model);
+
+        autocomplete(document.getElementById("whereto"), wheres);
+
+    </script>
+
+}

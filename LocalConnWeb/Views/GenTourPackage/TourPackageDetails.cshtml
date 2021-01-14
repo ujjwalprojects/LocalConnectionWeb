@@ -1,0 +1,771 @@
+﻿@model LocalConnWeb.CustomModels.GenTourPackageAPIVM
+@{
+    ViewBag.Title = "Tour Package Details";
+    Layout = "~/Views/Shared/_LayoutGeneral.cshtml";
+}
+@{
+    var last = Model.Itineraries.Last();
+    var first = Model.Itineraries.First();
+}
+@{
+    List<LocalConnWeb.CustomModels.GenTourPackageImage> banners = new List<LocalConnWeb.CustomModels.GenTourPackageImage>();
+    int bannerCount = 0;
+    if (Model.GalleryImage != null)
+    {
+        banners = (List<LocalConnWeb.CustomModels.GenTourPackageImage>)Model.GalleryImage;
+        bannerCount = banners.Count();
+    }
+}
+<link href="~/Content/timeline.css" rel="stylesheet" />
+<link href="~/Content/datetimepicker/jquery.datetimepicker.min.css" rel="stylesheet" />
+<link href="~/Content/Select2/select2.min.css" rel="stylesheet" />
+<link href="~/Content/tour-details.css" rel="stylesheet" />
+
+<!-- Tour Details Area Start -->
+<section class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="tour-details-left">
+                    <div class="row">
+                        <div class="col-lg-7 col-md-7">
+                            <div class="mt-3">
+                                <h4 class="text-dark">@Model.GenTourPackageDtlView.PackageName</h4><br />
+                                <span class="text-info font-weight-bold"><i class="fa fa-hourglass-3"></i> @Model.GenTourPackageDtlView.Days Days / @Model.GenTourPackageDtlView.Nights Nights</span><br />
+                                <i class="fa fa-inr mt-3"></i>&nbsp;&nbsp;<span class="text-dark font-weight-bold display-price mt-3" id="pack-price">@Model.GenTourPackageDtlView.FinalFare.ToString("0")</span>  /- per @Model.GenTourPackageDtlView.FarePer
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-5">
+                            <div class="book-tour-field">
+
+                                <div class="book-tour-field clearfix mt-3">
+                                    <label class="mb-0"><i class="fa fa-building text-info"></i>&nbsp;&nbsp;&nbsp; Choose Your Hotel Stay :</label>
+                                    <div class="d-flex">
+                                        @foreach (var item in Model.HotelTypes)
+                                        {
+
+                                            <label>
+                                                @Html.RadioButtonFor(m => m.ClientEnquiry.HotelTypeID, item.HotelTypeID, new { @class = "rbHotel", data_price = item.BaseFare })
+                                                <span class="design"></span>
+                                                <span class="text">@item.HotelTypeName</span>
+                                            </label>
+                                        }
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ClientEnquiry.HotelTypeID)
+                                </div>
+                                <div class="book-tour-field clearfix">
+                                    <label class="mb-0"><i class="fa fa-cab text-info"></i>&nbsp;&nbsp;&nbsp; Choose Your Transport Type :</label>
+                                    <div class="d-flex">
+                                        @foreach (var item in Model.CabTypes)
+                                        {
+                                            <label>
+                                                @Html.RadioButtonFor(m => m.ClientEnquiry.CabTypeID, item.CabTypeID, new { @class = "rbCab", data_price = item.BaseFare })
+                                                <span class="design"></span>
+                                                <span class="text">@item.CabTypeName</span>
+                                            </label>
+                                        }
+                                    </div>
+                                    @*@Html.DropDownListFor(model => model.ClientEnquiry.CabTypeID, new SelectList(Model.CabTypes, "CabTypeID", "CabTypeName"), "Preferred Cab Type", new { id = "CabType", @class = "wide dd-select" })*@
+                                    @Html.ValidationMessageFor(model => model.ClientEnquiry.CabTypeID)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-sm-8 col-xl-8">
+                <div class="tour-details-left">
+                    <div class="tour-details-head">
+                        @*<h3>@Model.GenTourPackageDtlView.PackageName</h3>
+                            <div class="tour-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-o"></i></li>
+                                    </ul>
+                                    <p>(2 Review) </p>
+                                </div>*@
+                    </div>
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            @for (int i = 0; i < bannerCount; i++)
+                            {
+                                if (i == 0)
+                                {
+
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="@i" class="active"></li>
+                                }
+                                else
+                                {
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="@i"></li>
+                                }
+                            }
+                        </ol>
+                        <div class="carousel-inner">
+                            @for (int i = 0; i < bannerCount; i++)
+                            {
+                                if (i == 0)
+                                {
+
+                                    <div class="carousel-item active">
+                                        <img class="d-block w-100" src="@banners.ElementAt(i).PhotoNormalPath" alt="@banners.ElementAt(i).PhotoCaption">
+                                        <div class="carousel-caption">
+                                            <h5>@banners.ElementAt(i).PhotoCaption</h5>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="@banners.ElementAt(i).PhotoNormalPath" alt="@banners.ElementAt(i).PhotoCaption">
+                                        <div class="carousel-caption">
+                                            <h5>@banners.ElementAt(i).PhotoCaption</h5>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                    <h4 class="pb-3 pt-3">Overview</h4>
+                    @Html.Raw(HttpUtility.HtmlDecode(Model.GenTourPackageDtlView.PackageDesc))
+                    <ul class="tour-offer clearfix pl-0 ml-0">
+                        <li><span>Route </span>@Model.GenTourPackageDtlView.PackageRouting</li>
+                        <li><span>PickUp Point </span>@Model.GenTourPackageDtlView.PickupPoint</li>
+                        <li><span>Drop Point</span>@Model.GenTourPackageDtlView.DropPoint</li>
+                        <li><span>Accommodation </span>All Inclusive</li>
+                    </ul>
+
+
+                    <div class="row">
+
+                        <div class="col-md-12 col-lg-12">
+                            <div id="tracking-pre"></div>
+                            <div id="tracking">
+                                <div class="text-center tracking-status-intransit">
+                                    <p class="tracking-status text-tight">Itinerary</p>
+                                </div>
+                                <div class="tracking-list">
+
+                                    @foreach (var item in Model.Itineraries)
+                                    {
+                                        <div class="tracking-item">
+                                            <div class="tracking-icon status-intransit">
+                                                @item.DayNo
+                                            </div>
+                                            <div class="tracking-date">Day </div>
+                                            <div class="tracking-content">
+                                                @item.ItineraryName
+                                                <ul class="package-tags">
+                                                    @if (item.Equals(first))
+                                                    {
+                                                        <li>
+                                                            <img src="~/Content/img/ItineraryIcon/land.png" /> Arrival
+                                                        </li>
+                                                    }
+                                                </ul>
+
+                                                <div class="tracking-title mb-4">
+                                                    Other Benefits (On Arrival)
+                                                    <div class="row ml-2">
+                                                        @if (item.Breakfast == true)
+                                                        {
+                                                            <div class="css-1hrscrw clearfix relative">
+                                                                <span class="">
+                                                                    <span class="css-g71760">
+                                                                        <img src="~/Content/img/ItineraryIcon/food.png" />
+                                                                    </span>
+                                                                    <span class="inclusionName">Breakfast</span>
+                                                                </span>
+                                                            </div>
+                                                        }
+                                                        @if (item.Lunch == true)
+                                                        {
+                                                            <div class="css-1hrscrw clearfix relative">
+                                                                <span class="">
+                                                                    <span class="css-g71760">
+                                                                        <img src="~/Content/img/ItineraryIcon/food.png" />
+                                                                    </span>
+                                                                    <span class="inclusionName">Lunch</span>
+                                                                </span>
+                                                            </div>
+                                                        }
+                                                        @if (item.Dinner == true)
+                                                        {
+                                                            <div class="css-1hrscrw clearfix relative">
+                                                                <span class="">
+                                                                    <span class="css-g71760">
+                                                                        <img src="~/Content/img/ItineraryIcon/food.png" />
+                                                                    </span>
+                                                                    <span class="inclusionName">Dinner</span>
+                                                                </span>
+                                                            </div>
+                                                        }
+                                                        @if (item.SightSeeing == true)
+                                                        {
+                                                            <div class="css-1hrscrw clearfix relative">
+                                                                <span class="">
+                                                                    <span class="css-g71760">
+                                                                        <img src="~/Content/img/ItineraryIcon/eye.png" />
+                                                                    </span>
+                                                                    <span class="inclusionName">Sight Seeing</span>
+                                                                </span>
+                                                            </div>
+                                                        }
+                                                        @if (item.Stay == true)
+                                                        {
+                                                            <div class="css-1hrscrw clearfix relative">
+                                                                <span class="">
+                                                                    <span class="css-g71760">
+                                                                        <img src="~/Content/img/ItineraryIcon/bed.png" />
+                                                                    </span>
+                                                                    <span class="inclusionName">Stay</span>
+                                                                </span>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <span>@item.ItineraryRemarks</span>
+                                                <div class="tracking-title mt-4">Overnight Destination: @item.DestinationName</div>
+                                                <ul class="package-tags">
+                                                    @if (item.Equals(last))
+                                                    {
+                                                        <li>
+                                                            Departure
+                                                            <img src="~/Content/img/ItineraryIcon/take-off.png" />
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.AdvActivity.Count() > 0)
+                    {
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12">
+                                <div id="tracking-pre"></div>
+                                <div id="tracking">
+                                    <div class="text-center tracking-status-intransit">
+                                        <p class="tracking-status text-tight">Adventure Activities</p>
+                                    </div>
+                                    <div class="tracking-list">
+                                        <div class="mt-4">
+                                            <div class="tracking-content">
+                                                <div class="tracking-title m-4">
+                                                    <div class="row ml-2">
+                                                        @foreach (var item in Model.AdvActivity)
+                                                        {
+                                                            if (item.ActivityName == "Rock Climbing")
+                                                            {
+                                                                <div class="css-1hrscrw clearfix relative">
+                                                                    <span class="">
+                                                                        <span class="css-g71761">
+                                                                            <img src="~/Uploads/AdventureIcon/climbing.png" />
+                                                                        </span>
+                                                                        <span class="inclusionName_adv">Rock Climbing</span>
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                            if (item.ActivityName == "Treeking")
+                                                            {
+                                                                <div class="css-1hrscrw clearfix relative">
+                                                                    <span class="">
+                                                                        <span class="css-g71761">
+                                                                            <img src="~/Uploads/AdventureIcon/hiker.png" />
+                                                                        </span>
+                                                                        <span class="inclusionName_adv">Treeking</span>
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                            if (item.ActivityName == "Caving")
+                                                            {
+                                                                <div class="css-1hrscrw clearfix relative">
+                                                                    <span class="">
+                                                                        <span class="css-g71761">
+                                                                            <img src="~/Uploads/AdventureIcon/cave.png" />
+                                                                        </span>
+                                                                        <span class="inclusionName_adv">Caving</span>
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                            if (item.ActivityName == "River Rafting")
+                                                            {
+                                                                <div class="css-1hrscrw clearfix relative">
+                                                                    <span class="">
+                                                                        <span class="css-g71761">
+                                                                            <img src="~/Uploads/AdventureIcon/rafting.png" />
+                                                                        </span>
+                                                                        <span class="inclusionName_adv">River Rafting</span>
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                            if (item.ActivityName == "Safari")
+                                                            {
+                                                                <div class="css-1hrscrw clearfix relative">
+                                                                    <span class="">
+                                                                        <span class="css-g71761">
+                                                                            <img src="~/Uploads/AdventureIcon/safari.png" />
+                                                                        </span>
+                                                                        <span class="inclusionName_adv">Safari</span>
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                            if (item.ActivityName == "Paragliding")
+                                                            {
+                                                                <div class="css-1hrscrw clearfix relative">
+                                                                    <span class="">
+                                                                        <span class="css-g71761">
+                                                                            <img src="~/Uploads/AdventureIcon/parachutist.png" />
+                                                                        </span>
+                                                                        <span class="inclusionName_adv">Paragliding</span>
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                            if (item.ActivityName == "Ropeway Cable Ride")
+                                                            {
+                                                                <div class="css-1hrscrw clearfix relative">
+                                                                    <span class="">
+                                                                        <span class="css-g71761">
+                                                                            <img src="~/Uploads/AdventureIcon/Ropeway.png" />
+                                                                        </span>
+                                                                        <span class="inclusionName_adv">Ropeway Cable Ride</span>
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                            if (item.ActivityName == "Mountaineering")
+                                                            {
+                                                                <div class="css-1hrscrw clearfix relative">
+                                                                    <span class="">
+                                                                        <span class="css-g71761">
+                                                                            <img src="~/Uploads/AdventureIcon/mountaineering.png" />
+                                                                        </span>
+                                                                        <span class="inclusionName_adv">Mountaineering</span>
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                            if (item.ActivityName == "Mountain Biking")
+                                                            {
+                                                                <div class="css-1hrscrw clearfix relative">
+                                                                    <span class="">
+                                                                        <span class="css-g71761">
+                                                                            <img src="~/Uploads/AdventureIcon/cyclist.png" />
+                                                                        </span>
+                                                                        <span class="inclusionName_adv">Mountain Biking</span>
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                            if (item.ActivityName == "Helicopter Ride")
+                                                            {
+                                                                <div class="css-1hrscrw clearfix relative">
+                                                                    <span class="">
+                                                                        <span class="css-g71761">
+                                                                            <img src="~/Uploads/AdventureIcon/chopper.png" />
+                                                                        </span>
+                                                                        <span class="inclusionName_adv">Helicopter Ride</span>
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                            if (item.ActivityName == "Casino")
+                                                            {
+                                                                <div class="css-1hrscrw clearfix relative">
+                                                                    <span class="">
+                                                                        <span class="css-g71761">
+                                                                            <img src="~/Uploads/AdventureIcon/casino.png" />
+                                                                        </span>
+                                                                        <span class="inclusionName_adv">Casino</span>
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                        }
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @*inclusion/exclusion/terms section*@
+                    <div class="tabs">
+                        <input type="radio" id="tab1" name="tab-control" checked>
+                        <input type="radio" id="tab2" name="tab-control">
+                        <input type="radio" id="tab3" name="tab-control">
+                        <input type="radio" id="tab4" name="tab-control">
+                        <ul>
+                            <li title="Features">
+                                <label for="tab1" role="button">
+                                    <i class="fa fa-check-circle"></i>
+                                    <br>
+                                    <span>What´s Included</span>
+                                </label>
+                            </li>
+                            <li title="Delivery Contents">
+                                <label for="tab2" role="button">
+                                    <i class="fa fa-close"></i>
+                                    <br>
+                                    <span>Exclusions</span>
+                                </label>
+                            </li>
+                            <li title="Shipping">
+                                <label for="tab3" role="button">
+                                    <i class="fa fa-file-text-o"></i>
+                                    <br>
+                                    <span>Terms & Conditions</span>
+                                </label>
+                            </li>
+                            <li title="Returns">
+                                <label for="tab4" role="button">
+                                    <i class="fa fa-info"></i>
+                                    <br>
+                                    <span>Cancel Policy</span>
+                                </label>
+                            </li>
+                        </ul>
+
+                        <div class="slider"><div class="indicator"></div></div>
+                        <div class="content">
+                            <section>
+                                <h2>What´s Included</h2>
+                                <div class="boxcontent">
+                                    <ul>
+
+                                        @if (Model.Inclusions != null)
+                                        {
+                                            foreach (var item in Model.Inclusions)
+                                            {
+                                                <li><i class="fa fa-caret-right"></i> @item.InclusionName</li>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            <li>NA</li>
+                                        }
+                                    </ul>
+                                </div>
+                            </section>
+                            <section>
+                                <h2>Exclusions</h2>
+                                <div class="boxcontent">
+                                    <ul>
+                                        @if (Model.Exclusions != null)
+                                        {
+                                            foreach (var item in Model.Exclusions)
+                                            {
+                                                <li><i class="fa fa-caret-right"></i> @item.ExclusionName</li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li>NA</li>
+                                        }
+                                    </ul>
+                                </div>
+                            </section>
+                            <section>
+                                <div class="boxcontent">
+                                    <h2>Terms & Conditions</h2>
+                                    <ul>
+                                        @if (Model.Terms.Count() > 0)
+                                        {
+                                            foreach (var item in Model.Terms)
+                                            {
+                                                <li><i class="fa fa-caret-right"></i> @item.TermName</li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </section>
+                            <section>
+                                <h2>Cancellation Policy</h2>
+                                <ul>
+                                    @if (Model.Cancel.Count() > 0)
+                                    {
+                                        foreach (var item in Model.Cancel)
+                                        {
+                                            <li><i class="fa fa-caret-right"></i> @item.CancellationDesc</li>
+                                        }
+                                    }
+                                </ul>
+
+                            </section>
+                        </div>
+                    </div>
+                    @*end vertical table*@
+                    @*<div class="peulis-comment-list">
+                            <div class="comment-group-title">
+                                <h3>Tour Reviews</h3>
+                            </div>
+                            <div class="single-comment-item">
+                                <div class="single-comment-box">
+                                    <div class="main-comment">
+                                        <div class="author-image">
+                                            <img src="assets/img/4.jpg" alt="author">
+                                        </div>
+                                        <div class="comment-text">
+                                            <div class="comment-info">
+                                                <h4>david kamal</h4>
+                                                <ul>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                </ul>
+                                                <p>4 minitues ago</p>
+                                            </div>
+                                            <div class="comment-text-inner">
+                                                <p>Ne erat velit invidunt his. Eum in dicta veniam interesset, harum lupta definitionem. Vocibus suscipit prodesset vim ei, equidem perpetua eu per.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="single-comment-box">
+                                    <div class="main-comment">
+                                        <div class="author-image">
+                                            <img src="assets/img/5.jpg" alt="author">
+                                        </div>
+                                        <div class="comment-text">
+                                            <div class="comment-info">
+                                                <h4>Jerix Ablin</h4>
+                                                <ul>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                </ul>
+                                                <p>12 minitues ago</p>
+                                            </div>
+                                            <div class="comment-text-inner">
+                                                <p>orem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo? </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="peulis-leave-comment">
+                            <h3>Leave a Review</h3>
+                            <form>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="comment-field">
+                                            <p>Rating :</p>
+                                            <div class="star-rating">
+                                                <input id="star-5" type="radio" name="rating" value="star-5">
+                                                <label for="star-5" title="5 stars">
+                                                    <i class="active fa fa-star" aria-hidden="true"></i>
+                                                </label>
+                                                <input id="star-4" type="radio" name="rating" value="star-4">
+                                                <label for="star-4" title="4 stars">
+                                                    <i class="active fa fa-star" aria-hidden="true"></i>
+                                                </label>
+                                                <input id="star-3" type="radio" name="rating" value="star-3">
+                                                <label for="star-3" title="3 stars">
+                                                    <i class="active fa fa-star" aria-hidden="true"></i>
+                                                </label>
+                                                <input id="star-2" type="radio" name="rating" value="star-2">
+                                                <label for="star-2" title="2 stars">
+                                                    <i class="active fa fa-star" aria-hidden="true"></i>
+                                                </label>
+                                                <input id="star-1" type="radio" name="rating" value="star-1">
+                                                <label for="star-1" title="1 star">
+                                                    <i class="active fa fa-star" aria-hidden="true"></i>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="comment-field">
+                                            <textarea class="comment" placeholder="Comment..." name="comment"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="comment-field">
+                                            <input class="ns-com-name" name="name" placeholder="Name" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="comment-field">
+                                            <input class="ns-com-name" name="email" placeholder="Email" type="email">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="comment-field">
+                                            <button type="submit" class="peulis-theme-btn">post comment</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>*@
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="sidebar-widget sticky-top">
+                    <div class="single-sidebar">
+                        <div class="quick-contact ">
+                            <h3>Book This Tour</h3>
+                            <form method="post" action="/GenTourPackage/SubmitDirectBooking">
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(model => model.GenTourPackageDtlView.PackageID)
+                                @Html.HiddenFor(model => model.GenTourPackageDtlView.Days)
+                                <div class="book-tour-field">
+
+                                    @Html.TextBoxFor(model => model.ClientEnquiry.ClientName, new { @class = "form-control", placeholder = "Your Name" })
+                                    @Html.ValidationMessageFor(model => model.ClientEnquiry.ClientName)
+                                </div>
+                                <div class="book-tour-field">
+
+                                    @Html.TextBoxFor(model => model.ClientEnquiry.ClientEmail, new { @class = "form-control", placeholder = "Email Address" })
+                                    @Html.ValidationMessageFor(model => model.ClientEnquiry.ClientEmail)
+                                </div>
+                                <div class="book-tour-field">
+
+                                    @Html.TextBoxFor(model => model.ClientEnquiry.ClientPhoneNo, new { @class = "form-control", placeholder = "Phone Number" })
+                                    @Html.ValidationMessageFor(model => model.ClientEnquiry.ClientPhoneNo)
+                                </div>
+                                <div class="book-tour-field">
+                                    @Html.TextAreaFor(model => model.ClientEnquiry.Remarks, new { @class = "form-control", placeholder = "Remarks" })
+                                    @Html.ValidationMessageFor(model => model.ClientEnquiry.Remarks)
+                                </div>
+                                <div class="book-tour-field">
+                                    @*<input id="reservation_date" name="reservation_date" placeholder="Departure Date" data-select="datepicker" type="text">*@
+                                    @Html.TextBoxFor(model => model.ClientEnquiry.DateOfArrival, new { @class = "", id = "reservation_date", placeholder = "Travel Date" })
+                                    @Html.ValidationMessageFor(model => model.ClientEnquiry.DateOfArrival)
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 pr-1">
+                                        <div class="book-tour-field clearfix">
+                                            @Html.DropDownListFor(x => x.ClientEnquiry.NoOfAdult, new SelectListItem[]{
+                                        new SelectListItem(){Text="No of Adults", Value=""},
+                                        new SelectListItem(){Text="1", Value="1"},
+                                        new SelectListItem(){Text="2",Value="2"},
+                                        new SelectListItem(){Text="3",Value="3"},
+                                        new SelectListItem(){Text="4+",Value="4+"}}, new { @class = "wide dd-select", id = "NoofAdults", name = "NoofAdults" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 pl-1">
+                                        <div class="book-tour-field clearfix">
+                                            @Html.DropDownListFor(x => x.ClientEnquiry.NoOfChildren, new SelectListItem[]{
+                                        new SelectListItem(){Text="No of Children", Value=""},
+                                        new SelectListItem(){Text="0", Value="0"},
+                                        new SelectListItem(){Text="1", Value="1"},
+                                        new SelectListItem(){Text="2",Value="2"},
+                                        new SelectListItem(){Text="3+",Value="3+"}, }, new { @class = "wide dd-select", id = "NoOfChildren", name = "NoOfChildren" })
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="book-tour-field">
+                                    <button type="submit">Book Now</button>
+
+                                    <a href="/customtourpackage/@Model.linkname" title="custom package" class="mt-2 btn bg-info text-light font-weight-bold w-100">
+                                        Customize Package
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    @*<h3 class="text-center text-secondary pb-3">Or</h3>
+                        <div class="single-sidebar">
+                            <div class="quick-contact card bg-light">
+                                <form>
+                                    <div class="book-tour-field">
+                                        <a href="/customtourpackage/@Model.linkname" title="custom package" class="btn bg-info text-light font-weight-bold w-100">
+                                            Customize Package
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>*@
+                    @*<div class="single-sidebar">
+                            <h3>More Information</h3>
+                            <ul class="more-info">
+                                <li>
+                                    <span><i class="fa fa-phone"></i> Phone Number:</span>
+                                    1-567-124-44227
+                                </li>
+                                <li>
+                                    <span><i class="fa fa-clock-o"></i> Office Time:</span>
+                                    9am - 5pm
+                                </li>
+                                <li>
+                                    <span><i class="fa fa-map-marker"></i> Office Location:</span>
+                                    5520 Quebec Place
+                                </li>
+                            </ul>
+                        </div>*@
+                    @*<div class="single-sidebar">
+                            <img src="assets/img/destination.jpg" alt="destination" />
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts{
+    <script src="~/Content/Select2/select2.min.js"></script>
+    <script src="~/Content/datetimepicker/jquery.datetimepicker.full.min.js"></script>
+    <script type="text/javascript">
+        var fare = '@Model.GenTourPackageDtlView.FinalFare';
+
+        $('.rbHotel').on('change', function () {
+            setprice();
+        });
+        $('.rbCab').on('change', function () {
+            setprice();
+        });
+
+        $('.dd-select').select2({
+            width: '100%',
+        });
+        $('#reservation_date').datetimepicker({
+            theme: 'light',
+            timepicker: false,
+            format: 'd M Y',
+            minDate: 'today'
+        });
+
+        function setprice() {
+            var hotelfare = $('.rbHotel:checked').attr('data-price');
+            var cabfare = $('.rbCab:checked').attr('data-price');
+
+            var hfare = parseInt(hotelfare) || 0;
+            var cfare = parseInt(cabfare) || 0;
+
+            var final = parseInt(fare) + hfare + cfare;
+            $('#pack-price').text(final);
+        }
+    </script>
+}

@@ -1,0 +1,75 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.InclusionVM
+<div id="DataGrid">
+    @if (Model.InclusionList.Count() > 0)
+    {
+        <div class="table-responsive">
+            <div class="table-responsive">
+                <table class="table table-striped table-condensed table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="vertical-align:middle">
+                                Inclusion Name
+                            </th>
+                            <th class="text-center" style="vertical-align:middle">
+                                Inclusion Description
+                            </th>
+                            <th class="text-center" style="vertical-align:middle">
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.InclusionList)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    <b>@item.InclusionName</b>
+                                </td>
+                                <td class="text-center">
+                                    <b>@item.InclusionType</b>
+                                </td>
+                                <td class="action-td">
+                                    <div class="flexbox">
+                                        <div class="plr-5">
+                                            <a href="/admin/inclusions/editinclusion/@item.InclusionID" title="Edit">
+                                                <i class="fa fa-edit text-dark"></i>
+                                            </a>
+                                        </div>
+                                        <div class="plr-5">
+                                            <form method="post" action="/admin/inclusions/DeleteInclusion" data-otf-ajax="true" data-otf-target="#DataGrid">
+                                                @Html.Hidden("InclusionID", item.InclusionID)
+                                                @Html.AntiForgeryToken()
+                                                <a href="/admin/inclusions/DeleteInclusion/@item.InclusionID" class="delete" title="Delete" data-record="@item.InclusionName">
+                                                    <i class="fa fa-trash text-dark"></i>
+                                                </a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="ns-grid-pager row m-0" data-otf-target="#DataGrid">
+                <div class="hidden-xs col-md-3 col-sm-3">
+                    @Model.PagingInfo.TotalItems Record(s)
+                </div>
+                <div class="visible-lg visible-md visible-sm col-md-9 col-sm-9 ns-pagination" data-otf-target="#DataGrid" data-otf-actionlink="/admin/inclusions/inclusionlist">
+                    @Html.PageLinks(Model.PagingInfo, x => Url.Action("inclusionlist", "inclusions", new { @Area = "admin", PageNo = x, PageSize = Model.PagingInfo.ItemsPerPage }))
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center p-2">
+            <img src="~/Content/img/no_record.png" /><br />
+            <span class="text-muted">No records available or your searched record in not available..</span>
+        </div>
+    }
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>

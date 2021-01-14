@@ -1,0 +1,48 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.LocalitiesSaveModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Localities</span>&nbsp;
+    <small>Edit</small>
+</div>
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="text-center">
+            <label class="alert alert-info p-2"><small> Fields marked * are mandatory</small></label>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+             @Html.HiddenFor(m => m.Localities.LocalityID)
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Localities.CityID, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.Localities.CityID, new SelectList(Model.CitiesList, "CityID", "CityName"), "-- Select City --", new { @class = "form-control", @id = "ddCity" })
+                        @Html.ValidationMessageFor(m => m.Localities.CityID)
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Localities.LocalityName, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.Localities.LocalityName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Localities.LocalityName)
+                    </div>
+                </div>
+            </div>
+            <div class="action-div">
+                @Html.ActionLink("Back To List", "index", "localities", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })
+                <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
+            </div>
+        }
+    </div>
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+

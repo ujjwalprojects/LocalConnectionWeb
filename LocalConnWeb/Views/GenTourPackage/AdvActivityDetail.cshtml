@@ -1,0 +1,135 @@
+﻿@model LocalConnWeb.CustomModels.GenTourPackageAPIVM
+@{
+    ViewBag.Title = "Activity Details";
+    Layout = "~/Views/Shared/_LayoutGeneral.cshtml";
+}
+<link href="~/Content/timeline.css" rel="stylesheet" />
+
+<div class="container-fluid border-bottom">
+    <div class="container mt-3 mb-2">
+        <h5>View Similar Packages in your budget for :</h5>
+        <ul class="package-tags pt-2">
+            <li class="text-info">
+                <h6>4-9 days</h6>
+            </li>
+            <li class="text-info">
+                <h6>7-9 days</h6>
+            </li>
+            <li class="text-info">
+                <h6>10-12 days</h6>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="container pt-2">
+    <div class=" clearfix row">
+        <div class="col-lg-8 col-sm-8 col-xl-8">
+            <div class="clearfix pt-2 pb-2">
+                <div class="clearfix p-0">
+                    <div class="clearfix">
+                        <ol class="package-tag" style="font-size:10px;">
+                            <li itemprop="isBasedOnUrl"><a class="text-primary" target="_blank" itemprop="image" href="#"><span itemprop="name">Home></span></a></li>
+                            <li itemprop="isBasedOnUrl"><a class="text-primary" target="_blank" itemprop="image" href="#"><span itemprop="name"> >Tour Package</span></a></li>
+                            <li itemprop="isBasedOnUrl"><a class="text-primary" target="_blank" itemprop="image" href="#"><span itemprop="name"> >Tour-Type</span></a></li>
+                            <li itemprop="isBasedOnUrl"><a class="text-primary" target="_blank" itemprop="image" href="#"><span itemprop="name"> >Destination</span></a></li>
+                            <li itemprop="isBasedOnUrl"><a target="_blank" itemprop="image" href="#"><span itemprop="name"> >Customize Package</span></a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-4 col-xl-4">
+            <div class="clearfix pt-2 pb-2">
+                <div class="clearfix p-0">
+                    <div class="clearfix">
+                        <div class="package-tag float-right">
+                            <span><i class="fa fa-phone"></i> Call Us</span>
+                            <h5 class="text-info">&nbsp; 888 666 6666</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix row">
+        <div class="col-xl-12 border-bottom pt-1">
+            Reference Package :<span class="text-danger text-bold"> Test</span><span class="text-secondary">&nbsp;&nbsp; Customizable</span>
+        </div>
+    </div>
+</div>
+<div class="container pt-2">
+    <div class="clearfix row">
+        <div class="col-lg-4 col-sm-4 col-xl-4">
+
+        </div>
+        <div class="col-lg-8 col-sm-8 col-xl-8">
+            <div class="card">
+                <div class="">
+                    <div class="sidebar-widget">
+                        <div class="single-sidebar">
+                            <div class="quick-contact">
+                                <h3>Select activities for the package</h3>
+                                @using (Html.BeginForm(Html.BeginForm("advactivitydetail", "gentourpackage", FormMethod.Post)))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(m => m.ClientEnquiry.RefPackageID)
+                                    if (Model.ClientEnqActivityList.Count() > 0)
+                                    {
+                                        <div class="d-flex justify-content-center flex-wrap">
+                                            @{
+                                        int i = 0;
+                                        foreach (var item in Model.ClientEnqActivityList)
+                                        {
+                                            @Html.HiddenFor(m => Model.ClientEnqActivityList[i].ClientActivityID)
+                                                @Html.HiddenFor(m => Model.ClientEnqActivityList[i].EnquiryCode)
+                                                @Html.HiddenFor(m => Model.ClientEnqActivityList[i].RefPackageID)
+                                                @Html.HiddenFor(m => Model.ClientEnqActivityList[i].ActivityID)
+                                                <div class="mb-1">
+                                                    <div class="card bg-light">
+                                                        <div class="card-body pt-1 pb-1">
+                                                            <h4>@item.ActivityName</h4>
+                                                            <small>@item.ActivityDesc</small>
+                                                            <hr />
+                                                            <div class="text-center">
+                                                                <label class="fancy">@Html.CheckBox("ClientEnqActivityList[" + i + "].IsSelected", Model.ClientEnqActivityList[i].IsSelected, new { @class = "chkActivity", @id = "chkAct_" + @i }) &nbsp;&nbsp; Include in package</label><br />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @Html.HiddenFor(m => Model.ClientEnqActivityList[i].ActivityName)
+                                                @Html.HiddenFor(m => Model.ClientEnqActivityList[i].ActivityDesc)
+                                            i++;
+                                        }
+                                            }
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="text-center p-3">
+                                            <img src="~/Content/img/no_record.png" /><br />
+                                            <span class="text-muted">No activites found in the activity master. Add activities and then select.</span>
+                                        </div>
+                                    }
+                                    <div class="action-div">
+                                        <div class="col-md p-0">
+                                            <a href="/customitineraries/@Model.ClientEnquiry.EnquiryCode" class="btn btn-secondary btn-sm">Back</a>
+                                            <button class="btn btn-warning btn-sm float-right" type="submit">Next &nbsp;<i class="fa fa-arrow-circle-o-right"></i></button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+

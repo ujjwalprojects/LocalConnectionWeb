@@ -1,0 +1,18 @@
+﻿@model IEnumerable<LocalConnWeb.Areas.Admin.CustomModels.StateView>
+@{
+    ViewBag.Title = "States";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">States</span>&nbsp;
+    <small>List</small>
+</div>
+<div class="card bg-light">
+    <div class="card-body">
+        <a class="btn btn-primary btn-sm pull-right" href="/Admin/states/add"><i class="fa fa-plus-circle"></i> Add</a>
+        <div class="clearfix"></div>
+        @Html.Partial("_pvStateList", Model)
+    </div>
+</div>

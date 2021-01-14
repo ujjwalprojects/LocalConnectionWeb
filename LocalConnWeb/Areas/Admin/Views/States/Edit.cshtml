@@ -1,0 +1,48 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.StateSaveModel
+@{
+    ViewBag.Title = "Edit State";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">States</span>&nbsp;
+    <small>Edit</small>
+</div>
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="text-center">
+            <label class="alert alert-info p-2"><small> Fields marked * are mandatory</small></label>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m=>m.State.StateID)
+            <div class="form-group">
+                @Html.LabelFor(m => m.State.CountryID, new { @class = "required" })
+                <div class="col-md-6 p-0">
+                    @Html.DropDownListFor(m => m.State.CountryID, new SelectList(Model.CountryList, "CountryID", "CountryName"), "-- Select Country --", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.State.CountryID)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.State.StateName, new { @class = "required" })
+                <div class="col-md p-0">
+                    @Html.TextBoxFor(m => m.State.StateName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.State.StateName)
+                </div>
+            </div>
+            <div class="action-div">
+                @Html.ActionLink("Back To List", "index", "states", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })
+                <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
+            </div>
+        }
+    </div>
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,97 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.TourPackageBookEnquiryVM
+
+<style>
+    .font-13 {
+        font-size: 13px;
+    }
+</style>
+<div id="DataGrid">
+    @if (Model.Enquiries.Count() > 0)
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Client Information</th>
+                        <th>Package Information</th>
+                        <th>Status/Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Enquiries)
+                    {
+                        <tr>
+                            <td>
+                                <div>
+                                    <h5 class="text-muted text-capitalize">Mr./Mrs. @item.ClientName</h5>
+                                    <small class="font-weight-bold"><i class="fa fa-envelope text-info"></i> @item.ClientEmail &nbsp;&nbsp; <i class="fa fa-phone text-info"></i> @item.ClientPhoneNo</small>
+                                    <br />
+                                    <p class="font-13">
+                                        Date of Arrival : <b>@item.DateOfArrival.ToString("dd MMM yyyy")</b>
+                                        <br />
+                                        Guests : <b>@item.NoOfAdult Adults, @item.NoOfChildren Children</b>
+                                        <br />
+                                        Duration : <b>@item.NoOfDays Days / @(item.NoOfDays - 1) Nights</b>
+                                        <br />
+                                        <small>Remarks : @item.Remarks</small>
+                                    </p>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <h5 class="text-info">@item.PackageName</h5>
+                                    <p class="font-13">
+                                        Hotel Type : <b>@item.HotelTypeName</b>
+                                        <br />
+                                        Cab Type : <b>@item.CabTypeName</b>
+                                        <br />
+                                        Package Fare : <b>@item.FinalFare.ToString("#,#", System.Globalization.CultureInfo.CreateSpecificCulture("hi-IN")) / person</b> / @item.FarePer
+                                    </p>
+                                    @*<br />
+                                        <small>Package Description : @item.PackageDesc</small>*@
+                                </div>
+                            </td>
+                            <td class="text-center" style="vertical-align:middle;">
+                                @if (item.IsDirectBooking)
+                                {
+                                    <span class="text-info">~ Direct Booking</span><br />
+                                }
+                                @if (item.Status == "Submitted")
+                                {
+                                    <label class="badge badge-dark">Unassigned</label><br />
+                                }
+                                else
+                                {
+                                    <label class="badge badge-dark">@item.Status</label><br />
+                                }
+
+
+                                <a href="/admin/tourpackage/enquirydtls?code=@item.Enquirycode" class="small"> <i class="fa fa-eye"></i> View Enquiry</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="ns-grid-pager row m-0" data-otf-target="#DataGrid">
+                <div class="hidden-xs col-md-3 col-sm-3">
+                    @Model.PagingInfo.TotalItems Record(s)
+                </div>
+                <div class="visible-lg visible-md visible-sm col-md-9 col-sm-9 ns-pagination" data-otf-target="#DataGrid" data-otf-actionlink="/admin/tourpackage/enquiries">
+                    @Html.PageLinks(Model.PagingInfo, x => Url.Action("enquiries", "tourpackage", new { @Area = "admin", PageNo = x, PageSize = Model.PagingInfo.ItemsPerPage }))
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center p-2">
+            <img src="~/Content/img/no_record.png" alt="no record" /><br />
+            <span class="text-muted">No records available or your searched record in not available..</span>
+        </div>
+    }
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>

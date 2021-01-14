@@ -1,0 +1,440 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @*<meta http-equiv="Content-Security-Policy" content="default-src 'self' gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline' ws://*; style-src 'self' https://fonts.googleapis.com/css 'unsafe-inline'; media-src *; frame-src *; img-src * filesystem: data:; font-src 'self' https://fonts.gstatic.com">*@
+    <title>@ViewBag.Title</title>
+    <!-- plugins:css -->
+    @Styles.Render("~/bundles/templateCss")
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/favicon.png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+</head>
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar default-layout col-lg-12 col-12 p-0 d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+                <a class="navbar-brand d-none d-md-block d-lg-block d-sm-none" href="#">
+                    <img src="#" alt="logo" />
+                </a>
+                <a class="navbar-brand brand-logo-mini" href="index.html">
+                    <img src="#" alt="logo" />
+                </a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center">
+                <ul class="navbar-nav navbar-nav-right">
+                    @*@if (ViewBag.VideoCount != null)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link count-indicator dropdown-toggle" id="videoDropdown" href="#" data-toggle="dropdown">
+                                    <i class="fa fa-video-camera"></i>
+                                    @if ((int)ViewBag.VideoCount != 0)
+                                    {
+                                        <span class="count">@ViewBag.VideoCount</span>
+                                    }
+
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="videoDropdown">
+                                    @if ((int)ViewBag.VideoCount != 0)
+                                    {
+                                        <a class="dropdown-item preview-item" href="/school/tutorialvideo/unverified">
+                                            <p class="mb-0 font-weight-bold float-left">
+                                                You have @ViewBag.VideoCount Videos To Be Verified
+                                            </p>
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item preview-item" href="/school/tutorialvideo/unverified">
+                                            <span class="badge badge-pill badge-warning float-right">View all</span>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="dropdown-item preview-item">
+                                            <p class="mb-0 font-weight-bold float-left">
+                                                No new videos to verify
+                                            </p>
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                    }
+
+                                </div>
+                            </li>
+                        }*@
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                            <i class="fa fa-bell"></i>
+                            @*@if ((int)ViewBag.UnreadMsg != 0)
+                                {
+                                    <span class="count">@ViewBag.UnreadMsg</span>
+                                }*@
+
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                            @*@if ((int)ViewBag.UnreadMsg != 0)
+                                {
+                                    <a class="dropdown-item preview-item" href="/school/communication">
+                                        <p class="mb-0 font-weight-bold float-left">
+                                            You have @ViewBag.UnreadMsg unread message(s)
+                                        </p>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item preview-item" href="/school/communication">
+                                        <span class="badge badge-pill badge-warning float-right">View all</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item preview-item">
+                                        <p class="mb-0 font-weight-bold float-left">
+                                            No new messages
+                                        </p>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item preview-item" href="/school/communication">
+                                        <span class="badge badge-pill badge-info">View all</span>
+                                    </a>
+                                }*@
+
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown d-none d-xl-inline-block">
+                        <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <span class="profile-text">Hello, @ViewBag.CurrentUserName !</span>
+                            <img src="~/Content/img/face1.png" class="img-xs rounded-circle" alt="Profile image" />
+                            @*@if (ViewBag.UserImageSrc == null || (string)ViewBag.UserImageSrc == "")
+                                {
+
+                                }
+                                else
+                                {
+                                    <img src="@ViewBag.UserImageSrc" class="img-xs rounded-circle" alt="Profile image" />
+                                }*@
+
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                            <a class="dropdown-item mt-2" href="/myprofile">
+                                <i class="fa fa-user-circle"></i> My Profile
+                            </a>
+                            <a class="dropdown-item mt-2" href="/account/changepassword">
+                                <i class="fa fa-edit"></i> Change Password
+                            </a>
+                            <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
+                                @Html.AntiForgeryToken()
+                                <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item"><i class="fa fa-outdent"></i> &nbsp;&nbsp;Log Out</a>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="page-body-wrapper">
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item nav-profile">
+                        <div class="nav-link">
+                            <div class="user-wrapper">
+                                <div class="profile-image">
+                                    <img src="~/Content/img/face1.png" alt="profile image">
+                                    @*@if (ViewBag.UserImageSrc == null || (string)ViewBag.UserImageSrc == "")
+                                        {
+                                            <img src="~/Content/img/face1.png" alt="profile image">
+                                        }
+                                        else
+                                        {
+                                            <img src="@ViewBag.UserImageSrc" alt="Profile image" />
+                                        }*@
+                                </div>
+                                <div class="text-wrapper">
+                                    <p class="profile-name">@ViewBag.CurrentUserName</p>
+                                    <div>
+                                        <small class="designation text-muted">@ViewBag.Role</small>
+                                        <span class="status-indicator online"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">
+                            <i class="menu-icon fa fa-television"></i>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                            <i class="menu-icon fa fa-contao"></i>
+                            <span class="menu-title">Configuration</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse sub-div" id="ui-basic">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/countries/index">Countries</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/States/index">States</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/Cities/index">Cities</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/localities/index">Localities</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/amenities/index">Amenities</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/StarRating/index">Star Rating</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/HomeTypes/index">Home Type</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/Rooms/index">Room Type</a>
+                                </li>
+                                @*<li class="nav-item">
+                                    <a class="nav-link" href="/admin/package/packagelist">Package Type</a>
+                                </li>*@
+                                @*<li class="nav-item">
+                                    <a class="nav-link" href="/admin/inclusions/inclusionlist">Inclusions</a>
+                                </li>*@
+                                @*<li class="nav-item">
+                                    <a class="nav-link" href="/admin/exclusion/exclusionlist">Exclusions</a>
+                                </li>*@
+                                @*<li class="nav-item">
+                                    <a class="nav-link" href="/admin/itineraries/ItineraryList">Itinerary</a>
+                                </li>*@
+                                @*<li class="nav-item">
+                                    <a class="nav-link" href="/admin/term/termlist">Terms & Condition</a>
+                                </li>*@
+                                @*<li class="nav-item">
+                                    <a class="nav-link" href="/admin/tourcancel/tourcancellist">Tour Cancellation</a>
+                                </li>*@
+                                @*<li class="nav-item">
+                                    <a class="nav-link" href="/admin/banner/bannerlist">Banners</a>
+                                </li>*@
+                                @*<li class="nav-item">
+                                    <a class="nav-link" href="/admin/activity/activitylist">Adventure Activity</a>
+                                </li>*@
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#agent" aria-expanded="false" aria-controls="auth">
+                            <i class="menu-icon fa fa-user"></i>
+                            <span class="menu-title">Agent Management</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse sub-div" id="agent">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/agentconfig/agentlist">Register Agents</a>
+                                </li>
+                                @*<li class="nav-item">
+                                        <a class="nav-link" href="/admin/hotel">Hotels </a>
+                                    </li>*@
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#hotel" aria-expanded="false" aria-controls="auth">
+                            <i class="menu-icon fa fa-building"></i>
+                            <span class="menu-title">Hotel Management</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse sub-div" id="hotel">
+                            <ul class="nav flex-column sub-menu">
+                                @*<li class="nav-item">
+                                    <a class="nav-link" href="/admin/hoteltype">Hotel Types</a>
+                                </li>*@
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/lchotels/index">Hotels </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#cab" aria-expanded="false" aria-controls="auth">
+                            <i class="menu-icon fa fa-car"></i>
+                            <span class="menu-title">Cab Management</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse sub-div" id="cab">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/cabtype">Cab Types</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/cabhead">Cab Heads</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/cabdriver">Cab Drivers</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/cab">Cabs </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#package" aria-expanded="false" aria-controls="auth">
+                            <i class="menu-icon fa fa-asterisk"></i>
+                            <span class="menu-title">Package Management</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse sub-div" id="package">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/package/PackageOfferList">Package Offer</a>
+                                </li>
+                                @*<li class="nav-item">
+                                        <a class="nav-link" href="/admin/cabhead">Cab Heads</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/admin/cabdriver">Cab Drivers</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/admin/cab">Cabs </a>
+                                    </li>*@
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/tourpackage">
+                            <i class="menu-icon fa fa-plane"></i>
+                            <span class="menu-title">Tour Package</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/tourguide">
+                            <i class="menu-icon fa fa-map"></i>
+                            <span class="menu-title">Tour Guides</span>
+                        </a>
+                    </li>
+                    @*<li class="nav-item">
+                            <a class="nav-link" href="/master/academicsession">
+                                <i class="menu-icon fa fa-calendar-plus-o"></i>
+                                <span class="menu-title">Academic Session</span>
+                            </a>
+                        </li>*@
+                    @*<li class="nav-item">
+                            <a class="nav-link" href="pages/tables/basic-table.html">
+                                <i class="menu-icon fa fa-table"></i>
+                                <span class="menu-title">Tables</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="pages/icons/font-awesome.html">
+                                <i class="menu-icon fa fa-sticky-note"></i>
+                                <span class="menu-title">Icons</span>
+                            </a>
+                        </li>*@
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/tourpackage/enquiries">
+                            <i class="menu-icon fa fa-podcast"></i>
+                            <span class="menu-title">Client Enquiries</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#upload" aria-expanded="false" aria-controls="upload">
+                            <i class="menu-icon fa fa-database"></i>
+                            <span class="menu-title">User Management</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse sub-div" id="upload">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/master/User/Register">Register User </a>
+                                </li>
+                                @*<li class="nav-item">
+                        <a class="nav-link" href="/master/data/teacherupload"> Teacher </a>
+                    </li>*@
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item d-lg-block d-xl-none d-md-block d-sm-block">
+                        <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
+                            @Html.AntiForgeryToken()
+                            <a href="javascript:document.getElementById('logOut').submit()" class="nav-link">
+                                <i class="menu-icon fa fa-outdent"></i>
+                                <span class="menu-title">Logout</span>
+                            </a>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    @RenderBody()
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="container-fluid clearfix">
+                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">
+
+                        </span>
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+                            SHAMAGRA SIKSHA, GOVT. OF SIKKIM
+                            @*Hand-crafted & made with
+                                <i class="fa fa-heart text-danger"></i>*@
+                        </span>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <div class="toast-container"></div>
+    <input type="hidden" id="ActiveURL" data-value="@ViewBag.ActiveURL" />
+    <div id="ajaxLoading" class="fade in" style="background-color: rgb(0, 0, 0); bottom: 0px; left: 0px; position: fixed; right: 0px; top: 0px; z-index: 10000; opacity: 0.5; display: none;">
+        <div class="text-center panel center-div">
+            <div class="panel-body">
+                <img src="~/Content/img/ajax-loader.gif" />
+                <p class="m-2"><b>Please wait...</b></p>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-styled" id="myErroMsgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-md-12">
+                        <button type="button" class="close color-white" data-dismiss="modal" aria-label="Close" onclick="CloseMyModal()"><span aria-hidden="true">&times;</span></button>
+                        <i class="fa fa-info-circle color-white pull-left"></i> <span class="modal-title color-white" id="myErroModalLabel"></span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <h5 id="Msg" class="text-center"></h5>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10 text-right" style="padding-right: 0;">
+                        <input type="button" id="myErroMsgModalNoButton" class="btn btn-default btn-sm" data-dismiss="modal" onclick="CloseMyModal()" value="Cancel" />
+                        <input type="button" id="myErroMsgModalYesButton" value="Yes" class="btn btn-info btn-sm hidden" onclick="OkMyModal()" />
+                    </div>
+                </div>
+                <input type="hidden" id="eventSender" name="name" value=" " />
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/moment.min.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/templateJs")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

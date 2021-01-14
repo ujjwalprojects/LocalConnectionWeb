@@ -1,0 +1,242 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.LCHotelManageModel
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    long stateid = Model.LCHotel == null ? 0 : Model.LCHotel.StateID;
+    long cityid = Model.LCHotel == null ? 0 : Model.LCHotel.CityID;
+    long localitiesid = Model.LCHotel == null ? 0 : Model.LCHotel.LocalityID;
+}
+
+<link href="~/Content/Select2/select2.min.css" rel="stylesheet" />
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Hotels</span>&nbsp;
+    <small>Add</small>
+</div>
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="text-center">
+            <label class="alert alert-info p-2"><small> Fields marked * are mandatory</small></label>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.CountryID, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.LCHotel.CountryID, new SelectList(Model.CountryList, "CountryID", "CountryName"), "-- Select Country --", new { @class = "form-control", @id = "ddCountry" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.CountryID)
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.StateID, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.LCHotel.StateID, new SelectList(string.Empty), "-- Select State --", new { @class = "form-control", @id = "ddState" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.StateID)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.CityID, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.LCHotel.CityID, new SelectList(string.Empty), "-- Select City --", new { @class = "form-control", @id = "ddCity" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.CityID)
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.LocalityID, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.LCHotel.LocalityID, new SelectList(string.Empty), "-- Select Localities --", new { @class = "form-control", @id = "ddLocalities" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.LocalityID)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LCHotel.HotelName, new { @class = "required" })
+                @Html.TextBoxFor(m => m.LCHotel.HotelName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LCHotel.HotelName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LCHotel.HotelAddress, new { @class = "required" })
+                @Html.TextAreaFor(m => m.LCHotel.HotelAddress, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LCHotel.HotelAddress)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LCHotel.HotelDesc, new { @class = "required" })
+                @Html.TextAreaFor(m => m.LCHotel.HotelDesc, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LCHotel.HotelDesc)
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.HotelContactNo, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.HotelContactNo, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.HotelContactNo)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.HotelEmail, new { @class = "" })
+                        @Html.TextBoxFor(m => m.LCHotel.HotelEmail, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.HotelEmail)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.HomeTypeID, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.LCHotel.HomeTypeID, new SelectList(Model.HomeTypeList, "HomeTypeID", "HomeTypeName"), "-- Select Home Type --", new { @class = "form-control", @id = "ddHomeType" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.HomeTypeID)
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.StarRatingID, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.LCHotel.StarRatingID, new SelectList(Model.StarRatingList, "StarRatingID", "StarRatingName"), "-- Select Star Rating --", new { @class = "form-control", @id = "ddStarRating" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.StarRatingID)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LCHotel.HotelBaseFare, new { @class = "required" })
+                @Html.TextBoxFor(m => m.LCHotel.HotelBaseFare, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LCHotel.HotelBaseFare)
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.TotalSingleRooms, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.TotalSingleRooms, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.TotalSingleRooms)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.TotalDoubleRooms, new { @class = "" })
+                        @Html.TextBoxFor(m => m.LCHotel.TotalDoubleRooms, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.TotalDoubleRooms)
+                    </div>
+                </div>
+            </div>
+               <div class="form-group">
+                @Html.LabelFor(m => m.LCHotel.MetaText, new { @class = "" })
+                @Html.TextAreaFor(m => m.LCHotel.MetaText, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LCHotel.MetaText)
+            </div>
+            <div class="action-div">
+                @Html.ActionLink("Back To List", "index", "lchotel", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })
+                <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
+            </div>
+        }
+    </div>
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Content/Select2/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            loadStates('@stateid');
+            loadCities('@cityid');
+            loadLocalities('@localitiesid');
+
+            $('#ddCountry').on('change', function () {
+                loadStates();
+            });
+            $('#ddState').on('change', function () {
+                loadCities();
+            });
+            $('#ddCity').on('change', function () {
+                loadLocalities();
+            });
+        });
+        function loadStates(stateid) {
+            $('#ddState').empty().append("<option value=''>-- Select State --</option>");
+            var countryID = $('#ddCountry').val();
+            if (countryID != '') {
+                var options = {
+                    url: '/admin/lchotels/getstates',
+                    type: 'get',
+                    data: { id: countryID },
+                    dataType: 'json'
+                };
+                $.ajax(options).done(function (data) {
+                    $.each(data, function (i, item) {
+                        $('#ddState').append('<option value="' + item.StateID + '">' + item.StateName + '</option>');
+                    });
+                    if (stateid) {
+                        $('#ddState').val(stateid);
+                    }
+                }).fail(function (xhr, msg, err) {
+                    toastr.error(msg, "Error");
+                });
+            }
+        }
+        function loadCities(cityid) {
+            $('#ddCity').empty().append("<option value=''>-- Select City --</option>");
+            var stateID = $('#ddState').val();
+            if (stateID != '') {
+                var options = {
+                    url: '/admin/lchotels/getcities',
+                    type: 'get',
+                    data: { id: stateID },
+                    dataType: 'json'
+                };
+                $.ajax(options).done(function (data) {
+                    $.each(data, function (i, item) {
+                        $('#ddCity').append('<option value="' + item.CityID + '">' + item.CityName + '</option>');
+                    });
+                    if (cityid) {
+                        $('#ddCity').val(cityid);
+                    }
+                }).fail(function (xhr, msg, err) {
+                    toastr.error(msg, "Error");
+                });
+            }
+        }
+        function loadLocalities(localitiesid) {
+            $('#ddLocalities').empty().append("<option value=''>-- Select Locality --</option>");
+            var cityID = $('#ddCity').val();
+            if (cityID != '') {
+                var options = {
+                    url: '/admin/lchotels/getlocalities',
+                    type: 'get',
+                    data: { id: cityID },
+                    dataType: 'json'
+                };
+                $.ajax(options).done(function (data) {
+                    $.each(data, function (i, item) {
+                        $('#ddLocalities').append('<option value="' + item.LocalityID + '">' + item.LocalityName + '</option>');
+                    });
+                    if (localitiesid) {
+                        $('#ddLocalities').val(LocalityName);
+                    }
+                }).fail(function (xhr, msg, err) {
+                    toastr.error(msg, "Error");
+                });
+            }
+        }
+        $.validator.setDefaults({
+            ignore: ''
+        });
+        $(document).ready(function () {
+            $('#typedd').select2({
+                allowClear: true,
+                width: '100%',
+                placeholder: 'Select Type(s)'
+            });
+            $('#destdd').select2({
+                width: '100%',
+            });
+        });
+
+    </script>
+}
+

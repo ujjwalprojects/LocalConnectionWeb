@@ -1,0 +1,58 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.RoomsSaveModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Rooms</span>&nbsp;
+    <small>Edit</small>
+</div>
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="text-center">
+            <label class="alert alert-info p-2"><small> Fields marked * are mandatory</small></label>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+             @Html.HiddenFor(m => m.Rooms.RoomID)
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rooms.RoomType, new { @class = "required" })
+                        <div class="col-md p-0">
+                            @Html.TextBoxFor(m => m.Rooms.RoomType, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Rooms.RoomType)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rooms.RoomBaseFare, new { @class = "required" })
+                        <div class="col-md p-0">
+                            @Html.TextBoxFor(m => m.Rooms.RoomBaseFare, new { @class = "form-control" , Value=Model.Rooms.RoomBaseFare.ToString("0")})
+                            @Html.ValidationMessageFor(m => m.Rooms.RoomBaseFare)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rooms.TotalCapacity, new { @class = "required" })
+                        <div class="col-md p-0">
+                            @Html.TextBoxFor(m => m.Rooms.TotalCapacity, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Rooms.TotalCapacity)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="action-div">
+                @Html.ActionLink("Back To List", "index", "rooms", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })
+                <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
+            </div>
+        }
+    </div>
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>

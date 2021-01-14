@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <link href="~/Content/Select2/select2.min.css" rel="stylesheet" />
+    @*<link href="~/Content/login.css" rel="stylesheet" />*@
+    <link rel="shortcut icon" href="~/favicon.png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    @Styles.Render("~/bundles/maincss")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/MainCss/style.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Header Area Start -->
+    <header class="peulis-header-area">
+        <!-- Header Top Area Start -->
+        <div class="header-top-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="header-top-left">
+                            <p>
+                                <i class="fa fa-envelope"></i>
+                                info@example.com
+                            </p>
+                            <p>
+                                <i class="fa fa-phone"></i>
+                                1 562 867 5309
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="header-top-right">
+                            <div class="header-top-social">
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="header-top-auth">
+                                <ul>
+                                    <li><i class="fa fa-user"></i></li>
+                                    <li class="separator"><a href="/account/login">Login</a></li>
+                                    @*<li><a href="#">Register</a></li>*@
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header Top Area End -->
+        <!-- Main Header Area Start -->
+        <div class="main-header-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="header_inn">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="site-logo">
+                                        <a href="index.html">
+                                            <img src="~/Content/img/logos.png" alt="Peulis" />
+                                        </a>
+                                    </div>
+                                    <!-- Responsive Menu Start -->
+                                    <div class="peulis-responsive-menu"></div>
+                                    <!-- Responsive Menu End -->
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="mainmenu">
+                                        <nav>
+                                            <ul id="navigation_menu">
+                                                <li><a href="/home/index">Home</a></li>
+                                                @if (ViewBag.Dests != null)
+                                                {
+                                                    <li>
+                                                        <a href="#">Destination Guides</a>
+                                                        <div class="row">
+                                                            @foreach (var group in ViewBag.Dests)
+                                                            {
+
+                                                                <ul class="col-md">
+                                                                    <li class="text-info font-weight-bold">@group.Key</li>
+                                                                    @foreach (var item in group.Value)
+                                                                    {
+                                                                        <li><a href="/gentourpackage/searchpackage?Where=@item.DestinationName">@item.DestinationName</a></li>
+                                                                    }
+                                                                </ul>
+                                                            }
+                                                        </div>
+
+                                                        @*<ul>
+                                                                <li><a href="destination-three.html">Destination 3 columns</a></li>
+                                                                <li><a href="destination-four.html">Destination 4 columns</a></li>
+                                                                <li><a href="destination-single.html">Single Destination</a></li>
+                                                            </ul>*@
+                                                    </li>
+                                                }
+
+                                                <li>
+                                                    <a href="#">Tour Packages</a>
+                                                    <ul>
+                                                        <li><a href="tour-sidebar.html">Tour Sidebar</a></li>
+                                                        <li><a href="tour-details.html">Tour Details</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="header_action">
+                                        <ul>
+                                            @*<li class="header-search">
+                                                    <a href="#" class="search-btn">
+                                                        <i class="fa fa-search"></i>
+                                                    </a>
+                                                    <div class="search-box search-elem">
+                                                        <span class="search-close"></span>
+                                                        <div class="inner row">
+                                                            <form>
+                                                                <input type="search" placeholder="Type to Search...">
+                                                                <button type="submit"><i class="fa fa-search"></i></button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </li>*@
+                                            <li><a href="#" id="sidenav-toggle" class="font-weight-bold"> About Us <i class="fa fa-safari text-info"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main Header Area End -->
+    </header>
+    <!-- Header Area End -->
+
+
+    <section class="peulis-login-page section_70 pt-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @*<div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper auth-page p-0">
+            <div class="content-wrapper d-flex auth auth-bg-1 theme-one">
+                <div class="flex-row w-100">
+                    <div class="col-md-6 col-lg-4 mx-auto">
+                        <div class="auto-form-wrapper">
+                            @RenderBody()
+                        </div>*@
+    @*<ul class="auth-footer">
+                <li>
+                    <a href="#">Conditions</a>
+                </li>
+                <li>
+                    <a href="#">Help</a>
+                </li>
+                <li>
+                    <a href="#">Terms</a>
+                </li>
+            </ul>
+        <p class="footer-text text-center">SHAMAGRA SIKSHA SIKKIM, GOVT. OF SIKKIM</p>*@
+    @*</div>
+            </div>
+        </div>*@
+    <!-- content-wrapper ends -->
+    @*</div>*@
+    <!-- page-body-wrapper ends -->
+    @*</div>*@
+    <!-- Footer Area Start -->
+    <footer class="peulis-footer-area">
+        <div class="footer-top-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer">
+                            <p>ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.ipsum dolor sit amet, consectetur </p>
+                            <div class="footer-logo">
+                                <a href="index.html">
+                                    <img src="assets/img/footer-logo.png" alt="Peulis" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer">
+                            <h3>About Us</h3>
+                            <ul>
+                                <li><a href="#">Why Us</a></li>
+                                <li><a href="#">Why Touring</a></li>
+                                <li><a href="#">Reviews</a></li>
+                                <li><a href="#">Travel Insurance</a></li>
+                                <li><a href="#">Programme</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer">
+                            <h3>Support</h3>
+                            <ul>
+                                <li><a href="#">Account</a></li>
+                                <li><a href="#">Client Area</a></li>
+                                <li><a href="#">Privacy & Policy</a></li>
+                                <li><a href="#">Author Hangout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer">
+                            <h3>Pay Safely</h3>
+                            <p>Eiusmod tempor incididunt utbor etian dolm magna aliqua enim minim</p>
+                            <div class="payment_image">
+                                <img src="assets/img/creditcard-logo.png" alt="Payment Card" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="footer-bottom-box">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="footer-bottom-left">
+                                        <p>&copy; Copyright Peulis - By <a href="#">Themescare</a></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="footer-bottom-left">
+                                        <ul>
+                                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Area End -->
+    @*error message*@
+    <div id="ErrMsg" style="display:none;">
+        <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+    </div>
+
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <!-- Sidebar Navigation End -->
+    @Scripts.Render("~/bundles/jquery")
+    @*<script src="~/Scripts/Main/jquery.min.js"></script>*@
+    <script src="~/Content/Select2/select2.min.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/mainJs")
+    @RenderSection("scripts", required: false)
+
+    <script src="~/Scripts/toastr.js"></script>
+    <script>
+        $(document).ready(function () {
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            ShowToast();
+        });
+        function ShowToast() {
+            if ($('#ErrMsgHiddenField').val().length > 1) {
+                var msgId = $('#ErrMsgHiddenField').val();
+                if (msgId != null && msgId.toString().trim() != "") {
+                    toastr.info(msgId, 'Information');
+                }
+            }
+        }
+    </script>
+
+
+    <!-- endinject -->
+</body>
+</html>

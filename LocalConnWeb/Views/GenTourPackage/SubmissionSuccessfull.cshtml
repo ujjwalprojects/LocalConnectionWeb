@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Submission Successful";
+    Layout = "~/Views/Shared/_LayoutGeneral.cshtml";
+}
+
+<div class="container pt-2">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card p-2">
+                <div class="notfound-box">
+                    <h1><span class="fa fa-smile-o"></span></h1>
+
+                    <h3>Yippee... Submission Successful!</h3>
+                    <h5>Your PackageID is <strong class="text-success">@ViewBag.eqcode</strong></h5>
+                    <p>Please check your mail for further details</p>
+                    <a href="/home" class="peulis-btn">back to home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

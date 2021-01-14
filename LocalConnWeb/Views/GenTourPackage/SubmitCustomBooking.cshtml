@@ -1,0 +1,220 @@
+﻿@model LocalConnWeb.CustomModels.GenTourPackageAPIVM
+@{
+    ViewBag.Title = "Submit Booking";
+    Layout = "~/Views/Shared/_LayoutGeneral.cshtml";
+}
+
+<style>
+    .bg-day {
+        background-color: #0a3a4d;
+    }
+
+    .day {
+        font-weight: bold;
+        font-size: 50px;
+        font-family: 'Comic Sans MS';
+        color: #fff;
+    }
+
+    .bg-itinerary {
+        background-color: #c7c7c7;
+    }
+
+    .fs-13 {
+        font-size: 13px;
+    }
+</style>
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Customize - Itineraries</span>&nbsp;
+</div>
+<div class="card ">
+    <div class="card-header bg-head">
+        <div class="pb-2">
+            <span class="display-5 text-white">@Model.GenTourPackageDtlView.PackageName</span> &nbsp;&nbsp;<b class="text-muted">@Model.GenTourPackageDtlView.Days&nbsp;Days/@(Model.GenTourPackageDtlView.Days - 1)&nbsp;Nights</b>
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.GenTourPackageDtlView.PackageID)
+            {
+                int i = 0;
+                foreach (var item in Model.Itinerariespck)
+                {
+                    @Html.HiddenFor(m => Model.Itinerariespck[i].PackageItineraryID)
+                    @Html.HiddenFor(m => Model.Itinerariespck[i].PackageID)
+                    @Html.HiddenFor(m => Model.Itinerariespck[i].DayNo)
+                    <div>
+
+                    </div>
+                    <div class="card bg-itinerary">
+                        <div class="card-body pt-0 pb-0 pl-3">
+
+                            <div class="row">
+                                <div class="col-md-3 bg-day text-center pt-3">
+                                    <span class="day">Day</span><br />
+                                    <span class="display-3 text-muted" style="font-weight:600;">@item.DayNo</span>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="row mt-2">
+                                        <div class="col-md-12">
+                                            <label class="pull-right col-md-3">
+                                                Exclude Day
+                                                @Html.RadioButtonFor(m => Model.Itinerariespck[i].IncludeDay, false)
+                                            </label>
+                                            <label class="pull-right col-md-3">
+                                                Include Day
+                                                @Html.RadioButtonFor(m => Model.Itinerariespck[i].IncludeDay, true)
+                                            </label>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-1">
+                                        @Html.LabelFor(m => Model.Itinerariespck[i].ItineraryID, new { @class = "required" })
+                                        @Html.DropDownListFor(m => Model.Itinerariespck[i].ItineraryID, new SelectList(Model.ItineraryList, "ItineraryID", "ItineraryName", item.ItineraryID), "-- Select Itinerary --", new { @class = "form-control dd-select dd-itinerary", @id = "itinerary_" + @i })
+                                        @Html.ValidationMessageFor(m => Model.Itinerariespck[i].ItineraryID)
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => Model.Itinerariespck[i].ItineraryRemarks, new { @class = "" })
+                                        @Html.TextAreaFor(m => Model.Itinerariespck[i].ItineraryRemarks, new { @class = "form-control", @id = "remarks_" + @i })
+                                        @Html.ValidationMessageFor(m => Model.Itinerariespck[i].ItineraryRemarks)
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => Model.Itinerariespck[i].OvernightDestinationID, new { @class = "" })
+                                                <small class="text-muted">If applicable</small>
+                                                @Html.DropDownListFor(m => Model.Itinerariespck[i].OvernightDestinationID, new SelectList(Model.DestinationList, "DestinationID", "DestinationName", item.OvernightDestinationID), "-- Select Destination --", new { @class = "form-control dd-select", @id = "dddest_" + @i })
+                                                @Html.ValidationMessageFor(m => Model.Itinerariespck[i].OvernightDestinationID)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="destDiv_@i">
+                                            <div class="form-group">
+                                                <label class="text-muted"><small> Mention if not in the list</small></label>
+                                                @Html.TextBoxFor(m => Model.Itinerariespck[i].OvernightDestination, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => Model.Itinerariespck[i].OvernightDestination)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="fancy fs-13">
+                                            @Html.CheckBox("Itineraries[" + i + "].SightSeeing", Model.Itinerariespck[i].SightSeeing)
+                                            &nbsp;Sightseeing
+                                        </label>
+                                        &nbsp;&nbsp;
+                                        <label class="fancy fs-13">
+                                            @Html.CheckBox("Itineraries[" + i + "].Breakfast", Model.Itinerariespck[i].Breakfast)
+                                            &nbsp;Breakfast
+                                        </label>
+                                        &nbsp;&nbsp;
+                                        <label class="fancy fs-13">
+                                            @Html.CheckBox("Itineraries[" + i + "].Lunch", Model.Itinerariespck[i].Lunch)
+                                            &nbsp;Lunch
+                                        </label>
+                                        &nbsp;&nbsp;
+                                        <label class="fancy fs-13">
+                                            @Html.CheckBox("Itineraries[" + i + "].Dinner", Model.Itinerariespck[i].Dinner)
+                                            &nbsp;Dinner
+                                        </label>
+                                        &nbsp;&nbsp;
+                                        <label class="fancy fs-13">
+                                            @Html.CheckBox("Itineraries[" + i + "].Stay", Model.Itinerariespck[i].Stay)
+                                            &nbsp;Stay
+                                        </label>
+                                        &nbsp;&nbsp;
+                                        <small class="text-muted">(Check applicable)</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+                    i++;
+                }
+
+                int j = 0;
+                foreach (var item in Model.ActivityList)
+                {
+                    @Html.HiddenFor(m => Model.ActivityList[j].ActivityID)
+                    <div>
+                        <h4>@item.ActivityName</h4>
+                        <small>@item.ActivityDesc</small><br />
+                        <label class="fancy pull-right">@Html.CheckBox("Activities[" + j + "].IsSelected", Model.ActivityList[j].IsSelected, new { @class = "chkActivity", @id = "chkAct_" + @j }) &nbsp;&nbsp; Include in package</label><br />
+                    </div>
+                    j++;
+                }
+
+
+            }
+
+            <div class="clearfix"></div>
+            <div>
+                <div class="col-md-12">
+                    <div class="col-md-12 form-group required">
+                        <label class="control-label">Select if you like to add more destinations</label>
+                        <select name="Dest[]" class="Dest form-control dd-select" multiple>
+                            @foreach (var item in Model.DestinationList)
+                            {
+                                <option value="@item.DestinationID">@item.DestinationName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="action-div">
+                <a href="/admin/tourpackage/edit/@Model.GenTourPackageDtlView.PackageID" class="btn btn-secondary">Back To Package</a>
+                <button class="btn btn-success pull-right" type="submit">Save &amp; Continue</button>
+            </div>
+        }
+    </div>
+</div>
+@section scripts{
+    
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $.validator.setDefaults({
+            ignore: ''
+        });
+        $('.Dest').select2({
+            allowClear: true,
+            width: '100%',
+            placeholder: 'Select Destination(s)'
+        });
+        $('.dd-select').select2({
+            width: '100%',
+        });
+        $(document).ready(function () {
+            
+
+            $('.dd-itinerary').on('change', function () {
+                var id = $(this).attr('id').split('_');
+                var id_no = id[1];
+                var itVal = $(this).val();
+                $('#remarks_' + id_no).val('');
+                $('#dddest_' + id_no).select2('val', '');
+                if (itVal != '') {
+                    var options = {
+                        url: '/gentourpackage/getitinerarydetails',
+                        method: 'get',
+                        data: { id: itVal },
+                        dataType: 'json',
+                    };
+                    $.ajax(options).done(function (data) {
+                        $('#remarks_' + id_no).val(data.ItineraryDesc);
+                        $('#dddest_' + id_no).select2('val', data.OvernightDestinationID);
+                    }).fail(function (xhr, msg, err) {
+                        toastr.error(msg, "Error");
+                    });
+                }
+                return false;
+            });
+        });
+
+    </script>
+}

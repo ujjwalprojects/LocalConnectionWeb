@@ -1,0 +1,304 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.CitiesSaveModel
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    long stateid = Model.Cities == null ? 0 : Model.Cities.StateID;
+}
+<link href="~/Content/NewCropper/cropper.min.css" rel="stylesheet" />
+<style>
+    /***************** Image Upload ****************/
+
+    .cropper-container {
+        top: 0 !important;
+    }
+
+    .cropper-preview {
+        margin-left: auto;
+        margin-right: auto;
+        height: 200px;
+        width: 300px;
+        overflow: hidden;
+        margin-top: 8px;
+        margin-bottom: 4px;
+        background-image: url("img/img-bg.png");
+        background-repeat: repeat;
+    }
+</style>
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Cities</span>&nbsp;
+    <small>Add</small>
+</div>
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="text-center">
+            <label class="alert alert-info p-2"><small> Fields marked * are mandatory</small></label>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-md-12 ">
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <div class="form-group required">
+
+                                <div class="col-md-12">
+                                    <div class="thumbnail text-center">
+                                        <div id="imgPhotoThumb">
+                                            <img src="~/Content/Images/noimage.jpg" alt="Add Photo" class="img-rounded text-center" style="width: 300px; height: 250px; vertical-align: middle" />
+                                        </div>
+                                    </div>
+                                    <div style="width: 100%; margin-top: 2px; ">
+                                        <button type="button" style="width:100%;" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#photo-modal">
+                                            Upload Photo
+                                        </button>
+                                    </div>
+                                    @Html.TextAreaFor(m => m.cropper.PhotoNormal, new { @class = "hidden", @id = "PhotoNormal" })
+                                    @Html.TextAreaFor(m => m.cropper.PhotoThumb, new { @class = "hidden", @id = "PhotoThumb" })
+                                    @Html.ValidationMessageFor(m => m.cropper.PhotoNormal)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Cities.CountryID, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.Cities.CountryID, new SelectList(Model.CountryList, "CountryID", "CountryName"), "-- Select Country --", new { @class = "form-control", @id = "ddCountry" })
+                        @Html.ValidationMessageFor(m => m.Cities.CountryID)
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Cities.StateID, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.Cities.StateID, new SelectList(string.Empty), "-- Select State --", new { @class = "form-control", @id = "ddState" })
+                        @Html.ValidationMessageFor(m => m.Cities.StateID)
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Cities.CityName, new { @class = "required" })
+                <div class="col-md p-0">
+                    @Html.TextBoxFor(m => m.Cities.CityName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Cities.CityName)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.CheckBoxFor(m => m.Cities.IsPopular) &nbsp;&nbsp;<label>Shows City in HomePage?</label>
+                <br />
+                <small class="text-warning">Note: Choose city to view in the top 10 popular cities</small>
+            </div>
+            <div class="action-div">
+                @Html.ActionLink("Back To List", "index", "cities", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })
+                <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
+            </div>
+        }
+    </div>
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+<div class="modal fade" id="photo-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form class="avatar-form" action="#" enctype="multipart/form-data" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title">Upload Photo</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body clearfix">
+                    <div class="row no-horizantal-padding">
+                        <div class="col-md-8 clearfix">
+                            <div class="action-div clearfix">
+                                <div class="img-container">
+                                    <img src="#" class="img-rounded">
+                                </div>
+                            </div>
+                            <div class="action-div clearfix">
+                                <div class="col-md-12 col-sm-12" style="padding: 0">
+                                    <div class="btn btn-primary" for="inputImage" title="Upload image file">
+                                        <input id="inputImage" class="img-rounded" name="file" type="file" accept="image/*" data-toggle="tooltip" title="Upload image" onchange="ShowFileMsg()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 clearfix">
+                            <div class="action-div text-center">
+                                <span class="page-title-main-text"><strong>Preview</strong></span>
+                                <div id="dataURLView" class="cropper-preview img-thumbnail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-div clearfix">
+                        <button class="btn btn-success pull-right" id="getDataURL" type="button"><i class="fa fa-save"></i> &nbsp;&nbsp;Done</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            loadStates('@stateid');
+
+            $('#ddCountry').on('change', function () {
+                loadStates();
+            });
+        });
+
+        function loadStates(stateid) {
+            $('#ddState').empty().append("<option value=''>-- Select State --</option>");
+            var countryID = $('#ddCountry').val();
+            if (countryID != '') {
+                var options = {
+                    url: '/admin/cities/getstates',
+                    type: 'get',
+                    data: { id: countryID },
+                    dataType: 'json'
+                };
+                $.ajax(options).done(function (data) {
+                    $.each(data, function (i, item) {
+                        $('#ddState').append('<option value="' + item.StateID + '">' + item.StateName + '</option>');
+                    });
+                    if (stateid) {
+                        $('#ddState').val(stateid);
+                    }
+                }).fail(function (xhr, msg, err) {
+                    toastr.error(msg, "Error");
+                });
+            }
+        }
+    </script>
+    <script src="~/Content/NewCropper/cropper.min.js"></script>
+    <script type="text/javascript">
+        function ShowFileMsg() {
+            if ($('#inputImage').val() == "") {
+                $("#ImageSpan").text("Upload photo...");
+                $('#getDataURL').css("pointer-events", "none");
+                $('#getDataURL').css("opacity:", ".3");
+            }
+            else {
+                $("#ImageSpan").text("");
+                $('#getDataURL').css("pointer-events", "");
+                $('#getDataURL').css("opacity", "1");
+            }
+
+            if ($('#dataURLInto').val() == "") {
+                $('#ModelDone').css("pointer-events", "none");
+                $('#ModelDone').css("opacity:", ".3");
+            }
+            else {
+                $('#ModelDone').css("pointer-events", "");
+                $('#ModelDone').css("opacity", "1");
+            }
+        }
+        $(function () {
+            (function () {
+
+                var $image = $('.img-container img');
+                var $download = $('#download');
+                var $dataX = $('#dataX');
+                var $dataY = $('#dataY');
+                var $dataHeight = $('#dataHeight');
+                var $dataWidth = $('#dataWidth');
+                var $dataRotate = $('#dataRotate');
+                var $dataScaleX = $('#dataScaleX');
+                var $dataScaleY = $('#dataScaleY');
+                var options = {
+                    aspectRatio: 3 / 2,
+                    preview: '.cropper-preview',
+                    crop: function (e) {
+                        $dataX.val(Math.round(e.x));
+                        $dataY.val(Math.round(e.y));
+                        $dataHeight.val(Math.round(e.height));
+                        $dataWidth.val(Math.round(e.width));
+                        $dataRotate.val(e.rotate);
+                        $dataScaleX.val(e.scaleX);
+                        $dataScaleY.val(e.scaleY);
+                    }
+                };
+
+                // Cropper
+                $image.on({
+                    'build.cropper': function (e) {
+                        console.log(e.type);
+                    },
+                    'built.cropper': function (e) {
+                        console.log(e.type);
+                    },
+                    'cropstart.cropper': function (e) {
+                        console.log(e.type, e.action);
+                    },
+                    'cropmove.cropper': function (e) {
+                        console.log(e.type, e.action);
+                    },
+                    'cropend.cropper': function (e) {
+                        console.log(e.type, e.action);
+                    },
+                    'crop.cropper': function (e) {
+                        console.log(e.type, e.x, e.y, e.width, e.height, e.rotate, e.scaleX, e.scaleY);
+                    },
+                    'zoom.cropper': function (e) {
+                        console.log(e.type, e.ratio);
+                    }
+                }).cropper(options);
+
+                // Import image
+                var $inputImage = $('#inputImage');
+                var URL = window.URL || window.webkitURL;
+                var blobURL;
+
+                if (URL) {
+                    $inputImage.change(function () {
+                        var files = this.files;
+                        var file;
+
+                        if (!$image.data('cropper')) {
+                            return;
+                        }
+
+                        if (files && files.length) {
+                            file = files[0];
+
+                            if (/^image\/\w+$/.test(file.type)) {
+                                blobURL = URL.createObjectURL(file);
+                                $image.one('built.cropper', function () {
+
+                                    // Revoke when load complete
+                                    URL.revokeObjectURL(blobURL);
+                                }).cropper('reset').cropper('replace', blobURL);
+                                $inputImage.val('');
+                            } else {
+                                window.alert('Please choose an image file.');
+                            }
+                        }
+                    });
+                } else {
+                    $inputImage.prop('disabled', true).parent().addClass('disabled');
+                }
+
+                $("#getDataURL").click(function () {
+                    var dataURLNormal = $image.cropper("getDataURL", {
+                        width: 500,
+                        height: 500
+                    }, "image/jpeg", 0.8);
+
+
+                    $(PhotoNormal).text(dataURLNormal);
+                    $(imgPhotoThumb).html('<img class="img-fluid" style="width:300px;height:250px;" src="' + dataURLNormal + '">');
+                    $('#photo-modal').modal('hide');
+                });
+            }());
+        });
+        function inputImage() {
+        }
+    </script>
+}

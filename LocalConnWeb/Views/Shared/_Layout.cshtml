@@ -1,0 +1,388 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="OffRoadsTravel | Travel Agency & Tourism">
+    <meta name="keyword" content="travel, tourism, agency, tourist">
+    <meta name="author" content="Themescare">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @*@Styles.Render("~/Content/css")*@
+    @Styles.Render("~/bundles/maincss")
+    <link href="~/Content/MainCss/nice-select.css" rel="stylesheet" />
+    <link href="~/Content/MainCss/style.css" rel="stylesheet" />
+    <link href="~/Content/MainCss/megamenu.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <!--Preloader Start-->
+    @*<div class="preloader">
+            <div class="loading-text">
+                <span class="loading-text-words" data-preloader="A">A</span>
+                <span class="loading-text-words" data-preloader="R">R</span>
+                <span class="loading-text-words" data-preloader="R">R</span>
+                <span class="loading-text-words" data-preloader="I">I</span>
+                <span class="loading-text-words" data-preloader="V">V</span>
+                <span class="loading-text-words" data-preloader="I">I</span>
+                <span class="loading-text-words" data-preloader="N">N</span>
+                <span class="loading-text-words" data-preloader="G">G</span>
+            </div>
+        </div>*@
+    <!--Preloader End-->
+    <!-- Header Top Area Start -->
+    <div class="header-top-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6">
+                    <div class="header-top-left">
+                        <p>
+                            <i class="fa fa-envelope"></i>
+                            info@example.com
+                        </p>
+                        <p>
+                            <i class="fa fa-phone"></i>
+                            1 562 867 5309
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-6">
+                    <div class="header-top-right">
+                        <div class="header-top-social">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="header-top-auth">
+                            <ul>
+                                <li><a href="/account/login"><i class="fa fa-user"></i>LOGIN</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header Top Area End -->
+    <!-- Header Area Start -->
+    <header class="light">
+        <nav role="navigation">
+            <a href="javascript:void(0);" class="ic menu" tabindex="1">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </a>
+            <a href="javascript:void(0);" class="ic close"></a>
+
+            <ul class="main-nav">
+
+                <li class="top-level-link">
+                    @*<a><span>Home</span></a>*@
+                    <div class="site-logo">
+                        <a href="index.html">
+                            <img src="~/Content/img/logos.png" alt="offroads" />
+                        </a>
+                    </div>
+                </li>
+                <li class="top-level-link">
+                    <a class="mega-menu"><span>Destinations Guides</span></a>
+                    <div class="sub-menu-block">
+                        <div class="row">
+                            @if (Enumerable.Count(ViewBag.Dests) > 0)
+                            {
+                                int i = 0, x = 0;
+                                foreach (var group in ViewBag.Dests)
+                                {
+                                    <div class="col-md-2 col-lg-2 col-sm-6">
+                                        <h2 class="sub-menu-head">@group.Key</h2>
+                                        <ul class="sub-menu-lists">
+
+                                            @foreach (var item in group.Value)
+                                            {
+                                                <li><a href="/gentourpackage/searchpackage?Where=@item.DestinationName">@item.DestinationName</a></li>
+                                                if (i < 3)
+                                                {
+                                                    i++;
+                                                }
+                                                else
+                                                {
+                                                    i = 0;
+                                                    break;
+                                                }
+                                            }
+
+                                            <li><a>View All</a></li>
+                                        </ul>
+                                    </div>
+                                            if (x < 5)
+                                            {
+                                                x++;
+                                            }
+                                            else
+                                            {
+                                                x = 0;
+                                                break;
+                                            }
+                                }
+                            }
+
+                            @*<div class="col-md-4 col-lg-4 col-sm-4">
+                                            @foreach (var group in ViewBag.Dests)
+                                            {
+
+                                                <h2 class="sub-menu-head">Darjeeling</h2>
+                                                <ul class="sub-menu-lists">
+                                                    @foreach (var item in group.Value)
+                                                    {
+                                                        <li><a href="/gentourpackage/searchpackage?Where=@item.DestinationName">@item.DestinationName</a></li>
+                                                    }
+                                                    <li><a>View All</a></li>
+                                                </ul>
+                                            }
+                                        </div>
+                                        <div class="col-md-4 col-lg-4 col-sm-4">
+                                            @foreach (var group in ViewBag.Dests)
+                                            {
+
+                                                <h2 class="sub-menu-head">Bhutan</h2>
+                                                <ul class="sub-menu-lists">
+                                                    @foreach (var item in group.Value)
+                                                    {
+                                                        <li><a href="/gentourpackage/searchpackage?Where=@item.DestinationName">@item.DestinationName</a></li>
+                                                    }
+                                                    <li><a>View All</a></li>
+                                                </ul>
+                                            }
+                                            <h2 class="sub-menu-head">Clothing</h2>
+                                            <ul class="sub-menu-lists">
+                                                <li><a>Mens</a></li>
+                                                <li><a>Womens</a></li>
+                                                <li><a>Kids</a></li>
+                                                <li><a>New Born</a></li>
+                                                <li><a>View All</a></li>
+                                            </ul>
+                                </div>*@
+                        </div>
+
+                        <div class="row banners-area">
+                            <div class="col-md-6 col-lg-6 col-sm-6">
+                                <img src="~/Content/img/banner-menu1.png" width="100%;">
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-sm-6">
+                                <img src="~/Content/img/banner-menu2.png" width="100%;">
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+                <li class="top-level-link">
+                    <a class="mega-menu"><span>Holiday Themes</span></a>
+                    <div class="sub-menu-block">
+                        <div class="row">
+                            <div class="col-md-2 col-lg-2 col-sm-2">
+                                <h6 class="">Sesonal</h6>
+                                <img class="text-center imghover" src="~/Content/img/packagetypeicons/sesonal.png">
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-sm-4">
+                                <h6 class="align-content-center">Adventure</h6>
+                                <img class="text-center imghover" src="~/Content/img/packagetypeicons/adventure.png">
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-sm-4">
+                                <h6 class="align-content-center">Family</h6>
+                                <img class="text-center imghover" src="~/Content/img/packagetypeicons/family.png">
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-sm-2">
+                                <h6 class="align-content-center">Honeymoon</h6>
+                                <img class="text-center imghover" src="~/Content/img/packagetypeicons/honeymoon.png">
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-sm-4">
+                                <h6 class="align-content-center">Friends</h6>
+                                <img class="text-center imghover" src="~/Content/img/packagetypeicons/friends.png">
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-sm-4">
+                                <h6 class="align-content-center">Solo</h6>
+                                <img class="text-center imghover" src="~/Content/img/packagetypeicons/solo.png">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 col-lg-2 col-sm-2">
+                                <h6 class="align-content-center">Snow</h6>
+                                <img class="text-center imghover" src="~/Content/img/packagetypeicons/snow.png">
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-sm-4">
+                                <h6 class="align-content-center">Pilgrim</h6>
+                                <img class="text-center imghover" src="~/Content/img/packagetypeicons/pilgrim.png">
+                            </div>
+                        </div>
+
+                        @*<div class="row banners-area">
+                                <div class="col-md-6 col-lg-6 col-sm-6">
+                                    <img src="~/Content/img/banner-menu1.png" width="100%;">
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-sm-6">
+                                    <img src="~/Content/img/banner-menu2.png" width="100%;">
+                                </div>
+                            </div>*@
+
+                    </div>
+                </li>
+                <li class="top-level-link">
+                    <a><span>Holiday Deals</span></a>
+                </li>
+                <li class="top-level-link">
+                    <a><span>Offers</span></a>
+                </li>
+                <li class="top-level-link">
+                    <a id="sidenav-toggle"><span>About Us</span></a>
+                </li>
+                @*<li class="top-level-link">
+                        <a href="/account/login"><span>Login</span></a>
+                    </li>*@
+            </ul>
+        </nav>
+        @*<blockquote>
+                @RenderBody()
+            </blockquote>*@
+    </header>
+
+
+    <!-- Header Area End -->
+    @RenderBody()
+    <!-- Footer Area Start -->
+    <footer class="peulis-footer-area">
+        <div class="footer-top-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer">
+                            <p>ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.ipsum dolor sit amet, consectetur </p>
+                            <div class="footer-logo">
+                                <a href="index.html">
+                                    <img src="/content/img/footer-logo.png" alt="Peulis" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer">
+                            <h3>About Us</h3>
+                            <ul>
+                                <li><a href="#">Why Us</a></li>
+                                <li><a href="#">Why Touring</a></li>
+                                <li><a href="#">Reviews</a></li>
+                                <li><a href="#">Travel Insurance</a></li>
+                                <li><a href="#">Programme</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer">
+                            <h3>Support</h3>
+                            <ul>
+                                <li><a href="#">Account</a></li>
+                                <li><a href="#">Client Area</a></li>
+                                <li><a href="#">Privacy & Policy</a></li>
+                                <li><a href="#">Author Hangout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer">
+                            <h3>Pay Safely</h3>
+                            <p>Eiusmod tempor incididunt utbor etian dolm magna aliqua enim minim</p>
+                            <div class="payment_image">
+                                <img src="assets/img/creditcard-logo.png" alt="Payment Card" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="footer-bottom-box">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="footer-bottom-left">
+                                        <p>&copy; Copyright off-roads-travel - By <a href="#">InputGroup</a></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6">
+                                    <div class="footer-bottom-left">
+                                        <ul>
+                                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Area End -->
+    <!-- Sidebar Navigation Start -->
+    <div class="ct-sidenav">
+        <button class="close"><i class="fa fa-times"></i></button>
+        <img src="/content/img/logos.png" alt="Site Logo" />
+        <div class="sidenav-info">
+            <p style="font-size:14px;">
+                At Offroads Travel, we believe that every traveler has unique needs, objectives and expectations for their travel plan.<br />
+
+            </p>
+            <p><b>Curiosity is the key……..</b></p>
+            <p style="font-size:14px;">
+                …… and that’s been true since the beginning. Offroads Travel was established in the year 2018 and is one of the best Sikkim Travel Companies located in Gangtok, Sikkim.
+                We run our business with the understanding that travel should make us defenders of a place, not a means of its deterioration. We know that travel can profoundly benefit both the visitor and the visited.
+            </p>
+            <div class="col-md-12 text-right">
+                <a style="color:#007bff;" href="/home/about">View More...</a>
+            </div>
+
+            @*<ul class="sidenav-contact-info">
+                    <li>
+                        <i class="fa fa-map-marker"></i>
+                        <p>29 Division Pt <span>New York, NY 10002, USA</span></p>
+                    </li>
+                    <li>
+                        <i class="fa fa-phone"></i>
+                        <p> +0 (321) 984 754 <span>Give us a call</span></p>
+                    </li>
+                    <li>
+                        <i class="fa fa-envelope"></i>
+                        <p> support@example.com<span>24/7 online support</span></p>
+                    </li>
+                </ul>*@
+        </div>
+        <div class="sidenav-social">
+            <h3>Follow Us</h3>
+            <ul>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Sidebar Navigation End -->
+    @*@Scripts.Render("~/bundles/jquery")*@
+    <script src="~/Scripts/Main/jquery.min.js"></script>
+    <script src="~/Scripts/Main/jquery.nice-select.min.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/mainJs")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

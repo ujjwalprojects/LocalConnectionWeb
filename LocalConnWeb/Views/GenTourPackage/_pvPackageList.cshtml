@@ -1,0 +1,102 @@
+﻿@model LocalConnWeb.CustomModels.GenTourPackageSearchModel
+<div id="DataGrid">
+    @if (Model.PackageList.Count() > 0)
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="property-page-heading">
+                    @*<div class="propertu-page-head">
+                            <ul>
+                                <li class="active"><a href="#"><i class="fa fa-th-list"></i></a></li>
+                                <li><a href="#"><i class="fa fa-th-large"></i></a></li>
+                            </ul>
+                        </div>*@
+                    <div class="paging_status">
+                        <p>We have <b>@Model.TotalRecords</b> Packages for your search</p>
+                    </div>
+                    @*<div class="propertu-page-shortby">
+                            <label><i class="fa fa-sort-amount-asc"></i>Sort By</label>
+                            <select class="chosen-select-no-single" style="display: none;">
+                                <option>Default</option>
+                                <option>Price (Low to High)</option>
+                                <option>Price (High to Low)</option>
+                                <option>Featured</option>
+                            </select>
+                            <div class="nice-select chosen-select-no-single" tabindex="0">
+                                <span class="current">Default</span>
+                                <ul class="list">
+                                    <li data-value="Default" class="option selected">Default</li>
+                                    <li data-value="Price (Low to High)" class="option">Price (Low to High)</li>
+                                    <li data-value="Price (High to Low)" class="option">Price (High to Low)</li>
+                                    <li data-value="Featured" class="option">Featured</li>
+                                </ul>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var item in Model.PackageList)
+            {
+                <div class="col-lg-6">
+                    <div class="single-popular-tour">
+                        <div class="popular-tour-image">
+                            <img src="@item.PhotoThumbPath" alt="Popular Tours" />
+                            <div class="popular-tour-hover">
+                                @*<ul>
+                                    <li><a href="#"><i class="fa fa-eye"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-share-alt"></i></a></li>
+                                </ul>*@
+                            </div>
+                        </div>
+                        <div class="popular-tour-desc">
+                            <div class="tour-desc-top">
+                                <h3><a href="/tourpackage/@item.LinkText">@item.PackageName</a></h3>
+                                <div class="tour_duration">
+                                    <p>
+                                        <i class="fa fa-hourglass-half"></i>
+                                        @item.Days days / @item.Nights nights
+                                    </p>
+                                </div>
+                                @*<div class="tour-desc-heading">
+                                    <div class="tour-rating">
+                                        <ul>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star-o"></i></li>
+                                        </ul>
+                                    </div>
+                                    <div class="tour_feature">
+                                        <a href="#"><i class="fa fa-plane"></i></a>
+                                        <a href="#"><i class="fa fa-building-o"></i></a>
+                                        <a href="#"><i class="fa fa-cutlery"></i></a>
+                                    </div>
+                                </div>*@
+                            </div>
+                            <div class="tour-desc-bottom">
+                                <div class="tour-details pt-2">
+                                    <a href="/tourpackage/@item.LinkText" class="p-2"><i class="fa fa-flag"></i> Book Now</a>
+                                </div>
+                                <div class="tour-desc-price">
+                                    <p><i class="fa fa-rupee"></i> @item.FinalFare.ToString("#,#", System.Globalization.CultureInfo.CreateSpecificCulture("hi-IN")) / @item.FarePer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        
+    }
+    else
+    {
+        <div class="text-center p-2" style="margin-top:50px;">
+            <img src="~/Content/img/no_record.png" alt="no record" /><br /><br />
+            <h4 class="text-danger">Oops !!</h4>
+            <span class="text-danger">No tour packages found for your search..</span>
+        </div>
+    }
+</div>

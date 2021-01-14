@@ -1,0 +1,151 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.TourPackageManageModel4
+@{
+    ViewBag.Title = "Package - Exclusions & Terms";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Tour Package - Activities &amp; Inclusions</span>&nbsp;
+    <small>Step 5 of 5</small>
+</div>
+<div class="card ">
+    <div class="card-header bg-head">
+        <div class="pb-2">
+            <span class="display-5 text-white">@Model.Package.PackageName</span> &nbsp;&nbsp;<b class="text-muted">@Model.Package.TotalDays&nbsp;Days/@(Model.Package.TotalDays - 1)&nbsp;Nights</b>
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Package.PackageID)
+            <h4 class="text-muted">Select exclusions for the package</h4>
+            <hr />
+            if (Model.Exclusions.Count() > 0)
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        @{
+                int i = 0;
+                foreach (var item in Model.Exclusions)
+                {
+                    @Html.HiddenFor(m => Model.Exclusions[i].PackageExclusionID)
+                            @Html.HiddenFor(m => Model.Exclusions[i].PackageID)
+                            @Html.HiddenFor(m => Model.Exclusions[i].ExclusionID)
+                            <tr>
+                                <td class="p-2">
+                                    <label class="fancy">
+                                        @Html.CheckBox("Exclusions[" + i + "].IsSelected", Model.Exclusions[i].IsSelected)
+                                        &nbsp;&nbsp;
+                                        @item.ExclusionName
+                                    </label>
+                                </td>
+                            </tr>
+                            @Html.HiddenFor(m => Model.Exclusions[i].ExclusionName)
+                    i++;
+                }
+
+                        }
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center p-3">
+                    <img src="~/Content/img/no_record.png" alt="no record" /><br />
+                    <span class="text-muted">No exclusions found in the exclusions master. Add exclusions and then select.</span>
+                </div>
+            }
+            <hr />
+            <h4 class="mt-2 text-muted">Select terms &amp; conditions for the package</h4>
+            <hr />
+            if (Model.Terms.Count() > 0)
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        @{
+                int i = 0;
+                foreach (var item in Model.Terms)
+                {
+                    @Html.HiddenFor(m => Model.Terms[i].PackageTermsID)
+                            @Html.HiddenFor(m => Model.Terms[i].PackageID)
+                            @Html.HiddenFor(m => Model.Terms[i].TermID)
+                            <tr>
+                                <td class="p-2">
+                                    <label class="fancy">
+                                        @Html.CheckBox("Terms[" + i + "].IsSelected", Model.Terms[i].IsSelected)  &nbsp;&nbsp;
+                                        @item.TermName
+                                    </label>
+
+                                </td>
+                            </tr>
+                            @Html.HiddenFor(m => Model.Terms[i].TermName)
+                    i++;
+                }
+
+                        }
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center p-3">
+                    <img src="~/Content/img/no_record.png" alt="no record" /><br />
+                    <span class="text-muted">No terms &amp; conditions found in the master. Add terms &amp; conditions and then select.</span>
+                </div>
+            }
+            <hr />
+            <h4 class="mt-2 text-muted">Select cancellation policies for the package</h4>
+            <hr />
+            if (Model.Cancellations.Count() > 0)
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        @{
+                int i = 0;
+                foreach (var item in Model.Cancellations)
+                {
+                    @Html.HiddenFor(m => Model.Cancellations[i].PackageCancID)
+                            @Html.HiddenFor(m => Model.Cancellations[i].PackageID)
+                            @Html.HiddenFor(m => Model.Cancellations[i].CancellationID)
+                            <tr>
+                                <td class="p-2">
+                                    <label class="fancy">
+                                        @Html.CheckBox("Cancellations[" + i + "].IsSelected", Model.Cancellations[i].IsSelected)  &nbsp;&nbsp;
+                                        @item.CancellationDesc
+                                    </label>
+
+                                </td>
+                            </tr>
+                            @Html.HiddenFor(m => Model.Cancellations[i].CancellationDesc)
+                    i++;
+                }
+
+                        }
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center p-3">
+                    <img src="~/Content/img/no_record.png" alt="no record" /><br />
+                    <span class="text-muted">No cancellation policies found in the master. Add cancellation policies and then select.</span>
+                </div>
+            }
+            <div class="action-div">
+                <a href="/admin/tourpackage/activityinclusions/@Model.Package.PackageID" class="btn btn-secondary">Back To Activity/Inclusions</a>
+                <button class="btn btn-success pull-right" type="submit">Finish</button>
+            </div>
+        }
+    </div>
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

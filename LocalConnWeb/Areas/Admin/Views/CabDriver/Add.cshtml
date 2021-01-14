@@ -1,0 +1,49 @@
+﻿@model LocalConnWeb.Areas.Admin.Models.utblMstCabDriver
+@{
+    ViewBag.Title = "Add Cab Driver";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Cab Drivers</span>&nbsp;
+    <small>Add</small>
+</div>
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="text-center">
+            <label class="alert alert-info p-2"><small> Fields marked * are mandatory</small></label>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.LabelFor(m => m.DriverName, new { @class = "required" })
+                <div class="col-md p-0">
+                    @Html.TextBoxFor(m => m.DriverName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.DriverName)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.DriverContact, new { @class = "required" })
+                <div class="col-md-6 p-0">
+                    @Html.TextBoxFor(m => m.DriverContact, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.DriverContact)
+                </div>
+            </div>
+            <div class="action-div">
+                @Html.ActionLink("Back To List", "index", "Cabdriver", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })
+                <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
+            </div>
+        }
+    </div>
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
