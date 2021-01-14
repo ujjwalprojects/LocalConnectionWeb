@@ -21,6 +21,8 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1076,6 +1078,7 @@
     <Content Include="Areas\Admin\Views\LCHotels\Index.cshtml" />
     <Content Include="Areas\Admin\Views\LCHotels\_pvLCHotelList.cshtml" />
     <Content Include="Areas\Admin\Views\LCHotels\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\Edit.cshtml" />
     <None Include="bin\TourTravel Web.dll.config" />
     <None Include="Properties\PublishProfiles\API.pubxml" />
     <Content Include="Content\ckeditor\CHANGES.md" />

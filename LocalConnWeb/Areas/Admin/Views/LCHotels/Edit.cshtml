@@ -1,6 +1,6 @@
 ﻿@model LocalConnWeb.Areas.Admin.CustomModels.LCHotelManageModel
 @{
-    ViewBag.Title = "Add";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     long stateid = Model.LCHotel == null ? 0 : Model.LCHotel.StateID;
     long cityid = Model.LCHotel == null ? 0 : Model.LCHotel.CityID;
@@ -11,7 +11,7 @@
 <div class="title-div">
     <i class="fa fa-hand-o-right"></i>&nbsp;
     <span class="title">Hotels</span>&nbsp;
-    <small>Add</small>
+    <small>Edit</small>
 </div>
 <div class="card bg-light">
     <div class="card-body">
@@ -21,7 +21,7 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-
+            @Html.HiddenFor(m => m.LCHotel.HotelID)
             <div class="row">
                 <div class="col-md">
                     <div class="form-group">
@@ -103,7 +103,7 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.LCHotel.HotelBaseFare, new { @class = "required" })
-                @Html.TextBoxFor(m => m.LCHotel.HotelBaseFare, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.LCHotel.HotelBaseFare, new { @class = "form-control" , @Value= Model.LCHotel.HotelBaseFare.ToString("0")})
                 @Html.ValidationMessageFor(m => m.LCHotel.HotelBaseFare)
             </div>
             <div class="row">
@@ -122,7 +122,7 @@
                     </div>
                 </div>
             </div>
-               <div class="form-group">
+            <div class="form-group">
                 @Html.LabelFor(m => m.LCHotel.MetaText, new { @class = "" })
                 @Html.TextAreaFor(m => m.LCHotel.MetaText, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.LCHotel.MetaText)
@@ -146,7 +146,7 @@
             loadStates('@stateid');
             loadCities('@cityid');
             loadLocalities('@localitiesid');
-
+            
             $('#ddCountry').on('change', function () {
                 loadStates();
             });
@@ -158,6 +158,7 @@
             });
         });
         function loadStates(stateid) {
+            
             $('#ddState').empty().append("<option value=''>-- Select State --</option>");
             var countryID = $('#ddCountry').val();
             if (countryID != '') {
@@ -180,8 +181,13 @@
             }
         }
         function loadCities(cityid) {
+           
             $('#ddCity').empty().append("<option value=''>-- Select City --</option>");
             var stateID = $('#ddState').val();
+            if (stateID == '') {
+                stateID = @stateid;
+            }
+
             if (stateID != '') {
                 var options = {
                     url: '/admin/lchotels/getcities',
@@ -202,8 +208,13 @@
             }
         }
         function loadLocalities(localitiesid) {
+            
             $('#ddLocalities').empty().append("<option value=''>-- Select Locality --</option>");
             var cityID = $('#ddCity').val();
+            if (cityID == '') {
+                cityID = @cityid;
+            }
+           
             if (cityID != '') {
                 var options = {
                     url: '/admin/lchotels/getlocalities',
@@ -216,7 +227,7 @@
                         $('#ddLocalities').append('<option value="' + item.LocalityID + '">' + item.LocalityName + '</option>');
                     });
                     if (localitiesid) {
-                        $('#ddLocalities').val(LocalityName);
+                        $('#ddLocalities').val(localitiesid);
                     }
                 }).fail(function (xhr, msg, err) {
                     toastr.error(msg, "Error");
@@ -239,4 +250,3 @@
 
     </script>
 }
-
