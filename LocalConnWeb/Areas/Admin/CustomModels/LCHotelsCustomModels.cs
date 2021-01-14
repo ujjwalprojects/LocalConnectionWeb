@@ -76,6 +76,7 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         [Display(Name = "Total Double Rooms")]
         public int TotalDoubleRooms { get; set; }
     }
+
     public class LCHotelManageModel
     {
         public LCHotelSaveModel LCHotel { get; set; }
@@ -85,5 +86,10 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public IEnumerable<LocalitiesDD> LocalitiesList { get; set; }
         public IEnumerable<utblLCMstHomeType> HomeTypeList { get; set; }
         public IEnumerable<utblLCMstStarRating> StarRatingList { get; set; }
+    }
+    public class LCHotelDD
+    {
+        public long HotelID { get; set; }
+        public string HotelName { get; set; }
     }
 }
