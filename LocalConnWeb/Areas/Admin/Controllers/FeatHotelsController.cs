@@ -42,7 +42,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             try
             {
                 FeatHotelsSaveModel model = new FeatHotelsSaveModel();
-                model.LCHotelDD = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelsDD");
+                model.LCHotelDD = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelDD");
                 return View(model);
             }
             catch (AuthorizationException)
@@ -64,12 +64,12 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                     TempData["ErrMsg"] = result;
                     if (result.ToLower().Contains("error"))
                     {
-                        model.LCHotelDD = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelsDD");
+                        model.LCHotelDD = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelDD");
                         return View(model);
                     }
                     return RedirectToAction("index", "feathotels", new { Area = "admin" });
                 }
-                model.LCHotelDD = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelsDD");
+                model.LCHotelDD = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelDD");
                 return View(model);
             }
             catch (AuthorizationException)
@@ -83,8 +83,8 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             try
             {
                 FeatHotelsSaveModel model = new FeatHotelsSaveModel();
-                model.FeatHotels = objAPI.GetObjectByKey<utblLCFeaturedHotel>("configuration", "citiesbyid", id.ToString(), "id");
-                model.LCHotelDD = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelsDD");
+                model.FeatHotels = objAPI.GetObjectByKey<utblLCFeaturedHotel>("lchotelconfig", "FeatHotelsByID", id.ToString(), "id");
+                model.LCHotelDD = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelDD");
                 return View(model);
             }
             catch (AuthorizationException)
@@ -106,12 +106,12 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                     TempData["ErrMsg"] = result;
                     if (result.ToLower().Contains("error"))
                     {
-                        model.LCHotelDD = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelsDD");
+                        model.LCHotelDD = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelDD");
                         return View(model);
                     }
                     return RedirectToAction("index", "feathotels", new { Area = "admin" });
                 }
-                model.LCHotelDD = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelsDD");
+                model.LCHotelDD = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelDD");
                 return View(model);
             }
             catch (AuthorizationException)

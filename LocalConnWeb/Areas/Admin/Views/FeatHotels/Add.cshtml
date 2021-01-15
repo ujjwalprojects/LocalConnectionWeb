@@ -1,0 +1,67 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.FeatHotelsSaveModel
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Feature Hotels</span>&nbsp;
+    <small>Add</small>
+</div>
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="text-center">
+            <label class="alert alert-info p-2"><small> Fields marked * are mandatory</small></label>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FeatHotels.HotelID, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.FeatHotels.HotelID, new SelectList(Model.LCHotelDD, "HotelID", "HotelName"), "-- Select Hotel --", new { @class = "form-control", @id = "ddhotel" })
+                        @Html.ValidationMessageFor(m => m.FeatHotels.HotelID)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FeatHotels.FeatureStartDate, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.FeatHotels.FeatureStartDate, new { @class = "form-control featdate", @id = "featstartdate", name = "featstartdate" })
+                        @Html.ValidationMessageFor(m => m.FeatHotels.FeatureStartDate)
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FeatHotels.FeatureEndDate, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.FeatHotels.FeatureEndDate, new { @class = "form-control featdate", @id = "featenddate", name = "featenddate" })
+                        @Html.ValidationMessageFor(m => m.FeatHotels.FeatureEndDate)
+                    </div>
+                </div>
+            </div>
+            <div class="action-div">
+                @Html.ActionLink("Back To List", "index", "feathotels", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })
+                <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
+            </div>
+        }
+    </div>
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript">
+        $('.featdate').datetimepicker({
+            format: "DD MMM YYYY"
+        })
+    </script>
+
+}
