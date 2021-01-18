@@ -92,4 +92,43 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public long HotelID { get; set; }
         public string HotelName { get; set; }
     }
+
+    //Hotel Image
+    public class LCHotelImageView
+    {
+        public long HotelImageID { get; set; }
+        public long HotelID { get; set; }
+        public string HotelName { get; set; }
+        public bool IsHotelCover { get; set; }
+        public string PhotoThumbPath { get; set; }
+        public string PhotoNormalPath { get; set; }
+        public string PhotoCaption { get; set; }
+    }
+    public class LCHotelImageAPIVM
+    {
+        public IEnumerable<LCHotelImageView> LCHotelImageList { get; set; }
+        public int TotalRecords { get; set; }
+    }
+    public class LCHotelImageVM
+    {
+        public IEnumerable<LCHotelImageView> LCHotelImageList { get; set; }
+        public PagingInfo PagingInfo { get; set; }
+    }
+    public class LCHotelImageSaveModel
+    {
+        public long HotelImageID { get; set; }
+        [Display(Name = "Hotel")]
+        public long HotelID { get; set; }
+        [Display(Name = "Set As Cover Image")]
+        public bool IsHotelCover { get; set; }
+        public string PhotoThumbPath { get; set; }
+        public string PhotoNormalPath { get; set; }
+        [Display(Name = "Image Title")]
+        public string PhotoCaption { get; set; }
+    }
+    public class LCHotelImageManageModel
+    {
+        public LCHotelImageSaveModel LCHotelImage { get; set; }
+        public IEnumerable<LCHotelDD> HotelList { get; set; }
+    }
 }
