@@ -196,6 +196,7 @@
     <Compile Include="Areas\Admin\Controllers\HotelTypeController.cs" />
     <Compile Include="Areas\Admin\Controllers\InclusionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ItinerariesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LCHotelImgController.cs" />
     <Compile Include="Areas\Admin\Controllers\LCHotelsController.cs" />
     <Compile Include="Areas\Admin\Controllers\LocalitiesController.cs" />
     <Compile Include="Areas\Admin\Controllers\PackageController.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Areas\Admin\Models\utblAgent.cs" />
     <Compile Include="Areas\Admin\Models\utblLCFeaturedHotel.cs" />
     <Compile Include="Areas\Admin\Models\utblLCHotel.cs" />
+    <Compile Include="Areas\Admin\Models\utblLCHotelImage.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstAmenitie.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstCitie.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstHomeType.cs" />
@@ -1269,6 +1271,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\LCHotelImg\" />
     <Folder Include="Uploads\Cities\" />
     <Folder Include="Uploads\Offer\" />
     <Folder Include="Views\Base\" />
