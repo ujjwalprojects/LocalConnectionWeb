@@ -15,6 +15,13 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public string HotelContactNo { get; set; }
         public string HotelEmail { get; set; }
         public string HomeTypeName { get; set; }
+        public string StateName { get; set; }
+        public string CityName { get; set; }
+        public string LocalityName { get; set; }
+        public string StarRatingName { get; set; }
+        public decimal HotelBaseFare { get; set; }
+        public int TotalSingleRooms { get; set; }
+        public int TotalDoubleRooms { get; set; }
     }
     public class LCHotelAPIVM
     {
@@ -112,6 +119,7 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
     public class LCHotelImageVM
     {
         public IEnumerable<LCHotelImageView> LCHotelImageList { get; set; }
+        public utblLCHotel HotelDetails { get; set; }
         public PagingInfo PagingInfo { get; set; }
     }
     public class LCHotelImageSaveModel
@@ -129,6 +137,8 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
     public class LCHotelImageManageModel
     {
         public LCHotelImageSaveModel LCHotelImage { get; set; }
+        public utblLCHotel HotelDetails { get; set; }
         public IEnumerable<LCHotelDD> HotelList { get; set; }
+        public ImageStrs ImageStrs { get; set; }
     }
 }
