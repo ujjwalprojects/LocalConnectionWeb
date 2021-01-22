@@ -104,7 +104,7 @@ namespace LocalConnWeb.Controllers
 
                     var claims = new[]
                         {
-                            new Claim(ClaimTypes.Name, token.email),
+                            new Claim(ClaimTypes.Name, token.email),   
                             new Claim(ClaimTypes.Role, token.role)
                         };
 
