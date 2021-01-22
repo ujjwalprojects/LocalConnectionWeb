@@ -16,14 +16,15 @@ namespace LocalConnWeb.Areas.Admin.Controllers
     {
         ApiConnection objAPI = new ApiConnection("Admin");
         // GET: Admin/LCHotelImg
-        public ActionResult Index(int PageNo = 1, int PageSize = 10, string SearchTerm = "")
+        public ActionResult Index(long id, int PageNo = 1, int PageSize = 10)
         {
             try
             {
-                string query = "PageNo=" + PageNo + "&PageSize=" + PageSize + "&SearchTerm=" + SearchTerm;
+                string query = "HotelID=" + id + "&PageNo=" + PageNo + "&PageSize=" + PageSize;
                 LCHotelImageAPIVM apiModel = objAPI.GetRecordByQueryString<LCHotelImageAPIVM>("lchotelconfig", "LCHotelImages", query);
                 LCHotelImageVM model = new LCHotelImageVM();
                 model.LCHotelImageList = apiModel.LCHotelImageList;
+                model.HotelDetails = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
                 model.PagingInfo = new PagingInfo { CurrentPage = PageNo, ItemsPerPage = PageSize, TotalItems = apiModel.TotalRecords };
                 if (Request.IsAjaxRequest())
                 {
@@ -37,12 +38,13 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Account", new { Area = "" });
             }
         }
-        public ActionResult Add()
+        public ActionResult Add(long id)
         {
             try
             {
                 LCHotelImageManageModel model = new LCHotelImageManageModel();
-                model.HotelList = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelDD");
+                model.HotelDetails = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
+                model.LCHotelImage = new LCHotelImageSaveModel() { HotelID = id };
                 return View(model);
             }
             catch (AuthorizationException)
@@ -59,6 +61,8 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    model.LCHotelImage.PhotoNormalPath = model.ImageStrs.PhotoNormal;
+                    model.LCHotelImage.PhotoThumbPath = model.ImageStrs.PhotoThumb;
                     string jsonStr = JsonConvert.SerializeObject(model.LCHotelImage);
                     string result = objAPI.PostRecordtoApI("lchotelconfig", "SaveLCHotelImages", jsonStr);
                     TempData["ErrMsg"] = result;
@@ -67,7 +71,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                         model.HotelList = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelDD");
                         return View(model);
                     }
-                    return RedirectToAction("index", "LCHotelImg", new { Area = "admin" });
+                    return RedirectToAction("index", "LCHotelImg", new { Area = "admin" , id = model.LCHotelImage.HotelID});
                 }
                 model.HotelList = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelDD");
                 return View(model);

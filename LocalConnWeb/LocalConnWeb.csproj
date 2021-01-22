@@ -1088,6 +1088,9 @@
     <Content Include="Areas\Admin\Views\FeatHotels\_pvFeatHotelsList.cshtml" />
     <Content Include="Areas\Admin\Views\FeatHotels\Add.cshtml" />
     <Content Include="Areas\Admin\Views\FeatHotels\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotelImg\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotelImg\_pvHotelImageList.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotelImg\Add.cshtml" />
     <None Include="bin\TourTravel Web.dll.config" />
     <None Include="Properties\PublishProfiles\API.pubxml" />
     <Content Include="Content\ckeditor\CHANGES.md" />
@@ -1271,7 +1274,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\LCHotelImg\" />
     <Folder Include="Uploads\Cities\" />
     <Folder Include="Uploads\Offer\" />
     <Folder Include="Views\Base\" />
