@@ -27,25 +27,25 @@
                                     else
                                     {
                                         <form action="/admin/lchotelimg/makecoverimage" method="get" id="form_@item.HotelImageID" data-otf-ajax="true" data-otf-target="#DataGrid">
-                                            @Html.Hidden("HotelID", item.HotelID)
-                                            @Html.Hidden("ImageID", item.HotelImageID)
+                                            @Html.Hidden("hotelid", item.HotelID)
+                                            @Html.Hidden("imageid", item.HotelImageID)
                                             <a href="javascript:document.getElementById('form_@item.HotelImageID').submit()"><small>Make Cover</small></a>
                                         </form>
                                     }
                                 </div>
                                 <div>
                                     <div style="display:inline-block">
-                                        <a href="/admin/lchotelimg/edit?HotelID=@item.HotelID&ImageID=@item.HotelImageID" title="Edit">
+                                        <a href="/admin/lchotelimg/edit/@item.HotelImageID" title="Edit">
                                             <small> <i class="fa fa-pencil text-primary"></i></small>
                                         </a>
                                     </div>
                                     |
                                     <div style="display:inline-block">
                                         <form method="post" action="/admin/lchotelimg/delete" data-otf-ajax="true" data-otf-target="#DataGrid">
-                                            @Html.Hidden("HotelID", item.HotelID)
-                                            @Html.Hidden("ImageID", item.HotelImageID)
+                                            @*@Html.Hidden("HotelID", item.HotelID)*@
+                                            @Html.Hidden("HotelImageID", item.HotelImageID)
                                             @Html.AntiForgeryToken()
-                                            <a href="/admin/lchotelimg/delete?HotelID=@item.HotelID&ImageID=@item.HotelImageID" class="delete" title="Delete" data-record="@item.PhotoCaption">
+                                            <a href="/admin/lchotelimg/delete?hotelid=@item.HotelID&hotelimageid=@item.HotelImageID" class="delete" title="Delete" data-record="@item.PhotoCaption">
                                                 <small> <i class="fa fa-trash text-danger"></i></small>
                                             </a>
                                         </form>
