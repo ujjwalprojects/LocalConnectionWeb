@@ -24,7 +24,7 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public IEnumerable<RoomsView> Rooms { get; set; }
         public PagingInfo PagingInfo { get; set; }
     }
-    public class RoomsDD
+    public class RoomsTypeDD
     {
         public long RoomID { get; set; }
         public string RoomType { get; set; }
@@ -32,7 +32,7 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
     public class RoomsSaveModel
     {
         public utblLCRoom Rooms { get; set; }
-        public IEnumerable<RoomsDD> RoomsList { get; set; }
+        public IEnumerable<RoomsTypeDD> RoomsList { get; set; }
         public Cropper cropper { get; set; }
     }
 }

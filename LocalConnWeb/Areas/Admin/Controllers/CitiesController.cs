@@ -61,27 +61,28 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         {
             try
             {
-                Random rand = new Random();
-                string name = "City_" + DateTime.Now.ToString("yyyyMMdd") + "_" + rand.Next(50) + ".webp";
-                bool isValidFile = FileTypeCheck.DataImage(model.cropper.PhotoNormal);
-                if (!isValidFile)
-                {
-                    TempData["ErrMsg"] = "Please Select A Valid Image File!";
-                    return View(model);
-                }
-                string normal_result = SaveImage(model.cropper.PhotoNormal, name);
-                if (normal_result.Contains("Error"))
-                {
-                    TempData["ErrMsg"] = normal_result;
-                    return RedirectToAction("index", "cities", new { Area = "Admin" });
-                }
-                else
-                {
-                    model.Cities.CityIconPath = "/Uploads/Cities/" + normal_result;
-                }
+                //Random rand = new Random();
+                //string name = "City_" + DateTime.Now.ToString("yyyyMMdd") + "_" + rand.Next(50) + ".webp";
+                //bool isValidFile = FileTypeCheck.DataImage(model.cropper.PhotoNormal);
+                //if (!isValidFile)
+                //{
+                //    TempData["ErrMsg"] = "Please Select A Valid Image File!";
+                //    return View(model);
+                //}
+                //string normal_result = SaveImage(model.cropper.PhotoNormal, name);
+                //if (normal_result.Contains("Error"))
+                //{
+                //    TempData["ErrMsg"] = normal_result;
+                //    return RedirectToAction("index", "cities", new { Area = "Admin" });
+                //}
+                //else
+                //{
+                //    model.Cities.CityIconPath = "/Uploads/Cities/" + normal_result;
+                //}
 
                 if (ModelState.IsValid)
                 {
+                    model.Cities.CityIconPath = model.cropper.PhotoNormal;
                     string jsonStr = JsonConvert.SerializeObject(model.Cities);
                     TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "savecities", jsonStr);
                     return RedirectToAction("index", "cities", new { Area = "Admin" });
@@ -116,34 +117,43 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         {
             try
             {
-                if (model.cropper.PhotoNormal != null)
+                //if (model.cropper.PhotoNormal != null)
+                //{
+                //    bool isValidFile = FileTypeCheck.DataImage(model.cropper.PhotoNormal);
+                //    //bool isValidThumb = FileTypeCheck.DataImage(model.cropper.PhotoThumb);
+                //    if (!isValidFile)
+                //    {
+                //        TempData["ErrMsg"] = "Please Select A Valid Image File!";
+                //        return View();
+                //    }
+                //    Random rand = new Random();
+                //    string name = "Banner_" + DateTime.Now.ToString("yyyyMMdd") + "_" + rand.Next(50) + ".webp";
+                //    string normal_result = SaveImage(model.cropper.PhotoNormal, name);
+                //    if (normal_result.Contains("Error"))
+                //    {
+                //        TempData["ErrMsg"] = "Please Select A Valid Image File!";
+                //        return View();
+                //    }
+                //    else
+                //    {
+                //        model.Cities.CityIconPath = "/Uploads/Cities/" + normal_result;
+                //    }
+                //}
+                //else
+                //{
+                //    model.Cities.CityIconPath = model.Cities.CityIconPath;
+                //}
+                if (ModelState.IsValid)
                 {
-                    bool isValidFile = FileTypeCheck.DataImage(model.cropper.PhotoNormal);
-                    //bool isValidThumb = FileTypeCheck.DataImage(model.cropper.PhotoThumb);
-                    if (!isValidFile)
+                    if(model.cropper.PhotoNormal != null)
                     {
-                        TempData["ErrMsg"] = "Please Select A Valid Image File!";
-                        return View();
-                    }
-                    Random rand = new Random();
-                    string name = "Banner_" + DateTime.Now.ToString("yyyyMMdd") + "_" + rand.Next(50) + ".webp";
-                    string normal_result = SaveImage(model.cropper.PhotoNormal, name);
-                    if (normal_result.Contains("Error"))
-                    {
-                        TempData["ErrMsg"] = "Please Select A Valid Image File!";
-                        return View();
+                        model.Cities.CityIconPath = model.cropper.PhotoNormal;
+                       
                     }
                     else
                     {
-                        model.Cities.CityIconPath = "/Uploads/Cities/" + normal_result;
+                        model.Cities.CityIconPath = model.Cities.CityIconPath;
                     }
-                }
-                else
-                {
-                    model.Cities.CityIconPath = model.Cities.CityIconPath;
-                }
-                if (ModelState.IsValid)
-                {
                     string jsonStr = JsonConvert.SerializeObject(model.Cities);
                     TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "saveCities", jsonStr);
                     return RedirectToAction("index", "Cities", new { Area = "Admin" });

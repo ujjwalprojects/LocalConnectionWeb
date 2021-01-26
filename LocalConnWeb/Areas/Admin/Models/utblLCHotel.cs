@@ -22,6 +22,8 @@ namespace LocalConnWeb.Areas.Admin.Models
         public long HomeTypeID { get; set; }
         public long StarRatingID { get; set; }
         public decimal HotelBaseFare { get; set; }
+        public decimal HotelOfferPrice { get; set; }
+        public int OfferPercentage { get; set; }
         public int HotelHitCount { get; set; }
         public string MetaText { get; set; }
         public int TotalSingleRooms { get; set; }
