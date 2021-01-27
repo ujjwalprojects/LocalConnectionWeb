@@ -94,7 +94,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             {
                 LCHotelManageModel model = new LCHotelManageModel();
                 utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
-                var HotelRoomTypelist = objAPI.GetRecordsByQueryString<long>("configuration", "HotelRoomTypeList", "id=" + id);
+                var HotelRoomTypelist = objAPI.GetRecordsByQueryString<long>("configuration", "HotelRoomTypeList", "id=" + id); 
                 model.LCHotel = new LCHotelSaveModel()
                 {
                     HotelID = lchotel.HotelID,
