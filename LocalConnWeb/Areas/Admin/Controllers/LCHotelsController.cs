@@ -46,6 +46,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                 model.CountryList = objAPI.GetAllRecords<CountryDD>("configuration", "CountriesList");
                 model.HomeTypeList = objAPI.GetAllRecords<utblLCMstHomeType>("configuration", "AllHomeTypes");
                 model.StarRatingList = objAPI.GetAllRecords<utblLCMstStarRating>("configuration", "AllStarRating");
+                model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
                 return View(model);
             }
             catch (AuthorizationException)
@@ -62,7 +63,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    string jsonStr = JsonConvert.SerializeObject(model.LCHotel);
+                    string jsonStr = JsonConvert.SerializeObject(model);
                     string result = objAPI.PostRecordtoApI("lchotelconfig", "SaveLCHotel", jsonStr);
                     TempData["ErrMsg"] = result;
                     if (result.ToLower().Contains("error"))
@@ -70,6 +71,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                         model.CountryList = objAPI.GetAllRecords<CountryDD>("configuration", "CountriesList");
                         model.HomeTypeList = objAPI.GetAllRecords<utblLCMstHomeType>("configuration", "AllHomeTypes");
                         model.StarRatingList = objAPI.GetAllRecords<utblLCMstStarRating>("configuration", "AllStarRating");
+                        model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
                         return View(model);
                     }
                     return RedirectToAction("index", "lchotels", new { Area = "admin" });
@@ -77,6 +79,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                 model.CountryList = objAPI.GetAllRecords<CountryDD>("configuration", "CountriesList");
                 model.HomeTypeList = objAPI.GetAllRecords<utblLCMstHomeType>("configuration", "AllHomeTypes");
                 model.StarRatingList = objAPI.GetAllRecords<utblLCMstStarRating>("configuration", "AllStarRating");
+                model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
                 return View(model);
             }
             catch (AuthorizationException)
@@ -91,6 +94,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             {
                 LCHotelManageModel model = new LCHotelManageModel();
                 utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
+                var HotelRoomTypelist = objAPI.GetRecordsByQueryString<long>("configuration", "HotelRoomTypeList", "id=" + id);
                 model.LCHotel = new LCHotelSaveModel()
                 {
                     HotelID = lchotel.HotelID,
@@ -106,14 +110,20 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                     HomeTypeID = lchotel.HomeTypeID,
                     StarRatingID = lchotel.StarRatingID,
                     HotelBaseFare = lchotel.HotelBaseFare,
+                    HotelOfferPrice = lchotel.HotelOfferPrice,
+                    OfferPercentage = lchotel.OfferPercentage,
                     //HotelHitCount = lchotel.HotelHitCount,
                     MetaText = lchotel.MetaText,
                     TotalSingleRooms = lchotel.TotalSingleRooms,
-                    TotalDoubleRooms = lchotel.TotalDoubleRooms
+                    TotalDoubleRooms = lchotel.TotalDoubleRooms,
+                   
+
                 };
+                model.RoomID = HotelRoomTypelist;
                 model.CountryList = objAPI.GetAllRecords<CountryDD>("configuration", "CountriesList");
                 model.HomeTypeList = objAPI.GetAllRecords<utblLCMstHomeType>("configuration", "AllHomeTypes");
                 model.StarRatingList = objAPI.GetAllRecords<utblLCMstStarRating>("configuration", "AllStarRating");
+                model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
                 return View(model);
             }
             catch (AuthorizationException)
@@ -130,7 +140,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    string jsonStr = JsonConvert.SerializeObject(model.LCHotel);
+                    string jsonStr = JsonConvert.SerializeObject(model);
                     string result = objAPI.PostRecordtoApI("lchotelconfig", "SaveLCHotel", jsonStr);
                     TempData["ErrMsg"] = result;
                     if (result.ToLower().Contains("error"))
@@ -138,6 +148,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                         model.CountryList = objAPI.GetAllRecords<CountryDD>("configuration", "CountriesList");
                         model.HomeTypeList = objAPI.GetAllRecords<utblLCMstHomeType>("configuration", "AllHomeTypes");
                         model.StarRatingList = objAPI.GetAllRecords<utblLCMstStarRating>("configuration", "AllStarRating");
+                        model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
                         return View(model);
                     }
                     return RedirectToAction("index", "lchotels", new { Area = "admin" });
@@ -145,6 +156,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                 model.CountryList = objAPI.GetAllRecords<CountryDD>("configuration", "CountriesList");
                 model.HomeTypeList = objAPI.GetAllRecords<utblLCMstHomeType>("configuration", "AllHomeTypes");
                 model.StarRatingList = objAPI.GetAllRecords<utblLCMstStarRating>("configuration", "AllStarRating");
+                model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
                 return View(model);
             }
             catch (AuthorizationException)

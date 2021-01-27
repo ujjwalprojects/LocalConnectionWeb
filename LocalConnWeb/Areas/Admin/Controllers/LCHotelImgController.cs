@@ -115,6 +115,8 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    model.LCHotelImage.PhotoNormalPath = model.ImageStrs.PhotoNormal;
+                    model.LCHotelImage.PhotoThumbPath = model.ImageStrs.PhotoThumb;
                     string jsonStr = JsonConvert.SerializeObject(model.LCHotelImage);
                     string result = objAPI.PostRecordtoApI("lchotelconfig", "SaveLCHotelImages", jsonStr);
                     TempData["ErrMsg"] = result;
@@ -123,7 +125,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                         model.HotelList = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelDD");
                         return View(model);
                     }
-                    return RedirectToAction("index", "LCHotelImg", new { Area = "admin" });
+                    return RedirectToAction("index", "LCHotelImg", new { Area = "admin", id = model.LCHotelImage.HotelID });
                 }
                 model.HotelList = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelDD");
                 return View(model);
@@ -136,10 +138,17 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(long id)
+        public ActionResult Delete(long hotelid, long hotelimageid)
         {
-            TempData["ErrMsg"] = objAPI.DeleteRecordByKey("lchotelconfig", "DeleteLCHotelImages", id.ToString(), "id");
-            return RedirectToAction("index", "LCHotelImg", new { Area = "Admin" });
+            TempData["ErrMsg"] = objAPI.DeleteRecordByKey("lchotelconfig", "DeleteLCHotelImages", hotelimageid.ToString(), "id");
+            return RedirectToAction("index", "LCHotelImg", new { Area = "Admin", id = hotelid });
+        }
+
+        public ActionResult MakeCoverImage(long hotelid, long imageid)
+        {
+            string query = "hotelid=" + hotelid + "&imageid=" + imageid;
+            TempData["ErrMsg"] = objAPI.PostRecordUsingQueryString("lchotelconfig", "makecoverimage", query);
+            return RedirectToAction("index", "LCHotelImg", new { Area = "Admin", id = hotelid });
         }
     }
 }

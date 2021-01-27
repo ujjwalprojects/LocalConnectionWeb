@@ -1,10 +1,11 @@
 ﻿@model LocalConnWeb.Areas.Admin.CustomModels.LCHotelImageManageModel
 @{
-    ViewBag.Title = "Add";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <link href="~/Content/NewCropper/cropper.min.css" rel="stylesheet" />
+
 <style>
     .cropper-container {
         top: 0 !important;
@@ -24,24 +25,33 @@
 </style>
 <div class="title-div">
     <i class="fa fa-hand-o-right"></i>&nbsp;
-    <span class="title">Hotel - Add Image</span>&nbsp;
+    <span class="title">Hotel - Edit Image</span>&nbsp;
 </div>
 <div class="card bg-light">
     <div class="card-body">
-        <div>
+        @*<div>
             <span class="display-4">@Model.HotelDetails.HotelName </span>
-        </div>
+        </div>*@
         <hr />
         <div>
-            <form method="post" action="/admin/lchotelimg/add/">
+            <form method="post" action="/admin/lchotelimg/edit/">
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(m => m.LCHotelImage.HotelID)
+                @Html.HiddenFor(m=> m.LCHotelImage.HotelImageID)
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
                         <div class="form-group text-center">
                             <div class="thumbnail">
                                 <div id="imgPhotoThumb">
-                                    <img src="~/content/img/temp/popular-2.jpg" class="img-fluid" alt="image" style="width:400px;" />
+                                    @if (Model.LCHotelImage.PhotoThumbPath != null || Model.LCHotelImage.PhotoThumbPath != "")
+                                    {
+                                        <img src="@Model.LCHotelImage.PhotoThumbPath" alt="Add Photo" class="img-fluid" style="width: 400px;" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Content/Images/noimage.jpg" alt="Add Photo" class="img-fluid" style="width: 400px;" />
+                                    }
+                                    @*<img src="~/content/img/temp/popular-2.jpg" class="img-fluid" alt="image" style="width:400px;" />*@
                                 </div>
                             </div>
                             <div class="mt-2">
@@ -64,7 +74,7 @@
                     </div>
                 </div>
                 <div class="action-div">
-                    <a href="/admin/lchotelimg/index/@Model.HotelDetails.HotelID" class="btn btn-secondary">Back To Images</a>
+                    <a href="/admin/lchotelimg/index/@Model.LCHotelImage.HotelID" class="btn btn-secondary">Back To Images</a>
                     <button type="submit" class="btn btn-primary pull-right">Save</button>
                     <div class="clearfix"></div>
                 </div>
@@ -249,5 +259,3 @@
         </div>
     </div>
 </div>
-
-
