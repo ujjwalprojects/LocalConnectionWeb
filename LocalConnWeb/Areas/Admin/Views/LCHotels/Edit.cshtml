@@ -22,22 +22,23 @@
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(m => m.LCHotel.HotelID)
-            <div class="row">
-                <div class="col-md">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.LCHotel.CountryID, new { @class = "required" })
-                        @Html.DropDownListFor(m => m.LCHotel.CountryID, new SelectList(Model.CountryList, "CountryID", "CountryName"), "-- Select Country --", new { @class = "form-control", @id = "ddCountry" })
-                        @Html.ValidationMessageFor(m => m.LCHotel.CountryID)
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.LCHotel.StateID, new { @class = "required" })
-                        @Html.DropDownListFor(m => m.LCHotel.StateID, new SelectList(string.Empty), "-- Select State --", new { @class = "form-control", @id = "ddState" })
-                        @Html.ValidationMessageFor(m => m.LCHotel.StateID)
-                    </div>
+        <div class="row">
+            <div class="col-md">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.LCHotel.CountryID, new { @class = "required" })
+                    @Html.DropDownListFor(m => m.LCHotel.CountryID, new SelectList(Model.CountryList, "CountryID", "CountryName"), "-- Select Country --", new { @class = "form-control", @id = "ddCountry" })
+                    @Html.ValidationMessageFor(m => m.LCHotel.CountryID)
                 </div>
             </div>
+
+            <div class="col-md">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.LCHotel.StateID, new { @class = "required" })
+                    @Html.DropDownListFor(m => m.LCHotel.StateID, new SelectList(string.Empty), "-- Select State --", new { @class = "form-control", @id = "ddState" })
+                    @Html.ValidationMessageFor(m => m.LCHotel.StateID)
+                </div>
+            </div>
+        </div>
             <div class="row">
                 <div class="col-md">
                     <div class="form-group">
@@ -176,8 +177,7 @@
                 width: '100%',
                 placeholder: 'Select Type(s)'
             });
-            var clarr = JSON.parse('@Html.Raw(Json.Encode(Model.LCHotel.HotelID))')
-            alert(clarr);
+            var clarr = JSON.parse('@Html.Raw(Json.Encode(Model.RoomID))')
             $('#typedd').select2('val', clarr);
         });
 

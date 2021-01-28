@@ -52,6 +52,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    model.Amenities.AmenitiesIconPath = model.cropper.PhotoNormal;
                     string jsonStr = JsonConvert.SerializeObject(model.Amenities);
                     TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "SaveAmenities", jsonStr);
                     return RedirectToAction("index", "Amenities", new { Area = "Admin" });
@@ -86,6 +87,10 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if(model.cropper.PhotoNormal != null)
+                    {
+                        model.Amenities.AmenitiesIconPath = model.cropper.PhotoNormal;
+                    }
                     string jsonStr = JsonConvert.SerializeObject(model.Amenities);
                     TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "SaveAmenities", jsonStr);
                     return RedirectToAction("index", "Amenities", new { Area = "Admin" });

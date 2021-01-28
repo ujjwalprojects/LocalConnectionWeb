@@ -8,6 +8,9 @@
                     <thead>
                         <tr>
                             <th class="text-center" style="vertical-align:middle">
+                                Icon
+                            </th>
+                            <th class="text-center" style="vertical-align:middle">
                                 Name
                             </th>
                             <th class="text-center" style="vertical-align:middle">
@@ -21,32 +24,35 @@
                     <tbody>
                         @foreach (var item in Model.Amenities)
                         {
-                            <tr>
-                                <td class="text-center">
-                                    <small>@item.AmenitiesName  </small>
-                                </td>
-                                <td class="text-center">
-                                    <small>@item.AmenitiesBasePrice.ToString("0.00")  </small>
-                                </td>
-                                <td class="action-td">
-                                    <div class="flexbox">
-                                        <div class="plr-5">
-                                            <a href="/admin/Amenities/edit/@item.AmenitiesID" title="Edit">
-                                                <i class="fa fa-edit text-dark"></i>
-                                            </a>
-                                        </div>
-                                        <div class="plr-5">
-                                            <form method="post" action="/admin/Amenities/delete" data-otf-ajax="true" data-otf-target="#DataGrid">
-                                                @Html.Hidden("id", item.AmenitiesID)
-                                                @Html.AntiForgeryToken()
-                                                <a href="/admin/Amenities/delete/@item.AmenitiesID" class="delete" title="Delete" data-record="@item.AmenitiesName">
-                                                    <i class="fa fa-trash text-dark"></i>
-                                                </a>
-                                            </form>
-                                        </div>
+                        <tr>
+                            <td class="text-center">
+                                <img src="@item.AmenitiesIconPath" alt="@item.AmenitiesName" class="img-fluid text-center" style="width: 30px; height: 30px; vertical-align: middle" />
+                            </td>
+                            <td class="text-center">
+                                <small>@item.AmenitiesName  </small>
+                            </td>
+                            <td class="text-center">
+                                <small>@item.AmenitiesBasePrice.ToString("0.00")  </small>
+                            </td>
+                            <td class="action-td">
+                                <div class="flexbox">
+                                    <div class="plr-5">
+                                        <a href="/admin/Amenities/edit/@item.AmenitiesID" title="Edit">
+                                            <i class="fa fa-edit text-dark"></i>
+                                        </a>
                                     </div>
-                                </td>
-                            </tr>
+                                    <div class="plr-5">
+                                        <form method="post" action="/admin/Amenities/delete" data-otf-ajax="true" data-otf-target="#DataGrid">
+                                            @Html.Hidden("id", item.AmenitiesID)
+                                            @Html.AntiForgeryToken()
+                                            <a href="/admin/Amenities/delete/@item.AmenitiesID" class="delete" title="Delete" data-record="@item.AmenitiesName">
+                                                <i class="fa fa-trash text-dark"></i>
+                                            </a>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>
