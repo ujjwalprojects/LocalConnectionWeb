@@ -46,7 +46,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                 model.CountryList = objAPI.GetAllRecords<CountryDD>("configuration", "CountriesList");
                 model.HomeTypeList = objAPI.GetAllRecords<utblLCMstHomeType>("configuration", "AllHomeTypes");
                 model.StarRatingList = objAPI.GetAllRecords<utblLCMstStarRating>("configuration", "AllStarRating");
-                model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
+                //model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
                 return View(model);
             }
             catch (AuthorizationException)
@@ -74,12 +74,13 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                         model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
                         return View(model);
                     }
-                    return RedirectToAction("index", "lchotels", new { Area = "admin" });
+                    //return RedirectToAction("index", "lchotels", new { Area = "admin" });
+                    return RedirectToAction("AddRoomType", new { @id = Convert.ToInt64(result) });
                 }
                 model.CountryList = objAPI.GetAllRecords<CountryDD>("configuration", "CountriesList");
                 model.HomeTypeList = objAPI.GetAllRecords<utblLCMstHomeType>("configuration", "AllHomeTypes");
                 model.StarRatingList = objAPI.GetAllRecords<utblLCMstStarRating>("configuration", "AllStarRating");
-                model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
+                //model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
                 return View(model);
             }
             catch (AuthorizationException)
@@ -94,7 +95,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             {
                 LCHotelManageModel model = new LCHotelManageModel();
                 utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
-                var HotelRoomTypelist = objAPI.GetRecordsByQueryString<long>("configuration", "HotelRoomTypeList", "id=" + id); 
+                var HotelRoomTypelist = objAPI.GetRecordsByQueryString<long>("configuration", "HotelRoomTypeList", "id=" + id);
                 model.LCHotel = new LCHotelSaveModel()
                 {
                     HotelID = lchotel.HotelID,
@@ -112,18 +113,22 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                     HotelBaseFare = lchotel.HotelBaseFare,
                     HotelOfferPrice = lchotel.HotelOfferPrice,
                     OfferPercentage = lchotel.OfferPercentage,
+                    RatePerNight = lchotel.RatePerNight,
+                    RatePerGuest = lchotel.RatePerGuest,
+                    RatePerRoom = lchotel.RatePerRoom,
+                    RatePerChild = lchotel.RatePerChild,
                     //HotelHitCount = lchotel.HotelHitCount,
                     MetaText = lchotel.MetaText,
                     TotalSingleRooms = lchotel.TotalSingleRooms,
                     TotalDoubleRooms = lchotel.TotalDoubleRooms,
-                   
+
 
                 };
-                model.RoomID = HotelRoomTypelist;
+                //model.RoomID = HotelRoomTypelist;
                 model.CountryList = objAPI.GetAllRecords<CountryDD>("configuration", "CountriesList");
                 model.HomeTypeList = objAPI.GetAllRecords<utblLCMstHomeType>("configuration", "AllHomeTypes");
                 model.StarRatingList = objAPI.GetAllRecords<utblLCMstStarRating>("configuration", "AllStarRating");
-                model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
+                //model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
                 return View(model);
             }
             catch (AuthorizationException)
@@ -148,15 +153,16 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                         model.CountryList = objAPI.GetAllRecords<CountryDD>("configuration", "CountriesList");
                         model.HomeTypeList = objAPI.GetAllRecords<utblLCMstHomeType>("configuration", "AllHomeTypes");
                         model.StarRatingList = objAPI.GetAllRecords<utblLCMstStarRating>("configuration", "AllStarRating");
-                        model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
+                        //model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
                         return View(model);
                     }
-                    return RedirectToAction("index", "lchotels", new { Area = "admin" });
+                    //return RedirectToAction("index", "lchotels", new { Area = "admin" });
+                    return RedirectToAction("AddRoomType", new { @id = Convert.ToInt64(result) });
                 }
                 model.CountryList = objAPI.GetAllRecords<CountryDD>("configuration", "CountriesList");
                 model.HomeTypeList = objAPI.GetAllRecords<utblLCMstHomeType>("configuration", "AllHomeTypes");
                 model.StarRatingList = objAPI.GetAllRecords<utblLCMstStarRating>("configuration", "AllStarRating");
-                model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
+                //model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
                 return View(model);
             }
             catch (AuthorizationException)
@@ -164,6 +170,167 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                 TempData["ErrMsg"] = "Your Login Session has expired. Please Login Again";
                 return RedirectToAction("Login", "Account", new { Area = "" });
             }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CalculateBasePrice(LCHotelManageModel model)
+        {
+            long id = model.LCHotel.HotelID;
+            utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
+            string query = "id=" + id;
+            model.HotelRoomTypeMapView = objAPI.GetRecordsByQueryString<HotelRoomTypeMapView>("lchotelconfig", "GetHotelRoomTypeMapList", query);
+            decimal BasePrice = 0, OfferPrice = 0,FinalPrice = 0, DefaultRoomTypePrice = 0;
+            foreach (var item in model.HotelRoomTypeMapView)
+            {
+                if(item.IsStandard == true)
+                {
+                    DefaultRoomTypePrice = item.RoomTypePrice;
+                }
+            }
+            BasePrice = lchotel.RatePerRoom + lchotel.RatePerNight + lchotel.RatePerGuest + DefaultRoomTypePrice;
+            OfferPrice = (lchotel.OfferPercentage * BasePrice) / 100;
+            FinalPrice = BasePrice - OfferPrice;
+
+            model.LCHotel.HotelID = id;
+            model.LCHotel.HotelBaseFare = BasePrice;
+            model.LCHotel.HotelOfferPrice = FinalPrice;
+
+            string jsonStr = JsonConvert.SerializeObject(model.LCHotel);
+            string result = objAPI.PostRecordtoApI("lchotelconfig", "UpdateLCHotelRate", jsonStr);
+            TempData["ErrMsg"] = result;
+            if (!result.ToLower().Contains("error"))
+            {
+                return RedirectToAction("Index", "lchotels");
+            }
+            return View(model);
+        }
+
+
+        public ActionResult AddRoomType(long id)
+        {
+            LCHotelManageModel model = new LCHotelManageModel();
+            utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
+            model.LCHotel = new LCHotelSaveModel()
+            {
+                HotelID = lchotel.HotelID,
+                HotelName = lchotel.HotelName,
+                HotelAddress = lchotel.HotelAddress,
+                HotelDesc = lchotel.HotelDesc,
+                HotelContactNo = lchotel.HotelContactNo,
+                HotelEmail = lchotel.HotelEmail,
+                CountryID = lchotel.CountryID,
+                StateID = lchotel.StateID,
+                CityID = lchotel.CityID,
+                LocalityID = lchotel.LocalityID,
+                HomeTypeID = lchotel.HomeTypeID,
+                StarRatingID = lchotel.StarRatingID,
+                HotelBaseFare = lchotel.HotelBaseFare,
+                HotelOfferPrice = lchotel.HotelOfferPrice,
+                OfferPercentage = lchotel.OfferPercentage,
+                RatePerNight = lchotel.RatePerNight,
+                RatePerGuest = lchotel.RatePerGuest,
+                RatePerRoom = lchotel.RatePerRoom,
+                RatePerChild = lchotel.RatePerChild,
+                //HotelHitCount = lchotel.HotelHitCount,
+                MetaText = lchotel.MetaText,
+                TotalSingleRooms = lchotel.TotalSingleRooms,
+                TotalDoubleRooms = lchotel.TotalDoubleRooms,
+
+
+            };
+            //model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
+            string query = "id=" + id;
+            model.HotelRoomTypeMapView = objAPI.GetRecordsByQueryString<HotelRoomTypeMapView>("lchotelconfig", "GetHotelRoomTypeMapList", query);
+            List<RoomsTypeDD> RTypelist = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
+            foreach (var item in model.HotelRoomTypeMapView)
+            {
+                RTypelist.RemoveAll(x => x.RoomID == item.RoomID);
+            }
+            model.RoomsList = RTypelist.ToList();
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddRoomType(LCHotelManageModel model)
+        {
+            try
+            {
+                model.HotelRoomTypeMap.HotelID = model.LCHotel.HotelID;
+                string jsonStr = JsonConvert.SerializeObject(model.HotelRoomTypeMap);
+                string result = objAPI.PostRecordtoApI("lchotelconfig", "SaveHotelRoomTypeMap", jsonStr);
+                TempData["ErrMsg"] = result;
+                if (result.ToLower().Contains("error"))
+                {
+                    utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", model.LCHotel.HotelID.ToString(), "id");
+                    model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
+                    return View(model);
+                }
+                return RedirectToAction("AddRoomType", new { id = model.LCHotel.HotelID});
+            }
+            catch (AuthorizationException)
+            {
+                TempData["ErrMsg"] = "Your Login Session has expired. Please Login Again";
+                return RedirectToAction("Login", "Account", new { Area = "" });
+            }
+        }
+        public ActionResult EditRoomType(long id, long rid)
+        {
+            try
+            {
+                LCHotelManageModel model = new LCHotelManageModel();
+                string query = "id=" + id + "&rid=" + rid;
+                model.HotelRoomTypeMap = objAPI.GetRecordByQueryString<HotelRoomTypeMap>("lchotelconfig", "GetHotelRoomTypeMapByID", query);
+                string querylist = "id=" + id;
+                model.HotelRoomTypeMapView = objAPI.GetRecordsByQueryString<HotelRoomTypeMapView>("lchotelconfig", "GetHotelRoomTypeMapList", querylist);
+                utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
+                model.LCHotel = new LCHotelSaveModel()
+                {
+                    HotelID = lchotel.HotelID,
+                    HotelName = lchotel.HotelName,
+                    HotelAddress = lchotel.HotelAddress,
+                    HotelDesc = lchotel.HotelDesc,
+                    HotelContactNo = lchotel.HotelContactNo,
+                    HotelEmail = lchotel.HotelEmail,
+                    CountryID = lchotel.CountryID,
+                    StateID = lchotel.StateID,
+                    CityID = lchotel.CityID,
+                    LocalityID = lchotel.LocalityID,
+                    HomeTypeID = lchotel.HomeTypeID,
+                    StarRatingID = lchotel.StarRatingID,
+                    HotelBaseFare = lchotel.HotelBaseFare,
+                    HotelOfferPrice = lchotel.HotelOfferPrice,
+                    OfferPercentage = lchotel.OfferPercentage,
+                    RatePerNight = lchotel.RatePerNight,
+                    RatePerGuest = lchotel.RatePerGuest,
+                    RatePerRoom = lchotel.RatePerRoom,
+                    RatePerChild = lchotel.RatePerChild,
+                    //HotelHitCount = lchotel.HotelHitCount,
+                    MetaText = lchotel.MetaText,
+                    TotalSingleRooms = lchotel.TotalSingleRooms,
+                    TotalDoubleRooms = lchotel.TotalDoubleRooms,
+
+
+                };
+                List<RoomsTypeDD> RTypelist = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
+                foreach (var item in model.HotelRoomTypeMapView)
+                {
+                    RTypelist.RemoveAll(x => x.RoomID == item.RoomID && x.RoomID != rid);
+                }
+                model.RoomsList = RTypelist.ToList();
+                return View("AddRoomType", model);
+            }
+            catch (AuthorizationException)
+            {
+                TempData["ErrMsg"] = "Your Login Session has expired. Please Login Again";
+                return RedirectToAction("Login", "Account", new { Area = "" });
+            }
+            //return View();
+        }
+        public ActionResult DeleteRoomType(long hid, long rid)
+        {
+            string query = "id=" + hid + "&rid=" + rid;
+            TempData["ErrMsg"] = objAPI.DeleteRecordByQuerystring("lchotelconfig", "DeleteHotelRoomTypeMap", query);
+            return RedirectToAction("AddRoomType", new { id = hid });
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -187,5 +354,5 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             var model = objAPI.GetRecordsByID<LocalitiesDD>("configuration", "LocalitiesByCity", id);
             return Json(model, JsonRequestBehavior.AllowGet);
         }
-	}
+    }
 }

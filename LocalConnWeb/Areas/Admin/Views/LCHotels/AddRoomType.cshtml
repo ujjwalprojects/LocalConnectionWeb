@@ -1,0 +1,143 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.LCHotelManageModel
+@{
+    ViewBag.Title = "AddRoomType";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link href="~/Content/Select2/select2.min.css" rel="stylesheet" />
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Hotels - Room Type Mapping</span>&nbsp;
+    <small>Step 2 of 3</small>
+</div>
+<div class="card ">
+    <div class="card-header bg-head">
+        <div class="pb-2">
+            <span class="display-5 text-white">@Model.LCHotel.HotelName</span>
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("AddRoomType", "lchotels", new { Area = "Admin" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.LCHotel.HotelID)
+        <div class="row">
+            <div class="col-md">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.HotelRoomTypeMap.RoomID, new { @class = "required" })
+                    @Html.DropDownListFor(m => m.HotelRoomTypeMap.RoomID, new SelectList(Model.RoomsList, "RoomID", "RoomType"), "-- Select Room Type --", new { @class = "form-control", @id = "ddroomtype" })
+                    @Html.ValidationMessageFor(m => m.HotelRoomTypeMap.RoomID)
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.HotelRoomTypeMap.RoomTypePrice, new { @class = "required" })
+                    @Html.TextBoxFor(m => m.HotelRoomTypeMap.RoomTypePrice, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.HotelRoomTypeMap.RoomTypePrice)
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-group">
+                    <label class="control-label mt-4">@Html.CheckBoxFor(m => m.HotelRoomTypeMap.IsStandard) &nbsp; Make Default Room Type</label>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-group">
+
+                    <input type="submit" value="Save" class="btn btn-primary mt-4" id="bCheck" />
+                </div>
+            </div>
+        </div>
+        }
+
+        <hr class="hr-style" />
+        <div id="DataGrid">
+            @if (Model.HotelRoomTypeMapView.Count() > 0)
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="vertical-align: middle;">
+                                    Room Type
+                                </th>
+                                <th class="text-center" style="vertical-align: middle;">
+                                    Rate
+                                </th>
+                                <th class="text-center" style="vertical-align: middle;">
+                                    Default Room Type
+                                </th>
+                                <th class="text-center" style="vertical-align: middle;">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.HotelRoomTypeMapView)
+                            {
+                            <tr>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.RoomType)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.RoomTypePrice)
+                                </td>
+                                <td class="text-center">
+                                    @if(item.IsStandard == true)
+                                    {
+                                    <small>Yes</small>
+                                    }
+                                    else
+                                    {
+                                       <small>No</small>
+                                    }
+                                </td>
+                                <td class="action-td">
+                                    <div class="flexbox">
+                                        <div class="plr-5">
+                                            <a href="/admin/lchotels/editroomtype?id=@item.HotelID&rid=@item.RoomID" title="Edit">
+                                                <i class="fa fa-edit text-dark"></i>
+                                            </a>
+                                        </div>
+                                        <div class="plr-5">
+                                            <form method="post" action="/admin/lchotels/deleteroomtype" data-otf-ajax="true" data-otf-target="#DataGrid">
+                                                @Html.Hidden("id", item.RoomID)
+                                                @Html.AntiForgeryToken()
+                                                <a href="/admin/lchotels/deleteroomtype?hid=@item.HotelID&rid=@item.RoomID" class="delete" title="Delete" data-record="@item.RoomType">
+                                                    <i class="fa fa-trash text-dark"></i>
+                                                </a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <h3>No Records...</h3>
+            }
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <div class="form-group">
+                    <form method="post" action="/admin/lchotels/CalculateBasePrice">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.LCHotel.HotelID)
+                        @Html.ActionLink("Back", "Edit", "lchotels", new { Area = "Admin", id = Model.LCHotel.HotelID }, new { @class = "btn btn-secondary btn-sm" })
+                        <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Finish</button>
+                    </form>
+                        @*@Html.ActionLink("Finish", "CalculateBasePrice", "lchotels", new { Area = "Admin", id = Model.LCHotel.HotelID }, new { @class = "btn btn-success btn-sm pull-right" })*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@*<div class="card-body">
+    @Html.Partial("_pvHotelRoomTypeMap", Model)
+</div>*@

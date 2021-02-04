@@ -1092,6 +1092,8 @@
     <Content Include="Areas\Admin\Views\LCHotelImg\_pvHotelImageList.cshtml" />
     <Content Include="Areas\Admin\Views\LCHotelImg\Add.cshtml" />
     <Content Include="Areas\Admin\Views\LCHotelImg\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\AddRoomType.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\_pvHotelRoomTypeMap.cshtml" />
     <None Include="bin\TourTravel Web.dll.config" />
     <None Include="Properties\PublishProfiles\API.pubxml" />
     <Content Include="Content\ckeditor\CHANGES.md" />
