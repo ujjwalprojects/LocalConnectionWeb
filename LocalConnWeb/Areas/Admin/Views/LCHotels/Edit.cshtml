@@ -30,6 +30,7 @@
                         @Html.ValidationMessageFor(m => m.LCHotel.CountryID)
                     </div>
                 </div>
+
                 <div class="col-md">
                     <div class="form-group">
                         @Html.LabelFor(m => m.LCHotel.StateID, new { @class = "required" })
@@ -101,35 +102,43 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.LCHotel.HotelBaseFare, new { @class = "required" })
-                        @Html.TextBoxFor(m => m.LCHotel.HotelBaseFare, new { @class = "form-control", @Value = Model.LCHotel.HotelBaseFare.ToString("0") })
-                        @Html.ValidationMessageFor(m => m.LCHotel.HotelBaseFare)
+                        @Html.LabelFor(m => m.LCHotel.RatePerNight, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.RatePerNight, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.RatePerNight)
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.LCHotel.HotelOfferPrice, new { @class = "required" })
-                        @Html.TextBoxFor(m => m.LCHotel.HotelOfferPrice, new { @class = "form-control", @Value = Model.LCHotel.HotelOfferPrice.ToString("0") })
-                        @Html.ValidationMessageFor(m => m.LCHotel.HotelOfferPrice)
+                        @Html.LabelFor(m => m.LCHotel.RatePerRoom, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.RatePerRoom, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.RatePerRoom)
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.LCHotel.OfferPercentage, new { @class = "required" })
-                        @Html.TextBoxFor(m => m.LCHotel.OfferPercentage, new { @class = "form-control", placeholder = "do not append % symbol" })
-                        @Html.ValidationMessageFor(m => m.LCHotel.OfferPercentage)
+                        @Html.LabelFor(m => m.LCHotel.RatePerGuest, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.RatePerGuest, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.RatePerGuest)
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.RatePerChild, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.RatePerChild, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.RatePerChild)
                     </div>
                 </div>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.LabelFor(m => m.RoomID, new { @class = "required" }) &nbsp;&nbsp;&nbsp;
                 <small class="text-muted">Select multiple if applicable</small>
                 @Html.DropDownListFor(m => m.RoomID, new SelectList(Model.RoomsList, "RoomID", "RoomType"), "-- Select Room Type --", new { @class = "form-control", id = "typedd", multiple = "multiple" })
                 @Html.ValidationMessageFor(m => m.RoomID)
-            </div>
+            </div>*@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -146,6 +155,29 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                @*<div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.HotelBaseFare, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.HotelBaseFare, new { @class = "form-control", @Value = Model.LCHotel.HotelBaseFare.ToString("0") })
+                        @Html.ValidationMessageFor(m => m.LCHotel.HotelBaseFare)
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.HotelOfferPrice, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.HotelOfferPrice, new { @class = "form-control", @Value = Model.LCHotel.HotelOfferPrice.ToString("0") })
+                        @Html.ValidationMessageFor(m => m.LCHotel.HotelOfferPrice)
+                    </div>
+                </div>*@
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.OfferPercentage, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.OfferPercentage, new { @class = "form-control", placeholder = "do not append % symbol" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.OfferPercentage)
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.LCHotel.MetaText, new { @class = "" })
                 @Html.TextAreaFor(m => m.LCHotel.MetaText, new { @class = "form-control" })
@@ -153,7 +185,9 @@
             </div>
             <div class="action-div">
                 @Html.ActionLink("Back To List", "index", "lchotels", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })
+                @Html.ActionLink("Next", "AddRoomType", "lchotels", new { Area = "Admin", id = Model.LCHotel.HotelID }, new { @class = "btn btn-success btn-sm pull-right ml-2 " })
                 <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
+
             </div>
         }
     </div>
@@ -166,7 +200,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Content/Select2/select2.min.js"></script>
 
-    <script>
+    @*<script>
         $.validator.setDefaults({
             ignore: ''
         });
@@ -176,12 +210,11 @@
                 width: '100%',
                 placeholder: 'Select Type(s)'
             });
-            var clarr = JSON.parse('@Html.Raw(Json.Encode(Model.LCHotel.HotelID))')
-            alert(clarr);
+            var clarr = JSON.parse('@Html.Raw(Json.Encode(Model.RoomID))')
             $('#typedd').select2('val', clarr);
         });
 
-    </script>
+    </script>*@
     <script>
         $(document).ready(function () {
             loadStates('@stateid');

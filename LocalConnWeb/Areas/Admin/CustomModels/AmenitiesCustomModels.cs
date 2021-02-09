@@ -11,6 +11,7 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
     {
         public long AmenitiesID { get; set; }
         public string AmenitiesName { get; set; }
+        public string AmenitiesIconPath { get; set; }
         public decimal AmenitiesBasePrice { get; set; }
     }
     public class AmenitiesAPIVM
@@ -26,5 +27,6 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
     public class AmenitiesSaveModel
     {
         public utblLCMstAmenitie Amenities { get; set; }
+        public Cropper cropper { get; set; }
     }
 }

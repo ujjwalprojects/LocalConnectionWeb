@@ -22,6 +22,10 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public decimal HotelBaseFare { get; set; }
         public decimal HotelOfferPrice { get; set; }
         public int OfferPercentage { get; set; }
+        public decimal RatePerNight { get; set; }
+        public decimal RatePerRoom { get; set; }
+        public decimal RatePerGuest { get; set; }
+        public decimal RatePerChild { get; set; }
         public int TotalSingleRooms { get; set; }
         public int TotalDoubleRooms { get; set; }
     }
@@ -80,6 +84,19 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         [Required(ErrorMessage = "Enter Offer Percentage")]
         [Display(Name = "Hotel Offer Percentage")]
         public int OfferPercentage { get; set; }
+
+        [Required(ErrorMessage = "Enter Rate Per Night")]
+        [Display(Name = "Rate Per Night")]
+        public decimal RatePerNight { get; set; }
+        [Required(ErrorMessage = "Enter Rate Per Room")]
+        [Display(Name = "Rate Per Room")]
+        public decimal RatePerRoom { get; set; }
+        [Required(ErrorMessage = "Enter Rate Per Guest")]
+        [Display(Name = "Rate Per Guest")]
+        public decimal RatePerGuest { get; set; }
+        [Required(ErrorMessage = "Enter Rate Per Child")]
+        [Display(Name = "Rate Per Child")]
+        public decimal RatePerChild { get; set; }
         //public int HotelHitCount { get; set; }
         [Required(ErrorMessage = "Enter Tags")]
         [Display(Name = "Enter Tags")]
@@ -159,9 +176,11 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public IEnumerable<utblLCMstHomeType> HomeTypeList { get; set; }
         public IEnumerable<utblLCMstStarRating> StarRatingList { get; set; }
         public IEnumerable<RoomsTypeDD> RoomsList { get; set; }
-        [Required(ErrorMessage = "Select Room Type")]
-        [Display(Name = "Room Type List")]
-        public List<long> RoomID { get; set; }
+        public HotelRoomTypeMap HotelRoomTypeMap { get; set; }
+        public IEnumerable<HotelRoomTypeMapView> HotelRoomTypeMapView { get; set; }
+        //[Required(ErrorMessage = "Select Room Type")]
+        //[Display(Name = "Room Type List")]
+        //public List<long> RoomID { get; set; }
     }
     public class LCHotelDD
     {
@@ -209,5 +228,21 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public utblLCHotel HotelDetails { get; set; }
         public IEnumerable<LCHotelDD> HotelList { get; set; }
         public ImageStrs ImageStrs { get; set; }
+    }
+   
+    public class HotelRoomTypeMap
+    {
+        public long HotelID { get; set; }
+        public long RoomID { get; set; }
+        public decimal RoomTypePrice { get; set; }
+        public bool IsStandard { get; set; }
+    }
+    public class HotelRoomTypeMapView
+    {
+        public long HotelID { get; set; }
+        public long RoomID { get; set; }
+        public string RoomType { get; set; }
+        public decimal RoomTypePrice { get; set; }
+        public bool IsStandard { get; set; }
     }
 }

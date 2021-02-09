@@ -23,14 +23,19 @@
                     </div>
                     <div class="card-body">
                         <div style="font-size:13px;">
-                            <span class="pull-right">
-                                <small>Base Fare</small><br />
-                                <i class="fa fa-rupee"></i> <span class="fare"> @item.HotelBaseFare.ToString("#,#", System.Globalization.CultureInfo.CreateSpecificCulture("hi-IN"))</span> per room/ per night
+                            <span class="ml-5 pull-right">
+                                <small>Final Fare</small><br />
+                                <i class="fa fa-rupee" style="font-size:35px;"></i> <span class="fare"> @item.HotelOfferPrice.ToString("#,#", System.Globalization.CultureInfo.CreateSpecificCulture("hi-IN"))</span> per room/ per night
                             </span>
+                            <span class=" pull-right">
+                                <small>Base Fare</small><br />
+                                <i class="fa fa-rupee" style="font-size:35px;"></i> <span class="fare"> @item.HotelBaseFare.ToString("#,#", System.Globalization.CultureInfo.CreateSpecificCulture("hi-IN"))</span> per room/ per night
+                            </span>
+
                             State : <b>@item.StateName</b><br />
                             City : <b>@item.CityName</b><br />
                             Locality : <b>@item.LocalityName</b><br />
-                           
+
                             Total Single Room : <b>@item.TotalSingleRooms</b>/
                             Totel Double Room : <b>@item.TotalDoubleRooms</b>
                         </div>
