@@ -92,7 +92,7 @@ namespace LocalConnWeb.Controllers
                         Role = token.role,
                         UserImage = token.userImage,
                         UserName = token.profileName,
-                        Email = token.email,
+                        //Email = token.email,
                     };
                     Session["SessionVar"] = session_model;
 
@@ -104,7 +104,7 @@ namespace LocalConnWeb.Controllers
 
                     var claims = new[]
                         {
-                            new Claim(ClaimTypes.Name, token.email),   
+                            new Claim(ClaimTypes.Name, token.userId),   
                             new Claim(ClaimTypes.Role, token.role)
                         };
 
