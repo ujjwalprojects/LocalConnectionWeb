@@ -179,10 +179,10 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
             string query = "id=" + id;
             model.HotelRoomTypeMapView = objAPI.GetRecordsByQueryString<HotelRoomTypeMapView>("lchotelconfig", "GetHotelRoomTypeMapList", query);
-            decimal BasePrice = 0, OfferPrice = 0,FinalPrice = 0, DefaultRoomTypePrice = 0;
+            decimal BasePrice = 0, OfferPrice = 0, FinalPrice = 0, DefaultRoomTypePrice = 0;
             foreach (var item in model.HotelRoomTypeMapView)
             {
-                if(item.IsStandard == true)
+                if (item.IsStandard == true)
                 {
                     DefaultRoomTypePrice = item.RoomTypePrice;
                 }
@@ -200,12 +200,11 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             TempData["ErrMsg"] = result;
             if (!result.ToLower().Contains("error"))
             {
-                return RedirectToAction("Index", "lchotels");
+                //return RedirectToAction("Index", "lchotels");
+                return RedirectToAction("CancellationAndTerms", new { id = model.LCHotel.HotelID });
             }
             return View(model);
         }
-
-
         public ActionResult AddRoomType(long id)
         {
             LCHotelManageModel model = new LCHotelManageModel();
@@ -265,7 +264,8 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                     model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
                     return View(model);
                 }
-                return RedirectToAction("AddRoomType", new { id = model.LCHotel.HotelID});
+                //return RedirectToAction("AddRoomType", new { id = model.LCHotel.HotelID});
+                return RedirectToAction("CancellationAndTerms", new { area = "LCHotels", id = model.LCHotel.HotelID });
             }
             catch (AuthorizationException)
             {
@@ -338,6 +338,70 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         {
             TempData["ErrMsg"] = objAPI.DeleteRecordByKey("lchotelconfig", "DeleteLCHotel", id.ToString(), "id");
             return RedirectToAction("index", "lchotels", new { Area = "Admin" });
+        }
+        public ActionResult CancellationAndTerms(long id)
+        {
+            try
+            {
+                LCHotelManageModel model = new LCHotelManageModel();
+                utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
+                model.HotelInfo = new HotelBriefInfo()
+                {
+                    HotelID = lchotel.HotelID,
+                    HotelName = lchotel.HotelName,
+                };
+                model.Terms = objAPI.GetRecordsByID<HotelTerms>("lchotelconfig", "HotelTerms", id);
+                model.Cancellations = objAPI.GetRecordsByID<HotelCancellations>("lchotelconfig", "HotelCancellations", id);
+                return View(model);
+            }
+            catch (AuthorizationException)
+            {
+                TempData["ErrMsg"] = "Your Login Session has expired. Please Login Again";
+                return RedirectToAction("Login", "Account", new { Area = "" });
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CancellationAndTerms(LCHotelManageModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    LCHotelManageModel sendModel = new LCHotelManageModel();
+
+                    if (model.Terms == null)
+                        sendModel.Terms = new List<HotelTerms>();
+                    else
+                        sendModel.Terms = model.Terms.Where(x => x.IsSelected).ToList();
+                    if (model.Cancellations == null)
+                        sendModel.Cancellations = new List<HotelCancellations>();
+                    else
+                        sendModel.Cancellations = model.Cancellations.Where(x => x.IsSelected).ToList();
+                    sendModel.HotelID = model.HotelInfo.HotelID;
+
+                    string jsonStr = JsonConvert.SerializeObject(sendModel);
+                    string result = objAPI.PostRecordtoApI("lchotelconfig", "SaveTermsCancellations", jsonStr);
+                    if (!result.ToLower().Contains("error"))
+                    {
+                        TempData["ErrMsg"] = "Tour Package Details Saved";
+                        return RedirectToAction("index");
+                    }
+                    TempData["ErrMsg"] = result;
+                }
+                utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", model.HotelInfo.HotelID.ToString(), "id");
+                model.HotelInfo = new HotelBriefInfo()
+                {
+                    HotelID = lchotel.HotelID,
+                    HotelName = lchotel.HotelName,
+                };
+                return View(model);
+            }
+            catch (AuthorizationException)
+            {
+                TempData["ErrMsg"] = "Your Login Session has expired. Please Login Again";
+                return RedirectToAction("Login", "Account", new { Area = "" });
+            }
         }
         public JsonResult GetStates(long id)
         {

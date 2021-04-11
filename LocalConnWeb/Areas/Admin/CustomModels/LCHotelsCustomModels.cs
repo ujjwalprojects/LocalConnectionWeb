@@ -169,6 +169,7 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
     {
         public LCEditHotelSaveModel LCEditHotel { get; set; }
         public LCHotelSaveModel LCHotel { get; set; }
+        public HotelBriefInfo HotelInfo { get; set; }
         public IEnumerable<CountryDD> CountryList { get; set; }
         public IEnumerable<StateDD> StateList { get; set; }
         public IEnumerable<CitiesDD> CitiesList { get; set; }
@@ -178,6 +179,10 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public IEnumerable<RoomsTypeDD> RoomsList { get; set; }
         public HotelRoomTypeMap HotelRoomTypeMap { get; set; }
         public IEnumerable<HotelRoomTypeMapView> HotelRoomTypeMapView { get; set; }
+
+        public List<HotelTerms> Terms { get; set; }
+        public List<HotelCancellations> Cancellations { get; set; }
+        public long HotelID { get; set; }
         //[Required(ErrorMessage = "Select Room Type")]
         //[Display(Name = "Room Type List")]
         //public List<long> RoomID { get; set; }
@@ -187,7 +192,11 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public long HotelID { get; set; }
         public string HotelName { get; set; }
     }
-
+    public class HotelBriefInfo
+    {
+        public long HotelID { get; set; }
+        public string HotelName { get; set; }
+    }
     //Hotel Image
     public class LCHotelImageView
     {
@@ -215,6 +224,12 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public long HotelImageID { get; set; }
         [Display(Name = "Hotel")]
         public long HotelID { get; set; }
+        [Display(Name = "Hotel Premises")]
+        public long  HotelPremID { get; set; }
+        [Display(Name = "Room Type")]
+        public long? RoomID { get; set; }
+        [Display(Name = "Room Cover")]
+        public bool IsRoomCover { get; set; }
         [Display(Name = "Set As Cover Image")]
         public bool IsHotelCover { get; set; }
         public string PhotoThumbPath { get; set; }
@@ -227,6 +242,8 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public LCHotelImageSaveModel LCHotelImage { get; set; }
         public utblLCHotel HotelDetails { get; set; }
         public IEnumerable<LCHotelDD> HotelList { get; set; }
+        public IEnumerable<utblLCMstHotelPremise> HotelPremiseDD { get; set; }
+        public IEnumerable<RoomsTypeDD> RoomTypeDD { get; set; }
         public ImageStrs ImageStrs { get; set; }
     }
    
@@ -244,5 +261,24 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public string RoomType { get; set; }
         public decimal RoomTypePrice { get; set; }
         public bool IsStandard { get; set; }
+    }
+
+
+    //LCHotel Terms and cancellations
+    public class HotelTerms
+    {
+        public long HotelTermsID { get; set; }
+        public long HotelID { get; set; }
+        public long TermID { get; set; }
+        public string TermName { get; set; }
+        public bool IsSelected { get; set; }
+    }
+    public class HotelCancellations
+    {
+        public long HotelCancID { get; set; }
+        public long HotelID { get; set; }
+        public long CancellationID { get; set; }
+        public string CancellationDesc { get; set; }
+        public bool IsSelected { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    
 }
 
 <link href="~/Content/NewCropper/cropper.min.css" rel="stylesheet" />
@@ -30,16 +31,18 @@
 <div class="card bg-light">
     <div class="card-body">
         @*<div>
-            <span class="display-4">@Model.HotelDetails.HotelName </span>
-        </div>*@
+                <span class="display-4">@Model.HotelDetails.HotelName </span>
+            </div>*@
         <hr />
         <div>
             <form method="post" action="/admin/lchotelimg/edit/">
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(m => m.LCHotelImage.HotelID)
-                @Html.HiddenFor(m=> m.LCHotelImage.HotelImageID)
+                @Html.HiddenFor(m => m.LCHotelImage.HotelImageID)
+                @Html.HiddenFor(m => m.LCHotelImage.PhotoNormalPath)
+                @Html.HiddenFor(m => m.LCHotelImage.PhotoThumbPath)
                 <div class="row">
-                    <div class="col-md-8 offset-md-2">
+                    <div class="col-md-6">
                         <div class="form-group text-center">
                             <div class="thumbnail">
                                 <div id="imgPhotoThumb">
@@ -63,6 +66,23 @@
                             @Html.TextAreaFor(model => model.ImageStrs.PhotoThumb, new { @class = "hidden", @id = "DisplayPictureThumb" })
                             @Html.ValidationMessageFor(m => m.ImageStrs.PhotoNormal)
                         </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LCHotelImage.HotelPremID, new { @class = "required" })
+                            @Html.DropDownListFor(m => m.LCHotelImage.HotelPremID, new SelectList(Model.HotelPremiseDD, "HotelPremID", "HotelPremName"), "-- Select Hotel Premises --", new { @class = "form-control", @id = "ddprem" })
+                            @Html.ValidationMessageFor(m => m.LCHotelImage.HotelPremID)
+                        </div>
+                        <div class="col-md d-none card card-body" id="Roomtype">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.LCHotelImage.RoomID, new { @class = "required" })
+                                @Html.DropDownListFor(m => m.LCHotelImage.RoomID, new SelectList(Model.RoomTypeDD, "RoomID", "RoomType"), "-- Select Room Type --", new { @class = "form-control", @id = "ddrtype" })
+                                @Html.ValidationMessageFor(m => m.LCHotelImage.RoomID)
+                            </div>
+                            <div class="form-group text-center">
+                                <label class="control-label">@Html.CheckBoxFor(m => m.LCHotelImage.IsRoomCover, new { @id = "isroomcover" }) &nbsp; Make Room Cover</label>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="required"> Image Caption</label>
                             @Html.TextAreaFor(m => m.LCHotelImage.PhotoCaption, new { @class = "form-control" })
@@ -72,6 +92,8 @@
                             <label class="control-label">@Html.CheckBoxFor(m => m.LCHotelImage.IsHotelCover) &nbsp; Make Cover Image</label>
                         </div>
                     </div>
+
+
                 </div>
                 <div class="action-div">
                     <a href="/admin/lchotelimg/index/@Model.LCHotelImage.HotelID" class="btn btn-secondary">Back To Images</a>
@@ -90,6 +112,29 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Content/NewCropper/cropper.min.js"></script>
     <script type="text/javascript">
+        //section to show and hide roomtype dropdown and ISroomcover
+        $(document).ready(function () {
+            $('#ddprem').on('change', function () {
+                var isroom = $("#ddprem option:selected").text();
+                if (isroom == "Room") {
+                    $('#Roomtype').removeClass('d-none');
+                }
+                else {
+                    $('#Roomtype').addClass('d-none');
+                    $('#ddrtype').val(null);
+                    $('#isroomcover').val(false);
+                }
+            });
+            var isroom = $("#ddprem option:selected").text();
+            if (isroom == "Room") {
+                $('#Roomtype').removeClass('d-none');
+            }
+            else {
+                $('#Roomtype').addClass('d-none');
+               
+            }
+        });
+        //end
         function ShowFileMsg() {
             if ($('#inputImage').val() == "") {
                 $("#ImageSpan").text("Upload photo...");

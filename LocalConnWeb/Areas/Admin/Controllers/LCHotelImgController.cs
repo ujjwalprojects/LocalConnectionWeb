@@ -44,6 +44,8 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             {
                 LCHotelImageManageModel model = new LCHotelImageManageModel();
                 model.HotelDetails = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
+                model.HotelPremiseDD = objAPI.GetAllRecords<utblLCMstHotelPremise>("lchotelconfig", "HotelPremisesDD");
+                model.RoomTypeDD = objAPI.GetRecordsByID<RoomsTypeDD>("lchotelconfig", "RoomTypeDD",id);
                 model.LCHotelImage = new LCHotelImageSaveModel() { HotelID = id };
                 return View(model);
             }
@@ -69,11 +71,15 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                     if (result.ToLower().Contains("error"))
                     {
                         model.HotelList = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelDD");
+                        model.HotelPremiseDD = objAPI.GetAllRecords<utblLCMstHotelPremise>("lchotelconfig", "HotelPremisesDD");
+                        model.RoomTypeDD = objAPI.GetRecordsByID<RoomsTypeDD>("lchotelconfig", "RoomTypeDD", model.LCHotelImage.HotelID);
                         return View(model);
                     }
                     return RedirectToAction("index", "LCHotelImg", new { Area = "admin" , id = model.LCHotelImage.HotelID});
                 }
                 model.HotelList = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelDD");
+                model.HotelPremiseDD = objAPI.GetAllRecords<utblLCMstHotelPremise>("lchotelconfig", "HotelPremisesDD");
+                model.RoomTypeDD = objAPI.GetRecordsByID<RoomsTypeDD>("lchotelconfig", "RoomTypeDD", model.LCHotelImage.HotelID);
                 return View(model);
             }
             catch (AuthorizationException)
@@ -88,10 +94,15 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             {
                 LCHotelImageManageModel model = new LCHotelImageManageModel();
                 utblLCHotelImage lchotel = objAPI.GetObjectByKey<utblLCHotelImage>("lchotelconfig", "LCHotelImagesByID", id.ToString(), "id");
+                model.HotelPremiseDD = objAPI.GetAllRecords<utblLCMstHotelPremise>("lchotelconfig", "HotelPremisesDD");
+                model.RoomTypeDD = objAPI.GetRecordsByID<RoomsTypeDD>("lchotelconfig", "RoomTypeDD", lchotel.HotelID);
                 model.LCHotelImage = new LCHotelImageSaveModel()
                 {
                     HotelImageID = lchotel.HotelImageID,
                     HotelID = lchotel.HotelID,
+                    HotelPremID= lchotel.HotelPremID,
+                    RoomID= lchotel.RoomID,
+                    IsRoomCover = lchotel.IsRoomCover,
                     IsHotelCover = lchotel.IsHotelCover,
                     PhotoNormalPath = lchotel.PhotoNormalPath,
                     PhotoThumbPath = lchotel.PhotoThumbPath,
@@ -115,14 +126,25 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    model.LCHotelImage.PhotoNormalPath = model.ImageStrs.PhotoNormal;
-                    model.LCHotelImage.PhotoThumbPath = model.ImageStrs.PhotoThumb;
+                    if (model.ImageStrs.PhotoNormal != null)
+                    {
+                        model.LCHotelImage.PhotoNormalPath = model.ImageStrs.PhotoNormal;
+                        model.LCHotelImage.PhotoThumbPath = model.ImageStrs.PhotoThumb;
+                    }
+                    else
+                    {
+                        model.LCHotelImage.PhotoNormalPath = model.LCHotelImage.PhotoNormalPath;
+                        model.LCHotelImage.PhotoThumbPath = model.LCHotelImage.PhotoThumbPath;
+                    }
+                   
                     string jsonStr = JsonConvert.SerializeObject(model.LCHotelImage);
                     string result = objAPI.PostRecordtoApI("lchotelconfig", "SaveLCHotelImages", jsonStr);
                     TempData["ErrMsg"] = result;
                     if (result.ToLower().Contains("error"))
                     {
                         model.HotelList = objAPI.GetAllRecords<LCHotelDD>("lchotelconfig", "LCHotelDD");
+                        model.HotelPremiseDD = objAPI.GetAllRecords<utblLCMstHotelPremise>("lchotelconfig", "HotelPremisesDD");
+                        model.RoomTypeDD = objAPI.GetRecordsByID<RoomsTypeDD>("lchotelconfig", "RoomTypeDD", model.LCHotelImage.HotelID);
                         return View(model);
                     }
                     return RedirectToAction("index", "LCHotelImg", new { Area = "admin", id = model.LCHotelImage.HotelID });
