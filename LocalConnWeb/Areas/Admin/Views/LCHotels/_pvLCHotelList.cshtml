@@ -24,20 +24,27 @@
                     <div class="card-body">
                         <div style="font-size:13px;">
                             <span class="ml-5 pull-right">
-                                <small>Final Fare</small><br />
-                                <i class="fa fa-rupee" style="font-size:35px;"></i> <span class="fare"> @item.HotelOfferPrice.ToString("#,#", System.Globalization.CultureInfo.CreateSpecificCulture("hi-IN"))</span> per room/ per night
+                                <small>Offer Price</small><br />
+
+                                @{ decimal offerprice = (item.OverallOfferPercentage * item.RoomTypePrice) / 100;}
+
+
+
+                              
+                                 <i class="fa fa-rupee" style="font-size:35px;"></i> <span class="fare"> @offerprice.ToString("#,#", System.Globalization.CultureInfo.CreateSpecificCulture("hi-IN"))</span> <span class="badge badge-primary">@item.RoomType</span>Per head
+
                             </span>
                             <span class=" pull-right">
-                                <small>Base Fare</small><br />
-                                <i class="fa fa-rupee" style="font-size:35px;"></i> <span class="fare"> @item.HotelBaseFare.ToString("#,#", System.Globalization.CultureInfo.CreateSpecificCulture("hi-IN"))</span> per room/ per night
+                                <small>Actual Price</small><br />
+                                <i class="fa fa-rupee" style="font-size:35px;"></i> <span class="fare"> @item.RoomTypePrice.ToString("#,#", System.Globalization.CultureInfo.CreateSpecificCulture("hi-IN"))</span>  <span class="badge badge-success">@item.RoomType</span>Per head
                             </span>
 
                             State : <b>@item.StateName</b><br />
                             City : <b>@item.CityName</b><br />
                             Locality : <b>@item.LocalityName</b><br />
 
-                            Total Single Room : <b>@item.TotalSingleRooms</b>/
-                            Totel Double Room : <b>@item.TotalDoubleRooms</b>
+                            @*Total Single Room : <b>@item.TotalSingleRooms</b>/
+                            Totel Double Room : <b>@item.TotalDoubleRooms</b>*@
                         </div>
                     </div>
                     <div class="card-footer" style="font-size:13px;">
@@ -47,10 +54,10 @@
                                 @Html.AntiForgeryToken()
                                 @Html.Hidden("id", item.HotelID)
                                 <a href="/admin/lchotels/edit/@item.HotelID" title="Edit"><i class="fa fa-pencil text-info"></i> Edit</a>
-                                |
+                                @*|
                                 <a href="/admin/lchotels/delete/@item.HotelID" class="delete" title="Delete" data-record="@item.HotelName">
                                     <i class="fa fa-trash text-danger"></i> Delete
-                                </a>
+                                </a>*@
                             </form>
                         </div>
                     </div>

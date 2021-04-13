@@ -110,19 +110,14 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                     LocalityID = lchotel.LocalityID,
                     HomeTypeID = lchotel.HomeTypeID,
                     StarRatingID = lchotel.StarRatingID,
-                    HotelBaseFare = lchotel.HotelBaseFare,
-                    HotelOfferPrice = lchotel.HotelOfferPrice,
-                    OfferPercentage = lchotel.OfferPercentage,
-                    RatePerNight = lchotel.RatePerNight,
-                    RatePerGuest = lchotel.RatePerGuest,
-                    RatePerRoom = lchotel.RatePerRoom,
-                    RatePerChild = lchotel.RatePerChild,
-                    //HotelHitCount = lchotel.HotelHitCount,
-                    MetaText = lchotel.MetaText,
-                    TotalSingleRooms = lchotel.TotalSingleRooms,
-                    TotalDoubleRooms = lchotel.TotalDoubleRooms,
-
-
+                    MaxOccupant= lchotel.MaxOccupant,
+                    OverallOfferPercentage=lchotel.OverallOfferPercentage,
+                    TwoOccupantPercentage=lchotel.TwoOccupantPercentage,
+                    ThreeOccupantPercentage=lchotel.ThreeOccupantPercentage,
+                    FourPlusOccupantPercentage=lchotel.FourPlusOccupantPercentage,
+                    ChildOccupantNote=lchotel.ChildOccupantNote,
+                    IsActive=lchotel.IsActive,
+                   
                 };
                 //model.RoomID = HotelRoomTypelist;
                 model.CountryList = objAPI.GetAllRecords<CountryDD>("configuration", "CountriesList");
@@ -187,13 +182,13 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                     DefaultRoomTypePrice = item.RoomTypePrice;
                 }
             }
-            BasePrice = lchotel.RatePerRoom + lchotel.RatePerNight + lchotel.RatePerGuest + DefaultRoomTypePrice;
-            OfferPrice = (lchotel.OfferPercentage * BasePrice) / 100;
-            FinalPrice = BasePrice - OfferPrice;
+            //BasePrice = lchotel.RatePerRoom + lchotel.RatePerNight + lchotel.RatePerGuest + DefaultRoomTypePrice;
+            //OfferPrice = (lchotel.OfferPercentage * BasePrice) / 100;
+            //FinalPrice = BasePrice - OfferPrice;
 
-            model.LCHotel.HotelID = id;
-            model.LCHotel.HotelBaseFare = BasePrice;
-            model.LCHotel.HotelOfferPrice = FinalPrice;
+            //model.LCHotel.HotelID = id;
+            //model.LCHotel.HotelBaseFare = BasePrice;
+            //model.LCHotel.HotelOfferPrice = FinalPrice;
 
             string jsonStr = JsonConvert.SerializeObject(model.LCHotel);
             string result = objAPI.PostRecordtoApI("lchotelconfig", "UpdateLCHotelRate", jsonStr);
@@ -223,17 +218,13 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                 LocalityID = lchotel.LocalityID,
                 HomeTypeID = lchotel.HomeTypeID,
                 StarRatingID = lchotel.StarRatingID,
-                HotelBaseFare = lchotel.HotelBaseFare,
-                HotelOfferPrice = lchotel.HotelOfferPrice,
-                OfferPercentage = lchotel.OfferPercentage,
-                RatePerNight = lchotel.RatePerNight,
-                RatePerGuest = lchotel.RatePerGuest,
-                RatePerRoom = lchotel.RatePerRoom,
-                RatePerChild = lchotel.RatePerChild,
-                //HotelHitCount = lchotel.HotelHitCount,
-                MetaText = lchotel.MetaText,
-                TotalSingleRooms = lchotel.TotalSingleRooms,
-                TotalDoubleRooms = lchotel.TotalDoubleRooms,
+                MaxOccupant = lchotel.MaxOccupant,
+                OverallOfferPercentage = lchotel.OverallOfferPercentage,
+                TwoOccupantPercentage = lchotel.TwoOccupantPercentage,
+                ThreeOccupantPercentage = lchotel.ThreeOccupantPercentage,
+                FourPlusOccupantPercentage = lchotel.FourPlusOccupantPercentage,
+                ChildOccupantNote = lchotel.ChildOccupantNote,
+                IsActive = lchotel.IsActive,
 
 
             };
@@ -264,8 +255,8 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                     model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
                     return View(model);
                 }
-                //return RedirectToAction("AddRoomType", new { id = model.LCHotel.HotelID});
-                return RedirectToAction("CancellationAndTerms", new { area = "LCHotels", id = model.LCHotel.HotelID });
+                return RedirectToAction("AddRoomType", new { id = model.LCHotel.HotelID });
+                //return RedirectToAction("CancellationAndTerms", new { area = "LCHotels", id = model.LCHotel.HotelID });
             }
             catch (AuthorizationException)
             {
@@ -297,17 +288,13 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                     LocalityID = lchotel.LocalityID,
                     HomeTypeID = lchotel.HomeTypeID,
                     StarRatingID = lchotel.StarRatingID,
-                    HotelBaseFare = lchotel.HotelBaseFare,
-                    HotelOfferPrice = lchotel.HotelOfferPrice,
-                    OfferPercentage = lchotel.OfferPercentage,
-                    RatePerNight = lchotel.RatePerNight,
-                    RatePerGuest = lchotel.RatePerGuest,
-                    RatePerRoom = lchotel.RatePerRoom,
-                    RatePerChild = lchotel.RatePerChild,
-                    //HotelHitCount = lchotel.HotelHitCount,
-                    MetaText = lchotel.MetaText,
-                    TotalSingleRooms = lchotel.TotalSingleRooms,
-                    TotalDoubleRooms = lchotel.TotalDoubleRooms,
+                    MaxOccupant = lchotel.MaxOccupant,
+                    OverallOfferPercentage = lchotel.OverallOfferPercentage,
+                    TwoOccupantPercentage = lchotel.TwoOccupantPercentage,
+                    ThreeOccupantPercentage = lchotel.ThreeOccupantPercentage,
+                    FourPlusOccupantPercentage = lchotel.FourPlusOccupantPercentage,
+                    ChildOccupantNote = lchotel.ChildOccupantNote,
+                    IsActive = lchotel.IsActive,
 
 
                 };

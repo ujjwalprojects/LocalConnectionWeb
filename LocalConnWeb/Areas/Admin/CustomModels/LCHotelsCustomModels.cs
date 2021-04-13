@@ -19,15 +19,15 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public string CityName { get; set; }
         public string LocalityName { get; set; }
         public string StarRatingName { get; set; }
-        public decimal HotelBaseFare { get; set; }
-        public decimal HotelOfferPrice { get; set; }
-        public int OfferPercentage { get; set; }
-        public decimal RatePerNight { get; set; }
-        public decimal RatePerRoom { get; set; }
-        public decimal RatePerGuest { get; set; }
-        public decimal RatePerChild { get; set; }
-        public int TotalSingleRooms { get; set; }
-        public int TotalDoubleRooms { get; set; }
+        public Int16 MaxOccupant { get; set; }
+        public Int16 OverallOfferPercentage { get; set; }
+        public Int16 TwoOccupantPercentage { get; set; }
+        public Int16 ThreeOccupantPercentage { get; set; }
+        public Int16 FourPlusOccupantPercentage { get; set; }
+        public string ChildOccupantNote { get; set; }
+        public bool IsActive { get; set; }
+        public string RoomType { get; set; }
+        public decimal RoomTypePrice { get; set; }
     }
     public class LCHotelAPIVM
     {
@@ -75,38 +75,37 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         [Required(ErrorMessage = "Select Star Rating")]
         [Display(Name = "Star Rating")]
         public long StarRatingID { get; set; }
-        [Required(ErrorMessage = "Enter Hotel Base Price")]
-        [Display(Name = "Hotel Base Fare")]
-        public decimal HotelBaseFare { get; set; }
-        [Required(ErrorMessage = "Enter Hotel Offer Price")]
-        [Display(Name = "Hotel Offer Price")]
-        public decimal HotelOfferPrice { get; set; }
-        [Required(ErrorMessage = "Enter Offer Percentage")]
-        [Display(Name = "Hotel Offer Percentage")]
-        public int OfferPercentage { get; set; }
 
-        [Required(ErrorMessage = "Enter Rate Per Night")]
-        [Display(Name = "Rate Per Night")]
-        public decimal RatePerNight { get; set; }
-        [Required(ErrorMessage = "Enter Rate Per Room")]
-        [Display(Name = "Rate Per Room")]
-        public decimal RatePerRoom { get; set; }
-        [Required(ErrorMessage = "Enter Rate Per Guest")]
-        [Display(Name = "Rate Per Guest")]
-        public decimal RatePerGuest { get; set; }
-        [Required(ErrorMessage = "Enter Rate Per Child")]
-        [Display(Name = "Rate Per Child")]
-        public decimal RatePerChild { get; set; }
-        //public int HotelHitCount { get; set; }
-        [Required(ErrorMessage = "Enter Tags")]
-        [Display(Name = "Enter Tags")]
-        public string MetaText { get; set; }
-        [Required(ErrorMessage = "Enter No of Single Rooms")]
-        [Display(Name = "Total Single Rooms")]
-        public int TotalSingleRooms { get; set; }
-        [Required(ErrorMessage = "Enter No of Double Rooms")]
-        [Display(Name = "Total Double Rooms")]
-        public int TotalDoubleRooms { get; set; }
+        [Required(ErrorMessage = "Enter Max Occupant Per Room")]
+        [Display(Name = "Max Occupant")]
+        public Int16 MaxOccupant { get; set; }
+
+        [Required(ErrorMessage = "Enter Offer %")]
+        [Display(Name = "Overall Offer Percentage")]
+        public Int16 OverallOfferPercentage { get; set; }
+
+        [Required(ErrorMessage = "Enter 2 Occupant %")]
+        [Display(Name = "Discount % for 2")]
+        public Int16 TwoOccupantPercentage { get; set; }
+
+        [Required(ErrorMessage = "Enter 3 Occupant %")]
+        [Display(Name = "Discount % for 3")]
+        public Int16 ThreeOccupantPercentage { get; set; }
+
+        [Required(ErrorMessage = "Enter 4 Plus Occupant %")]
+        [Display(Name = "Discount % for 4+")]
+        public Int16 FourPlusOccupantPercentage { get; set; }
+
+
+        [Required(ErrorMessage = "Enter Child Occupant Note")]
+        [Display(Name = "Child Occupant Note")]
+        public string ChildOccupantNote { get; set; }
+
+
+        [Required(ErrorMessage = "Select to enaple hotel")]
+        [Display(Name = "Enable/Disable Hotel")]
+        public bool IsActive { get; set; }
+
     }
     public class LCEditHotelSaveModel
     {
@@ -144,25 +143,57 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         [Required(ErrorMessage = "Select Star Rating")]
         [Display(Name = "Star Rating")]
         public long StarRatingID { get; set; }
-        [Required(ErrorMessage = "Enter Hotel Base Price")]
-        [Display(Name = "Hotel Base Fare")]
-        public decimal HotelBaseFare { get; set; }
-        [Required(ErrorMessage = "Enter Hotel Offer Price")]
-        [Display(Name = "Hotel Offer Price")]
-        public decimal HotelOfferPrice { get; set; }
-        [Required(ErrorMessage = "Enter Offer Percentage")]
-        [Display(Name = "Hotel Offer Percentage")]
-        public int OfferPercentage { get; set; }
-        //public int HotelHitCount { get; set; }
-        [Required(ErrorMessage = "Enter Tags")]
-        [Display(Name = "Enter Tags")]
-        public string MetaText { get; set; }
-        [Required(ErrorMessage = "Enter No of Single Rooms")]
-        [Display(Name = "Total Single Rooms")]
-        public int TotalSingleRooms { get; set; }
-        [Required(ErrorMessage = "Enter No of Double Rooms")]
-        [Display(Name = "Total Double Rooms")]
-        public int TotalDoubleRooms { get; set; }
+
+        [Required(ErrorMessage = "Enter Max Occupant Per Room")]
+        [Display(Name = "Max Occupant")]
+        public Int16 MaxOccupant { get; set; }
+
+        [Required(ErrorMessage = "Enter Offer %")]
+        [Display(Name = "Overall Offer Percentage")]
+        public Int16 OverallOfferPercentage { get; set; }
+
+        [Required(ErrorMessage = "Enter 2 Occupant %")]
+        [Display(Name = "Discount % for 2")]
+        public Int16 TwoOccupantPercentage { get; set; }
+
+        [Required(ErrorMessage = "Enter 3 Occupant %")]
+        [Display(Name = "Discount % for 3")]
+        public Int16 ThreeOccupantPercentage { get; set; }
+
+        [Required(ErrorMessage = "Enter 4 Plus Occupant %")]
+        [Display(Name = "Discount % for 4+")]
+        public Int16 FourPlusOccupantPercentage { get; set; }
+
+
+        [Required(ErrorMessage = "Enter Child Occupant Note")]
+        [Display(Name = "Child Occupant Note")]
+        public string ChildOccupantNote { get; set; }
+
+
+        [Required(ErrorMessage = "Select to enaple hotel")]
+        [Display(Name = "Enable/Disable Hotel")]
+        public string IsActive { get; set; }
+
+
+        //[Required(ErrorMessage = "Enter Hotel Base Price")]
+        //[Display(Name = "Hotel Base Fare")]
+        //public decimal HotelBaseFare { get; set; }
+        //[Required(ErrorMessage = "Enter Hotel Offer Price")]
+        //[Display(Name = "Hotel Offer Price")]
+        //public decimal HotelOfferPrice { get; set; }
+        //[Required(ErrorMessage = "Enter Offer Percentage")]
+        //[Display(Name = "Hotel Offer Percentage")]
+        //public int OfferPercentage { get; set; }
+        ////public int HotelHitCount { get; set; }
+        //[Required(ErrorMessage = "Enter Tags")]
+        //[Display(Name = "Enter Tags")]
+        //public string MetaText { get; set; }
+        //[Required(ErrorMessage = "Enter No of Single Rooms")]
+        //[Display(Name = "Total Single Rooms")]
+        //public int TotalSingleRooms { get; set; }
+        //[Required(ErrorMessage = "Enter No of Double Rooms")]
+        //[Display(Name = "Total Double Rooms")]
+        //public int TotalDoubleRooms { get; set; }
         public List<long> RoomID { get; set; }
     }
     public class LCHotelManageModel

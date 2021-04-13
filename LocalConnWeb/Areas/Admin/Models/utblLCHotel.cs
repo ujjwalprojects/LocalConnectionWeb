@@ -21,16 +21,12 @@ namespace LocalConnWeb.Areas.Admin.Models
         public long LocalityID { get; set; }
         public long HomeTypeID { get; set; }
         public long StarRatingID { get; set; }
-        public decimal HotelBaseFare { get; set; }
-        public decimal HotelOfferPrice { get; set; }
-        public int OfferPercentage { get; set; }
-        public decimal RatePerNight { get; set; }
-        public decimal RatePerRoom { get; set; }
-        public decimal RatePerGuest { get; set; }
-        public decimal RatePerChild { get; set; }
-        public int HotelHitCount { get; set; }
-        public string MetaText { get; set; }
-        public int TotalSingleRooms { get; set; }
-        public int TotalDoubleRooms { get; set; }
+        public Int16 MaxOccupant { get; set; }
+        public Int16 OverallOfferPercentage { get; set; }
+        public Int16 TwoOccupantPercentage { get; set; }
+        public Int16 ThreeOccupantPercentage { get; set; }
+        public Int16 FourPlusOccupantPercentage { get; set; }
+        public string ChildOccupantNote { get; set; }
+        public bool IsActive { get; set; }
     }
 }
