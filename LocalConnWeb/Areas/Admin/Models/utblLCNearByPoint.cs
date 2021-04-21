@@ -11,6 +11,7 @@ namespace LocalConnWeb.Areas.Admin.Models
         [Key]
         public long NearbyPointsID { get; set; }
         public long NearByID { get; set; }
+        public long HotelID { get; set; }
         public string NearByPoints { get; set; }
         public string NearByDistance { get; set; }
     }

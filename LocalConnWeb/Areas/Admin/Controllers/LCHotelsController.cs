@@ -423,6 +423,83 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             model.LCNearByPointsDD = objAPI.GetAllRecords<LCNearBysTypeDD>("lchotelconfig", "NearByDD");
             return View(model);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddNearBys(LCHotelManageModel model)
+        {
+            try
+            {
+                model.LCNearByPoints.HotelID = model.LCHotel.HotelID;
+                string jsonStr = JsonConvert.SerializeObject(model.LCNearByPoints);
+                string result = objAPI.PostRecordtoApI("lchotelconfig", "SaveNearByPoints", jsonStr);
+                TempData["ErrMsg"] = result;
+                if (result.ToLower().Contains("error"))
+                {
+                    utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", model.LCHotel.HotelID.ToString(), "id");
+                    string query = "id=" + model.LCHotel.HotelID;
+                    model.LCNearByPointsView = objAPI.GetRecordsByQueryString<LCNearByPointsView>("lchotelconfig", "GetLCNearByPointsMapList", query);
+                    model.LCNearByPointsDD = objAPI.GetAllRecords<LCNearBysTypeDD>("lchotelconfig", "NearByDD");
+                    return View(model);
+                }
+                return RedirectToAction("AddNearBys", new { id = model.LCHotel.HotelID });
+            }
+            catch (AuthorizationException)
+            {
+                TempData["ErrMsg"] = "Your Login Session has expired. Please Login Again";
+                return RedirectToAction("Login", "Account", new { Area = "" });
+
+            }
+        }
+        public ActionResult EditNearBys(long id, long rid)
+        {
+            try
+            {
+                LCHotelManageModel model = new LCHotelManageModel();
+                string query = "id=" + id + "&rid=" + rid;
+                model.HotelRoomTypeMap = objAPI.GetRecordByQueryString<HotelRoomTypeMap>("lchotelconfig", "GetHotelRoomTypeMapByID", query);
+                string querylist = "id=" + id;
+                model.HotelRoomTypeMapView = objAPI.GetRecordsByQueryString<HotelRoomTypeMapView>("lchotelconfig", "GetHotelRoomTypeMapList", querylist);
+                utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
+                model.LCHotel = new LCHotelSaveModel()
+                {
+                    HotelID = lchotel.HotelID,
+                    HotelName = lchotel.HotelName,
+                    HotelAddress = lchotel.HotelAddress,
+                    HotelDesc = lchotel.HotelDesc,
+                    HotelContactNo = lchotel.HotelContactNo,
+                    HotelEmail = lchotel.HotelEmail,
+                    CountryID = lchotel.CountryID,
+                    StateID = lchotel.StateID,
+                    CityID = lchotel.CityID,
+                    LocalityID = lchotel.LocalityID,
+                    HomeTypeID = lchotel.HomeTypeID,
+                    StarRatingID = lchotel.StarRatingID,
+                    MaxOccupant = lchotel.MaxOccupant,
+                    OverallOfferPercentage = lchotel.OverallOfferPercentage,
+                    TwoOccupantPercentage = lchotel.TwoOccupantPercentage,
+                    ThreeOccupantPercentage = lchotel.ThreeOccupantPercentage,
+                    FourPlusOccupantPercentage = lchotel.FourPlusOccupantPercentage,
+                    ChildOccupantNote = lchotel.ChildOccupantNote,
+                    IsActive = lchotel.IsActive,
+
+
+                };
+                List<RoomsTypeDD> RTypelist = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
+                foreach (var item in model.HotelRoomTypeMapView)
+                {
+                    RTypelist.RemoveAll(x => x.RoomID == item.RoomID && x.RoomID != rid);
+                }
+                model.RoomsList = RTypelist.ToList();
+                return View("AddRoomType", model);
+            }
+            catch (AuthorizationException)
+            {
+                TempData["ErrMsg"] = "Your Login Session has expired. Please Login Again";
+                return RedirectToAction("Login", "Account", new { Area = "" });
+            }
+            //return View();
+        }
+
         public JsonResult GetStates(long id)
         {
             var model = objAPI.GetRecordsByID<StateDD>("configuration", "statebycountry", id);

@@ -226,6 +226,7 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
 
         public List<LCNearByPointsView> LCNearByPointsView { get; set; }
         public List<LCNearBysTypeDD> LCNearByPointsDD { get; set; }
+        public LCNearByPoints LCNearByPoints { get; set; }
 
         public long HotelID { get; set; }
         //[Required(ErrorMessage = "Select Room Type")]
@@ -337,6 +338,7 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
     {
         public long NearbyPointsID { get; set; }
         public long NearByID { get; set; }
+        public long HotelID { get; set; }
         public string NearByPoints { get; set; }
         public string NearByDistance { get; set; }
     }
