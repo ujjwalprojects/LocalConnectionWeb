@@ -199,6 +199,7 @@
     <Compile Include="Areas\Admin\Controllers\LCHotelImgController.cs" />
     <Compile Include="Areas\Admin\Controllers\LCHotelOffersController.cs" />
     <Compile Include="Areas\Admin\Controllers\LCHotelsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LCNearByPointsController.cs" />
     <Compile Include="Areas\Admin\Controllers\LocalitiesController.cs" />
     <Compile Include="Areas\Admin\Controllers\PackageController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoomsController.cs" />
@@ -244,6 +245,7 @@
     <Compile Include="Areas\Admin\Models\utblLCMstHotelPremise.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstLocalitie.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstStarRating.cs" />
+    <Compile Include="Areas\Admin\Models\utblLCNearByPoint.cs" />
     <Compile Include="Areas\Admin\Models\utblLCRoom.cs" />
     <Compile Include="Areas\Admin\Models\utblMstActivitie.cs" />
     <Compile Include="Areas\Admin\Models\utblMstBanner.cs" />
@@ -1073,6 +1075,7 @@
     <Content Include="Areas\Admin\Views\LCHotelOffers\_pvHotelOfferList.cshtml" />
     <Content Include="Areas\Admin\Views\LCHotelOffers\AddHotelOffer.cshtml" />
     <Content Include="Areas\Admin\Views\LCHotelOffers\EditHotelOffer.cshtml" />
+    <Content Include="Areas\Admin\Views\LCNearByPoints\Index.cshtml" />
     <None Include="Properties\PublishProfiles\API.pubxml" />
     <Content Include="Content\ckeditor\CHANGES.md" />
     <Content Include="Content\ckeditor\LICENSE.md" />

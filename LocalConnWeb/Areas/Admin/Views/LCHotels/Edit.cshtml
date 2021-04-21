@@ -108,10 +108,17 @@
                         @Html.ValidationMessageFor(m => m.LCHotel.MaxOccupant)
                     </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.MaxOccupant, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.MaxOccupant, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.MaxOccupant)
+                    </div>
+                </div>
+                <div class="col-md-6">
                     <div class="form-group">
                         @Html.LabelFor(m => m.LCHotel.ChildOccupantNote, new { @class = "required" })
-                        @Html.TextAreaFor(m => m.LCHotel.ChildOccupantNote, new { @class = "form-control", @placeholder="Content should be between 20-25 words for better view in the app" })
+                        @Html.TextAreaFor(m => m.LCHotel.ChildOccupantNote, new { @class = "form-control", @placeholder = "Content should be between 20-25 words for better view in the app" })
                         @Html.ValidationMessageFor(m => m.LCHotel.ChildOccupantNote)
                     </div>
                 </div>

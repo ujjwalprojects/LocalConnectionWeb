@@ -1,6 +1,7 @@
 ﻿using LocalConnWeb.Areas.Admin.Models;
 using LocalConnWeb.Helpers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public string LocalityName { get; set; }
         public string StarRatingName { get; set; }
         public Int16 MaxOccupant { get; set; }
+        public Int16 MaxRooms { get; set; }
         public Int16 OverallOfferPercentage { get; set; }
         public Int16 TwoOccupantPercentage { get; set; }
         public Int16 ThreeOccupantPercentage { get; set; }
@@ -79,6 +81,10 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         [Required(ErrorMessage = "Enter Max Occupant Per Room")]
         [Display(Name = "Max Occupant")]
         public Int16 MaxOccupant { get; set; }
+
+        [Required(ErrorMessage = "Enter Max Room")]
+        [Display(Name = "Max Rooms")]
+        public Int16 MaxRooms { get; set; }
 
         [Required(ErrorMessage = "Enter Offer %")]
         [Display(Name = "Overall Offer Percentage")]
@@ -148,6 +154,10 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         [Display(Name = "Max Occupant")]
         public Int16 MaxOccupant { get; set; }
 
+        [Required(ErrorMessage = "Enter Max Room")]
+        [Display(Name = "Max Rooms")]
+        public Int16 MaxRooms { get; set; }
+
         [Required(ErrorMessage = "Enter Offer %")]
         [Display(Name = "Overall Offer Percentage")]
         public Int16 OverallOfferPercentage { get; set; }
@@ -213,6 +223,10 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
 
         public List<HotelTerms> Terms { get; set; }
         public List<HotelCancellations> Cancellations { get; set; }
+
+        public List<LCNearByPointsView> LCNearByPointsView { get; set; }
+        public List<LCNearBysTypeDD> LCNearByPointsDD { get; set; }
+
         public long HotelID { get; set; }
         //[Required(ErrorMessage = "Select Room Type")]
         //[Display(Name = "Room Type List")]
@@ -311,5 +325,45 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public long CancellationID { get; set; }
         public string CancellationDesc { get; set; }
         public bool IsSelected { get; set; }
+    }
+
+    //LCNearByPoints
+    public class LCNearBysTypeDD
+    {
+        public long NearByID { get; set; }
+        public string NearByName { get; set; }
+    }
+    public class LCNearByPoints
+    {
+        public long NearbyPointsID { get; set; }
+        public long NearByID { get; set; }
+        public string NearByPoints { get; set; }
+        public string NearByDistance { get; set; }
+    }
+    public class LCNearByPointsView
+    {
+        public long NearbyPointsID { get; set; }
+        public long NearByID { get; set; }
+        public string NearByName { get; set; }
+        public string NearByPoints { get; set; }
+        public string NearByDistance { get; set; }
+    }
+    public class LCNearByPointsAPIVM
+    {
+        public IEnumerable<LCNearByPointsView> LCNearByPointView { get; set; }
+        public IEnumerable<LCNearBysTypeDD> NearBysDD { get; set; }
+        public int TotalRecords { get; set; }
+    }
+    public class LCNearByPointsVM
+    {
+        public IEnumerable<LCNearByPointsView> LCNearByPointView { get; set; }
+        public IEnumerable<LCNearBysTypeDD> NearBysDD { get; set; }
+        public PagingInfo PagingInfo { get; set; }
+    }
+    public class LCNearByPointsSaveModel
+    {
+        public utblLCNearByPoint NearPoints { get; set; }
+        public LCNearByPoints LCNearByPoints { get; set; }
+        public List<LCNearBysTypeDD> LCNearByPointsDD { get; set; }
     }
 }

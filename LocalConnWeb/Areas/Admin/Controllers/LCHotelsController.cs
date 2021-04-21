@@ -200,6 +200,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             }
             return View(model);
         }
+        //RoomType
         public ActionResult AddRoomType(long id)
         {
             LCHotelManageModel model = new LCHotelManageModel();
@@ -389,6 +390,38 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                 TempData["ErrMsg"] = "Your Login Session has expired. Please Login Again";
                 return RedirectToAction("Login", "Account", new { Area = "" });
             }
+        }
+        //NearBy
+        public ActionResult AddNearBys(long id)
+        {
+            LCHotelManageModel model = new LCHotelManageModel();
+            utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
+            model.LCHotel = new LCHotelSaveModel()
+            {
+                HotelID = lchotel.HotelID,
+                HotelName = lchotel.HotelName,
+                HotelAddress = lchotel.HotelAddress,
+                HotelDesc = lchotel.HotelDesc,
+                HotelContactNo = lchotel.HotelContactNo,
+                HotelEmail = lchotel.HotelEmail,
+                CountryID = lchotel.CountryID,
+                StateID = lchotel.StateID,
+                CityID = lchotel.CityID,
+                LocalityID = lchotel.LocalityID,
+                HomeTypeID = lchotel.HomeTypeID,
+                StarRatingID = lchotel.StarRatingID,
+                MaxOccupant = lchotel.MaxOccupant,
+                OverallOfferPercentage = lchotel.OverallOfferPercentage,
+                TwoOccupantPercentage = lchotel.TwoOccupantPercentage,
+                ThreeOccupantPercentage = lchotel.ThreeOccupantPercentage,
+                FourPlusOccupantPercentage = lchotel.FourPlusOccupantPercentage,
+                ChildOccupantNote = lchotel.ChildOccupantNote,
+                IsActive = lchotel.IsActive,
+            };
+            string query = "id=" + id;
+            model.LCNearByPointsView = objAPI.GetRecordsByQueryString<LCNearByPointsView>("lchotelconfig", "GetLCNearByPointsMapList", query);
+            model.LCNearByPointsDD = objAPI.GetAllRecords<LCNearBysTypeDD>("lchotelconfig", "NearByDD");
+            return View(model);
         }
         public JsonResult GetStates(long id)
         {
