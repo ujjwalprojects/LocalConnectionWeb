@@ -227,7 +227,7 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public List<LCNearByPointsView> LCNearByPointsView { get; set; }
         public List<LCNearBysTypeDD> LCNearByPointsDD { get; set; }
         public LCNearByPoints LCNearByPoints { get; set; }
-
+        public utblLCNearByPoint NearByPoints { get; set; }
         public long HotelID { get; set; }
         //[Required(ErrorMessage = "Select Room Type")]
         //[Display(Name = "Room Type List")]
@@ -296,7 +296,13 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
     public class HotelRoomTypeMap
     {
         public long HotelID { get; set; }
+
+        [Required(ErrorMessage = "Select Room Type")]
+        [Display(Name = "Room Type")]
         public long RoomID { get; set; }
+
+        [Required(ErrorMessage = "Enter Room Rate")]
+        [Display(Name = "Room Rate")]
         public decimal RoomTypePrice { get; set; }
         public bool IsStandard { get; set; }
     }
@@ -337,17 +343,27 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
     public class LCNearByPoints
     {
         public long NearbyPointsID { get; set; }
+        [Required(ErrorMessage = "Select Type")]
+        [Display(Name = "Type")]
         public long NearByID { get; set; }
         public long HotelID { get; set; }
+        [Required(ErrorMessage = "Enter Point Name")]
+        [Display(Name = "Point Name")]
         public string NearByPoints { get; set; }
+        [Required(ErrorMessage = "Enter Distance")]
+        [Display(Name = "Distance")]
         public string NearByDistance { get; set; }
     }
     public class LCNearByPointsView
     {
         public long NearbyPointsID { get; set; }
         public long NearByID { get; set; }
+        public long HotelID { get; set; }
+        
         public string NearByName { get; set; }
+        
         public string NearByPoints { get; set; }
+      
         public string NearByDistance { get; set; }
     }
     public class LCNearByPointsAPIVM

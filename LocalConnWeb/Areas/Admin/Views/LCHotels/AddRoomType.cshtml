@@ -7,8 +7,8 @@
 <link href="~/Content/Select2/select2.min.css" rel="stylesheet" />
 <div class="title-div">
     <i class="fa fa-hand-o-right"></i>&nbsp;
-    <span class="title">Hotels - Room Type Mapping</span>&nbsp;
-    <small>Step 2 of 3</small>
+    <span class="title">Hotels - Configure Room Rates </span>&nbsp;
+    <small>Step 2 of 4</small>
 </div>
 <div class="card ">
     <div class="card-header bg-head">
@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-md">
                         <div class="form-group">
-                            <input type="submit" value="Add" class="btn btn-outline-danger mt-4" id="bCheck" />
+                            <input type="submit" value="Save" class="btn btn-outline-danger mt-4" id="bCheck" />
                         </div>
                     </div>
                 </div>
@@ -133,7 +133,8 @@
                         @Html.ActionLink("Back", "Edit", "lchotels", new { Area = "Admin", id = Model.LCHotel.HotelID }, new { @class = "btn btn-secondary btn-sm" })
                         @if (Model.HotelRoomTypeMapView.Count() > 0)
                         {
-                            @Html.ActionLink("Next", "CancellationAndTerms", "lchotels", new { Area = "Admin", id = Model.LCHotel.HotelID }, new { @class = "btn btn-success btn-sm pull-right ml-2 " })
+                            @*@Html.ActionLink("Next", "CancellationAndTerms", "lchotels", new { Area = "Admin", id = Model.LCHotel.HotelID }, new { @class = "btn btn-success btn-sm pull-right ml-2 " })*@
+                            @Html.ActionLink("Next", "AddNearBys", "lchotels", new { Area = "Admin", id = Model.LCHotel.HotelID }, new { @class = "btn btn-success btn-sm pull-right ml-2 " })
                         }
                         @*<button type="submit" class="btn btn-sm btn-success pull-right"><i class="fa fa-save"></i> Next</button>*@
                     </form>

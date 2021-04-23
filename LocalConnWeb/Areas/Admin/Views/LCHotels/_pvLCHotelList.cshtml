@@ -67,8 +67,8 @@
                 <div class="hidden-xs col-md-3 col-sm-3">
                     @Model.PagingInfo.TotalItems Record(s)
                 </div>
-                <div class="visible-lg visible-md visible-sm col-md-9 col-sm-9 ns-pagination" data-otf-target="#DataGrid" data-otf-actionlink="/admin/lchotels/index">
-                    @Html.PageLinks(Model.PagingInfo, x => Url.Action("index", "lchotels", new { @Area = "admin", PageNo = x, PageSize = Model.PagingInfo.ItemsPerPage }))
+                <div class="visible-lg visible-md visible-sm col-md-9 col-sm-9 ns-pagination" data-otf-target="#DataGrid" data-otf-actionlink="/admin/LCHotels/index">
+                    @Html.PageLinks(Model.PagingInfo, x => Url.Action("index", "LCHotels", new { @Area = "admin", PageNo = x, PageSize = Model.PagingInfo.ItemsPerPage }))
                 </div>
             </div>
         </div>

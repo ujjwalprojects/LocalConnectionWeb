@@ -1076,6 +1076,7 @@
     <Content Include="Areas\Admin\Views\LCHotelOffers\AddHotelOffer.cshtml" />
     <Content Include="Areas\Admin\Views\LCHotelOffers\EditHotelOffer.cshtml" />
     <Content Include="Areas\Admin\Views\LCNearByPoints\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\AddNearBys.cshtml" />
     <None Include="Properties\PublishProfiles\API.pubxml" />
     <Content Include="Content\ckeditor\CHANGES.md" />
     <Content Include="Content\ckeditor\LICENSE.md" />

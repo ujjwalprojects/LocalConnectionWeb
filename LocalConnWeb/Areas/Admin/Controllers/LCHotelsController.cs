@@ -246,16 +246,17 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         {
             try
             {
-                model.HotelRoomTypeMap.HotelID = model.LCHotel.HotelID;
-                string jsonStr = JsonConvert.SerializeObject(model.HotelRoomTypeMap);
-                string result = objAPI.PostRecordtoApI("lchotelconfig", "SaveHotelRoomTypeMap", jsonStr);
-                TempData["ErrMsg"] = result;
-                if (result.ToLower().Contains("error"))
-                {
-                    utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", model.LCHotel.HotelID.ToString(), "id");
-                    model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
-                    return View(model);
-                }
+                    model.HotelRoomTypeMap.HotelID = model.LCHotel.HotelID;
+                    string jsonStr = JsonConvert.SerializeObject(model.HotelRoomTypeMap);
+                    string result = objAPI.PostRecordtoApI("lchotelconfig", "SaveHotelRoomTypeMap", jsonStr);
+                    TempData["ErrMsg"] = result;
+                    if (result.ToLower().Contains("error"))
+                    {
+                        utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", model.LCHotel.HotelID.ToString(), "id");
+                        model.RoomsList = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
+                        return View(model);
+                    }
+                
                 return RedirectToAction("AddRoomType", new { id = model.LCHotel.HotelID });
                 //return RedirectToAction("CancellationAndTerms", new { area = "LCHotels", id = model.LCHotel.HotelID });
             }
@@ -450,15 +451,22 @@ namespace LocalConnWeb.Areas.Admin.Controllers
 
             }
         }
-        public ActionResult EditNearBys(long id, long rid)
+        public ActionResult EditNearBys(long id, long nid)
         {
             try
             {
                 LCHotelManageModel model = new LCHotelManageModel();
-                string query = "id=" + id + "&rid=" + rid;
-                model.HotelRoomTypeMap = objAPI.GetRecordByQueryString<HotelRoomTypeMap>("lchotelconfig", "GetHotelRoomTypeMapByID", query);
-                string querylist = "id=" + id;
-                model.HotelRoomTypeMapView = objAPI.GetRecordsByQueryString<HotelRoomTypeMapView>("lchotelconfig", "GetHotelRoomTypeMapList", querylist);
+                string query = "id=" + nid;
+                model.NearByPoints = objAPI.GetRecordByQueryString<utblLCNearByPoint>("lchotelconfig", "NearByPointsByID", query);
+                model.LCNearByPoints = new LCNearByPoints()
+                {
+                    NearbyPointsID = model.NearByPoints.NearbyPointsID,
+                    NearByID = model.NearByPoints.NearByID,
+                    HotelID = model.NearByPoints.HotelID,
+                    NearByPoints = model.NearByPoints.NearByPoints,
+                    NearByDistance = model.NearByPoints.NearByDistance
+                };
+                model.LCNearByPointsDD = objAPI.GetAllRecords<LCNearBysTypeDD>("lchotelconfig", "NearByDD");
                 utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
                 model.LCHotel = new LCHotelSaveModel()
                 {
@@ -484,13 +492,9 @@ namespace LocalConnWeb.Areas.Admin.Controllers
 
 
                 };
-                List<RoomsTypeDD> RTypelist = objAPI.GetAllRecords<RoomsTypeDD>("configuration", "RoomTypeDD");
-                foreach (var item in model.HotelRoomTypeMapView)
-                {
-                    RTypelist.RemoveAll(x => x.RoomID == item.RoomID && x.RoomID != rid);
-                }
-                model.RoomsList = RTypelist.ToList();
-                return View("AddRoomType", model);
+                string _query = "id=" + id;
+                model.LCNearByPointsView = objAPI.GetRecordsByQueryString<LCNearByPointsView>("lchotelconfig", "GetLCNearByPointsMapList", _query);
+                return View("AddNearBys", model);
             }
             catch (AuthorizationException)
             {
@@ -498,6 +502,13 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Account", new { Area = "" });
             }
             //return View();
+        }
+        public ActionResult DeleteNearBys(long id, long hid)
+        {
+            string query = "id=" + id;
+            TempData["ErrMsg"] = objAPI.DeleteRecordByQuerystring("lchotelconfig", "DeleteNearByPoints" , query);
+               
+            return RedirectToAction("AddNearBys", new { id = hid });
         }
 
         public JsonResult GetStates(long id)
