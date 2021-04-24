@@ -198,7 +198,6 @@
     <Compile Include="Areas\Admin\Controllers\ItinerariesController.cs" />
     <Compile Include="Areas\Admin\Controllers\LCHotelsController.cs" />
     <Compile Include="Areas\Admin\Controllers\LocalitiesController.cs" />
-    <Compile Include="Areas\Admin\Controllers\NotificationController.cs" />
     <Compile Include="Areas\Admin\Controllers\PackageController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoomsController.cs" />
     <Compile Include="Areas\Admin\Controllers\StarRatingController.cs" />
