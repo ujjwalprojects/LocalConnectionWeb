@@ -246,6 +246,7 @@
     <Compile Include="Areas\Admin\Models\utblLCMstLocalitie.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstStarRating.cs" />
     <Compile Include="Areas\Admin\Models\utblLCNearByPoint.cs" />
+    <Compile Include="Areas\Admin\Models\utblLCNotification.cs" />
     <Compile Include="Areas\Admin\Models\utblLCRoom.cs" />
     <Compile Include="Areas\Admin\Models\utblMstActivitie.cs" />
     <Compile Include="Areas\Admin\Models\utblMstBanner.cs" />
