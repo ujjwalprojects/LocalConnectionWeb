@@ -218,6 +218,7 @@
     <Compile Include="Areas\Admin\CustomModels\DestinationCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\ExclusionCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\FeatHotelsCustomModels.cs" />
+    <Compile Include="Areas\Admin\CustomModels\HelpPageCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\HomeTypeCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\HotelCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\InclusionCustomModels.cs" />
