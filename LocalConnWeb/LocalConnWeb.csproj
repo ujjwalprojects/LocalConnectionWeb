@@ -237,6 +237,7 @@
     <Compile Include="Areas\Admin\Models\utblAgent.cs" />
     <Compile Include="Areas\Admin\Models\utblLCFeaturedHotel.cs" />
     <Compile Include="Areas\Admin\Models\utblLCFeatureOffer.cs" />
+    <Compile Include="Areas\Admin\Models\utblLCHelpPage.cs" />
     <Compile Include="Areas\Admin\Models\utblLCHotel.cs" />
     <Compile Include="Areas\Admin\Models\utblLCHotelImage.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstAmenitie.cs" />
