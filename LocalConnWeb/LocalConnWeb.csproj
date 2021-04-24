@@ -225,6 +225,7 @@
     <Compile Include="Areas\Admin\CustomModels\LCHotelOffersCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\LCHotelsCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\LocalitiesCustomModels.cs" />
+    <Compile Include="Areas\Admin\CustomModels\NotificationCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\PackagesCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\RoomsCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\StarRatingCustomModels.cs" />
