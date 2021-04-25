@@ -191,6 +191,7 @@
     <Compile Include="Areas\Admin\Controllers\DestinationController.cs" />
     <Compile Include="Areas\Admin\Controllers\ExclusionController.cs" />
     <Compile Include="Areas\Admin\Controllers\FeatHotelsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HelpPageController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeTypesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HotelController.cs" />
     <Compile Include="Areas\Admin\Controllers\HotelTypeController.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="Areas\Admin\Controllers\LCHotelsController.cs" />
     <Compile Include="Areas\Admin\Controllers\LCNearByPointsController.cs" />
     <Compile Include="Areas\Admin\Controllers\LocalitiesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NotificationsController.cs" />
     <Compile Include="Areas\Admin\Controllers\PackageController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoomsController.cs" />
     <Compile Include="Areas\Admin\Controllers\StarRatingController.cs" />
@@ -1081,6 +1083,14 @@
     <Content Include="Areas\Admin\Views\LCHotelOffers\EditHotelOffer.cshtml" />
     <Content Include="Areas\Admin\Views\LCNearByPoints\Index.cshtml" />
     <Content Include="Areas\Admin\Views\LCHotels\AddNearBys.cshtml" />
+    <Content Include="Areas\Admin\Views\HelpPage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\HelpPage\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\HelpPage\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\HelpPage\_pvhelppageList.cshtml" />
+    <Content Include="Areas\Admin\Views\Notifications\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Notifications\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Notifications\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Notifications\_pvNotificationsList.cshtml" />
     <None Include="Properties\PublishProfiles\API.pubxml" />
     <Content Include="Content\ckeditor\CHANGES.md" />
     <Content Include="Content\ckeditor\LICENSE.md" />

@@ -16,7 +16,7 @@ namespace LocalConnWeb.Areas.Admin.Models
         public string HelpPageContent { get; set; }
         public string HelpPageImgPath { get; set; }
         [Display(Name = "Contact No")]
-        public int HelpPageContactNo { get; set; }
+        public string HelpPageContactNo { get; set; }
         [Display(Name = "Email ID")]
         public string HelpPageEmailID { get; set; }
     }
