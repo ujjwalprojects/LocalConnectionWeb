@@ -88,14 +88,14 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Account", new { Area = "" });
             }
         }
-        public ActionResult Edit(long id)
+        public ActionResult Edit(long hotelid, long hotelimageid)
         {
             try
             {
                 LCHotelImageManageModel model = new LCHotelImageManageModel();
-                utblLCHotelImage lchotel = objAPI.GetObjectByKey<utblLCHotelImage>("lchotelconfig", "LCHotelImagesByID", id.ToString(), "id");
+                utblLCHotelImage lchotel = objAPI.GetObjectByKey<utblLCHotelImage>("lchotelconfig", "LCHotelImagesByID", hotelimageid.ToString(), "id");
                 model.HotelPremiseDD = objAPI.GetAllRecords<utblLCMstHotelPremise>("lchotelconfig", "HotelPremisesDD");
-                model.RoomTypeDD = objAPI.GetRecordsByID<RoomsTypeDD>("lchotelconfig", "RoomTypeDD", lchotel.HotelID);
+                model.RoomTypeDD = objAPI.GetRecordsByID<RoomsTypeDD>("lchotelconfig", "RoomTypeDD", hotelid);
                 model.LCHotelImage = new LCHotelImageSaveModel()
                 {
                     HotelImageID = lchotel.HotelImageID,

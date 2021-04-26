@@ -22,20 +22,20 @@ namespace LocalConnWeb.Controllers
         }
         public ActionResult Index()
         {
-            string query = "PageNo=1&PageSize=10&SearchTerm=";
-            ViewBag.TourPackages = objAPI.GetRecordByQueryString<GenTourPackageVM>("tourpackage", "GenTourPackageList", query).PackageList;
-            ViewBag.Destinations = objAPI.GetAllRecords<utblMstDestination>("clientenquiry", "alldestinations").Take(6);
-            ViewBag.BannerList = objAPI.GetAllRecords<utblMstBanner>("tourpackage", "homebannerlist");
-            string[] abc = objAPI.GetAllRecords<string>("tourpackage", "wherenames").ToArray();
-            ViewBag.Where = abc;
-            ViewBag.TourTypes = objAPI.GetAllRecords<utblMstPackageType>("tourpackage", "tourtypes");
-            //ViewBag.PackagesTypeList = objAPI.GetRecordByQueryString<GenTourPackageVM>("tourpackage", "GenTourPackageDispList", query).PackageList;
-            GenTourPackageVM obj = new GenTourPackageVM();
-            obj.PackageList = objAPI.GetRecordByQueryString<GenTourPackageVM>("tourpackage", "GenTourPackageDispList", query).PackageList;
-            var pType = (from s in obj.PackageList group s by s.PackageTypeName).ToDictionary(x => x.Key, x => x.ToList());
-            ViewBag.PType = pType;
-            //offer package list
-            ViewBag.OfferPackage = objAPI.GetAllRecords<GenPackageOfferView>("tourpackage", "GenOfferPackagelist");
+            //string query = "PageNo=1&PageSize=10&SearchTerm=";
+            //ViewBag.TourPackages = objAPI.GetRecordByQueryString<GenTourPackageVM>("tourpackage", "GenTourPackageList", query).PackageList;
+            //ViewBag.Destinations = objAPI.GetAllRecords<utblMstDestination>("clientenquiry", "alldestinations").Take(6);
+            //ViewBag.BannerList = objAPI.GetAllRecords<utblMstBanner>("tourpackage", "homebannerlist");
+            //string[] abc = objAPI.GetAllRecords<string>("tourpackage", "wherenames").ToArray();
+            //ViewBag.Where = abc;
+            //ViewBag.TourTypes = objAPI.GetAllRecords<utblMstPackageType>("tourpackage", "tourtypes");
+            ////ViewBag.PackagesTypeList = objAPI.GetRecordByQueryString<GenTourPackageVM>("tourpackage", "GenTourPackageDispList", query).PackageList;
+            //GenTourPackageVM obj = new GenTourPackageVM();
+            //obj.PackageList = objAPI.GetRecordByQueryString<GenTourPackageVM>("tourpackage", "GenTourPackageDispList", query).PackageList;
+            //var pType = (from s in obj.PackageList group s by s.PackageTypeName).ToDictionary(x => x.Key, x => x.ToList());
+            //ViewBag.PType = pType;
+            ////offer package list
+            //ViewBag.OfferPackage = objAPI.GetAllRecords<GenPackageOfferView>("tourpackage", "GenOfferPackagelist");
             return View();
         }
 

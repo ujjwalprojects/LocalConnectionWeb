@@ -26,7 +26,7 @@
                             <span class="ml-5 pull-right">
                                 <small>Offer Price</small><br />
 
-                                @{ decimal offerprice = (item.OverallOfferPercentage * item.RoomTypePrice) / 100;}
+                                @{ decimal offerprice = item.RoomTypePrice -((item.OverallOfferPercentage * item.RoomTypePrice) / 100);}
 
 
 
