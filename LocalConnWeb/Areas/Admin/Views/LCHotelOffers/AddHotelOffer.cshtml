@@ -1,9 +1,13 @@
-﻿@model LocalConnWeb.Areas.Admin.CustomModels.AmenitiesSaveModel
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.SaveHotelOffer
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Add Hotel Offer";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+
+<link href="~/Content/Select2/select2.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <link href="~/Content/NewCropper/cropper.min.css" rel="stylesheet" />
+
 <style>
     /***************** Image Upload ****************/
 
@@ -26,40 +30,31 @@
 
 <div class="title-div">
     <i class="fa fa-hand-o-right"></i>&nbsp;
-    <span class="title">Amenities</span>&nbsp;
-    <small>Edit</small>
+    <span class="title">Feature Hotel Offer</span>&nbsp;
+    <small>Add</small>
 </div>
+
 <div class="card bg-light">
     <div class="card-body">
         <div class="text-center">
             <label class="alert alert-info p-2"><small> Fields marked * are mandatory</small></label>
         </div>
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("addhoteloffer", "lchoteloffers", FormMethod.Post, new { enctype = "multipart/form-data", id = "addForm" }))
         {
             @Html.AntiForgeryToken()
-            @Html.HiddenFor(m => m.Amenities.AmenitiesID)
-            @Html.HiddenFor(m => m.Amenities.AmenitiesIconPath)
             <div class="row">
-                <div class="col-md-12 ">
+                <div class="col-md-6">
                     <div class="box box-primary">
                         <div class="box-body box-profile">
                             <div class="form-group required">
-
                                 <div class="col-md-12">
-                                    <div class="thumbnail text-left">
+                                    <div class="thumbnail text-center">
                                         <div id="imgPhotoThumb">
-                                            @if (Model.Amenities.AmenitiesIconPath != null || Model.Amenities.AmenitiesIconPath != "")
-                                            {
-                                                <img src="@Model.Amenities.AmenitiesIconPath" alt="Add Photo" class="img-rounded text-center" style="width: 100px; height: 100px; vertical-align: middle" />
-                                            }
-                                            else
-                                            {
-                                                <img src="~/Content/Images/noimage.jpg" alt="Add Photo" class="img-rounded text-center" style="width: 100px; height: 100px; vertical-align: middle" />
-                                            }
+                                            <img src="~/Content/img/no-thumb.png" alt="Add Photo" class="img-rounded text-center" style="width: 480px; height: 170px; vertical-align: middle" />
                                         </div>
                                     </div>
-                                    <div style="width: 50%; margin-top: 2px; ">
-                                        <button type="button" style="width:50%;" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#photo-modal">
+                                    <div style="width: 100%; margin-top: 2px; ">
+                                        <button type="button" style="width:100%;" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#photo-modal">
                                             Upload Photo
                                         </button>
                                     </div>
@@ -71,25 +66,49 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md">
+                <div class="col-md-6">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.Amenities.AmenitiesName, new { @class = "required" })
-                        @Html.TextBoxFor(m => m.Amenities.AmenitiesName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Amenities.AmenitiesName)
+                        @Html.LabelFor(m => m.HotelOffer.OfferTagLine, new { @class = "" })
+                        @Html.TextBoxFor(m => m.HotelOffer.OfferTagLine, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(m => m.HotelOffer.OfferTagLine)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.HotelID, new { @class = "required" }) &nbsp;&nbsp;&nbsp;
+                        <small class="text-muted">Select multiple if applicable</small>
+                        @Html.DropDownListFor(m => m.HotelID, new SelectList(Model.HotelList, "HotelID", "HotelName"), "-- Select Hotel --", new { @class = "form-control", id = "typedd", multiple = "multiple" })
+                        @Html.ValidationMessageFor(m => m.HotelID)
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.HotelOffer.OfferStartDate, new { @class = "control-label required" })
+                                <div class="form-group input-group  datetimepicker" style="margin-top:-4px;margin-bottom: -5px;">
+                                    @Html.TextBoxFor(m => m.HotelOffer.OfferStartDate, new { @class = "date form-control datetime-style", autocomplete = "off", @placeholder = "Select Start Date" })
+                                    <span class="input-group-addon ">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(m => m.HotelOffer.OfferStartDate)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.HotelOffer.OfferEndDate, new { @class = "control-label required" })
+                                <div class="form-group input-group date datetimepicker" style="margin-top:-4px;margin-bottom: -5px;">
+                                    @Html.TextBoxFor(m => m.HotelOffer.OfferEndDate, new { @class = "date form-control datetime-style", autocomplete = "off", @placeholder = "Select End Date" })
+                                    <span class="input-group-addon ">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(m => m.HotelOffer.OfferEndDate)
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Amenities.AmenitiesBasePrice, new { @class = "required" })
-                        @Html.TextBoxFor(m => m.Amenities.AmenitiesBasePrice, new { @class = "form-control", Value = Model.Amenities.AmenitiesBasePrice.ToString("0") })
-                        @Html.ValidationMessageFor(m => m.Amenities.AmenitiesBasePrice)
-                    </div>
-                </div>
             </div>
+
             <div class="action-div">
-                @Html.ActionLink("Back To List", "index", "Amenities", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })
+                @Html.ActionLink("Back To List", "hotelofferlist", "lchoteloffers", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })
                 <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
             </div>
         }
@@ -112,7 +131,7 @@
                         <div class="col-md-8 clearfix">
                             <div class="action-div clearfix">
                                 <div class="img-container">
-                                    <img src="#" class="img-rounded">
+                                    <img src="~/Content/img/no-thumb.png" class="img-rounded">
                                 </div>
                             </div>
                             <div class="action-div clearfix">
@@ -140,7 +159,48 @@
     </div>
 </div>
 @section scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Content/Select2/select2.min.js"></script>
     <script src="~/Content/NewCropper/cropper.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            CKEDITOR.replace('cmscontent', { height: '300px' });
+            CKEDITOR.disableAutoInline = true;
+        });
+    </script>
+
+    <script>
+        $.validator.setDefaults({
+            ignore: ''
+        });
+        $(document).ready(function () {
+            $('#typedd').select2({
+                allowClear: true,
+                width: '100%',
+                placeholder: 'Select Type(s)'
+            });
+            $('#packdd').select2({
+                width: '100%',
+            });
+
+            $('.date').datetimepicker({
+                format: "DD MMM YYYY",
+                //weekStart: 1,
+                //todayBtn: 1,
+                //autoclose: 1,
+                //todayHighlight: 1,
+                //startView: 2,
+                //minView: 2,
+                //forceParse: 0
+            });
+        });
+
+    </script>
+
     <script type="text/javascript">
         function ShowFileMsg() {
             if ($('#inputImage').val() == "") {
@@ -176,7 +236,7 @@
                 var $dataScaleX = $('#dataScaleX');
                 var $dataScaleY = $('#dataScaleY');
                 var options = {
-                    aspectRatio: 1/ 1,
+                    aspectRatio: 16 / 9,
                     preview: '.cropper-preview',
                     crop: function (e) {
                         $dataX.val(Math.round(e.x));
@@ -250,13 +310,13 @@
 
                 $("#getDataURL").click(function () {
                     var dataURLNormal = $image.cropper("getDataURL", {
-                        width: 500,
-                        height: 500
+                        width: 960,
+                        height: 540
                     }, "image/jpeg", 0.8);
 
 
                     $(PhotoNormal).text(dataURLNormal);
-                    $(imgPhotoThumb).html('<img class="img-fluid" style="width:500px;height:500px;border: 2px solid #a6a6a6;" src="' + dataURLNormal + '">');
+                    $(imgPhotoThumb).html('<img class="img-fluid" style="width:480px;height:170px;" src="' + dataURLNormal + '">');
                     $('#photo-modal').modal('hide');
                 });
             }());
@@ -264,5 +324,4 @@
         function inputImage() {
         }
     </script>
-
 }

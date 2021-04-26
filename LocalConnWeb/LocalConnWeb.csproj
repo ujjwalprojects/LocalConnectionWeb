@@ -191,13 +191,18 @@
     <Compile Include="Areas\Admin\Controllers\DestinationController.cs" />
     <Compile Include="Areas\Admin\Controllers\ExclusionController.cs" />
     <Compile Include="Areas\Admin\Controllers\FeatHotelsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HelpPageController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeTypesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HotelController.cs" />
     <Compile Include="Areas\Admin\Controllers\HotelTypeController.cs" />
     <Compile Include="Areas\Admin\Controllers\InclusionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ItinerariesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LCHotelImgController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LCHotelOffersController.cs" />
     <Compile Include="Areas\Admin\Controllers\LCHotelsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LCNearByPointsController.cs" />
     <Compile Include="Areas\Admin\Controllers\LocalitiesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NotificationsController.cs" />
     <Compile Include="Areas\Admin\Controllers\PackageController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoomsController.cs" />
     <Compile Include="Areas\Admin\Controllers\StarRatingController.cs" />
@@ -220,6 +225,7 @@
     <Compile Include="Areas\Admin\CustomModels\HotelCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\InclusionCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\ItinerariesCustomModels.cs" />
+    <Compile Include="Areas\Admin\CustomModels\LCHotelOffersCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\LCHotelsCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\LocalitiesCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\NotificationCustomModels.cs" />
@@ -234,13 +240,17 @@
     <Compile Include="Areas\Admin\Models\CountriesModel.cs" />
     <Compile Include="Areas\Admin\Models\utblAgent.cs" />
     <Compile Include="Areas\Admin\Models\utblLCFeaturedHotel.cs" />
+    <Compile Include="Areas\Admin\Models\utblLCFeatureOffer.cs" />
     <Compile Include="Areas\Admin\Models\utblLCHelpPage.cs" />
     <Compile Include="Areas\Admin\Models\utblLCHotel.cs" />
+    <Compile Include="Areas\Admin\Models\utblLCHotelImage.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstAmenitie.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstCitie.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstHomeType.cs" />
+    <Compile Include="Areas\Admin\Models\utblLCMstHotelPremise.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstLocalitie.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstStarRating.cs" />
+    <Compile Include="Areas\Admin\Models\utblLCNearByPoint.cs" />
     <Compile Include="Areas\Admin\Models\utblLCNotification.cs" />
     <Compile Include="Areas\Admin\Models\utblLCRoom.cs" />
     <Compile Include="Areas\Admin\Models\utblMstActivitie.cs" />
@@ -1060,6 +1070,27 @@
     <Content Include="Areas\Admin\Views\FeatHotels\_pvFeatHotelsList.cshtml" />
     <Content Include="Areas\Admin\Views\FeatHotels\Add.cshtml" />
     <Content Include="Areas\Admin\Views\FeatHotels\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotelImg\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotelImg\_pvHotelImageList.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotelImg\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotelImg\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\AddRoomType.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\_pvHotelRoomTypeMap.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\CancellationAndTerms.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotelOffers\HotelOfferList.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotelOffers\_pvHotelOfferList.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotelOffers\AddHotelOffer.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotelOffers\EditHotelOffer.cshtml" />
+    <Content Include="Areas\Admin\Views\LCNearByPoints\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\AddNearBys.cshtml" />
+    <Content Include="Areas\Admin\Views\HelpPage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\HelpPage\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\HelpPage\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\HelpPage\_pvhelppageList.cshtml" />
+    <Content Include="Areas\Admin\Views\Notifications\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Notifications\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Notifications\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Notifications\_pvNotificationsList.cshtml" />
     <None Include="Properties\PublishProfiles\API.pubxml" />
     <Content Include="Content\ckeditor\CHANGES.md" />
     <Content Include="Content\ckeditor\LICENSE.md" />
@@ -1243,7 +1274,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\Notification\" />
     <Folder Include="Uploads\Cities\" />
     <Folder Include="Uploads\Offer\" />
     <Folder Include="Views\Base\" />
@@ -1254,6 +1284,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

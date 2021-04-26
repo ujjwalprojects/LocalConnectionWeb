@@ -1,8 +1,9 @@
-﻿@model LocalConnWeb.Areas.Admin.CustomModels.AmenitiesSaveModel
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.NotificationSaveModel
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Add";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+
 <link href="~/Content/NewCropper/cropper.min.css" rel="stylesheet" />
 <style>
     /***************** Image Upload ****************/
@@ -23,11 +24,10 @@
         background-repeat: repeat;
     }
 </style>
-
 <div class="title-div">
     <i class="fa fa-hand-o-right"></i>&nbsp;
-    <span class="title">Amenities</span>&nbsp;
-    <small>Edit</small>
+    <span class="title">Notification</span>&nbsp;
+    <small>Add</small>
 </div>
 <div class="card bg-light">
     <div class="card-body">
@@ -37,8 +37,6 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            @Html.HiddenFor(m => m.Amenities.AmenitiesID)
-            @Html.HiddenFor(m => m.Amenities.AmenitiesIconPath)
             <div class="row">
                 <div class="col-md-12 ">
                     <div class="box box-primary">
@@ -46,20 +44,13 @@
                             <div class="form-group required">
 
                                 <div class="col-md-12">
-                                    <div class="thumbnail text-left">
+                                    <div class="thumbnail text-center">
                                         <div id="imgPhotoThumb">
-                                            @if (Model.Amenities.AmenitiesIconPath != null || Model.Amenities.AmenitiesIconPath != "")
-                                            {
-                                                <img src="@Model.Amenities.AmenitiesIconPath" alt="Add Photo" class="img-rounded text-center" style="width: 100px; height: 100px; vertical-align: middle" />
-                                            }
-                                            else
-                                            {
-                                                <img src="~/Content/Images/noimage.jpg" alt="Add Photo" class="img-rounded text-center" style="width: 100px; height: 100px; vertical-align: middle" />
-                                            }
+                                            <img src="~/Content/Images/noimage.jpg" alt="Add Photo" class="img-rounded text-center" style="width: 300px; height: 250px; vertical-align: middle" />
                                         </div>
                                     </div>
-                                    <div style="width: 50%; margin-top: 2px; ">
-                                        <button type="button" style="width:50%;" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#photo-modal">
+                                    <div style="width: 100%; margin-top: 2px; ">
+                                        <button type="button" style="width:100%;" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#photo-modal">
                                             Upload Photo
                                         </button>
                                     </div>
@@ -72,24 +63,24 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Amenities.AmenitiesName, new { @class = "required" })
-                        @Html.TextBoxFor(m => m.Amenities.AmenitiesName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Amenities.AmenitiesName)
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Amenities.AmenitiesBasePrice, new { @class = "required" })
-                        @Html.TextBoxFor(m => m.Amenities.AmenitiesBasePrice, new { @class = "form-control", Value = Model.Amenities.AmenitiesBasePrice.ToString("0") })
-                        @Html.ValidationMessageFor(m => m.Amenities.AmenitiesBasePrice)
-                    </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.notificationsave.NotificationTitle, new { @class = "required" })
+                <div class="col-md p-0">
+                    @Html.TextBoxFor(m => m.notificationsave.NotificationTitle, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.notificationsave.NotificationTitle)
                 </div>
             </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.notificationsave.NotificationDesc, new { @class = "required" })
+                <div class="col-md p-0">
+                    @Html.TextAreaFor(m => m.notificationsave.NotificationDesc, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.notificationsave.NotificationDesc)
+                </div>
+            </div>
+
             <div class="action-div">
-                @Html.ActionLink("Back To List", "index", "Amenities", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })
+                @Html.ActionLink("Back To List", "index", "notifications", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })
                 <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
             </div>
         }
@@ -140,6 +131,8 @@
     </div>
 </div>
 @section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
     <script src="~/Content/NewCropper/cropper.min.js"></script>
     <script type="text/javascript">
         function ShowFileMsg() {
@@ -176,7 +169,7 @@
                 var $dataScaleX = $('#dataScaleX');
                 var $dataScaleY = $('#dataScaleY');
                 var options = {
-                    aspectRatio: 1/ 1,
+                    aspectRatio: 3 / 2,
                     preview: '.cropper-preview',
                     crop: function (e) {
                         $dataX.val(Math.round(e.x));
@@ -256,7 +249,7 @@
 
 
                     $(PhotoNormal).text(dataURLNormal);
-                    $(imgPhotoThumb).html('<img class="img-fluid" style="width:500px;height:500px;border: 2px solid #a6a6a6;" src="' + dataURLNormal + '">');
+                    $(imgPhotoThumb).html('<img class="img-fluid" style="width:300px;height:250px;" src="' + dataURLNormal + '">');
                     $('#photo-modal').modal('hide');
                 });
             }());
@@ -264,5 +257,6 @@
         function inputImage() {
         }
     </script>
-
 }
+
+

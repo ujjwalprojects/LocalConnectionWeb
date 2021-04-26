@@ -1,6 +1,6 @@
-﻿@model LocalConnWeb.Areas.Admin.CustomModels.AmenitiesVM
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.HotelOfferVM
 <div id="DataGrid">
-    @if (Model.Amenities.Count() > 0)
+    @if (Model.HotelOfferList.Count() > 0)
     {
         <div class="table-responsive">
             <div class="table-responsive">
@@ -8,13 +8,16 @@
                     <thead>
                         <tr>
                             <th class="text-center" style="vertical-align:middle">
-                                Icon
+                                Offer Tagline
                             </th>
                             <th class="text-center" style="vertical-align:middle">
-                                Name
+                                Hotel with Offer
                             </th>
                             <th class="text-center" style="vertical-align:middle">
-                                Base Price
+                                Start Date
+                            </th>
+                            <th class="text-center" style="vertical-align:middle">
+                                End Date
                             </th>
                             <th class="text-center" style="vertical-align:middle">
                                 Action
@@ -22,30 +25,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Amenities)
+                        @foreach (var item in Model.HotelOfferList)
                         {
                         <tr>
                             <td class="text-center">
-                                <img src="@item.AmenitiesIconPath" alt="@item.AmenitiesName" class="img-fluid text-center" style="width: 30px; height: 30px; vertical-align: middle" />
+                                <b>@item.OfferTagLine</b>
+                            </td>
+
+                            <td class="text-center">
+                                <b>@item.HotelName</b>
+                            </td>
+
+                            <td class="text-center">
+                                <b>@item.OfferStartDate.ToString("dd MMM yyyy")</b>
                             </td>
                             <td class="text-center">
-                                <small>@item.AmenitiesName  </small>
-                            </td>
-                            <td class="text-center">
-                                <small>@item.AmenitiesBasePrice.ToString("0.00")  </small>
+                                <b>@item.OfferEndDate.ToString("dd MMM yyyy")</b>
                             </td>
                             <td class="action-td">
                                 <div class="flexbox">
                                     <div class="plr-5">
-                                        <a href="/admin/Amenities/edit/@item.AmenitiesID" title="Edit">
+                                        <a href="/admin/lchoteloffers/EditHotelOffer/@item.OfferID" title="Edit">
                                             <i class="fa fa-edit text-dark"></i>
                                         </a>
                                     </div>
                                     <div class="plr-5">
-                                        <form method="post" action="/admin/Amenities/delete" data-otf-ajax="true" data-otf-target="#DataGrid">
-                                            @Html.Hidden("id", item.AmenitiesID)
+                                        <form method="post" action="/admin/lchoteloffers/DeleteHotelOffer" data-otf-ajax="true" data-otf-target="#DataGrid">
+                                            @Html.Hidden("OfferID", item.OfferID)
                                             @Html.AntiForgeryToken()
-                                            <a href="/admin/Amenities/delete/@item.AmenitiesID" class="delete" title="Delete" data-record="@item.AmenitiesName">
+                                            <a href="/admin/lchoteloffers/DeleteHotelOffer/@item.OfferID" class="delete" title="Delete" data-record="@item.HotelName">
                                                 <i class="fa fa-trash text-dark"></i>
                                             </a>
                                         </form>
@@ -61,8 +69,8 @@
                 <div class="hidden-xs col-md-3 col-sm-3">
                     @Model.PagingInfo.TotalItems Record(s)
                 </div>
-                <div class="visible-lg visible-md visible-sm col-md-9 col-sm-9 ns-pagination" data-otf-target="#DataGrid" data-otf-actionlink="/admin/Amenities">
-                    @Html.PageLinks(Model.PagingInfo, x => Url.Action("index", "Amenities", new { @Area = "admin", PageNo = x, PageSize = Model.PagingInfo.ItemsPerPage }))
+                <div class="visible-lg visible-md visible-sm col-md-9 col-sm-9 ns-pagination" data-otf-target="#DataGrid" data-otf-actionlink="/admin/lchoteloffers/HotelOfferList">
+                    @Html.PageLinks(Model.PagingInfo, x => Url.Action("HotelOfferList", "lchoteloffers", new { @Area = "admin", PageNo = x, PageSize = Model.PagingInfo.ItemsPerPage }))
                 </div>
             </div>
         </div>
@@ -79,6 +87,4 @@
 <div id="ErrMsg" style="display:none;">
     <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
 </div>
-
-
 

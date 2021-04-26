@@ -1,0 +1,87 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.LCHotelImageVM
+<div id="DataGrid">
+    @if (Model.LCHotelImageList.Count() > 0)
+    {
+        <div class="table-responsive">
+            <div class="d-flex mb-2 justify-content-center flex-wrap">
+
+                @foreach (var item in Model.LCHotelImageList)
+                {
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div>
+                                    <img src="@item.PhotoThumbPath" class="img-fluid" style="width:100%" alt="@item.PhotoCaption" />
+                                </div>
+                                <div class="pt-2">
+                                    <small> @item.PhotoCaption</small>
+                                </div>
+
+                            </div>
+                            <div class="card-footer">
+                                <div class="pull-right">
+                                    @if (item.IsHotelCover)
+                                    {
+                                        <span class="badge badge-success">Hotel Cover</span>
+                                    }
+                                    else
+                                    {
+                                        <form action="/admin/lchotelimg/makecoverimage" method="get" id="form_@item.HotelImageID" data-otf-ajax="true" data-otf-target="#DataGrid">
+                                            @Html.Hidden("hotelid", item.HotelID)
+                                            @Html.Hidden("imageid", item.HotelImageID)
+                                            <a href="javascript:document.getElementById('form_@item.HotelImageID').submit()"><small>Make Cover</small></a>
+                                        </form>
+                                    }
+                                </div>
+                                <div>
+                                    <div style="display:inline-block">
+                                        <a href="/admin/lchotelimg/edit/?hotelid=@item.HotelID&hotelimageid=@item.HotelImageID" title="Edit">
+                                            <small> <i class="fa fa-pencil text-primary"></i></small>
+                                        </a>
+                                    </div>
+                                    |
+                                    <div style="display:inline-block">
+                                        <form method="post" action="/admin/lchotelimg/delete" data-otf-ajax="true" data-otf-target="#DataGrid">
+                                            @*@Html.Hidden("HotelID", item.HotelID)*@
+                                            @Html.Hidden("HotelImageID", item.HotelImageID)
+                                            @Html.AntiForgeryToken()
+                                            <a href="/admin/lchotelimg/delete?hotelid=@item.HotelID&hotelimageid=@item.HotelImageID" class="delete" title="Delete" data-record="@item.PhotoCaption">
+                                                <small> <i class="fa fa-trash text-danger"></i></small>
+                                            </a>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+            <div class="ns-grid-pager row m-0" data-otf-target="#DataGrid">
+                <div class="hidden-xs col-md-3 col-sm-3">
+                    @Model.PagingInfo.TotalItems Record(s)
+                </div>
+                <div class="visible-lg visible-md visible-sm col-md-9 col-sm-9 ns-pagination" data-otf-target="#DataGrid" data-otf-actionlink="/admin/lchotelimg/index">
+                    @Html.PageLinks(Model.PagingInfo, x => Url.Action("index", "lchotelimg", new { @Area = "admin", id = Model.HotelDetails.HotelID, PageNo = x, PageSize = Model.PagingInfo.ItemsPerPage }))
+                </div>
+            </div>
+        </div>
+        <div class="action-div">
+            <a href="/admin/lchotels/index/@Model.HotelDetails.HotelID" class="btn btn-secondary">Back</a>
+        </div>
+    }
+    else
+    {
+        <div class="text-center p-3">
+            <img src="~/Content/img/no_record.png" alt="no-image" /><br />
+            <span class="text-muted">No photos for the tour package available..</span>
+        </div>
+    }
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+
+

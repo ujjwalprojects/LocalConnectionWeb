@@ -13,24 +13,23 @@ using System.Web.Mvc;
 namespace LocalConnWeb.Areas.Admin.Controllers
 {
     [Authorize]
-    public class AmenitiesController : BaseController
+    public class HelpPageController : BaseController
     {
         ApiConnection objAPI = new ApiConnection("Admin");
         private string FileUrl = ConfigurationManager.AppSettings["FileURL"];
-        //
-        // GET: /Admin/Amenities/
+        // GET: Admin/HelpPage
         public ActionResult Index(int PageNo = 1, int PageSize = 10, string SearchTerm = "")
         {
             try
             {
                 string query = "PageNo=" + PageNo + "&PageSize=" + PageSize + "&SearchTerm=" + SearchTerm;
-                AmenitiesAPIVM apiModel = objAPI.GetRecordByQueryString<AmenitiesAPIVM>("configuration", "Amenities", query);
-                AmenitiesVM model = new AmenitiesVM();
-                model.Amenities = apiModel.Amenities;
+                HelpPageAPIVM apiModel = objAPI.GetRecordByQueryString<HelpPageAPIVM>("configuration", "helppage", query);
+               HelpPageVM model = new HelpPageVM();
+                model.HelpPageList = apiModel.HelpPage;
                 model.PagingInfo = new PagingInfo { CurrentPage = PageNo, ItemsPerPage = PageSize, TotalItems = apiModel.TotalRecords };
                 if (Request.IsAjaxRequest())
                 {
-                    return PartialView("_pvAmenitiesList", model);
+                    return PartialView("_pvhelppageList", model);
                 }
                 return View(model);
             }
@@ -46,16 +45,16 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(AmenitiesSaveModel model)
+        public ActionResult Add(HelpPageSaveModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    model.Amenities.AmenitiesIconPath = model.cropper.PhotoNormal;
-                    string jsonStr = JsonConvert.SerializeObject(model.Amenities);
-                    TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "SaveAmenities", jsonStr);
-                    return RedirectToAction("index", "Amenities", new { Area = "Admin" });
+                    model.HelpPagesave.HelpPageImgPath = model.cropper.PhotoNormal;
+                    string jsonStr = JsonConvert.SerializeObject(model.HelpPagesave);
+                    TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "saveHelpPage", jsonStr);
+                    return RedirectToAction("index", "HelpPage", new { Area = "Admin" });
                 }
                 return View(model);
             }
@@ -69,8 +68,8 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         {
             try
             {
-                AmenitiesSaveModel model = new AmenitiesSaveModel();
-                model.Amenities = objAPI.GetObjectByKey<utblLCMstAmenitie>("configuration", "AmenitiesByID", id.ToString(), "id");
+                HelpPageSaveModel model = new HelpPageSaveModel();
+                model.HelpPagesave = objAPI.GetObjectByKey<utblLCHelpPage>("configuration", "HelpPagebyid", id.ToString(), "id");
                 return View(model);
             }
             catch (AuthorizationException)
@@ -81,19 +80,24 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AmenitiesSaveModel model)
+        public ActionResult Edit(HelpPageSaveModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    if(model.cropper.PhotoNormal != null)
+                    if (model.cropper.PhotoNormal != null)
                     {
-                        model.Amenities.AmenitiesIconPath = model.cropper.PhotoNormal;
+                        model.HelpPagesave.HelpPageImgPath = model.cropper.PhotoNormal;
+
                     }
-                    string jsonStr = JsonConvert.SerializeObject(model.Amenities);
-                    TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "SaveAmenities", jsonStr);
-                    return RedirectToAction("index", "Amenities", new { Area = "Admin" });
+                    else
+                    {
+                        model.HelpPagesave.HelpPageImgPath = model.HelpPagesave.HelpPageImgPath;
+                    }
+                    string jsonStr = JsonConvert.SerializeObject(model.HelpPagesave);
+                    TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "saveHelpPage", jsonStr);
+                    return RedirectToAction("index", "HelpPage", new { Area = "Admin" });
                 }
                 return View(model);
             }
@@ -107,9 +111,8 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(long id)
         {
-            TempData["ErrMsg"] = objAPI.DeleteRecordByKey("configuration", "DeleteAmenities", id.ToString(), "id");
-            return RedirectToAction("index", "Amenities", new { Area = "Admin" });
+            TempData["ErrMsg"] = objAPI.DeleteRecordByKey("configuration", "deleteHelpPage", id.ToString(), "id");
+            return RedirectToAction("index", "HelpPage", new { Area = "Admin" });
         }
-
     }
 }

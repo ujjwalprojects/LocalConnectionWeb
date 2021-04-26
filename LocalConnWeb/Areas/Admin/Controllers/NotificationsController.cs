@@ -13,24 +13,23 @@ using System.Web.Mvc;
 namespace LocalConnWeb.Areas.Admin.Controllers
 {
     [Authorize]
-    public class AmenitiesController : BaseController
+    public class NotificationsController : BaseController
     {
         ApiConnection objAPI = new ApiConnection("Admin");
         private string FileUrl = ConfigurationManager.AppSettings["FileURL"];
-        //
-        // GET: /Admin/Amenities/
+        // GET: Admin/Notifications
         public ActionResult Index(int PageNo = 1, int PageSize = 10, string SearchTerm = "")
         {
             try
             {
                 string query = "PageNo=" + PageNo + "&PageSize=" + PageSize + "&SearchTerm=" + SearchTerm;
-                AmenitiesAPIVM apiModel = objAPI.GetRecordByQueryString<AmenitiesAPIVM>("configuration", "Amenities", query);
-                AmenitiesVM model = new AmenitiesVM();
-                model.Amenities = apiModel.Amenities;
+                NotificationAPIVM apiModel = objAPI.GetRecordByQueryString<NotificationAPIVM>("configuration", "notification", query);
+                NotificationVM model = new NotificationVM();
+                model.Notificationlist = apiModel.Notification;
                 model.PagingInfo = new PagingInfo { CurrentPage = PageNo, ItemsPerPage = PageSize, TotalItems = apiModel.TotalRecords };
                 if (Request.IsAjaxRequest())
                 {
-                    return PartialView("_pvAmenitiesList", model);
+                    return PartialView("_pvNotificationsList", model);
                 }
                 return View(model);
             }
@@ -46,16 +45,16 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(AmenitiesSaveModel model)
+        public ActionResult Add(NotificationSaveModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    model.Amenities.AmenitiesIconPath = model.cropper.PhotoNormal;
-                    string jsonStr = JsonConvert.SerializeObject(model.Amenities);
-                    TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "SaveAmenities", jsonStr);
-                    return RedirectToAction("index", "Amenities", new { Area = "Admin" });
+                    model.notificationsave.NotificationImagePath = model.cropper.PhotoNormal;
+                    string jsonStr = JsonConvert.SerializeObject(model.notificationsave);
+                    TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "savenotification", jsonStr);
+                    return RedirectToAction("index", "notifications", new { Area = "Admin" });
                 }
                 return View(model);
             }
@@ -69,8 +68,8 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         {
             try
             {
-                AmenitiesSaveModel model = new AmenitiesSaveModel();
-                model.Amenities = objAPI.GetObjectByKey<utblLCMstAmenitie>("configuration", "AmenitiesByID", id.ToString(), "id");
+               NotificationSaveModel model = new NotificationSaveModel();
+                model.notificationsave = objAPI.GetObjectByKey<utblLCNotification>("configuration", "notificationbyid", id.ToString(), "id");
                 return View(model);
             }
             catch (AuthorizationException)
@@ -81,19 +80,24 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AmenitiesSaveModel model)
+        public ActionResult Edit(NotificationSaveModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    if(model.cropper.PhotoNormal != null)
+                    if (model.cropper.PhotoNormal != null)
                     {
-                        model.Amenities.AmenitiesIconPath = model.cropper.PhotoNormal;
+                        model.notificationsave.NotificationImagePath = model.cropper.PhotoNormal;
+
                     }
-                    string jsonStr = JsonConvert.SerializeObject(model.Amenities);
-                    TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "SaveAmenities", jsonStr);
-                    return RedirectToAction("index", "Amenities", new { Area = "Admin" });
+                    else
+                    {
+                        model.notificationsave.NotificationImagePath = model.notificationsave.NotificationImagePath;
+                    }
+                    string jsonStr = JsonConvert.SerializeObject(model.notificationsave);
+                    TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "savenotification", jsonStr);
+                    return RedirectToAction("index", "notifications", new { Area = "Admin" });
                 }
                 return View(model);
             }
@@ -107,9 +111,8 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(long id)
         {
-            TempData["ErrMsg"] = objAPI.DeleteRecordByKey("configuration", "DeleteAmenities", id.ToString(), "id");
-            return RedirectToAction("index", "Amenities", new { Area = "Admin" });
+            TempData["ErrMsg"] = objAPI.DeleteRecordByKey("configuration", "deleteNotification", id.ToString(), "id");
+            return RedirectToAction("index", "notifications", new { Area = "Admin" });
         }
-
     }
 }

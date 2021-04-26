@@ -12,25 +12,23 @@ using System.Web.Mvc;
 
 namespace LocalConnWeb.Areas.Admin.Controllers
 {
-    [Authorize]
-    public class AmenitiesController : BaseController
+    public class LCNearByPointsController : BaseController
     {
         ApiConnection objAPI = new ApiConnection("Admin");
         private string FileUrl = ConfigurationManager.AppSettings["FileURL"];
-        //
-        // GET: /Admin/Amenities/
+
         public ActionResult Index(int PageNo = 1, int PageSize = 10, string SearchTerm = "")
         {
             try
             {
                 string query = "PageNo=" + PageNo + "&PageSize=" + PageSize + "&SearchTerm=" + SearchTerm;
-                AmenitiesAPIVM apiModel = objAPI.GetRecordByQueryString<AmenitiesAPIVM>("configuration", "Amenities", query);
-                AmenitiesVM model = new AmenitiesVM();
-                model.Amenities = apiModel.Amenities;
+                LCNearByPointsAPIVM apiModel = objAPI.GetRecordByQueryString<LCNearByPointsAPIVM>("lchotelconfig", "GetNearByPoints", query);
+                LCNearByPointsVM model = new LCNearByPointsVM();
+                model.LCNearByPointView = apiModel.LCNearByPointView;
                 model.PagingInfo = new PagingInfo { CurrentPage = PageNo, ItemsPerPage = PageSize, TotalItems = apiModel.TotalRecords };
                 if (Request.IsAjaxRequest())
                 {
-                    return PartialView("_pvAmenitiesList", model);
+                    return PartialView("_pvnearbypointsList", model);
                 }
                 return View(model);
             }
@@ -42,21 +40,32 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         }
         public ActionResult Add()
         {
-            return View();
+            try
+            {
+                LCNearByPointsSaveModel model = new LCNearByPointsSaveModel();
+                model.LCNearByPointsDD = objAPI.GetAllRecords<LCNearBysTypeDD>("lchotelconfig", "NearByDD");
+                return View(model);
+            }
+            catch (AuthorizationException)
+            {
+                TempData["ErrMsg"] = "Your Login Session has expired. Please Login Again";
+                return RedirectToAction("Login", "Account", new { Area = "" });
+            }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(AmenitiesSaveModel model)
+        public ActionResult Add(LCNearByPointsSaveModel model)
         {
             try
             {
+
                 if (ModelState.IsValid)
                 {
-                    model.Amenities.AmenitiesIconPath = model.cropper.PhotoNormal;
-                    string jsonStr = JsonConvert.SerializeObject(model.Amenities);
-                    TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "SaveAmenities", jsonStr);
-                    return RedirectToAction("index", "Amenities", new { Area = "Admin" });
+                    string jsonStr = JsonConvert.SerializeObject(model.LCNearByPoints);
+                    TempData["ErrMsg"] = objAPI.PostRecordtoApI("lchotelconfig", "SaveNearByPoints", jsonStr);
+                    return RedirectToAction("index", "LCNearByPoints", new { Area = "Admin" });
                 }
+                model.LCNearByPointsDD = objAPI.GetAllRecords<LCNearBysTypeDD>("lchotelconfig", "NearByDD");
                 return View(model);
             }
             catch (AuthorizationException)
@@ -69,8 +78,9 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         {
             try
             {
-                AmenitiesSaveModel model = new AmenitiesSaveModel();
-                model.Amenities = objAPI.GetObjectByKey<utblLCMstAmenitie>("configuration", "AmenitiesByID", id.ToString(), "id");
+                LCNearByPointsSaveModel model = new LCNearByPointsSaveModel();
+                model.NearPoints = objAPI.GetObjectByKey<utblLCNearByPoint>("lchotelconfig", "NearByPointsByID", id.ToString(), "id");
+                model.LCNearByPointsDD = objAPI.GetAllRecords<LCNearBysTypeDD>("lchotelconfig", "NearByDD");
                 return View(model);
             }
             catch (AuthorizationException)
@@ -79,22 +89,20 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Account", new { Area = "" });
             }
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AmenitiesSaveModel model)
+        public ActionResult Edit(LCNearByPointsSaveModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    if(model.cropper.PhotoNormal != null)
-                    {
-                        model.Amenities.AmenitiesIconPath = model.cropper.PhotoNormal;
-                    }
-                    string jsonStr = JsonConvert.SerializeObject(model.Amenities);
-                    TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "SaveAmenities", jsonStr);
-                    return RedirectToAction("index", "Amenities", new { Area = "Admin" });
+                    string jsonStr = JsonConvert.SerializeObject(model.LCNearByPoints);
+                    TempData["ErrMsg"] = objAPI.PostRecordtoApI("lchotelconfig", "SaveNearByPoints", jsonStr);
+                    return RedirectToAction("index", "LCNearByPoints", new { Area = "Admin" });
                 }
+                model.LCNearByPointsDD = objAPI.GetAllRecords<LCNearBysTypeDD>("lchotelconfig", "NearByDD");
                 return View(model);
             }
             catch (AuthorizationException)
@@ -107,8 +115,8 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(long id)
         {
-            TempData["ErrMsg"] = objAPI.DeleteRecordByKey("configuration", "DeleteAmenities", id.ToString(), "id");
-            return RedirectToAction("index", "Amenities", new { Area = "Admin" });
+            TempData["ErrMsg"] = objAPI.DeleteRecordByKey("lchotelconfig", "DeleteNearByPoints", id.ToString(), "id");
+            return RedirectToAction("index", "LCNearByPoints", new { Area = "Admin" });
         }
 
     }
