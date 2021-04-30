@@ -243,6 +243,7 @@
     <Compile Include="Areas\Admin\Models\utblLCFeatureOffer.cs" />
     <Compile Include="Areas\Admin\Models\utblLCHelpPage.cs" />
     <Compile Include="Areas\Admin\Models\utblLCHotel.cs" />
+    <Compile Include="Areas\Admin\Models\utblLCHotelAmenitiesMap.cs" />
     <Compile Include="Areas\Admin\Models\utblLCHotelImage.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstAmenitie.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstCitie.cs" />
@@ -1091,6 +1092,7 @@
     <Content Include="Areas\Admin\Views\Notifications\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Notifications\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Notifications\_pvNotificationsList.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\AddAmenitiesMap.cshtml" />
     <None Include="Properties\PublishProfiles\API.pubxml" />
     <Content Include="Content\ckeditor\CHANGES.md" />
     <Content Include="Content\ckeditor\LICENSE.md" />

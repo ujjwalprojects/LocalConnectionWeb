@@ -1,0 +1,72 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.LCHotelManageModel
+@{
+    ViewBag.Title = "Add Amenities Map";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Hotel - Amenities</span>&nbsp;
+    <small>Step 5 of 5</small>
+</div>
+
+<div class="card ">
+    <div class="card-header bg-head">
+        <div class="pb-2">
+            <span class="display-5 text-white">@Model.HotelInfo.HotelName</span>
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.HotelInfo.HotelID)
+            @Html.HiddenFor(m => m.HotelInfo.HotelName)
+            <h4 class="text-muted">Select Amenities for the hotel</h4>
+
+            <hr />
+            if (Model.HotelAmenitiesMapView.Count() > 0)
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        @{
+                            int i = 0;
+                            foreach (var item in Model.HotelAmenitiesMapView)
+                            {
+                                @Html.HiddenFor(m => Model.HotelAmenitiesMapView[i].HotelAmenitiesMapID)
+                                @Html.HiddenFor(m => Model.HotelAmenitiesMapView[i].HotelID)
+                                @Html.HiddenFor(m => Model.HotelAmenitiesMapView[i].AmenitiesID)
+                                <tr>
+                                    <td class="p-2">
+                                        <label class="fancy">
+                                            @Html.CheckBox("HotelAmenitiesMapView[" + i + "].IsSelected", Model.HotelAmenitiesMapView[i].IsSelected)  &nbsp;&nbsp;
+                                            @item.AmenitiesName &nbsp;&nbsp;<small class="text-info">Rs.@item.AmenitiesBasePrice.ToString("0.00")</small> 
+
+                                        </label>
+
+                                    </td>
+                                </tr>
+                                @Html.HiddenFor(m => Model.HotelAmenitiesMapView[i].AmenitiesName)
+                                @Html.HiddenFor(m => Model.HotelAmenitiesMapView[i].AmenitiesBasePrice)
+                                i++;
+                            }
+
+                        }
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center p-3">
+                    <img src="~/Content/img/no_record.png" alt="no record" /><br />
+                    <span class="text-muted">No Amenities found in the master. Add Amenities and then select.</span>
+                </div>
+            }
+           
+            <div class="action-div">
+                <a href="/admin/lchotels/CancellationAndTerms/@Model.HotelInfo.HotelID" class="btn btn-secondary">Back</a>
+                <button class="btn btn-success pull-right" type="submit">Finish</button>
+            </div>
+        }
+    </div>
+</div>

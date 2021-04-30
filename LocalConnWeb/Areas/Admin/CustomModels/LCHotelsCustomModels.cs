@@ -228,10 +228,13 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public List<LCNearBysTypeDD> LCNearByPointsDD { get; set; }
         public LCNearByPoints LCNearByPoints { get; set; }
         public utblLCNearByPoint NearByPoints { get; set; }
+
+        public IEnumerable<AmenitiesDD> AmenitiesDD { get; set; }
+        public List<HotelAmenitiesMapView> HotelAmenitiesMapView { get; set; }
+        public utblLCHotelAmenitiesMap HotelAmenitiesMap { get; set; }
+
         public long HotelID { get; set; }
-        //[Required(ErrorMessage = "Select Room Type")]
-        //[Display(Name = "Room Type List")]
-        //public List<long> RoomID { get; set; }
+        
     }
     public class LCHotelDD
     {
@@ -292,7 +295,8 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public IEnumerable<RoomsTypeDD> RoomTypeDD { get; set; }
         public ImageStrs ImageStrs { get; set; }
     }
-   
+    
+    //Hotel Room Type Map
     public class HotelRoomTypeMap
     {
         public long HotelID { get; set; }
@@ -314,7 +318,6 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public decimal RoomTypePrice { get; set; }
         public bool IsStandard { get; set; }
     }
-
 
     //LCHotel Terms and cancellations
     public class HotelTerms
@@ -383,5 +386,22 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public utblLCNearByPoint NearPoints { get; set; }
         public LCNearByPoints LCNearByPoints { get; set; }
         public List<LCNearBysTypeDD> LCNearByPointsDD { get; set; }
+    }
+
+    //LCHotelAmenities
+    public class AmenitiesDD
+    {
+        public long AmenitiesID { get; set; }
+        public string AmenitiesName { get; set; }
+    }
+ 
+    public class HotelAmenitiesMapView
+    {
+        public long HotelAmenitiesMapID { get; set; }
+        public long HotelID { get; set; }
+        public long AmenitiesID { get; set; }
+        public string AmenitiesName { get; set; }
+        public decimal AmenitiesBasePrice { get; set; }
+        public bool IsSelected { get; set; }
     }
 }

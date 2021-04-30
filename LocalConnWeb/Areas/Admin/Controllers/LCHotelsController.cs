@@ -111,6 +111,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                     HomeTypeID = lchotel.HomeTypeID,
                     StarRatingID = lchotel.StarRatingID,
                     MaxOccupant= lchotel.MaxOccupant,
+                    MaxRooms = lchotel.MaxRooms,
                     OverallOfferPercentage=lchotel.OverallOfferPercentage,
                     TwoOccupantPercentage=lchotel.TwoOccupantPercentage,
                     ThreeOccupantPercentage=lchotel.ThreeOccupantPercentage,
@@ -374,7 +375,8 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                     if (!result.ToLower().Contains("error"))
                     {
                         TempData["ErrMsg"] = "Tour Package Details Saved";
-                        return RedirectToAction("index");
+                        //return RedirectToAction("index");
+                        return RedirectToAction("AddAmenitiesMap", new { id = model.HotelInfo.HotelID });
                     }
                     TempData["ErrMsg"] = result;
                 }
@@ -510,7 +512,114 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                
             return RedirectToAction("AddNearBys", new { id = hid });
         }
+        //Amenities
+        public ActionResult AddAmenitiesMap(long id)
+        {
+            LCHotelManageModel model = new LCHotelManageModel();
+            utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
+            model.HotelInfo = new HotelBriefInfo()
+            {
+                HotelID = lchotel.HotelID,
+                HotelName = lchotel.HotelName,
+            };
+           
+            model.HotelAmenitiesMapView = objAPI.GetRecordsByID<HotelAmenitiesMapView>("lchotelconfig", "HotelAmenities", id);
+            //objAPI.GetRecordsByQueryString<HotelAmenitiesMapView>("lchotelconfig", "GetHotelAmenitiesMapList", query);
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddAmenitiesMap(LCHotelManageModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    LCHotelManageModel sendModel = new LCHotelManageModel();
+                    if (model.HotelAmenitiesMapView == null)
+                        sendModel.HotelAmenitiesMapView = new List<HotelAmenitiesMapView>();
+                    else
+                        sendModel.HotelAmenitiesMapView = model.HotelAmenitiesMapView.Where(x => x.IsSelected).ToList();
+                    sendModel.HotelID = model.HotelInfo.HotelID;
+                    string jsonStr = JsonConvert.SerializeObject(sendModel);
+                    string result = objAPI.PostRecordtoApI("lchotelconfig", "SaveHotelAmenitiesMap", jsonStr);
+                    TempData["ErrMsg"] = result;
+                    if (!result.ToLower().Contains("error"))
+                    {
+                        TempData["ErrMsg"] = "record Saved";
+                        return RedirectToAction("index");
+                    }
+                    TempData["ErrMsg"] = result;
+                }
+                utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", model.LCHotel.HotelID.ToString(), "id");
+                model.HotelInfo = new HotelBriefInfo()
+                {
+                    HotelID = lchotel.HotelID,
+                    HotelName = lchotel.HotelName,
+                };
+                return View(model);
+            }
+            catch (AuthorizationException)
+            {
+                TempData["ErrMsg"] = "Your Login Session has expired. Please Login Again";
+                return RedirectToAction("Login", "Account", new { Area = "" });
+            }
+        }
+        //public ActionResult EditAmenities(long id, long haid)
+        //{
+        //    try
+        //    {
+        //        LCHotelManageModel model = new LCHotelManageModel();
+        //        string query = "id=" + haid;
+        //        model.HotelRoomTypeMap = objAPI.GetRecordByQueryString<HotelRoomTypeMap>("lchotelconfig", "GetHotelAmenitiesMapByID", query);
+        //        string querylist = "id=" + id;
+        //        model.HotelAmenitiesMapView = objAPI.GetRecordsByQueryString<HotelAmenitiesMapView>("lchotelconfig", "GetHotelAmenitiesMapList", querylist);
+        //        utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
+        //        model.LCHotel = new LCHotelSaveModel()
+        //        {
+        //            HotelID = lchotel.HotelID,
+        //            HotelName = lchotel.HotelName,
+        //            HotelAddress = lchotel.HotelAddress,
+        //            HotelDesc = lchotel.HotelDesc,
+        //            HotelContactNo = lchotel.HotelContactNo,
+        //            HotelEmail = lchotel.HotelEmail,
+        //            CountryID = lchotel.CountryID,
+        //            StateID = lchotel.StateID,
+        //            CityID = lchotel.CityID,
+        //            LocalityID = lchotel.LocalityID,
+        //            HomeTypeID = lchotel.HomeTypeID,
+        //            StarRatingID = lchotel.StarRatingID,
+        //            MaxOccupant = lchotel.MaxOccupant,
+        //            OverallOfferPercentage = lchotel.OverallOfferPercentage,
+        //            TwoOccupantPercentage = lchotel.TwoOccupantPercentage,
+        //            ThreeOccupantPercentage = lchotel.ThreeOccupantPercentage,
+        //            FourPlusOccupantPercentage = lchotel.FourPlusOccupantPercentage,
+        //            ChildOccupantNote = lchotel.ChildOccupantNote,
+        //            IsActive = lchotel.IsActive,
 
+
+        //        };
+        //        List<AmenitiesDD> Amelist = objAPI.GetAllRecords<AmenitiesDD>("configuration", "AmenitiesDD");
+        //        foreach (var item in model.HotelAmenitiesMapView)
+        //        {
+        //            Amelist.RemoveAll(x => x.AmenitiesID == item.AmenitiesID);
+        //        }
+        //        model.AmenitiesDD = Amelist.ToList();
+        //        return View("AddAmenities", model);
+        //    }
+        //    catch (AuthorizationException)
+        //    {
+        //        TempData["ErrMsg"] = "Your Login Session has expired. Please Login Again";
+        //        return RedirectToAction("Login", "Account", new { Area = "" });
+        //    }
+        //    //return View();
+        //}
+        //public ActionResult DeleteAmenities(long haid)
+        //{
+        //    string query = "id=" + haid ;
+        //    TempData["ErrMsg"] = objAPI.DeleteRecordByQuerystring("lchotelconfig", "DeleteHotelAmenitiesMap", query);
+        //    return RedirectToAction("AddAmenities", new { id = haid });
+        //}
         public JsonResult GetStates(long id)
         {
             var model = objAPI.GetRecordsByID<StateDD>("configuration", "statebycountry", id);
