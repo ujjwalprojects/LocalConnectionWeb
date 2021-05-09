@@ -1,0 +1,47 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.PolicyPtSaveModel
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Policy Points</span>&nbsp;
+    <small>Add</small>
+</div>
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="text-center">
+            <label class="alert alert-info p-2"><small> Fields marked * are mandatory</small></label>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PolicyPt.PolicyID, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.PolicyPt.PolicyID, new SelectList(Model.PolicyDD, "PolicyID", "PolicyTitle"), "-- Select Policy Title --", new { @class = "form-control", @id = "ddCity" })
+                        @Html.ValidationMessageFor(m => m.PolicyPt.PolicyID)
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PolicyPt.PolicyPoints, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.PolicyPt.PolicyPoints, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.PolicyPt.PolicyPoints)
+                    </div>
+                </div>
+            </div>
+            <div class="action-div">
+                @Html.ActionLink("Back To List", "policyptlist", "policy", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })
+                <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
+            </div>
+        }
+    </div>
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+

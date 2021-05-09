@@ -178,6 +178,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AboutUsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ActivityController.cs" />
     <Compile Include="Areas\Admin\Controllers\AgentConfigController.cs" />
     <Compile Include="Areas\Admin\Controllers\AmenitiesController.cs" />
@@ -204,12 +205,14 @@
     <Compile Include="Areas\Admin\Controllers\LocalitiesController.cs" />
     <Compile Include="Areas\Admin\Controllers\NotificationsController.cs" />
     <Compile Include="Areas\Admin\Controllers\PackageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PolicyController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoomsController.cs" />
     <Compile Include="Areas\Admin\Controllers\StarRatingController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatesController.cs" />
     <Compile Include="Areas\Admin\Controllers\TermController.cs" />
     <Compile Include="Areas\Admin\Controllers\TourCancelController.cs" />
     <Compile Include="Areas\Admin\Controllers\TourGuideController.cs" />
+    <Compile Include="Areas\Admin\CustomModels\AboutPolicyCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\ActivityCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\AgentCustomModels.cs" />
     <Compile Include="Areas\Admin\Controllers\TourPackageController.cs" />
@@ -238,6 +241,7 @@
     <Compile Include="Areas\Admin\CustomModels\TourGuideCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\TourPackageCustomModels.cs" />
     <Compile Include="Areas\Admin\Models\CountriesModel.cs" />
+    <Compile Include="Areas\Admin\Models\utblAboutU.cs" />
     <Compile Include="Areas\Admin\Models\utblAgent.cs" />
     <Compile Include="Areas\Admin\Models\utblLCFeaturedHotel.cs" />
     <Compile Include="Areas\Admin\Models\utblLCFeatureOffer.cs" />
@@ -271,6 +275,8 @@
     <Compile Include="Areas\Admin\Models\utblMstTerm.cs" />
     <Compile Include="Areas\Admin\Models\utblMstTourCancellation.cs" />
     <Compile Include="Areas\Admin\Models\utblPackageOffer.cs" />
+    <Compile Include="Areas\Admin\Models\utblPolicie.cs" />
+    <Compile Include="Areas\Admin\Models\utblPolicyPoint.cs" />
     <Compile Include="Areas\Admin\Models\utblTourGuide.cs" />
     <Compile Include="Areas\Admin\Models\utblTourPackage.cs" />
     <Compile Include="Areas\Admin\Models\utblTourPackageImage.cs" />
@@ -1093,6 +1099,15 @@
     <Content Include="Areas\Admin\Views\Notifications\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Notifications\_pvNotificationsList.cshtml" />
     <Content Include="Areas\Admin\Views\LCHotels\AddAmenitiesMap.cshtml" />
+    <Content Include="Areas\Admin\Views\AboutUs\AddEditAboutUs.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\PolicyList.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\_pvPolicyList.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\PolicyPtList.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\_pvPolicyPtList.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\AddPolicyPt.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\EditPolicyPt.cshtml" />
     <None Include="Properties\PublishProfiles\API.pubxml" />
     <Content Include="Content\ckeditor\CHANGES.md" />
     <Content Include="Content\ckeditor\LICENSE.md" />

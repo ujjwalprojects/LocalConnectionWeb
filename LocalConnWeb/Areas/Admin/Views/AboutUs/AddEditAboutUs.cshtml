@@ -1,0 +1,40 @@
+﻿@model LocalConnWeb.Areas.Admin.Models.utblAboutU
+@{
+    ViewBag.Title = "AddEditAboutUs";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">About</span>&nbsp;
+    <small>Save</small>
+</div>
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="text-center">
+            <label class="alert alert-info p-2"><small> Fields marked * are mandatory</small></label>
+        </div>
+        @using (Html.BeginForm("AddEditAboutUs", "aboutus", FormMethod.Post, new { enctype = "multipart/form-data", id = "addForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.AboutID)
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.AboutContent, new { @class = "required" })
+                <div class="col-md p-0">
+                    @Html.TextAreaFor(m => m.AboutContent, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AboutContent)
+                </div>
+            </div>
+            <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
+        }
+    </div>
+</div>
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+@*@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}*@
+
