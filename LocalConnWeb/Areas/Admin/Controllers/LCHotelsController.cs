@@ -95,6 +95,8 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             {
                 LCHotelManageModel model = new LCHotelManageModel();
                 utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
+                utblLCHotelLatLong lchotelLatLong = objAPI.GetObjectByKey<utblLCHotelLatLong>("lchotelconfig", "LCHotelLatLongByID", id.ToString(), "id");
+
                 var HotelRoomTypelist = objAPI.GetRecordsByQueryString<long>("configuration", "HotelRoomTypeList", "id=" + id);
                 model.LCHotel = new LCHotelSaveModel()
                 {
@@ -117,6 +119,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                     ThreeOccupantPercentage=lchotel.ThreeOccupantPercentage,
                     FourPlusOccupantPercentage=lchotel.FourPlusOccupantPercentage,
                     ChildOccupantNote=lchotel.ChildOccupantNote,
+                    LatLong = lchotelLatLong.LatLong,
                     IsActive=lchotel.IsActive,
                    
                 };
@@ -620,6 +623,38 @@ namespace LocalConnWeb.Areas.Admin.Controllers
         //    TempData["ErrMsg"] = objAPI.DeleteRecordByQuerystring("lchotelconfig", "DeleteHotelAmenitiesMap", query);
         //    return RedirectToAction("AddAmenities", new { id = haid });
         //}
+
+
+        //Customer Booking details
+        public ActionResult LcCustBookingList(int PageNo = 1, int PageSize = 10, string SearchTerm = "")
+        {
+            try
+            {
+                string query = "PageNo=" + PageNo + "&PageSize=" + PageSize + "&SearchTerm=" + SearchTerm;
+                LCCustomerBookingAPIVM apiModel = objAPI.GetRecordByQueryString<LCCustomerBookingAPIVM>("lchotelconfig", "LCCustBookingDtl", query);
+                LCCustomerBookingVM model = new LCCustomerBookingVM();
+                model.LCCustomerBookingView = apiModel.LCCustomerBookingView;
+                model.PagingInfo = new PagingInfo { CurrentPage = PageNo, ItemsPerPage = PageSize, TotalItems = apiModel.TotalRecords };
+                if (Request.IsAjaxRequest())
+                {
+                    return PartialView("_pvLCCustBookingList", model);
+                }
+                return View(model);
+            }
+            catch (AuthorizationException)
+            {
+                TempData["ErrMsg"] = "Your Login Session has expired. Please Login Again";
+                return RedirectToAction("Login", "Account", new { Area = "" });
+            }
+        }
+        public ActionResult LCCustBookingDtl(string id)
+        {
+            LCCustomerBookingView model = new LCCustomerBookingView();
+            model = objAPI.GetObjectByKey<LCCustomerBookingView>("lchotelconfig", "LCCustBookingByID", id.ToString(), "id");
+            return View(model);
+        }
+
+
         public JsonResult GetStates(long id)
         {
             var model = objAPI.GetRecordsByID<StateDD>("configuration", "statebycountry", id);

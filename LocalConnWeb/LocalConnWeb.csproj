@@ -249,6 +249,7 @@
     <Compile Include="Areas\Admin\Models\utblLCHotel.cs" />
     <Compile Include="Areas\Admin\Models\utblLCHotelAmenitiesMap.cs" />
     <Compile Include="Areas\Admin\Models\utblLCHotelImage.cs" />
+    <Compile Include="Areas\Admin\Models\utblLCHotelLatLong.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstAmenitie.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstCitie.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstHomeType.cs" />
@@ -1108,6 +1109,9 @@
     <Content Include="Areas\Admin\Views\Policy\_pvPolicyPtList.cshtml" />
     <Content Include="Areas\Admin\Views\Policy\AddPolicyPt.cshtml" />
     <Content Include="Areas\Admin\Views\Policy\EditPolicyPt.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\LcCustBookingList.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\_pvLCCustBookingList.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\LCCustBookingDtl.cshtml" />
     <None Include="Properties\PublishProfiles\API.pubxml" />
     <Content Include="Content\ckeditor\CHANGES.md" />
     <Content Include="Content\ckeditor\LICENSE.md" />

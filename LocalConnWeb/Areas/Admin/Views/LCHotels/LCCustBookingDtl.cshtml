@@ -1,0 +1,40 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.LCCustomerBookingView
+    @{
+        ViewBag.Title = "LCCustBookingDtl";
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+
+    <div class="title-div">
+        <i class="fa fa-hand-o-right"></i>&nbsp;
+        <span class="title">Order Details</span>&nbsp;
+        @*<button type="button" class="btn btn-info btn-sm float-right"><a></a>Back to List</button>*@
+    </div>
+
+    <div class="card bg-light">
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><span>Booking ID#</span> @Model.BookingID</li>
+                <li class="list-group-item"><span>Customer Name:</span> @Model.CustName</li>
+                <li class="list-group-item"><span>Customer Email:</span> @Model.CustDetails</li>
+                <li class="list-group-item"><span>Customer PhoneNo:</span> @Model.CustPhNo</li>
+                <li class="list-group-item"><span>Hotel:</span> @Model.HotelName</li>
+                <li class="list-group-item"><span>Booking Duration:</span> @Model.BookingFrom.ToString("dd-MMM-yyyy") - @Model.BookingUpto.ToString("dd-MMM-yyyy")</li>
+                <li class="list-group-item"><span>Booking Date:</span> @Model.BookingDate.ToString("dd-MMM-yyyy")</li>
+                <li class="list-group-item"><span>Booking Details:</span> @Model.CustDetails</li>
+                @if (Model.paymentstatus == "Failed")
+                {
+                    <li class="list-group-item"><span>Payment Status:</span> <span class="btn btn-sm btn-outline-danger">  @Model.paymentstatus</span></li>
+                }
+                else
+                {
+                    <li class="list-group-item"><span>Payment Status:</span> <span class="btn btn-sm btn-outline-success">  @Model.paymentstatus</span></li>
+                }
+                <li class="list-group-item"><span>Payment Date:</span> @Model.PaymentDate.ToString("dd-MMM-yyyy")</li>
+
+            </ul>
+            <div class="btn btn-primary mt-4 float-right">
+                Booking Price <i class="fa fa-rupee"></i> @Model.FinalFare.ToString("0") /-
+            </div>
+        </div>
+    </div>
+
