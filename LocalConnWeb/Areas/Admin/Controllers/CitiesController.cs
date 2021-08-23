@@ -81,7 +81,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                 //}
 
                 if (ModelState.IsValid)
-                {
+                { 
                     model.Cities.CityIconPath = model.cropper.PhotoNormal;
                     string jsonStr = JsonConvert.SerializeObject(model.Cities);
                     TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "savecities", jsonStr);

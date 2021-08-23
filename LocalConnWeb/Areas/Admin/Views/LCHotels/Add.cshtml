@@ -23,30 +23,28 @@
             @Html.AntiForgeryToken()
 
             <div class="row">
-                <div class="col-md">
+                <div class="col-md-3">
                     <div class="form-group">
                         @Html.LabelFor(m => m.LCHotel.CountryID, new { @class = "required" })
                         @Html.DropDownListFor(m => m.LCHotel.CountryID, new SelectList(Model.CountryList, "CountryID", "CountryName"), "-- Select Country --", new { @class = "form-control", @id = "ddCountry" })
                         @Html.ValidationMessageFor(m => m.LCHotel.CountryID)
                     </div>
                 </div>
-                <div class="col-md">
+                <div class="col-md-3">
                     <div class="form-group">
                         @Html.LabelFor(m => m.LCHotel.StateID, new { @class = "required" })
                         @Html.DropDownListFor(m => m.LCHotel.StateID, new SelectList(string.Empty), "-- Select State --", new { @class = "form-control", @id = "ddState" })
                         @Html.ValidationMessageFor(m => m.LCHotel.StateID)
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md">
+                <div class="col-md-3">
                     <div class="form-group">
                         @Html.LabelFor(m => m.LCHotel.CityID, new { @class = "required" })
                         @Html.DropDownListFor(m => m.LCHotel.CityID, new SelectList(string.Empty), "-- Select City --", new { @class = "form-control", @id = "ddCity" })
                         @Html.ValidationMessageFor(m => m.LCHotel.CityID)
                     </div>
                 </div>
-                <div class="col-md">
+                <div class="col-md-3">
                     <div class="form-group">
                         @Html.LabelFor(m => m.LCHotel.LocalityID, new { @class = "required" })
                         @Html.DropDownListFor(m => m.LCHotel.LocalityID, new SelectList(string.Empty), "-- Select Localities --", new { @class = "form-control", @id = "ddLocalities" })
@@ -54,46 +52,48 @@
                     </div>
                 </div>
             </div>
+
             <div class="form-group">
+
                 @Html.LabelFor(m => m.LCHotel.HotelName, new { @class = "required" })
+                <small class="font-italic text-danger">&nbsp; Note: Please keep the Hotel Name as per the google map</small>
                 @Html.TextBoxFor(m => m.LCHotel.HotelName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.LCHotel.HotelName)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.LCHotel.HotelAddress, new { @class = "required" })
-                @Html.TextAreaFor(m => m.LCHotel.HotelAddress, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.LCHotel.HotelAddress)
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.LCHotel.HotelDesc, new { @class = "required" })
                 @Html.TextAreaFor(m => m.LCHotel.HotelDesc, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.LCHotel.HotelDesc)
             </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LCHotel.HotelAddress, new { @class = "required" })
+                @Html.TextBoxFor(m => m.LCHotel.HotelAddress, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LCHotel.HotelAddress)
+            </div>
+
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group">
                         @Html.LabelFor(m => m.LCHotel.HotelContactNo, new { @class = "required" })
                         @Html.TextBoxFor(m => m.LCHotel.HotelContactNo, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.LCHotel.HotelContactNo)
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group">
                         @Html.LabelFor(m => m.LCHotel.HotelEmail, new { @class = "" })
                         @Html.TextBoxFor(m => m.LCHotel.HotelEmail, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.LCHotel.HotelEmail)
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md">
+                <div class="col-md-3">
                     <div class="form-group">
                         @Html.LabelFor(m => m.LCHotel.HomeTypeID, new { @class = "required" })
                         @Html.DropDownListFor(m => m.LCHotel.HomeTypeID, new SelectList(Model.HomeTypeList, "HomeTypeID", "HomeTypeName"), "-- Select Home Type --", new { @class = "form-control", @id = "ddHomeType" })
                         @Html.ValidationMessageFor(m => m.LCHotel.HomeTypeID)
                     </div>
                 </div>
-                <div class="col-md">
+                <div class="col-md-3">
                     <div class="form-group">
                         @Html.LabelFor(m => m.LCHotel.StarRatingID, new { @class = "required" })
                         @Html.DropDownListFor(m => m.LCHotel.StarRatingID, new SelectList(Model.StarRatingList, "StarRatingID", "StarRatingName"), "-- Select Star Rating --", new { @class = "form-control", @id = "ddStarRating" })
@@ -101,86 +101,72 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.MaxOccupant, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.MaxOccupant, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.MaxOccupant)
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.MaxRooms, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.MaxRooms, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.MaxRooms)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.ChildOccupantNote, new { @class = "required" })
+                        @Html.TextAreaFor(m => m.LCHotel.ChildOccupantNote, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.ChildOccupantNote)
+                    </div>
+                </div>
 
+            </div>
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.LCHotel.RatePerNight, new { @class = "required" })
-                        @Html.TextBoxFor(m => m.LCHotel.RatePerNight, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.LCHotel.RatePerNight)
+                        @Html.LabelFor(m => m.LCHotel.OverallOfferPercentage, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.OverallOfferPercentage, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.OverallOfferPercentage)
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.LCHotel.RatePerRoom, new { @class = "required" })
-                        @Html.TextBoxFor(m => m.LCHotel.RatePerRoom, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.LCHotel.RatePerRoom)
+                        @Html.LabelFor(m => m.LCHotel.TwoOccupantPercentage, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.TwoOccupantPercentage, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.TwoOccupantPercentage)
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.LCHotel.RatePerGuest, new { @class = "required" })
-                        @Html.TextBoxFor(m => m.LCHotel.RatePerGuest, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.LCHotel.RatePerGuest)
+                        @Html.LabelFor(m => m.LCHotel.ThreeOccupantPercentage, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.ThreeOccupantPercentage, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.ThreeOccupantPercentage)
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.LCHotel.RatePerChild, new { @class = "required" })
-                        @Html.TextBoxFor(m => m.LCHotel.RatePerChild, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.LCHotel.RatePerChild)
+                        @Html.LabelFor(m => m.LCHotel.FourPlusOccupantPercentage, new { @class = "required" })
+                        @Html.TextBoxFor(m => m.LCHotel.FourPlusOccupantPercentage, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LCHotel.FourPlusOccupantPercentage)
                     </div>
                 </div>
             </div>
-            @*<div class="form-group">
-                @Html.LabelFor(m => m.RoomID, new { @class = "required" }) &nbsp;&nbsp;&nbsp;
-                <small class="text-muted">Select multiple if applicable</small>
-                @Html.DropDownListFor(m => m.RoomID, new SelectList(Model.RoomsList, "RoomID", "RoomType"), "-- Select Room Type --", new { @class = "form-control", id = "typedd", multiple = "multiple" })
-                @Html.ValidationMessageFor(m => m.RoomID)
-            </div>*@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.LCHotel.TotalSingleRooms, new { @class = "required" })
-                        @Html.TextBoxFor(m => m.LCHotel.TotalSingleRooms, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.LCHotel.TotalSingleRooms)
+                        @Html.LabelFor(m => m.LCHotel.LatLong)
+                        @Html.TextBoxFor(m => m.LCHotel.LatLong, new { @class = "form-control" })
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.LCHotel.TotalDoubleRooms, new { @class = "" })
-                        @Html.TextBoxFor(m => m.LCHotel.TotalDoubleRooms, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.LCHotel.TotalDoubleRooms)
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                @*<div class="col-md-6">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.LCHotel.HotelBaseFare, new { @class = "required" })
-                        @Html.TextBoxFor(m => m.LCHotel.HotelBaseFare, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.LCHotel.HotelBaseFare)
-                    </div>
-                </div>*@
-                @*<div class="col-md-3">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.LCHotel.HotelOfferPrice, new { @class = "required" })
-                        @Html.TextBoxFor(m => m.LCHotel.HotelOfferPrice, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.LCHotel.HotelOfferPrice)
-                    </div>
-                </div>*@
                 <div class="col-md-3">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.LCHotel.OfferPercentage, new { @class = "required" })
-                        @Html.TextBoxFor(m => m.LCHotel.OfferPercentage, new { @class = "form-control", placeholder = "do not append % symbol" })
-                        @Html.ValidationMessageFor(m => m.LCHotel.OfferPercentage)
+                        <label class="control-label">@Html.CheckBoxFor(m => m.LCHotel.IsActive) &nbsp;Enable Hotel</label>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.LCHotel.MetaText, new { @class = "" })
-                @Html.TextAreaFor(m => m.LCHotel.MetaText, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.LCHotel.MetaText)
             </div>
             <div class="action-div">
                 @Html.ActionLink("Back To List", "index", "lchotels", new { Area = "Admin" }, new { @class = "btn btn-secondary btn-sm" })

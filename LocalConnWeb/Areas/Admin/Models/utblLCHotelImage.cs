@@ -11,6 +11,9 @@ namespace LocalConnWeb.Areas.Admin.Models
         [Key]
         public long HotelImageID { get; set; }
         public long HotelID { get; set; }
+        public long HotelPremID { get; set; }
+        public long? RoomID { get; set; }
+        public bool IsRoomCover { get; set; }
         public bool IsHotelCover { get; set; }
         public string PhotoThumbPath { get; set; }
         public string PhotoNormalPath { get; set; }

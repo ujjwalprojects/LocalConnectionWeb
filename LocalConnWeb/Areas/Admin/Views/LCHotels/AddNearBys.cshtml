@@ -1,0 +1,142 @@
+﻿@model LocalConnWeb.Areas.Admin.CustomModels.LCHotelManageModel
+
+@{
+    ViewBag.Title = "AddNearBys";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link href="~/Content/Select2/select2.min.css" rel="stylesheet" />
+<div class="title-div">
+    <i class="fa fa-hand-o-right"></i>&nbsp;
+    <span class="title">Hotels - Near By Places or Transports</span>&nbsp;
+    <small>Step 3 of 5</small>
+</div>
+<div class="card ">
+    <div class="card-header bg-head">
+        <div class="pb-2">
+            <span class="display-5 text-white">@Model.LCHotel.HotelName</span>
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("AddNearBys", "lchotels", new { Area = "Admin" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.LCHotel.HotelID)
+            @Html.HiddenFor(model=> model.LCNearByPoints.NearbyPointsID)
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col-md">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LCNearByPoints.NearByID, new { @class = "required" })
+                            @Html.DropDownListFor(m => m.LCNearByPoints.NearByID, new SelectList(Model.LCNearByPointsDD, "NearByID", "NearByName"), "-- Select Type --", new { @class = "form-control", @id = "ddtype" })
+                            @Html.ValidationMessageFor(m => m.LCNearByPoints.NearByID)
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LCNearByPoints.NearByPoints, new { @class = "required" })
+                            @Html.TextBoxFor(m => m.LCNearByPoints.NearByPoints, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.LCNearByPoints.NearByPoints)
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LCNearByPoints.NearByDistance, new { @class = "required" })
+                            @Html.TextBoxFor(m => m.LCNearByPoints.NearByDistance, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.LCNearByPoints.NearByDistance)
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-outline-danger mt-4" id="bCheck" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <hr class="hr-style" />
+        <div id="DataGrid">
+            @if (Model.LCNearByPointsView.Count() > 0)
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="vertical-align: middle;">
+                                    Type
+                                </th>
+                                <th class="text-center" style="vertical-align: middle;">
+                                    Near By Point
+                                </th>
+                                <th class="text-center" style="vertical-align: middle;">
+                                    Distance
+                                </th>
+                                <th class="text-center" style="vertical-align: middle;">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.LCNearByPointsView)
+                            {
+                            <tr>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.NearByName)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.NearByPoints)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.NearByDistance)
+                                </td>
+                                <td class="action-td">
+                                    <div class="flexbox">
+                                        <div class="plr-5">
+                                            <a href="/admin/lchotels/EditNearBys?id=@item.HotelID&nid=@item.NearbyPointsID" title="Edit">
+                                                <i class="fa fa-edit text-dark"></i>
+                                            </a>
+                                        </div>
+                                        <div class="plr-5">
+                                            <form method="post" action="/admin/lchotels/DeleteNearBys" data-otf-ajax="true" data-otf-target="#DataGrid">
+                                                @Html.Hidden("id", item.NearbyPointsID)
+                                                @Html.AntiForgeryToken()
+                                                <a href="/admin/lchotels/DeleteNearBys?id=@item.NearbyPointsID&hid=@item.HotelID" class="delete" title="Delete" data-record="@item.NearByName">
+                                                    <i class="fa fa-trash text-dark"></i>
+                                                </a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <h3>No Records...</h3>
+            }
+        </div>
+        <div class="row action-div">
+            <div class="col-md">
+                <div class="form-group mb-0">
+                    <form method="post" action="/admin/lchotels/CalculateBasePrice">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.LCHotel.HotelID)
+                        @Html.ActionLink("Back", "AddRoomType", "lchotels", new { Area = "Admin", id = Model.LCHotel.HotelID }, new { @class = "btn btn-secondary btn-sm" })
+                        @if (Model.LCNearByPointsView.Count() > 0)
+                        {
+                            @Html.ActionLink("Next", "CancellationAndTerms", "lchotels", new { Area = "Admin", id = Model.LCHotel.HotelID }, new { @class = "btn btn-success btn-sm pull-right ml-2 " })
+                        }
+                        @*<button type="submit" class="btn btn-sm btn-success pull-right"><i class="fa fa-save"></i> Next</button>*@
+                    </form>
+                    @*@Html.ActionLink("Finish", "CalculateBasePrice", "lchotels", new { Area = "Admin", id = Model.LCHotel.HotelID }, new { @class = "btn btn-success btn-sm pull-right" })*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

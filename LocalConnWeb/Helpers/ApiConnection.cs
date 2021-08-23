@@ -401,6 +401,53 @@ namespace LocalConnWeb.Helpers
             }
             return model;
         }
+        public T GetRecord<T>(string ControllerName, string Actionname) where T : new()
+        {
+            //var model = new List<T>();
+            try
+            {
+                string urlLocal = url + ControllerName + "/" + Actionname;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlLocal);
+                request.Method = "Get";
+                request.Headers.Add("Authorization", token);
+                request.ContentType = "application/json";
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    string s = response.ToString();
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                    String jsonresponse = "";
+                    String temp = null;
+                    while ((temp = reader.ReadLine()) != null)
+                    {
+                        jsonresponse += temp;
+                    }
+                    return JsonConvert.DeserializeObject<T>(jsonresponse);
+                }
+                return default(T);
+            }
+            catch (WebException ex)
+            {
+                var webResponse = ex.Response as System.Net.HttpWebResponse;
+                if (webResponse != null &&
+                    webResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    throw new AuthorizationException();
+                }
+                using (WebResponse response = ex.Response)
+                {
+                    HttpWebResponse httpResponse = (HttpWebResponse)response;
+                    //Console.WriteLine("Error code: ", httpResponse.StatusCode);
+                    using (Stream data = response.GetResponseStream())
+                    using (var reader = new StreamReader(data))
+                    {
+                        string text = reader.ReadToEnd();
+                        //Console.WriteLine(text);
+                    }
+                }
+                return default(T);
+            }
+        }
         public string DeleteRecordByKey(string ControllerName, string Actionname, string paramValue, string paramName)
         {
             String HandleError = "";

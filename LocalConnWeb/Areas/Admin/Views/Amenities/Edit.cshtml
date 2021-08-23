@@ -250,13 +250,13 @@
 
                 $("#getDataURL").click(function () {
                     var dataURLNormal = $image.cropper("getDataURL", {
-                        width: 50,
-                        height: 50
+                        width: 500,
+                        height: 500
                     }, "image/jpeg", 0.8);
 
 
                     $(PhotoNormal).text(dataURLNormal);
-                    $(imgPhotoThumb).html('<img class="img-fluid" style="width:50px;height:50px;border: 2px solid #a6a6a6;" src="' + dataURLNormal + '">');
+                    $(imgPhotoThumb).html('<img class="img-fluid" style="width:500px;height:500px;border: 2px solid #a6a6a6;" src="' + dataURLNormal + '">');
                     $('#photo-modal').modal('hide');
                 });
             }());
