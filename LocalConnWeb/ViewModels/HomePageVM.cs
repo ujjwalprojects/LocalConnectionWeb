@@ -15,4 +15,13 @@ namespace LocalConnWeb.ViewModels
         public List<HotelList> homestayList { get; set; }
         public List<FtHotelList> FHotelList { get; set; }
     }
+
+    public class HotelDetailsVM
+    {
+        public HotelDtl hotelDtl { get; set; }
+        public List<HAmenitiesList> hAmenities { get; set; }
+        public List<HotelPremisesList> hotelPremises { get; set; }
+        public List<HotelRoomList> hotelRoomLists { get; set; }
+        public HotelRoomTab hotelRoomImgTab  { get; set; }
+    }
 }

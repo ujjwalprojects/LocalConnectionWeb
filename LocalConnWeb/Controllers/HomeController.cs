@@ -36,7 +36,13 @@ namespace LocalConnWeb.Controllers
 
         public ActionResult HotelDetails(string id)
         {
-            return View();
+            HotelDetailsVM obj = new HotelDetailsVM();
+            obj.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID="+id);
+            obj.hAmenities = objAPI.GetRecordsByID<HAmenitiesList>("webrequest", "gethamenitieslist", Convert.ToInt64(id));
+            obj.hotelRoomImgTab = objAPI.GetRecordByQueryString<HotelRoomTab>("webrequest", "gethroomimglist", "HotelID=" + id);
+            obj.hotelRoomLists = objAPI.GetRecordsByID<HotelRoomList>("webrequest", "gethotelroomlist", Convert.ToInt64(id));
+            obj.hotelPremises = objAPI.GetRecordsByID<HotelPremisesList>("webrequest", "gethotelpremises", Convert.ToInt64(id));
+            return View(obj);
         }
 
         public ActionResult About()
