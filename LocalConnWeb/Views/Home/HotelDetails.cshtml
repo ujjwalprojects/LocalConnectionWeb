@@ -3,7 +3,13 @@
     ViewBag.Title = "HotelDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<style>
+    .fixed-side {
+        position: fixed;
+        top: 220px;
+        width: 370px;
+    }
+</style>
 
 <!-- ================================
     START BREADCRUMB TOP BAR
@@ -106,9 +112,9 @@
                                 <div class="d-flex align-items-center pt-2">
                                     <p class="mr-2">@Model.hotelDtl.HotelAddress</p>
                                     @*<p>
-                        <span class="badge badge-warning text-white font-size-16">4.7</span>
-                        <span>(4,209 Reviews)</span>
-                    </p>*@
+                                            <span class="badge badge-warning text-white font-size-16">4.7</span>
+                                            <span>(4,209 Reviews)</span>
+                                        </p>*@
                                 </div>
                             </div><!-- end single-content-item -->
                             <div class="section-block"></div>
@@ -131,8 +137,12 @@
                             <div class="collapse" id="viewIncludedExample">
                                 <div class="cruise-included-feature-wrap">
                                     <div class="cruise-include-feature pt-3">
-                                        <i class="la la-star"></i>@if (Model.hotelDtl.ChildOccupantNote != null) {@Model.hotelDtl.ChildOccupantNote }else{<div>Not Available</div>}</div>
-                                  
+                                        <i class="la la-star"></i>@if (Model.hotelDtl.ChildOccupantNote != null)
+                                        {@Model.hotelDtl.ChildOccupantNote }
+                                    else
+                                    {<div>Not Available</div>}
+                                    </div>
+
                                 </div>
                             </div>
                         </div><!-- end single-content-item -->
@@ -157,7 +167,7 @@
                                                             {
                                                                 <div class="row">
                                                                     <div class="col-10">
-                                                                      <i class="la la-star"></i>  @item.NearByPoints
+                                                                        <i class="la la-star"></i>  @item.NearByPoints
                                                                     </div>
                                                                     <div class="col-md-2">
                                                                         @item.NearByDistance
@@ -244,8 +254,8 @@
                             <div class="single-content-item padding-top-40px padding-bottom-40px">
                                 <h3 class="title font-size-20">Amenities Add On</h3>
                                 <div class="table-form table-responsive padding-top-30px">
-                                    <table class="table">
-                                        <tbody>
+                                    <table class="table" id="amenities-table">
+                                        <tbody class="amenities-select">
                                             @if (Model.hAmenities.Count() > 0)
                                             {
                                                 foreach (var item in Model.hAmenities)
@@ -256,9 +266,9 @@
                                                             <td>
                                                                 <img src="@item.AmenitiesIconPath" style="height:50px;" />
                                                             </td>
-                                                            <td> <h3 class="title font-size-15 font-weight-medium">@item.AmenitiesName </h3></td>
-                                                            <td> <h3 class="title font-size-15 font-weight-medium">@item.AmenitiesBasePrice.ToString("G29") </h3></td>
-                                                            <td><input type="checkbox" class="theme-btn theme-btn-small" /></td>
+                                                            <td> <h3 class="title font-size-15 font-weight-medium" id="amSelName">@item.AmenitiesName </h3></td>
+                                                            <td> <h3 class="title font-size-15 font-weight-medium" id="amSelPrice">@item.AmenitiesBasePrice.ToString("G29")</h3></td>
+                                                            <td><input type="button" id="amSelBtn" class="theme-btn theme-btn-small" value="Add" /></td>
                                                         </tr>
                                                     }
                                                 }
@@ -275,43 +285,54 @@
                             <div class="single-content-item padding-top-40px padding-bottom-30px">
                                 <!-- end contact-form-action -->
                                 <h3 class="title font-size-20">Rooms</h3>
-
-                                @if (Model.hotelRoomLists.Count() > 0)
-                                {
-                                    foreach (var item in Model.hotelRoomLists)
+                                <div id="roomTypeSel">
+                                    @if (Model.hotelRoomLists.Count() > 0)
                                     {
-                                        <div class="cabin-type padding-top-30px">
-                                            <div class="cabin-type-item seat-selection-item d-flex">
-                                                <div class="cabin-type-img flex-shrink-0">
-                                                    <img src="@item.PhotoThumbPath" alt="">
-                                                </div>
-                                                <div class="cabin-type-detail">
-                                                    <h3 class="title">@item.RoomType</h3>
-                                                    <div class="row padding-top-20px">
-                                                        <div class="col-lg-6 responsive-column">
-                                                            <div class="single-tour-feature d-flex align-items-center mb-3">
-                                                                <p class="text-uppercase font-size-14">
-                                                                    Per/night<strong class="mt-n1 text-black font-size-18 font-weight-black d-block">@item.RoomTypePrice.ToString("G29")</strong>
-                                                                </p>
-                                                            </div>
-                                                        </div><!-- end col-lg-6 -->
-
-                                                    </div><!-- end row -->
-
-                                                </div>
-                                                <div class="cabin-price">
-
-                                                    <div class="custom-checkbox mb-0">
-                                                        <input type="checkbox" id="selectChb4">
-                                                        <label for="selectChb4" class="theme-btn theme-btn-small">Select</label>
+                                        int i = 0;
+                                        foreach (var item in Model.hotelRoomLists)
+                                        {
+                                            <div class="cabin-type padding-top-30px">
+                                                <div class="cabin-type-item seat-selection-item d-flex">
+                                                    <div class="cabin-type-img flex-shrink-0">
+                                                        <img src="@item.PhotoThumbPath" alt="">
                                                     </div>
-                                                </div>
-                                            </div><!-- end cabin-type-item -->
-                                        </div>
+                                                    <div class="cabin-type-detail">
+                                                        <h3 class="title">@item.RoomType</h3>
+                                                        <div class="row padding-top-20px">
+                                                            <div class="col-lg-6 responsive-column">
+                                                                <div class="single-tour-feature d-flex align-items-center mb-3">
+                                                                    <p class="text-uppercase font-size-14">
+                                                                        Per/night<strong class="mt-n1 text-black font-size-18 font-weight-black d-block">@item.RoomTypePrice.ToString("G29")</strong>
+                                                                    </p>
+                                                                </div>
+                                                            </div><!-- end col-lg-6 -->
+
+                                                        </div><!-- end row -->
+
+                                                    </div>
+                                                    <div class="cabin-price">
+                                                        @if (i == 0)
+                                                        {
+                                                            <div class="custom-checkbox mb-0 roomType"  name="@item.RoomType">
+                                                                <label id="@item.RoomType" class="theme-btn theme-btn-small">Selected</label>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="custom-checkbox mb-0 roomType"   name="@item.RoomType">
+                                                                <label id="@item.RoomType" class="theme-btn theme-btn-small">Select</label>
+                                                            </div>
+                                                        }
+
+                                                    </div>
+                                                </div><!-- end cabin-type-item -->
+                                            </div>
+                                            { i++; }
+
+                                        }
+
                                     }
-
-                                }
-
+                                </div>
                                 <!-- end cabin-type -->
                             </div><!-- end single-content-item -->
                             <div class="section-block"></div>
@@ -403,11 +424,11 @@
                                             <label class="label-text">Rooms</label>
                                             <div class="form-group">
                                                 <div class="select-contain w-auto">
-                                                    <select class="select-contain-select" onchange="getRoomval(this);">
-                                                        <option value="0">Select Rooms</option>
-                                                        @for (int i = 0; i <= Model.hotelDtl.MaxRooms; i++)
+                                                    <select class="select-contain-select" id="roomSelect">
+                                                        @*<option value="0">Select Rooms</option>*@
+                                                        @for (int i = 1; i <= Model.hotelDtl.MaxRooms; i++)
                                                         {
-                                                            <option value="1">@i Room</option>
+                                                            <option value="@i">@i Room</option>
                                                         }
                                                     </select>
                                                 </div>
@@ -420,22 +441,29 @@
                                 <div class="qty-box mb-2 d-flex align-items-center justify-content-between">
                                     <label class="font-size-16">Adults <span>Age 18+</span></label>
                                     <div class="qtyBtn d-flex align-items-center">
-                                        <div class="qtyDec"><i class="la la-minus"></i></div>
-                                        <input type="text" name="qtyInput" value="0" id="noAdult">
-                                        <div class="qtyInc"><i class="la la-plus"></i></div>
+                                        <div class="qtyDec" id="adultDec"><i class="la la-minus"></i></div>
+                                        <input type="text" name="qtyInput" value="1" id="noAdult">
+                                        <div class="qtyInc" id="adultInc"><i class="la la-plus"></i></div>
                                     </div>
                                 </div><!-- end qty-box -->
                                 <div class="qty-box mb-2 d-flex align-items-center justify-content-between">
                                     <label class="font-size-16">Children</label>
                                     <div class="qtyBtn d-flex align-items-center">
-                                        <div class="qtyDec"><i class="la la-minus"></i></div>
+                                        <div class="qtyDec" id="childDec"><i class="la la-minus"></i></div>
                                         <input type="text" name="qtyInput" value="0" id="noChild">
-                                        <div class="qtyInc"><i class="la la-plus"></i></div>
+                                        <div class="qtyInc" id="childInc"><i class="la la-plus"></i></div>
                                     </div>
                                 </div><!-- end qty-box -->
 
                             </div><!-- end sidebar-widget-item -->
+                            <div class="sidebar-widget-item">
+                                <div id="parentHolder">
 
+                                </div>
+                                <div id="notselected">
+                                    Meals Not Selected
+                                </div>
+                            </div>
                             <div class="sidebar-widget-item">
                                 <div class="sidebar-book-title-wrap mb-3">
                                     @*<h3>Popular</h3>*@
@@ -447,7 +475,12 @@
                                 @using (Html.BeginForm("HotelBookingDtl", "Home"))
                                 {
                                     @Html.HiddenFor(x => x.preBookDtl.FinalFare, new { id = "mFinalFare" })
-                                    @Html.HiddenFor(x => x.preBookDtl.RoomSelect, new { id = "roomSelect" })
+                                    @Html.HiddenFor(x => x.preBookDtl.RoomSelect, new { id = "mRoomSelect" })
+                                    @Html.HiddenFor(x => x.preBookDtl.AdultSelect, new { id = "mAdultSelect" })
+                                    @Html.HiddenFor(x => x.preBookDtl.ChildrenSelect, new { id = "mChildSelect" })
+                                    @Html.HiddenFor(x => x.preBookDtl.BookingFrom, new { id = "mBookingFrom" })
+                                    @Html.HiddenFor(x => x.preBookDtl.BookingUpto, new { id = "mBookingUpto" })
+
                                     <input type="submit" value="Book Now" class="theme-btn text-center w-100 mb-2" />
                                 }
 
@@ -460,35 +493,216 @@
         </div><!-- end container -->
     </div><!-- end single-content-box -->
 </section><!-- end tour-detail-area -->
-<!-- ================================
-    END TOUR DETAIL AREA
-================================= -->
-<!-- ================================
-    END RELATE TOUR AREA
-================================= -->
 
 
 @section Scripts{
     <script type="text/javascript">
-        function getRoomval(sel) {
-            alert(sel.value);
-            $('#roomSelect').val(sel.value);
-        }
+        $('#parentHolder').hide();
+        $('#notselected').show();
         $(document).ready(function () {
-            var maxAdult =@Model.hotelDtl.MaxOccupant;
-            alert(maxAdult);
-
+            var days = 1;
+            var amTotal =0;
+            var amnetiesArr = [];
+            amnetiesArr.push(["Meals"]);
+            $(window).on('scroll', function () {
+                var scroll = $(window).scrollTop();
+                if (scroll > 500) {
+                    $(".sidebar").addClass("fixed-side");
+                } else {
+                    $(".sidebar").removeClass("fixed-side");
+                }
+                lastScroll = scroll;
+            });
+            //Date Range
             $('.date-range').on('change', function () {
                 //alert(this.value);
+                var arr = this.value.split('-');
+                var endDate = arr[1];
+                var eendDate = formatDate(endDate.trim());
+                var newendDate = new Date(eendDate);
+                var startDate = arr[0];
+                var sstartDate = formatDate(startDate.trim());
+                var newstartDate = new Date(sstartDate);
+                var diff = new Date(newendDate - newstartDate);
+                days = diff / 1000 / 60 / 60 / 24;
+                $("#mBookingFrom").val(newstartDate);
+                $("#mBookingUpto").val(newendDate);
+                calculatePrice();
             });
-          
-            //var date = $('#date-range').val();
-            //alert(date);
+            function formatDate(date) {
+                var arr = date.split('/');
+                return arr[2] + "-" + arr[1] + "-" + arr[0];
+            }
+            //Room Select
+
+            $('#roomSelect').on('change', function () {
+                alert($('#roomSelect option:selected').val());
+                calculatePrice();
+
+            });
+
+            $("#adultInc").click(function () {
+                var maxAdult =@Model.hotelDtl.MaxOccupant;
+                var newAVal = parseInt($('#noAdult').val()) + 1;
+
+                if (parseInt(newAVal) > parseInt(maxAdult)) {
+                    $('#noAdult').val(maxAdult);
+                } else {
+                    $('#noAdult').val(newAVal);
+                }
+                $('#mAdultSelect').val(newAVal);
+                calculatePrice();
+            });
+            $("#adultDec").click(function () {
+                var maxAdult =@Model.hotelDtl.MaxOccupant;
+                var newAVal = parseInt($('#noAdult').val())-1;
+                if (parseInt(newAVal) > parseInt(maxAdult)) {
+                    $('#noAdult').val(maxAdult);
+                } else if (parseInt(newAVal) != 0){
+                        $('#noAdult').val(newAVal);
+                }
+                $('#mAdultSelect').val(newAVal);
+                calculatePrice();
+            });
+            //child
+             $("#childInc").click(function () {
+                var newAVal = parseInt($('#noChild').val()) + 1;
+                $('#noChild').val(newAVal);
+                $('#mChildSelect').val(newAVal);
+            });
+            $("#childDec").click(function () {
+                var newAVal = parseInt($('#noChild').val()) - 1;
+                if (parseInt(newAVal) != -1) {
+                    $('#noChild').val(newAVal);
+                }
+
+            });
+
+            //amenities
+            $("#amenities-table").on('click', '#amSelBtn', function () {
+
+                var currentRow = $(this).closest("tr");
+
+                var col1 = currentRow.find("#amSelName").html();
+                var col2 = currentRow.find("#amSelPrice").html();
+                var btnValu = currentRow.find("#amSelBtn").val();
+                if (btnValu == "Add") {
+                    currentRow.find("#amSelBtn").val("Remove");
+                    amnetiesArr.push([col1 + "- " + noOfAdult+"p x "+days+"d "+ + col2]);
+                    amTotal += parseInt(col2);
+                }
+                if (btnValu == "Remove") {
+                    currentRow.find("#amSelBtn").val("Add");
+                    amnetiesArr.pop([col1 + "-x"])
+                    amTotal -= parseInt(col2);
+
+                }
+                if (amnetiesArr.length < 2) {
+                    $('#parentHolder').hide();
+                    $('#notselected').show();
+                } else {
+                    $('#notselected').hide();
+                    $('#parentHolder').show();
+                }
+
+                    var parentDiv = $("#parentHolder");
+                    parentDiv.html("");
+                    var aTable = $("<table>", {
+                        "id": "newTable"
+                    }).appendTo(parentDiv);
+                var rowCount = amnetiesArr.length;
+                var colmCount = amnetiesArr[0].length;
+
+                    for (var k = 0; k < 1; k++) {
+                        var fragTrow = $("<tr>", {
+                            "class": "trClass"
+                        }).appendTo(aTable);
+                        for (var j = 0; j < colmCount; j++) {
+                            $("<th>", {
+                                "class": "thClass"
+                            }).prependTo(fragTrow).html(amnetiesArr[k][j]);
+                        }
+                    }
+
+                    for (var i = 1; i < rowCount; i < i++) {
+                        var fragTrow = $("<tr>", {
+                            "class": "trClass"
+                        }).appendTo(aTable);
+                        for (var j = 0; j < colmCount; j++) {
+                            $("<td>", {
+                                "class": "tdClass"
+                            }).appendTo(fragTrow).html(amnetiesArr[i][j]);
+                        }
+                    }
+                calculatePrice();
+            });
+
+
+            //select Room
+
+
+            $('.roomType').on("click", function (e) {
+
+                var selRoom = $(this).attr('name');
+                alert(selRoom);
+                $('#roomTypeSel').find('label').each(function () {
+                    if ($(this).prop('id') == selRoom) {
+                        $(this).text('Selected');
+                    } else {
+                        $(this).text('Select');
+                    }
+
+                });
+
+            });
+            //final calculation
+            function calculatePrice() {
+                var roomBaseValue = $('#actualPrice').text();
+                var noOfAdult = $('#noAdult').val();
+                var noOfChild = $('#noChild').val();
+                var noofday = 1;
+                var totalRoom = $('#roomSelect option:selected').val();
+                var overAll = @Model.hotelDtl.OverallOfferPercentage;
+                if (parseInt(totalRoom) > 1) {
+                    roomBaseValue = parseInt(roomBaseValue) * parseInt(totalRoom);
+                    actValue = roomBaseValue;
+                } else {
+                    actValue = roomBaseValue;
+                }
+                if (parseInt(noofday)  > 1) {
+                    roomBaseValue = parseInt(roomBaseValue) * parseInt(noofday);
+                    actValue = roomBaseValue;
+                } else {
+                    actValue = roomBaseValue;
+                }
+                if (parseInt(overAll) > 0) {
+                    var newvalue = parseInt(roomBaseValue) * parseInt(overAll) / 100;
+                            roomBaseValue = actValue - newvalue;
+                        }
+                if (parseInt(noOfAdult) == 2) {
+                            tPercent = (parseInt(roomBaseValue ) * parseInt(twoPercent)) / 100;
+                            var newvalue = roomBaseValue + tPercent;
+                            roomBaseValue = newvalue;
+                        }
+                if (parseInt(noOfAdult) == 3) {
+                            tPercent = (parseInt(roomBaseValue) * parseInt(threePercent)) / 100;
+                            var newvalue = parseInt(roomBaseValue) + parseInt(tPercent);
+                            roomBaseValue = newvalue;
+                        }
+                if (parseInt(noOfAdult) >= 4) {
+                            tPercent = (parseInt(roomBaseValue) * parseInt(fourPercent)) / 100;
+                            var newvalue = roomBaseValue + tPercent;
+                            roomBaseValue = newvalue;
+                        }
+                        var finalFare = parseInt(roomBaseValue) + parseInt(amTotal);
+                        alert(finalFare);
+
+            }
 
 
         });
 
 
     </script>
-    
-    }
+
+}

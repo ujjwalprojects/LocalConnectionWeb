@@ -107,6 +107,8 @@ namespace LocalConnWeb.ViewModels
         [Required(ErrorMessage = "Enter Customer Mobile")]
         public string CustPhNo { get; set; }
         public string RoomSelect { get; set; }
+        public string AdultSelect { get; set; }
+        public string ChildrenSelect { get; set; }
         public DateTime BookingFrom { get; set; }
         public DateTime BookingUpto { get; set; }
         public DateTime BookingDate { get; set; }
