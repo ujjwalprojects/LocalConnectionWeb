@@ -23,5 +23,10 @@ namespace LocalConnWeb.ViewModels
         public List<HotelPremisesList> hotelPremises { get; set; }
         public List<HotelRoomList> hotelRoomLists { get; set; }
         public HotelRoomTab hotelRoomImgTab  { get; set; }
+        public NearbyVM nearByVM { get; set; }
+        public TermCondPolicyVM termCondVM { get; set; }
+        public PreBookingDtl preBookDtl { get; set; }
     }
+
+  
 }

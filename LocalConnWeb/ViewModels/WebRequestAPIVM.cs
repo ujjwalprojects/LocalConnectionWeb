@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -99,9 +100,13 @@ namespace LocalConnWeb.ViewModels
     {
         public string BookingID { get; set; }
         public long HotelID { get; set; }
+        [Required(ErrorMessage ="Enter Cutomer Name")]
         public string CustName { get; set; }
+        [Required(ErrorMessage ="Enter Customer Email")]
         public string CustEmail { get; set; }
+        [Required(ErrorMessage = "Enter Customer Mobile")]
         public string CustPhNo { get; set; }
+        public string RoomSelect { get; set; }
         public DateTime BookingFrom { get; set; }
         public DateTime BookingUpto { get; set; }
         public DateTime BookingDate { get; set; }

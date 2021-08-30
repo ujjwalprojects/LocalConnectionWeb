@@ -42,7 +42,7 @@
                 START HEADER AREA
     ================================= -->
     <header class="header-area">
-        <div class="header-top-bar padding-right-100px padding-left-100px">
+        @*<div class="header-top-bar padding-right-100px padding-left-100px">
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-lg-6">
@@ -124,7 +124,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
         <div class="header-menu-wrapper padding-right-100px padding-left-100px">
             <div class="container-fluid">
                 <div class="row">
@@ -132,7 +132,7 @@
                         <div class="menu-wrapper justify-content-between">
                             <a href="#" class="down-button"><i class="la la-angle-down"></i></a>
                             <div class="logo">
-                                <a href="index.html"><img src="images/logo.png" alt="logo"></a>
+                                <a href="/home/index"><img src="~/Content/img/logos.png" alt="logo"></a>
                                 <div class="menu-toggler">
                                     <i class="la la-bars"></i>
                                     <i class="la la-times"></i>
@@ -142,16 +142,7 @@
                                 <nav>
                                     <ul>
                                         <li>
-                                            <a href="#">Home <i class="la la-angle-down"></i></a>
-                                            <ul class="dropdown-menu-item">
-                                                <li><a href="index.html">Home - main</a></li>
-                                                <li><a href="index2.html">Home - Hotel</a></li>
-                                                <li><a href="index3.html">Home - Activity</a></li>
-                                                <li><a href="index4.html">Home - Car</a></li>
-                                                <li><a href="index5.html">Home - Cruise</a></li>
-                                                <li><a href="index6.html">Home - Flight</a></li>
-                                                <li><a href="index7.html">Home - City Tour <span class="badge bg-2 text-white">New</span></a></li>
-                                            </ul>
+                                            <a href="/Home/Index">Home</a>
                                         </li>
                                         <li>
                                             <a href="#">Tour <i class="la la-angle-down"></i></a>
@@ -277,7 +268,8 @@
                                 </nav>
                             </div><!-- end main-menu-content -->
                             <div class="nav-btn">
-                                <a href="become-local-expert.html" class="theme-btn">Become Local Expert</a>
+                                <a href="/account/register" class="theme-btn theme-btn-small theme-btn-transparent mr-1">Sign Up</a>
+                                <a href="/account/login" class="theme-btn theme-btn-small">Login</a>
                             </div><!-- end nav-btn -->
                         </div><!-- end menu-wrapper -->
                     </div><!-- end col-lg-12 -->
