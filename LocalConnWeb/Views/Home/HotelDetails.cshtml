@@ -313,13 +313,13 @@
                                                     <div class="cabin-price">
                                                         @if (i == 0)
                                                         {
-                                                            <div class="custom-checkbox mb-0 roomType"  name="@item.RoomType">
+                                                            <div class="custom-checkbox mb-0 roomType"  name="@item.RoomType" value ="@item.RoomTypePrice">
                                                                 <label id="@item.RoomType" class="theme-btn theme-btn-small">Selected</label>
                                                             </div>
                                                         }
                                                         else
                                                         {
-                                                            <div class="custom-checkbox mb-0 roomType"   name="@item.RoomType">
+                                                            <div class="custom-checkbox mb-0 roomType"   name="@item.RoomType" value ="@item.RoomTypePrice">
                                                                 <label id="@item.RoomType" class="theme-btn theme-btn-small">Select</label>
                                                             </div>
                                                         }
@@ -467,7 +467,7 @@
                             <div class="sidebar-widget-item">
                                 <div class="sidebar-book-title-wrap mb-3">
                                     @*<h3>Popular</h3>*@
-                                    <p><span class="text-form">Total</span><span class="text-value ml-2 mr-1"><span id="actualPrice">@Model.hotelDtl.RoomTypePrice.ToString("G29")</span> </span> <span class="before-price">$412.00</span></p>
+                                    <p><span class="text-form">Total</span><span class="text-value ml-2 mr-1"><span id="actualPrice"></span> </span> <span class="before-price">@Model.hotelDtl.RoomTypePrice.ToString("G29")</span></p>
                                 </div>
                             </div><!-- end sidebar-widget-item -->
                             <div class="btn-box pt-2">
@@ -499,6 +499,10 @@
     <script type="text/javascript">
         $('#parentHolder').hide();
         $('#notselected').show();
+        var globalRValue =@Model.hotelDtl.RoomTypePrice.ToString("G29");
+        var noOfAdult = 1;
+        var noOfChild = 0;
+        var noofday = 1;
         $(document).ready(function () {
             var days = 1;
             var amTotal =0;
@@ -527,6 +531,7 @@
                 days = diff / 1000 / 60 / 60 / 24;
                 $("#mBookingFrom").val(newstartDate);
                 $("#mBookingUpto").val(newendDate);
+                noofday = days;
                 calculatePrice();
             });
             function formatDate(date) {
@@ -588,13 +593,13 @@
                 var btnValu = currentRow.find("#amSelBtn").val();
                 if (btnValu == "Add") {
                     currentRow.find("#amSelBtn").val("Remove");
-                    amnetiesArr.push([col1 + "- " + noOfAdult+"p x "+days+"d "+ + col2]);
-                    amTotal += parseInt(col2);
+                    amnetiesArr.push([col1 + "- " + noOfAdult + "p x " + days + "d " + + col2]);
+                        amTotal = parseInt(amTotal) + parseInt(col2);
                 }
                 if (btnValu == "Remove") {
                     currentRow.find("#amSelBtn").val("Add");
                     amnetiesArr.pop([col1 + "-x"])
-                    amTotal -= parseInt(col2);
+                    amTotal = parseInt(amTotal) - parseInt(col2 * parseInt($('#noAdult').val()));
 
                 }
                 if (amnetiesArr.length < 2) {
@@ -644,25 +649,33 @@
             $('.roomType').on("click", function (e) {
 
                 var selRoom = $(this).attr('name');
-                alert(selRoom);
+
+                //alert(selRoom + parseInt($(this).attr('value')));
                 $('#roomTypeSel').find('label').each(function () {
                     if ($(this).prop('id') == selRoom) {
                         $(this).text('Selected');
                     } else {
                         $(this).text('Select');
                     }
-
+                  
                 });
-
+                globalRValue = parseInt($(this).attr('value'));
+                calculatePrice();
             });
+
+            calculatePrice();
             //final calculation
             function calculatePrice() {
-                var roomBaseValue = $('#actualPrice').text();
-                var noOfAdult = $('#noAdult').val();
-                var noOfChild = $('#noChild').val();
-                var noofday = 1;
+                var roomBaseValue = globalRValue;
                 var totalRoom = $('#roomSelect option:selected').val();
+                noOfAdult = $('#noAdult').val();
+                noOfChild = $('#noChild').val();
+                var tPercent = 0;
+                var actValue = 0;
                 var overAll = @Model.hotelDtl.OverallOfferPercentage;
+                var twoPercent = @Model.hotelDtl.TwoOccupantPercentage;
+                var threePercent = @Model.hotelDtl.ThreeOccupantPercentage;
+                var fourPercent = @Model.hotelDtl.FourPlusOccupantPercentage;
                 if (parseInt(totalRoom) > 1) {
                     roomBaseValue = parseInt(roomBaseValue) * parseInt(totalRoom);
                     actValue = roomBaseValue;
@@ -693,9 +706,20 @@
                             tPercent = (parseInt(roomBaseValue) * parseInt(fourPercent)) / 100;
                             var newvalue = roomBaseValue + tPercent;
                             roomBaseValue = newvalue;
-                        }
-                        var finalFare = parseInt(roomBaseValue) + parseInt(amTotal);
+                }
+                if (parseInt(amTotal) != 0) {
+                    if (noOfAdult == 1) {
+                        noOfAdult = 0;
+                        amTotal = parseInt(noofday) * parseInt(amTotal) + parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild) * parseInt(amTotal) ;
+                    }
+                    else {
+                        amTotal = parseInt(noofday) * parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild) * parseInt(amTotal);
+                    }
+                }
+
+                var finalFare = parseInt(roomBaseValue) + parseInt(amTotal);
                         alert(finalFare);
+                $('#actualPrice').text(finalFare);
 
             }
 
