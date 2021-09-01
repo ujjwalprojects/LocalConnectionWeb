@@ -1365,6 +1365,7 @@
     <Content Include="Views\GenTourPackage\SearchPackage.cshtml" />
     <Content Include="Views\GenTourPackage\_pvPackageList.cshtml" />
     <Content Include="Views\Home\HotelDetails.cshtml" />
+    <Content Include="Views\Home\HotelBookingDtl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

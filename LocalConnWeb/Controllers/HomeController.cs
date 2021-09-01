@@ -47,11 +47,15 @@ namespace LocalConnWeb.Controllers
             return View(obj);
         }
 
-        public ActionResult HotelBookingDtl(HotelDetailsVM obj)
+        public ActionResult HotelBookingDtl(HotelDetailsVM obj,string Book="")
         {
-            return View();
+            HotelDetailsVM model = new HotelDetailsVM();
+            model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
+            model.preBookDtl = obj.preBookDtl;
+            return View(model);
         }
 
+    
 
 
         public ActionResult About()

@@ -313,13 +313,13 @@
                                                     <div class="cabin-price">
                                                         @if (i == 0)
                                                         {
-                                                            <div class="custom-checkbox mb-0 roomType"  name="@item.RoomType" value ="@item.RoomTypePrice">
+                                                            <div class="custom-checkbox mb-0 roomType" name="@item.RoomType" value="@item.RoomTypePrice">
                                                                 <label id="@item.RoomType" class="theme-btn theme-btn-small">Selected</label>
                                                             </div>
                                                         }
                                                         else
                                                         {
-                                                            <div class="custom-checkbox mb-0 roomType"   name="@item.RoomType" value ="@item.RoomTypePrice">
+                                                            <div class="custom-checkbox mb-0 roomType" name="@item.RoomType" value="@item.RoomTypePrice">
                                                                 <label id="@item.RoomType" class="theme-btn theme-btn-small">Select</label>
                                                             </div>
                                                         }
@@ -474,13 +474,14 @@
 
                                 @using (Html.BeginForm("HotelBookingDtl", "Home"))
                                 {
-                                    @Html.HiddenFor(x => x.preBookDtl.FinalFare, new { id = "mFinalFare" })
-                                    @Html.HiddenFor(x => x.preBookDtl.RoomSelect, new { id = "mRoomSelect" })
-                                    @Html.HiddenFor(x => x.preBookDtl.AdultSelect, new { id = "mAdultSelect" })
-                                    @Html.HiddenFor(x => x.preBookDtl.ChildrenSelect, new { id = "mChildSelect" })
-                                    @Html.HiddenFor(x => x.preBookDtl.BookingFrom, new { id = "mBookingFrom" })
-                                    @Html.HiddenFor(x => x.preBookDtl.BookingUpto, new { id = "mBookingUpto" })
-
+                                    @Html.TextBoxFor(x => x.preBookDtl.HotelID, new {Value=Model.hotelDtl.HotelID })
+                                    @Html.TextBoxFor(x => x.preBookDtl.FinalFare, new { id = "mFinalFare" })
+                                    @Html.TextBoxFor(x => x.preBookDtl.RoomSelect, new { id = "mRoomSelect" })
+                                    @Html.TextBoxFor(x => x.preBookDtl.AdultSelect, new { id = "mAdultSelect" })
+                                    @Html.TextBoxFor(x => x.preBookDtl.ChildrenSelect, new { id = "mChildSelect" })
+                                    @Html.TextBoxFor(x => x.preBookDtl.BookingFrom, new { id = "mBookingFrom" })
+                                    @Html.TextBoxFor(x => x.preBookDtl.BookingUpto, new { id = "mBookingUpto" })
+                                    @Html.TextBoxFor(x => x.preBookDtl.CustDetails, new { id = "mCustDetails" })
                                     <input type="submit" value="Book Now" class="theme-btn text-center w-100 mb-2" />
                                 }
 
@@ -497,13 +498,15 @@
 
 @section Scripts{
     <script type="text/javascript">
+
+        $(document).ready(function () {
         $('#parentHolder').hide();
         $('#notselected').show();
         var globalRValue =@Model.hotelDtl.RoomTypePrice.ToString("G29");
         var noOfAdult = 1;
         var noOfChild = 0;
         var noofday = 1;
-        $(document).ready(function () {
+        var sstartDate, eendDate;
             var days = 1;
             var amTotal =0;
             var amnetiesArr = [];
@@ -522,15 +525,13 @@
                 //alert(this.value);
                 var arr = this.value.split('-');
                 var endDate = arr[1];
-                var eendDate = formatDate(endDate.trim());
+                eendDate = formatDate(endDate.trim());
                 var newendDate = new Date(eendDate);
                 var startDate = arr[0];
-                var sstartDate = formatDate(startDate.trim());
+                sstartDate = formatDate(startDate.trim());
                 var newstartDate = new Date(sstartDate);
                 var diff = new Date(newendDate - newstartDate);
                 days = diff / 1000 / 60 / 60 / 24;
-                $("#mBookingFrom").val(newstartDate);
-                $("#mBookingUpto").val(newendDate);
                 noofday = days;
                 calculatePrice();
             });
@@ -657,7 +658,7 @@
                     } else {
                         $(this).text('Select');
                     }
-                  
+
                 });
                 globalRValue = parseInt($(this).attr('value'));
                 calculatePrice();
@@ -707,6 +708,10 @@
                             var newvalue = roomBaseValue + tPercent;
                             roomBaseValue = newvalue;
                 }
+                if (noofday == 0) {
+                    //alert("Please Select Date");
+                    noofday = 1;
+                }
                 if (parseInt(amTotal) != 0) {
                     if (noOfAdult == 1) {
                         noOfAdult = 0;
@@ -718,12 +723,20 @@
                 }
 
                 var finalFare = parseInt(roomBaseValue) + parseInt(amTotal);
-                        alert(finalFare);
+                        //alert(finalFare);
                 $('#actualPrice').text(finalFare);
+                //setting values
+
+
+                $('#mFinalFare').val(finalFare);
+                $('#mRoomSelect').val(totalRoom);
+                $('#mAdultSelect').val(noOfAdult);
+                $('#mChildSelect').val(noOfChild);
+                $("#mBookingFrom").val(sstartDate);
+                $("#mBookingUpto").val(eendDate);
+                $("#mCustDetails").val(amnetiesArr);
 
             }
-
-
         });
 
 

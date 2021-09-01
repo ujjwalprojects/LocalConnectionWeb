@@ -1,0 +1,110 @@
+﻿@model LocalConnWeb.ViewModels.HotelDetailsVM
+@{
+    ViewBag.Title = "HotelBookingDtl";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- ================================
+    START BREADCRUMB AREA
+================================= -->
+<section class="breadcrumb-area bread-bg-10">
+    <div class="breadcrumb-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-content text-center">
+                        <div class="section-heading">
+                            <h2 class="sec__title text-white">Cart</h2>
+                        </div>
+                        <span class="arrow-blink">
+                            <i class="la la-arrow-down"></i>
+                        </span>
+                    </div><!-- end breadcrumb-content -->
+                </div><!-- end col-lg-12 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end breadcrumb-wrap -->
+    <div class="bread-svg-box">
+        <svg class="bread-svg" xmlns="#" viewBox="0 0 100 10" preserveAspectRatio="none"><polygon points="100 0 50 10 0 0 0 10 100 10"></polygon></svg>
+    </div><!-- end bread-svg -->
+</section><!-- end breadcrumb-area -->
+<!-- ================================
+    END BREADCRUMB AREA
+================================= -->
+<!-- ================================
+    START CART AREA
+================================= -->
+<section class="cart-area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-wrap">
+                    <div class="table-form table-responsive mb-3">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Hotel</th>
+                                    <th scope="col">Price</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="table-content product-content d-flex align-items-center">
+                                            <a href="room-details.html" class="d-block">
+                                                <img src="@Model.hotelDtl.PhotoThumbPath" alt="" class="flex-shrink-0">
+                                            </a>
+                                            <div class="product-content">
+                                                <a href="room-details.html" class="title">Premium Lake View Room</a>
+                                                <div class="product-info-wrap">
+                                                    <div class="product-info line-height-24">
+                                                        <span class="product-info-label">Reservation:</span>
+                                                        <span class="product-info-value">
+                                                            <span class="product-check-in">@Model.preBookDtl.BookingFrom.ToString("dd MMM yyyy")</span>
+                                                            <span class="product-mark">/</span>
+                                                            <span class="product-check-out">@Model.preBookDtl.BookingUpto.ToString("dd MMM yyyy")</span>
+                                                            <span class="product-nights">(1 night)</span>
+                                                        </span>
+                                                    </div><!-- end product-info -->
+                                                    <div class="product-info line-height-24">
+                                                        <span class="product-info-label">Guests:</span>
+                                                        <span class="product-info-value">@Model.preBookDtl.AdultSelect Adult(s)</span>
+                                                        <span class="product-info-value">@Model.preBookDtl.ChildrenSelect Child(s)</span>
+                                                    </div><!-- end product-info -->
+
+                                                    <div class="product-info line-height-24">
+                                                        <span class="product-info-label">Meals:</span>
+                                                        <span class="product-info-value">@Model.preBookDtl.CustDetails</span>
+                                                    </div><!-- end product-info -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <td>@Model.preBookDtl.FinalFare</td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="section-block"></div>
+                  
+                    <div class="row">
+                        <div class="col-lg-4 ml-auto">
+                         
+                                <div class="section-block"></div>
+                                <div class="btn-box text-right pt-4">
+                                    <a href="checkout.html" class="theme-btn">Proceed to Checkout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end cart-wrap -->
+            </div><!-- end col-lg-12 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end cart-area -->
+<!-- ================================
+    END CART AREA
+================================= -->
