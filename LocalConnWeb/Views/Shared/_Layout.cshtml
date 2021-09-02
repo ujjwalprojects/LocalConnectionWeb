@@ -268,8 +268,17 @@
                                 </nav>
                             </div><!-- end main-menu-content -->
                             <div class="nav-btn">
-                                <a href="/account/register" class="theme-btn theme-btn-small theme-btn-transparent mr-1">Sign Up</a>
-                                <a href="/account/login" class="theme-btn theme-btn-small">Login</a>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a href="#" class="theme-btn theme-btn-small theme-btn-transparent mr-1">Welcome @User</a>
+                                }
+                                else
+                                {
+                                    <a href="/account/register" class="theme-btn theme-btn-small theme-btn-transparent mr-1">Sign Up</a>
+                                    <a href="/account/login" class="theme-btn theme-btn-small">Login</a>
+                                }
+
+
                             </div><!-- end nav-btn -->
                         </div><!-- end menu-wrapper -->
                     </div><!-- end col-lg-12 -->

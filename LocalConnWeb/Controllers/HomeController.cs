@@ -47,7 +47,7 @@ namespace LocalConnWeb.Controllers
             return View(obj);
         }
 
-        public ActionResult HotelBookingDtl(HotelDetailsVM obj,string Book="")
+        public ActionResult HotelBookingDtl(HotelDetailsVM obj)
         {
             HotelDetailsVM model = new HotelDetailsVM();
             model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
@@ -55,6 +55,17 @@ namespace LocalConnWeb.Controllers
             return View(model);
         }
 
+        public ActionResult PayNow(HotelDetailsVM obj)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login","Account",new {Areas="" });
+            }
+            HotelDetailsVM model = new HotelDetailsVM();
+            model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
+            model.preBookDtl = obj.preBookDtl;
+            return View(model);
+        }
     
 
 
