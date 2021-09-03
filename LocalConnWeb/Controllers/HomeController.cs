@@ -11,7 +11,7 @@ using LocalConnWeb.ViewModels;
 
 namespace LocalConnWeb.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         ApiConnection objAPI = new ApiConnection("general");
         //protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -57,14 +57,18 @@ namespace LocalConnWeb.Controllers
 
         public ActionResult PayNow(HotelDetailsVM obj)
         {
-            if (User.Identity.IsAuthenticated)
+            HotelDetailsVM model = new HotelDetailsVM();
+            if (!(User.Identity.IsAuthenticated))
             {
                 return RedirectToAction("Login","Account",new {Areas="" });
             }
-            HotelDetailsVM model = new HotelDetailsVM();
+            if (ModelState.IsValid)
+            {
+                
+            }
             model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
             model.preBookDtl = obj.preBookDtl;
-            return View(model);
+            return View("HotelBookingDtl", model);
         }
     
 

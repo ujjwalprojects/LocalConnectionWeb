@@ -270,13 +270,13 @@
                             <div class="nav-btn">
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    <a href="#" class="theme-btn theme-btn-small theme-btn-transparent mr-1">Welcome @User</a>
+                                    <a href="#" class="theme-btn theme-btn-small theme-btn-transparent mr-1">Welcome @ViewBag.CurrentUserName</a>
                                 }
                                 else
                                 {
                                     <a href="/account/register" class="theme-btn theme-btn-small theme-btn-transparent mr-1">Sign Up</a>
                                     <a href="/account/login" class="theme-btn theme-btn-small">Login</a>
-                                }
+                                 } 
 
 
                             </div><!-- end nav-btn -->
