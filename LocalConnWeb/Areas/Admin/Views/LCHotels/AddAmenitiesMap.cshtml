@@ -40,7 +40,9 @@
                                     <td class="p-2">
                                         <label class="fancy">
                                             @Html.CheckBox("HotelAmenitiesMapView[" + i + "].IsSelected", Model.HotelAmenitiesMapView[i].IsSelected)  &nbsp;&nbsp;
-                                            @item.AmenitiesName &nbsp;&nbsp;<small class="text-info">Rs.@item.AmenitiesBasePrice.ToString("0.00")</small> 
+                                            @item.AmenitiesName &nbsp;&nbsp;<small class="text-info"> @Html.TextBoxFor(model => model.HotelAmenitiesMapView[i].AmenitiesBasePrice, new {Value = item.AmenitiesBasePrice.ToString("0.00") })</small>
+                                           
+
 
                                         </label>
 

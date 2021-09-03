@@ -311,6 +311,7 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         [Display(Name = "Room Rate")]
         public decimal RoomTypePrice { get; set; }
         public bool IsStandard { get; set; }
+        public bool IsActive { get; set; }
     }
     public class HotelRoomTypeMapView
     {
@@ -319,6 +320,8 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public string RoomType { get; set; }
         public decimal RoomTypePrice { get; set; }
         public bool IsStandard { get; set; }
+        public bool IsActive { get; set; }
+
     }
 
     //LCHotel Terms and cancellations
