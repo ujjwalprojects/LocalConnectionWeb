@@ -1,0 +1,748 @@
+﻿@model LocalConnWeb.ViewModels.HotelDetailsVM
+@{
+    ViewBag.Title = "HotelDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .fixed-side {
+        position: fixed;
+        top: 220px;
+        width: 370px;
+    }
+</style>
+
+<!-- ================================
+    START BREADCRUMB TOP BAR
+================================= -->
+<section class="breadcrumb-top-bar">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-list breadcrumb-top-list">
+                    <ul class="list-items bg-transparent radius-none p-0">
+                        <li><a href="index.html">Home</a></li>
+                        <li>@Model.hotelDtl.HotelName</li>
+                        @*<li>Hilton Hotel and Resorts</li>*@
+                    </ul>
+                </div><!-- end breadcrumb-list -->
+            </div><!-- end col-lg-12 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end breadcrumb-top-bar -->
+<!-- ================================
+    END BREADCRUMB TOP BAR
+================================= -->
+<!-- ================================
+    START BREADCRUMB AREA
+================================= -->
+<section class="breadcrumb-area bread-bg-7 py-0">
+    <div class="breadcrumb-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-btn">
+                        <div class="btn-box">
+                            @*<a class="theme-btn" data-fancybox="video" data-src="https://www.youtube.com/watch?v=5u1WISBbo5I"
+                                   data-speed="700">
+                                    <i class="la la-video-camera mr-2"></i>Video
+                                </a>*@
+                            <a class="theme-btn" data-src="@Model.hotelDtl.PhotoThumbPath"
+                               data-fancybox="gallery"
+                               data-caption="Showing image - 01"
+                               data-speed="700">
+                                <i class="la la-photo mr-2"></i>More Photos
+                            </a>
+                        </div>
+                        @if (Model.hotelRoomImgTab != null)
+                        {
+                            if (Model.hotelRoomImgTab.roomImgList.Count > 0)
+                            {
+                                foreach (var item in Model.hotelRoomImgTab.roomImgList)
+                                {
+                                    <a class="d-none"
+                                       data-fancybox="gallery"
+                                       data-src="@item.PhotoNormalPath"
+                                       data-caption="@item.HotelPremName"
+                                       data-speed="700"></a>
+                                }
+
+
+                            }
+                        }
+
+
+
+                    </div><!-- end breadcrumb-btn -->
+                </div><!-- end col-lg-12 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end breadcrumb-wrap -->
+</section><!-- end breadcrumb-area -->
+<!-- ================================
+    END BREADCRUMB AREA
+================================= -->
+<!-- ================================
+    START TOUR DETAIL AREA
+================================= -->
+<section class="tour-detail-area padding-bottom-90px">
+    <div class="single-content-navbar-wrap menu section-bg" id="single-content-navbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="single-content-nav" id="single-content-nav">
+                        <ul>
+                            <li><a data-scroll="description" href="#description" class="scroll-link active">Hotel Details</a></li>
+                            <li><a data-scroll="availability" href="#availability" class="scroll-link">Availability</a></li>
+                            <li><a data-scroll="amenities" href="#amenities" class="scroll-link">Amenities</a></li>
+                            <li><a data-scroll="faq" href="#faq" class="scroll-link">Terms & Conditions</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- end single-content-navbar-wrap -->
+    <div class="single-content-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="single-content-wrap padding-top-60px">
+                        <div id="description" class="page-scroll">
+                            <div class="single-content-item pb-4">
+                                <h3 class="title font-size-26">@Model.hotelDtl.HotelName</h3>
+                                <div class="d-flex align-items-center pt-2">
+                                    <p class="mr-2">@Model.hotelDtl.HotelAddress</p>
+                                    @*<p>
+                                            <span class="badge badge-warning text-white font-size-16">4.7</span>
+                                            <span>(4,209 Reviews)</span>
+                                        </p>*@
+                                </div>
+                            </div><!-- end single-content-item -->
+                            <div class="section-block"></div>
+                            <div class="section-block"></div>
+                            <div class="single-content-item padding-top-40px padding-bottom-40px">
+                                <h3 class="title font-size-20">About @Model.hotelDtl.HotelName</h3>
+                                <p class="py-3">@Model.hotelDtl.HotelDesc</p>
+                                <p>rum explicari eu qui, est enim quaerendum te. Quo harum viris id. Per ne quando dolore evertitur, pro ad cibo commune.</p>
+                            </div><!-- end single-content-item -->
+                            <div class="section-block"></div>
+
+                        </div><!-- end description -->
+                        <div class="single-content-item padding-bottom-40px">
+                            <h3 class="title font-size-20 d-flex align-items-center justify-content-between">
+                                Child Policy
+                                <a class="btn collapse-btn theme-btn-hover-gray font-size-15" data-toggle="collapse" href="#viewIncludedExample" role="button" aria-expanded="false" aria-controls="viewIncludedExample">
+                                    View<i class="la la-angle-down ml-1"></i>
+                                </a>
+                            </h3>
+                            <div class="collapse" id="viewIncludedExample">
+                                <div class="cruise-included-feature-wrap">
+                                    <div class="cruise-include-feature pt-3">
+                                        <i class="la la-star"></i>@if (Model.hotelDtl.ChildOccupantNote != null)
+                                        {@Model.hotelDtl.ChildOccupantNote }
+                                    else
+                                    {<div>Not Available</div>}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div><!-- end single-content-item -->
+                        <div id="nearby">
+                            <section id="tabs" class="project-tab">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <nav>
+                                                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Places</a>
+                                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Transport</a>
+                                                </div>
+                                            </nav>
+                                            <div class="tab-content" id="nav-tabContent">
+                                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                    @if (Model.nearByVM.nearbyone != null)
+                                                    {
+                                                        if (Model.nearByVM.nearbyone.Count() > 0)
+                                                        {
+                                                            foreach (var item in Model.nearByVM.nearbyone)
+                                                            {
+                                                                <div class="row">
+                                                                    <div class="col-10">
+                                                                        <i class="la la-star"></i>  @item.NearByPoints
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        @item.NearByDistance
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="row">Not Available</div>
+                                                    }
+                                                </div>
+                                                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                                    @if (Model.nearByVM.nearbytwo != null)
+                                                    {
+                                                        if (Model.nearByVM.nearbytwo.Count() > 0)
+                                                        {
+                                                            foreach (var item in Model.nearByVM.nearbytwo)
+                                                            {
+                                                                <div class="row">
+                                                                    <div class="col-10">
+                                                                        @item.NearByPoints
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        @item.NearByDistance
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="row">Not Available</div>
+                                                    }
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        @if (Model.hAmenities != null)
+                        {
+                            <div id="amenities" class="page-scroll">
+                                <div class="single-content-item padding-top-40px padding-bottom-20px">
+                                    <h3 class="title font-size-20">Amenities</h3>
+                                    <div class="amenities-feature-item pt-4">
+                                        @if (Model.hAmenities.Count() > 0)
+                                        {
+                                            <div class="row">
+                                                @foreach (var item in Model.hAmenities)
+                                                {
+                                                    if (item.AmenitiesBasePrice.ToString("G29") == "0")
+                                                    {
+                                                        <div class="col-lg-4 responsive-column">
+                                                            <div class="single-tour-feature d-flex align-items-center mb-3">
+                                                                <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                                                    <img src="@item.AmenitiesIconPath" style="height:50px;" />
+                                                                </div>
+
+                                                                <div class="single-feature-titles">
+                                                                    <h3 class="title font-size-15 font-weight-medium">@item.AmenitiesName </h3>
+                                                                </div>
+
+
+                                                            </div><!-- end single-tour-feature -->
+                                                        </div><!-- end col-lg-4 -->
+                                                    }
+
+                                                }
+                                            </div><!-- end row -->
+                                        }
+
+                                    </div>
+                                </div><!-- end single-content-item -->
+                                @*<div class="section-block"></div>*@
+                            </div>
+                        }
+                        <div id="itinerary" class="page-scroll">
+                            <div class="section-block margin-top-40px"></div>
+                            <div class="single-content-item padding-top-40px padding-bottom-40px">
+                                <h3 class="title font-size-20">Amenities Add On</h3>
+                                <div class="table-form table-responsive padding-top-30px">
+                                    <table class="table" id="amenities-table">
+                                        <tbody class="amenities-select">
+                                            @if (Model.hAmenities.Count() > 0)
+                                            {
+                                                foreach (var item in Model.hAmenities)
+                                                {
+                                                    if (item.AmenitiesBasePrice.ToString("G29") != "0")
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <img src="@item.AmenitiesIconPath" style="height:50px;" />
+                                                            </td>
+                                                            <td> <h3 class="title font-size-15 font-weight-medium" id="amSelName">@item.AmenitiesName </h3></td>
+                                                            <td> <h3 class="title font-size-15 font-weight-medium" id="amSelPrice">@item.AmenitiesBasePrice.ToString("G29")</h3></td>
+                                                            <td><input type="button" id="amSelBtn" class="theme-btn theme-btn-small" value="Add" /></td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                    <p class="font-size-14 line-height-26"><strong class="text-black">Please note:</strong> While we do our best to adhere to our published itineraries, they may be changed at the discretion of the captain due to weather advisories, port traffic, and any other unforeseeable circumstances.</p>
+                                </div>
+                            </div><!-- end single-content-item -->
+                            <div class="section-block"></div>
+                        </div><!-- end itinerary -->
+                        <div id="availability" class="page-scroll">
+                            <div class="single-content-item padding-top-40px padding-bottom-30px">
+                                <!-- end contact-form-action -->
+                                <h3 class="title font-size-20">Rooms</h3>
+                                <div id="roomTypeSel">
+                                    @if (Model.hotelRoomLists.Count() > 0)
+                                    {
+                                        int i = 0;
+                                        foreach (var item in Model.hotelRoomLists)
+                                        {
+                                            <div class="cabin-type padding-top-30px">
+                                                <div class="cabin-type-item seat-selection-item d-flex">
+                                                    <div class="cabin-type-img flex-shrink-0">
+                                                        <img src="@item.PhotoThumbPath" alt="">
+                                                    </div>
+                                                    <div class="cabin-type-detail">
+                                                        <h3 class="title">@item.RoomType</h3>
+                                                        <div class="row padding-top-20px">
+                                                            <div class="col-lg-6 responsive-column">
+                                                                <div class="single-tour-feature d-flex align-items-center mb-3">
+                                                                    <p class="text-uppercase font-size-14">
+                                                                        Per/night<strong class="mt-n1 text-black font-size-18 font-weight-black d-block">@item.RoomTypePrice.ToString("G29")</strong>
+                                                                    </p>
+                                                                </div>
+                                                            </div><!-- end col-lg-6 -->
+
+                                                        </div><!-- end row -->
+
+                                                    </div>
+                                                    <div class="cabin-price">
+                                                        @if (i == 0)
+                                                        {
+                                                            <div class="custom-checkbox mb-0 roomType" name="@item.RoomType" value="@item.RoomTypePrice">
+                                                                <label id="@item.RoomType" class="theme-btn theme-btn-small">Selected</label>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="custom-checkbox mb-0 roomType" name="@item.RoomType" value="@item.RoomTypePrice">
+                                                                <label id="@item.RoomType" class="theme-btn theme-btn-small">Select</label>
+                                                            </div>
+                                                        }
+
+                                                    </div>
+                                                </div><!-- end cabin-type-item -->
+                                            </div>
+                                            { i++; }
+
+                                        }
+
+                                    }
+                                </div>
+                                <!-- end cabin-type -->
+                            </div><!-- end single-content-item -->
+                            <div class="section-block"></div>
+                        </div><!-- end location-map -->
+                        <!-- start Terms and condition -->
+                        <div id="faq" class="page-scroll">
+                            <div class="single-content-item padding-top-40px padding-bottom-40px">
+                                <h3 class="title font-size-20">Terms & Condition</h3>
+                                <div class="accordion accordion-item padding-top-30px" id="accordionExample2">
+                                    <div class="card">
+                                        <div class="card-header" id="faqHeadingFour">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-link d-flex align-items-center justify-content-end flex-row-reverse font-size-16" type="button" data-toggle="collapse" data-target="#faqCollapseFour" aria-expanded="true" aria-controls="faqCollapseFour">
+                                                    <span class="ml-3">Terms & Condition</span>
+                                                    <i class="la la-minus"></i>
+                                                    <i class="la la-plus"></i>
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="faqCollapseFour" class="collapse show" aria-labelledby="faqHeadingFour" data-parent="#accordionExample2">
+                                            <div class="card-body d-flex">
+                                                @if (Model.termCondVM.termPolicyList != null)
+                                                {
+                                                    if (Model.termCondVM.termPolicyList.Count > 0)
+                                                    {
+                                                        <ul>
+                                                            @foreach (var item in Model.termCondVM.termPolicyList)
+                                                            {
+                                                                <li><i class="la la-star"></i> @item.TermName</li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div><!-- end card -->
+                                    <div class="card">
+                                        <div class="card-header" id="faqHeadingFour">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-link d-flex align-items-center justify-content-end flex-row-reverse font-size-16" type="button" data-toggle="collapse" data-target="#faqCollapseFour" aria-expanded="true" aria-controls="faqCollapseFour">
+                                                    <span class="ml-3">Cancellation Policy</span>
+                                                    <i class="la la-minus"></i>
+                                                    <i class="la la-plus"></i>
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="faqCollapseFour" class="collapse show" aria-labelledby="faqHeadingFour" data-parent="#accordionExample2">
+                                            <div class="card-body d-flex">
+                                                @if (Model.termCondVM.cancelPolicyList != null)
+                                                {
+                                                    if (Model.termCondVM.cancelPolicyList.Count > 0)
+                                                    {
+                                                        <ul>
+                                                            @foreach (var item in Model.termCondVM.cancelPolicyList)
+                                                            {
+                                                                <li><i class="la la-star"></i> @item.CancellationDesc</li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div><!-- end card -->
+
+
+                                </div>
+                            </div><!-- end single-content-item -->
+                            <div class="section-block"></div>
+                        </div><!-- end faq -->
+                    </div><!-- end single-content-wrap -->
+                </div><!-- end col-lg-8 -->
+                <div class="col-lg-4">
+                    <div class="sidebar single-content-sidebar mb-0">
+                        <div class="sidebar-widget single-content-widget">
+                            <input type="hidden" value="@Model.hotelDtl.MaxRooms" id="maxRoomHidden" />
+                            <div class="sidebar-widget-item">
+                                <div class="contact-form-action">
+                                    <div>
+                                        <div class="input-box">
+                                            <label class="label-text">Check in - Check out</label>
+                                            <div class="form-group">
+                                                <span class="la la-calendar form-icon"></span>
+                                                <input class="date-range form-control" type="text" name="daterange">
+                                            </div>
+                                        </div>
+                                        <div class="input-box">
+                                            <label class="label-text">Rooms</label>
+                                            <div class="form-group">
+                                                <div class="select-contain w-auto">
+                                                    <select class="select-contain-select" id="roomSelect">
+                                                        @*<option value="0">Select Rooms</option>*@
+                                                        @for (int i = 1; i <= Model.hotelDtl.MaxRooms; i++)
+                                                        {
+                                                            <option value="@i">@i Room</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- end sidebar-widget-item -->
+                            <div class="sidebar-widget-item">
+                                <div class="qty-box mb-2 d-flex align-items-center justify-content-between">
+                                    <label class="font-size-16">Adults <span>Age 18+</span></label>
+                                    <div class="qtyBtn d-flex align-items-center">
+                                        <div class="qtyDec" id="adultDec"><i class="la la-minus"></i></div>
+                                        <input type="text" name="qtyInput" value="1" id="noAdult">
+                                        <div class="qtyInc" id="adultInc"><i class="la la-plus"></i></div>
+                                    </div>
+                                </div><!-- end qty-box -->
+                                <div class="qty-box mb-2 d-flex align-items-center justify-content-between">
+                                    <label class="font-size-16">Children</label>
+                                    <div class="qtyBtn d-flex align-items-center">
+                                        <div class="qtyDec" id="childDec"><i class="la la-minus"></i></div>
+                                        <input type="text" name="qtyInput" value="0" id="noChild">
+                                        <div class="qtyInc" id="childInc"><i class="la la-plus"></i></div>
+                                    </div>
+                                </div><!-- end qty-box -->
+
+                            </div><!-- end sidebar-widget-item -->
+                            <div class="sidebar-widget-item">
+                                <div id="parentHolder">
+
+                                </div>
+                                <div id="notselected">
+                                    Meals Not Selected
+                                </div>
+                            </div>
+                            <div class="sidebar-widget-item">
+                                <div class="sidebar-book-title-wrap mb-3">
+                                    @*<h3>Popular</h3>*@
+                                    <p><span class="text-form">Total</span><span class="text-value ml-2 mr-1"><span id="actualPrice"></span> </span> <span class="before-price">@Model.hotelDtl.RoomTypePrice.ToString("G29")</span></p>
+                                </div>
+                            </div><!-- end sidebar-widget-item -->
+                            <div class="btn-box pt-2">
+
+                                @using (Html.BeginForm("HotelBookingDtl", "Home"))
+                                {
+                                    @Html.TextBoxFor(x => x.preBookDtl.HotelID, new {Value=Model.hotelDtl.HotelID })
+                                    @Html.TextBoxFor(x => x.preBookDtl.FinalFare, new { id = "mFinalFare" })
+                                    @Html.TextBoxFor(x => x.preBookDtl.RoomSelect, new { id = "mRoomSelect" })
+                                    @Html.TextBoxFor(x => x.preBookDtl.AdultSelect, new { id = "mAdultSelect" })
+                                    @Html.TextBoxFor(x => x.preBookDtl.ChildrenSelect, new { id = "mChildSelect" })
+                                    @Html.TextBoxFor(x => x.preBookDtl.BookingFrom, new { id = "mBookingFrom" })
+                                    @Html.TextBoxFor(x => x.preBookDtl.BookingUpto, new { id = "mBookingUpto" })
+                                    @Html.TextBoxFor(x => x.preBookDtl.CustDetails, new { id = "mCustDetails" })
+                                    <input type="submit" value="Book Now" class="theme-btn text-center w-100 mb-2" />
+                                }
+
+                            </div>
+                        </div><!-- end sidebar-widget -->
+
+                    </div><!-- end sidebar -->
+                </div><!-- end col-lg-4 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end single-content-box -->
+</section><!-- end tour-detail-area -->
+
+
+@section Scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+        $('#parentHolder').hide();
+        $('#notselected').show();
+        var globalRValue =@Model.hotelDtl.RoomTypePrice.ToString("G29");
+        var noOfAdult = 1;
+        var noOfChild = 0;
+        var noofday = 1;
+        var sstartDate, eendDate;
+            var days = 1;
+            var amTotal =0;
+            var amnetiesArr = [];
+            amnetiesArr.push(["Meals"]);
+            $(window).on('scroll', function () {
+                var scroll = $(window).scrollTop();
+                if (scroll > 500) {
+                    $(".sidebar").addClass("fixed-side");
+                } else {
+                    $(".sidebar").removeClass("fixed-side");
+                }
+                lastScroll = scroll;
+            });
+            $('.date-range').on('change', function () {
+                DateCal();
+                calculatePrice();
+            });
+            DateCal();
+            function DateCal() {
+                 var arr = $('.date-range').val().split('-');
+                var endDate = arr[1];
+                eendDate = formatDate(endDate.trim());
+                var newendDate = new Date(eendDate);
+                var startDate = arr[0];
+                sstartDate = formatDate(startDate.trim());
+                var newstartDate = new Date(sstartDate);
+                var diff = new Date(newendDate - newstartDate);
+                days = diff / 1000 / 60 / 60 / 24;
+                noofday = days;
+            }
+
+            function formatDate(date) {
+                var arr = date.split('/');
+                return arr[2] + "-" + arr[1] + "-" + arr[0];
+            }
+            //Room Select
+
+            $('#roomSelect').on('change', function () {
+                alert($('#roomSelect option:selected').val());
+                calculatePrice();
+
+            });
+
+            $("#adultInc").click(function () {
+                var maxAdult =@Model.hotelDtl.MaxOccupant;
+                var newAVal = parseInt($('#noAdult').val()) + 1;
+
+                if (parseInt(newAVal) > parseInt(maxAdult)) {
+                    $('#noAdult').val(maxAdult);
+                } else {
+                    $('#noAdult').val(newAVal);
+                }
+                $('#mAdultSelect').val(newAVal);
+                calculatePrice();
+            });
+            $("#adultDec").click(function () {
+                var maxAdult =@Model.hotelDtl.MaxOccupant;
+                var newAVal = parseInt($('#noAdult').val())-1;
+                if (parseInt(newAVal) > parseInt(maxAdult)) {
+                    $('#noAdult').val(maxAdult);
+                } else if (parseInt(newAVal) != 0){
+                        $('#noAdult').val(newAVal);
+                }
+                $('#mAdultSelect').val(newAVal);
+                calculatePrice();
+            });
+            //child
+             $("#childInc").click(function () {
+                var newAVal = parseInt($('#noChild').val()) + 1;
+                $('#noChild').val(newAVal);
+                $('#mChildSelect').val(newAVal);
+            });
+            $("#childDec").click(function () {
+                var newAVal = parseInt($('#noChild').val()) - 1;
+                if (parseInt(newAVal) != -1) {
+                    $('#noChild').val(newAVal);
+                }
+
+            });
+
+            //amenities
+            $("#amenities-table").on('click', '#amSelBtn', function () {
+
+                var currentRow = $(this).closest("tr");
+
+                var col1 = currentRow.find("#amSelName").html();
+                var col2 = currentRow.find("#amSelPrice").html();
+                var btnValu = currentRow.find("#amSelBtn").val();
+                if (btnValu == "Add") {
+                    currentRow.find("#amSelBtn").val("Remove");
+                    amnetiesArr.push([col1 + "- " + noOfAdult + "p x " + days + "d " + + col2]);
+                        amTotal = parseInt(amTotal) + parseInt(col2);
+                }
+                if (btnValu == "Remove") {
+                    currentRow.find("#amSelBtn").val("Add");
+                    amnetiesArr.pop([col1 + "-x"])
+                    amTotal = parseInt(amTotal) - parseInt(col2 * parseInt($('#noAdult').val()));
+
+                }
+                if (amnetiesArr.length < 2) {
+                    $('#parentHolder').hide();
+                    $('#notselected').show();
+                } else {
+                    $('#notselected').hide();
+                    $('#parentHolder').show();
+                }
+
+                    var parentDiv = $("#parentHolder");
+                    parentDiv.html("");
+                    var aTable = $("<table>", {
+                        "id": "newTable"
+                    }).appendTo(parentDiv);
+                var rowCount = amnetiesArr.length;
+                var colmCount = amnetiesArr[0].length;
+
+                    for (var k = 0; k < 1; k++) {
+                        var fragTrow = $("<tr>", {
+                            "class": "trClass"
+                        }).appendTo(aTable);
+                        for (var j = 0; j < colmCount; j++) {
+                            $("<th>", {
+                                "class": "thClass"
+                            }).prependTo(fragTrow).html(amnetiesArr[k][j]);
+                        }
+                    }
+
+                    for (var i = 1; i < rowCount; i < i++) {
+                        var fragTrow = $("<tr>", {
+                            "class": "trClass"
+                        }).appendTo(aTable);
+                        for (var j = 0; j < colmCount; j++) {
+                            $("<td>", {
+                                "class": "tdClass"
+                            }).appendTo(fragTrow).html(amnetiesArr[i][j]);
+                        }
+                    }
+                calculatePrice();
+            });
+
+
+            //select Room
+
+
+            $('.roomType').on("click", function (e) {
+
+                var selRoom = $(this).attr('name');
+
+                //alert(selRoom + parseInt($(this).attr('value')));
+                $('#roomTypeSel').find('label').each(function () {
+                    if ($(this).prop('id') == selRoom) {
+                        $(this).text('Selected');
+                    } else {
+                        $(this).text('Select');
+                    }
+
+                });
+                globalRValue = parseInt($(this).attr('value'));
+                calculatePrice();
+            });
+
+            calculatePrice();
+            //final calculation
+            function calculatePrice() {
+                var roomBaseValue = globalRValue;
+                var totalRoom = $('#roomSelect option:selected').val();
+                noOfAdult = $('#noAdult').val();
+                noOfChild = $('#noChild').val();
+                var tPercent = 0;
+                var actValue = 0;
+                var overAll = @Model.hotelDtl.OverallOfferPercentage;
+                var twoPercent = @Model.hotelDtl.TwoOccupantPercentage;
+                var threePercent = @Model.hotelDtl.ThreeOccupantPercentage;
+                var fourPercent = @Model.hotelDtl.FourPlusOccupantPercentage;
+                if (parseInt(totalRoom) > 1) {
+                    roomBaseValue = parseInt(roomBaseValue) * parseInt(totalRoom);
+                    actValue = roomBaseValue;
+                } else {
+                    actValue = roomBaseValue;
+                }
+                if (parseInt(noofday)  > 1) {
+                    roomBaseValue = parseInt(roomBaseValue) * parseInt(noofday);
+                    actValue = roomBaseValue;
+                } else {
+                    actValue = roomBaseValue;
+                }
+                if (parseInt(overAll) > 0) {
+                    var newvalue = parseInt(roomBaseValue) * parseInt(overAll) / 100;
+                            roomBaseValue = actValue - newvalue;
+                        }
+                if (parseInt(noOfAdult) == 2) {
+                            tPercent = (parseInt(roomBaseValue ) * parseInt(twoPercent)) / 100;
+                            var newvalue = roomBaseValue + tPercent;
+                            roomBaseValue = newvalue;
+                        }
+                if (parseInt(noOfAdult) == 3) {
+                            tPercent = (parseInt(roomBaseValue) * parseInt(threePercent)) / 100;
+                            var newvalue = parseInt(roomBaseValue) + parseInt(tPercent);
+                            roomBaseValue = newvalue;
+                        }
+                if (parseInt(noOfAdult) >= 4) {
+                            tPercent = (parseInt(roomBaseValue) * parseInt(fourPercent)) / 100;
+                            var newvalue = roomBaseValue + tPercent;
+                            roomBaseValue = newvalue;
+                }
+                if (noofday == 0) {
+                    //alert("Please Select Date");
+                    noofday = 1;
+                }
+                if (parseInt(amTotal) != 0) {
+                    if (noOfAdult == 1) {
+                        noOfAdult = 0;
+                        amTotal = parseInt(noofday) * parseInt(amTotal) + parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild) * parseInt(amTotal) ;
+                    }
+                    else {
+                        amTotal = parseInt(noofday) * parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild) * parseInt(amTotal);
+                    }
+                }
+
+                var finalFare = parseInt(roomBaseValue) + parseInt(amTotal);
+                        //alert(finalFare);
+                $('#actualPrice').text(finalFare);
+                //setting values
+
+
+                $('#mFinalFare').val(finalFare);
+                $('#mRoomSelect').val(totalRoom);
+                $('#mAdultSelect').val(noOfAdult);
+                $('#mChildSelect').val(noOfChild);
+                $("#mBookingFrom").val(sstartDate);
+                $("#mBookingUpto").val(eendDate);
+                $("#mCustDetails").val(amnetiesArr);
+
+            }
+        });
+
+
+    </script>
+
+}

@@ -112,7 +112,15 @@ namespace LocalConnWeb.Controllers
 
                     Request.GetOwinContext().Authentication.SignIn(options, identity);
                     if (returnUrl != "" && returnUrl != null)
+                    {
                         return RedirectToLocal(returnUrl);
+                    }
+                    if (User.IsInRole("Customer"))
+                    {
+                      
+                        return RedirectToAction("Index", "Home");
+                    }
+                        
                     else
                     {
                         return RedirectToAction("dashboard", "user");

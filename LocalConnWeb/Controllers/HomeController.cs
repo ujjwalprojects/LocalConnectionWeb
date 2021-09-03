@@ -14,30 +14,60 @@ namespace LocalConnWeb.Controllers
     public class HomeController : Controller
     {
         ApiConnection objAPI = new ApiConnection("general");
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            IEnumerable<DestinationView> model = objAPI.GetAllRecords<DestinationView>("tourpackage", "destinations");
-            var groupedDests = (from s in model group s by s.StateName).ToDictionary(x => x.Key, x => x.ToList());
-            ViewBag.Dests = groupedDests;
-        }
+        //protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        //{
+        //    IEnumerable<DestinationView> model = objAPI.GetAllRecords<DestinationView>("tourpackage", "destinations");
+        //    var groupedDests = (from s in model group s by s.StateName).ToDictionary(x => x.Key, x => x.ToList());
+        //    ViewBag.Dests = groupedDests;
+        //}
+
         public ActionResult Index()
         {
-            //string query = "PageNo=1&PageSize=10&SearchTerm=";
-            //ViewBag.TourPackages = objAPI.GetRecordByQueryString<GenTourPackageVM>("tourpackage", "GenTourPackageList", query).PackageList;
-            //ViewBag.Destinations = objAPI.GetAllRecords<utblMstDestination>("clientenquiry", "alldestinations").Take(6);
-            //ViewBag.BannerList = objAPI.GetAllRecords<utblMstBanner>("tourpackage", "homebannerlist");
-            //string[] abc = objAPI.GetAllRecords<string>("tourpackage", "wherenames").ToArray();
-            //ViewBag.Where = abc;
-            //ViewBag.TourTypes = objAPI.GetAllRecords<utblMstPackageType>("tourpackage", "tourtypes");
-            ////ViewBag.PackagesTypeList = objAPI.GetRecordByQueryString<GenTourPackageVM>("tourpackage", "GenTourPackageDispList", query).PackageList;
-            //GenTourPackageVM obj = new GenTourPackageVM();
-            //obj.PackageList = objAPI.GetRecordByQueryString<GenTourPackageVM>("tourpackage", "GenTourPackageDispList", query).PackageList;
-            //var pType = (from s in obj.PackageList group s by s.PackageTypeName).ToDictionary(x => x.Key, x => x.ToList());
-            //ViewBag.PType = pType;
-            ////offer package list
-            //ViewBag.OfferPackage = objAPI.GetAllRecords<GenPackageOfferView>("tourpackage", "GenOfferPackagelist");
-            return View();
+            HomePageVM obj = new HomePageVM();
+            obj.cityLists= objAPI.GetRecordsByID<CityList>("webrequest", "getcitylist", 1);
+            obj.hotelList = objAPI.GetRecordsByID<HotelList>("webrequest", "gethotellist", 3);
+            obj.homestayList = objAPI.GetRecordsByID<HotelList>("webrequest", "gethomestaylist", 4);
+            obj.resortList = objAPI.GetRecordsByID<HotelList>("webrequest", "getresortlist", 5);
+            obj.lodgeList = objAPI.GetRecordsByID<HotelList>("webrequest", "getlodgelist", 6);
+            obj.guestHouseList = objAPI.GetRecordsByID<HotelList>("webrequest", "getghouselist", 7);
+            obj.FHotelList = objAPI.GetRecordsByQueryString<FtHotelList>("webrequest", "getFHotelList", "Dt="+ DateTime.Now.ToString("dd MMM yyyy"));
+            return View(obj);
         }
+
+        public ActionResult HotelDetails(string id)
+        {
+            HotelDetailsVM obj = new HotelDetailsVM();
+            obj.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID="+id);
+            obj.hAmenities = objAPI.GetRecordsByID<HAmenitiesList>("webrequest", "gethamenitieslist", Convert.ToInt64(id));
+            obj.hotelRoomImgTab = objAPI.GetRecordByQueryString<HotelRoomTab>("webrequest", "gethroomimglist", "HotelID=" + id);
+            obj.hotelRoomLists = objAPI.GetRecordsByID<HotelRoomList>("webrequest", "gethotelroomlist", Convert.ToInt64(id));
+            obj.hotelPremises = objAPI.GetRecordsByID<HotelPremisesList>("webrequest", "gethotelpremises", Convert.ToInt64(id));
+            obj.nearByVM = objAPI.GetRecordByQueryString<NearbyVM>("webrequest", "getnearbylist", "HotelID=" + id);
+            obj.termCondVM = objAPI.GetRecordByQueryString<TermCondPolicyVM>("webrequest", "gettermncondpolicylist", "HotelID=" + id);
+            return View(obj);
+        }
+
+        public ActionResult HotelBookingDtl(HotelDetailsVM obj)
+        {
+            HotelDetailsVM model = new HotelDetailsVM();
+            model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
+            model.preBookDtl = obj.preBookDtl;
+            return View(model);
+        }
+
+        public ActionResult PayNow(HotelDetailsVM obj)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login","Account",new {Areas="" });
+            }
+            HotelDetailsVM model = new HotelDetailsVM();
+            model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
+            model.preBookDtl = obj.preBookDtl;
+            return View(model);
+        }
+    
+
 
         public ActionResult About()
         {
