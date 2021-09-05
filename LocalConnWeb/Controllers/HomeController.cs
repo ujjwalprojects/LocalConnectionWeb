@@ -8,10 +8,11 @@ using LocalConnWeb.Areas.Admin.Models;
 using LocalConnWeb.CustomModels;
 using LocalConnWeb.Helpers;
 using LocalConnWeb.ViewModels;
+using Razorpay.Api;
 
 namespace LocalConnWeb.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
         ApiConnection objAPI = new ApiConnection("general");
         //protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -58,17 +59,37 @@ namespace LocalConnWeb.Controllers
         public ActionResult PayNow(HotelDetailsVM obj)
         {
             HotelDetailsVM model = new HotelDetailsVM();
-            if (!(User.Identity.IsAuthenticated))
-            {
-                return RedirectToAction("Login","Account",new {Areas="" });
-            }
-            if (ModelState.IsValid)
-            {
-                
-            }
+            //if (!(User.Identity.IsAuthenticated))
+            //{
+            //    return RedirectToAction("Login","Account",new {Areas="" });
+            //}
+            Random randomObj = new Random();
+            string transactionId = randomObj.Next(10000000, 100000000).ToString();
+
+            Razorpay.Api.RazorpayClient client = new Razorpay.Api.RazorpayClient("rzp_test_O6952intGT2qTL", "P4VmQ2BVBz0x2tLOBsRlhvyY");
+            Dictionary<string, object> options = new Dictionary<string, object>();
+            options.Add("amount", obj.preBookDtl.FinalFare * 100);  // Amount will in paise
+            options.Add("receipt", transactionId);
+            options.Add("currency", "INR");
+            options.Add("payment_capture", "0"); // 1 - automatic  , 0 - manual
+                                                 //options.Add("notes", "-- You can put any notes here --");
+            Razorpay.Api.Order orderResponse = client.Order.Create(options);
+            string orderId = orderResponse["id"].ToString();
+
+            //if (ModelState.IsValid)
+            //{
+
+            //}
+            ViewBag.RzpID = "rzp_test_O6952intGT2qTL";
+            ViewBag.TransactionID = transactionId;
+            ViewBag.amount = obj.preBookDtl.FinalFare;
+            ViewBag.name = obj.preBookDtl.CustName;
+            ViewBag.currency = "INR";
+            ViewBag.orderid = orderId;
+            ViewBag.phone = "9434553166";
             model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
             model.preBookDtl = obj.preBookDtl;
-            return View("HotelBookingDtl", model);
+            return View(model);
         }
     
 

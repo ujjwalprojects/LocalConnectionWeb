@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Helpers;
@@ -20,6 +21,7 @@ namespace LocalConnWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.Name;
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
     }
 }
