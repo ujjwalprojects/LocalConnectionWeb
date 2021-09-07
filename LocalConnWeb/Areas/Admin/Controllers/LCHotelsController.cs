@@ -96,7 +96,11 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                 LCHotelManageModel model = new LCHotelManageModel();
                 utblLCHotel lchotel = objAPI.GetObjectByKey<utblLCHotel>("lchotelconfig", "lchotelbyid", id.ToString(), "id");
                 utblLCHotelLatLong lchotelLatLong = objAPI.GetObjectByKey<utblLCHotelLatLong>("lchotelconfig", "LCHotelLatLongByID", id.ToString(), "id");
-
+                string latlong = "";
+                if(lchotelLatLong != null)
+                {
+                    latlong=  lchotelLatLong.LatLong;
+                }
                 var HotelRoomTypelist = objAPI.GetRecordsByQueryString<long>("configuration", "HotelRoomTypeList", "id=" + id);
                 model.LCHotel = new LCHotelSaveModel()
                 {
@@ -119,7 +123,7 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                     ThreeOccupantPercentage=lchotel.ThreeOccupantPercentage,
                     FourPlusOccupantPercentage=lchotel.FourPlusOccupantPercentage,
                     ChildOccupantNote=lchotel.ChildOccupantNote,
-                    LatLong = lchotelLatLong.LatLong,
+                    LatLong = latlong,
                     IsActive=lchotel.IsActive,
                    
                 };

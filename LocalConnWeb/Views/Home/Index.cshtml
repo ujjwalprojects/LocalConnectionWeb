@@ -9,8 +9,15 @@
         overflow: hidden;
         text-overflow: clip;
     }
-    .section-bg-alt{
-        background-color:#fff;
+
+    .section-bg-alt {
+        background-color: #fff;
+    }
+
+    .ellipsis {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 </style>
 <!-- ================================
@@ -20,9 +27,9 @@
     <div class="hero-box">
         <div id="fullscreen-slide-contain">
             <ul class="slides-container">
-                <li><img src="images/hero-bg2.jpg" alt=""></li>
-                <li><img src="images/hero--bg2.jpg" alt=""></li>
-                <li><img src="images/hero--bg3.jpg" alt=""></li>
+                <li><img src="~/Content/WebCss/css/images/banner-1.jpg" alt=""></li>
+                <li><img src="~/Content/WebCss/css/images/banner-2.jpg" alt=""></li>
+                <li><img src="~/Content/WebCss/css/images/banner-3.jpg" alt=""></li>
             </ul>
         </div><!-- End background slider -->
         <div class="container">
@@ -37,7 +44,7 @@
                     <div class="search-fields-container">
                         <div class="contact-form-action">
                             <form action="#" class="row">
-                                <div class="col-lg-3 pr-0">
+                                <div class="col-lg-9 pr-0 pl-4">
                                     <div class="input-box">
                                         <label class="label-text">Destination</label>
                                         <div class="form-group">
@@ -46,75 +53,20 @@
                                         </div>
                                     </div>
                                 </div><!-- end col-lg-3 -->
-                                <div class="col-lg-3 pr-0">
-                                    <div class="input-box">
-                                        <label class="label-text">When</label>
-                                        <div class="form-group">
-                                            <span class="la la-calendar form-icon"></span>
-                                            <input class="date-range form-control" type="text" name="daterange" readonly>
-                                        </div>
-                                    </div>
-                                </div><!-- end col-lg-3 -->
-                                <div class="col-lg-3 pr-0">
-                                    <div class="input-box">
-                                        <label class="label-text">Guests</label>
-                                        <div class="form-group">
-                                            <div class="dropdown dropdown-contain gty-container">
-                                                <a class="dropdown-toggle dropdown-btn" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                                                    <span class="adult" data-text="Adult" data-text-multi="Adults">0 Adult</span>
-                                                    -
-                                                    <span class="children" data-text="Child" data-text-multi="Children">0 Children</span>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-wrap">
-                                                    <div class="dropdown-item">
-                                                        <div class="qty-box d-flex align-items-center justify-content-between">
-                                                            <label>Adults</label>
-                                                            <div class="qtyBtn d-flex align-items-center">
-                                                                <div class="qtyDec"><i class="la la-minus"></i></div>
-                                                                <input type="text" name="adult_number" value="0">
-                                                                <div class="qtyInc"><i class="la la-plus"></i></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="dropdown-item">
-                                                        <div class="qty-box d-flex align-items-center justify-content-between">
-                                                            <label>Children</label>
-                                                            <div class="qtyBtn d-flex align-items-center">
-                                                                <div class="qtyDec"><i class="la la-minus"></i></div>
-                                                                <input type="text" name="child_number" value="0">
-                                                                <div class="qtyInc"><i class="la la-plus"></i></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end dropdown -->
-                                        </div>
-                                    </div>
-                                </div><!-- end col-lg-3 -->
+                              
+                                
                                 <div class="col-lg-3">
                                     <div class="input-box">
-                                        <label class="label-text">Price</label>
+                                        <label class="label-text">&nbsp;</label>
                                         <div class="form-group">
-                                            <div class="dropdown dropdown-contain">
-                                                <a class="dropdown-toggle dropdown-btn" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                                                    <div class="price-slider-amount">
-                                                        <input type="text" id="amount" class="amounts py-0" readonly>
-                                                    </div><!-- end price-slider-amount -->
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-wrap py-4">
-                                                    <div class="dropdown-item py-0">
-                                                        <label class="filter__label mb-2">Filter Price</label>
-                                                        <div id="slider-range"></div><!-- end slider-range -->
-                                                    </div>
-                                                </div>
-                                            </div><!-- end panel-dropdown -->
+                                            <div class="btn-box ">
+                                                <a href="activity-search-result.html" class="theme-btn">Search Now</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div><!-- end col-lg-3 -->
                             </form>
-                            <div class="btn-box pt-2">
-                                <a href="activity-search-result.html" class="theme-btn">Search Now</a>
-                            </div>
+                            
                         </div>
                     </div>
                 </div><!-- end col-lg-12 -->
@@ -126,186 +78,136 @@
     END HERO-WRAPPER AREA
 ================================= -->
 <!-- ================================
-    START INFO AREA
+    START FEATURE HOTELS AREA
 ================================= -->
-<section class="info-area padding-top-80px padding-bottom-45px">
-    <div class="arrow-separator"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4 responsive-column">
-                <div class="icon-box icon-layout-2 d-flex align-items-center">
-                    <div class="info-icon flex-shrink-0 bg-rgb radius-round-full">
-                        <img src="images/browser.png" class="w-50" alt="">
-                    </div><!-- end info-icon-->
-                    <div class="info-content">
-                        <h4 class="info__title">Best Selection</h4>
-                        <p class="info__desc">
-                            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-                        </p>
-                    </div><!-- end info-content -->
-                </div><!-- end icon-box -->
-            </div><!-- end col-lg-4 -->
-            <div class="col-lg-4 responsive-column">
-                <div class="icon-box icon-layout-2 d-flex align-items-center">
-                    <div class="info-icon flex-shrink-0 bg-rgb-2 radius-round-full">
-                        <img src="images/layout.png" class="w-50" alt="">
-                    </div><!-- end info-icon-->
-                    <div class="info-content">
-                        <h4 class="info__title">Best Price Guarantee</h4>
-                        <p class="info__desc">
-                            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-                        </p>
-                    </div><!-- end info-content -->
-                </div><!-- end icon-box -->
-            </div><!-- end col-lg-4 -->
-            <div class="col-lg-4 responsive-column">
-                <div class="icon-box icon-layout-2 d-flex align-items-center">
-                    <div class="info-icon flex-shrink-0 bg-rgb-3 radius-round-full">
-                        <img src="images/support.png" class="w-50" alt="">
-                    </div><!-- end info-icon-->
-                    <div class="info-content">
-                        <h4 class="info__title">24/7 Support</h4>
-                        <p class="info__desc">
-                            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-                        </p>
-                    </div><!-- end info-content -->
-                </div><!-- end icon-box -->
-            </div><!-- end col-lg-4 -->
-        </div><!-- end row -->
-    </div><!-- end container -->
-</section><!-- end info-area -->
-<!-- ================================
-    END INFO AREA
-================================= -->
-<!-- ================================
-    START FEATURED HOTEL AREA
-================================= -->
-<section class="trending-area position-relative section-bg padding-top-100px padding-bottom-200px ">
+<section class="trending-area position-relative section-bg section-padding ">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="section-heading">
-                    <h2 class="sec__title curve-shape padding-bottom-30px" data-text="curvs">Featured Hotels</h2>
+                <div class="section-heading text-center">
+                    <h2 class="sec__title">FEATURED STAYS</h2>
                 </div><!-- end section-heading -->
             </div><!-- end col-lg-12 -->
         </div><!-- end row -->
         <div class="row padding-top-50px">
             <div class="col-lg-12">
                 <div class="trending-carousel carousel-action">
-                    @if (Model.FHotelList != null)
+                    @if (Model.FHotelList.Count() > 0)
                     {
-                        if (Model.FHotelList.Count() > 0)
+                        foreach (var item in Model.FHotelList)
                         {
-                            foreach (var item in Model.FHotelList)
-                            {
-                                <div class="card-item trending-card mb-0">
-                                    <div class="card-img">
-                                        <a href="tour-details.html" class="d-block">
-                                            <img src="@item.PhotoThumbPath" alt="@item.HotelName">
-                                        </a>
-                                        <span class="badge">Bestseller</span>
-                                    </div>
-                                    <div class="card-body">
-                                        <h3 class="card-title mb-0"><a href="tour-details.html">@item.HotelName</a></h3>
-                                        @*<div class="card-rating">
-                                                <span class="badge text-white">4.4/5</span>
-                                                <span class="rating__text">30 Reviews</span>
-                                            </div>
-                                            <div class="card-price d-flex align-items-center justify-content-between">
-                                                <span><i class="la la-clock mr-1"></i>5 Days</span>
-                                                <p>
-                                                    <span class="price__from">from</span>
-                                                    <span class="price__num">$124.00</span>
-                                                </p>
-                                            </div>*@
-                                    </div>
-                                </div><!-- end card-item -->
-                            }
+                            <div class="card-item trending-card mb-0">
+                                <div class="card-img">
+                                    <a href="tour-details.html" class="d-block">
+                                        <img src="@item.PhotoThumbPath" alt="@item.HotelName">
+                                    </a>
+                                    <span class="badge">Fearured</span>
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title ellipsis"><a href="tour-details.html" >@item.HotelName</a></h3>
+                                    <p class="card-meta ellipsis">@item.HotelAddress</p>
+                                    <div class="card-rating">
 
+                                        @if (item.OverallOfferPercentage != 0)
+                                        {
+                                            <span class="badge text-white">@item.OverallOfferPercentage% Off</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="">&nbsp;</span>
+
+                                        }
+                                    </div>
+                                    <div class="card-price d-flex align-items-center justify-content-between">
+                                        <p>
+                                            <span class="price__num before-price color-text-3"><i class="fa fa-rupee"></i> @item.RoomTypePrice.ToString("0.00")</span><br />
+                                            <span class="price__num"><i class="fa fa-rupee"></i> @item.OfferPrice.ToString("0.00")</span>
+                                            <span class="price__text">Per night</span>
+                                        </p>
+                                        <a href="tour-details.html" class="btn-text">View details<i class="la la-angle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div><!-- end card-item -->
                         }
                     }
-
-
                 </div><!-- end car-carousel -->
             </div><!-- end col-lg-12 -->
         </div><!-- end row -->
     </div><!-- end container -->
-    <svg class="hero-svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 10 0 0 A 90 59, 0, 0, 0, 100 0 L 100 10 Z"></path></svg>
+    <svg class="hero-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 10 0 0 A 90 59, 0, 0, 0, 100 0 L 100 10 Z"></path></svg>
 </section><!-- end trending-area -->
 <!-- ================================
-    END FEATURED HOTEL AREA
+    END FEATURE HOTELS AREA
 ================================= -->
-<!-- ================================
-    START DISCOUNT AREA
-================================= -->
-
-<!-- ================================
-    END DISCOUNT AREA
-================================= -->
-
-
 <div class="section-block"></div>
 <!-- ================================
-       START TOP ACTIVITY AREA
+    START OFFERS AREA
 ================================= -->
-<section class="top-activity-area section--padding">
-    <div class="container">
-       
-            <section class="discount-area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="discount-box join-us-box">
-                                <div class="discount-img">
-                                    <img src="images/cta-bg-2.html" alt="discount img">
-                                </div><!-- end discount-img -->
-                                <div class="discount-content d-flex align-items-center justify-content-between">
-                                    <div class="section-heading">
-                                        <h2 class="sec__title text-white mb-2">Explore more with us</h2>
-                                        <p class="sec__desc text-white">Join 2000+ locals & 1200+ contributors from 3000 cities</p>
-                                    </div><!-- end section-heading -->
-                                    <div class="btn-box">
-                                        <a href="#" class="theme-btn border-0">Explore <i class="la la-arrow-right ml-1"></i></a>
-                                    </div>
-                                </div><!-- end discount-content -->
-                            </div>
-                        </div><!-- end col-lg-12 -->
-                    </div><!-- end row -->
-                </div><!-- end container -->
-            </section><!-- end discount-area -->
-    </div><!-- end container -->
-</section><!-- end top-activity-area -->
-<!-- ================================
-       START TOP ACTIVITY AREA
-================================= -->
-<!-- ================================
-    START HOTEL AREA
-================================= -->
-@if (Model.hotelList != null)
+@if (Model.offerLists.Count() > 0)
 {
-    if (Model.hotelList.Count > 0)
-    {
-        <section class="hotel-area section-bg section-padding overflow-hidden padding-right-100px padding-left-100px">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-heading text-center">
-                            <h2 class="sec__title line-height-55">Most Popular Hotel </h2>
-                            <br> <a href="/Home/HotelList"><h5> View More</h5></a>
-                        </div><!-- end section-heading -->
-                    </div><!-- end col-lg-12 -->
-                </div><!-- end row -->
-                <div class="row padding-top-50px">
-                    <div class="col-lg-12">
-                        <div class="hotel-card-wrap">
-                            <div class="hotel-card-carousel carousel-action">
+    <section class="destination-area section--padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading text-center">
+                        <h2 class="sec__title">Today's Top Deals</h2>
+                    </div><!-- end section-heading -->
+                </div><!-- end col-lg-12 -->
+            </div><!-- end row -->
+            <div class="row padding-top-60px">
+                @foreach (var item in Model.offerLists)
+                {
+                    <div class="col-lg-6 responsive-column">
+                        <div class="card-item cruise-card">
+                            <div class="card-img">
+                                <img src="@item.OfferImagePath" alt="@item.OfferTagLine">
+                                <div class="card-body">
+                                    <h3 class="card-title mb-0"><a href="cruise-details.html">@item.OfferTagLine</a></h3>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <h3 class="card-subtitle">Get Ready for Some Fun in the Sun</h3>
+                            </div>
+                        </div><!-- end card-item -->
+                    </div><!-- end col-lg-6 -->
+                }
 
-
-                                @foreach (var item in Model.hotelList)
-                                {
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </section><!-- end destination-area -->
+}
+<!-- ================================
+    END OFFERS AREA
+================================= -->
+<!-- ================================
+    START POPULAR HOTELS AREA
+================================= -->
+<section class="hotel-area section-bg section-padding overflow-hidden padding-right-100px padding-left-100px">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="section-heading">
+                    <h2 class="sec__title">Popular Hotels</h2>
+                    <p class="sec__desc pt-3">Explore the best of the hotels
+                </div><!-- end section-heading -->
+            </div><!-- end col-lg-8 -->
+            <div class="col-lg-4">
+                <div class="btn-box btn--box text-right">
+                    <a href="tour-grid.html" class="theme-btn">Discover More <i class="la la-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div><!-- end row -->
+        <div class="row padding-top-50px">
+            <div class="col-lg-12">
+                <div class="hotel-card-wrap">
+                    <div class="hotel-card-carousel carousel-action">
+                        @if (Model.hotelList.Count() > 0)
+                        {
+                            foreach (var item in Model.hotelList)
+                            {
                                 <div class="card-item mb-0">
                                     <div class="card-img">
-                                        <a href="/Home/HotelDetails?id=@item.HotelID" class="d-block">
+                                        <a href="hotel-single.html" class="d-block">
                                             <img src="@item.PhotoThumbPath" alt="hotel-img">
                                         </a>
                                         <span class="badge">Bestseller</span>
@@ -314,385 +216,81 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <h3 class="card-title"><a href="/Home/HotelDetails?id=@item.HotelID">@item.HotelName</a></h3>
-                                        <p class="card-meta hotel-address">@item.HotelAddress</p>
-                                        @*<div class="card-rating">
-                                                <span class="badge text-white">4.4/5</span>
-                                                <span class="review__text">Average</span>
-                                                <span class="rating__text">(30 Reviews)</span>
-                                            </div>*@
+                                        <h3 class="card-title ellipsis"><a href="hotel-single.html" class="">@item.HotelName</a></h3>
+                                        <p class="card-meta ellipsis">@item.HotelAddress</p>
+                                        <div class="card-rating">
+                                            @if (item.OverallOfferPercentage != 0)
+                                            {
+                                                <span class="badge text-white">@item.OverallOfferPercentage% Off</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge text-white">&nbsp;</span>
+                                            }
+                                        </div>
                                         <div class="card-price d-flex align-items-center justify-content-between">
                                             <p>
-                                                <span class="price__from">From</span>
-                                                <span class="price__num">@item.OfferPrice</span>
+                                                <span class="price__num before-price color-text-3"><i class="fa fa-rupee"></i> @item.RoomTypePrice.ToString("0.00")</span><br />
+                                                <span class="price__num"><i class="fa fa-rupee"></i> @item.OfferPrice.ToString("0.00")</span>
                                                 <span class="price__text">Per night</span>
                                             </p>
-                                            <a href="/Home/HotelDetails?id=@item.HotelID" class="btn-text">See details<i class="la la-angle-right"></i></a>
+                                            <a href="tour-details.html" class="btn-text">Book Now<i class="la la-angle-right"></i></a>
                                         </div>
                                     </div>
                                 </div><!-- end card-item -->
-                                }
-                            </div><!-- end hotel-card-carousel -->
-                        </div>
-                    </div><!-- end col-lg-12 -->
-                </div><!-- end row -->
-            </div><!-- end container-fluid -->
-        </section><!-- end hotel-area -->
-    }
-}
+                            }
+                        }
+
+                    </div><!-- end hotel-card-carousel -->
+                </div>
+            </div><!-- end col-lg-12 -->
+        </div><!-- end row -->
+    </div><!-- end container-fluid -->
+</section><!-- end hotel-area -->
 <!-- ================================
-   END HOMESTAY AREA
+    END HOTEL AREA
 ================================= -->
 <!-- ================================
-    START HOMESTAY AREA
+    START MOBILE AREA
 ================================= -->
-
-
-@if (Model.homestayList != null)
-{
-    if (Model.homestayList.Count > 0)
-    {
-        <section class="hotel-area section-bg-alt section-padding overflow-hidden padding-right-100px padding-left-100px">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-heading text-center">
-                            <h2 class="sec__title line-height-55">Blissful Homestay </h2>
-                            <br> <a href="/Home/HotelList"><h5> View More</h5></a>
-                        </div><!-- end section-heading -->
-                    </div><!-- end col-lg-12 -->
-                </div><!-- end row -->
-                <div class="row padding-top-50px">
-                    <div class="col-lg-12">
-                        <div class="hotel-card-wrap">
-                            <div class="hotel-card-carousel carousel-action">
-
-
-                                @foreach (var item in Model.homestayList)
-                                {
-                                    <div class="card-item mb-0">
-                                        <div class="card-img">
-                                            <a href="hotel-single.html" class="d-block">
-                                                <img src="@item.PhotoThumbPath" alt="hotel-img">
-                                            </a>
-                                            <span class="badge">Bestseller</span>
-                                            <div class="add-to-wishlist icon-element" data-toggle="tooltip" data-placement="top" title="Bookmark">
-                                                <i class="la la-heart-o"></i>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title"><a href="hotel-single.html">@item.HotelName</a></h3>
-                                            <p class="card-meta hotel-address">@item.HotelAddress</p>
-                                            @*<div class="card-rating">
-                                                    <span class="badge text-white">4.4/5</span>
-                                                    <span class="review__text">Average</span>
-                                                    <span class="rating__text">(30 Reviews)</span>
-                                                </div>*@
-                                            <div class="card-price d-flex align-items-center justify-content-between">
-                                                <p>
-                                                    <span class="price__from">From</span>
-                                                    <span class="price__num">@item.OfferPrice</span>
-                                                    <span class="price__text">Per night</span>
-                                                </p>
-                                                <a href="hotel-single.html" class="btn-text">See details<i class="la la-angle-right"></i></a>
-                                            </div>
-                                        </div>
-                                    </div><!-- end card-item -->
-                                }
-                            </div><!-- end hotel-card-carousel -->
-                        </div>
-                    </div><!-- end col-lg-12 -->
-                </div><!-- end row -->
-            </div><!-- end container-fluid -->
-        </section><!-- end hotel-area -->
-    }
-}
-
-<!-- ================================
-        END HOMESTAY AREA
-    ================================= -->
-<!-- ================================
-    START RESORT AREA
-================================= -->
-
-
-@if (Model.resortList != null)
-{
-    if (Model.resortList.Count > 0)
-    {
-        <section class="hotel-area section-bg section-padding overflow-hidden padding-right-100px padding-left-100px">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-heading text-center">
-                            <h2 class="sec__title line-height-55">Beautiful Resort </h2>
-                            <br> <a href="/Home/HotelList"><h5> View More</h5></a>
-                        </div><!-- end section-heading -->
-                    </div><!-- end col-lg-12 -->
-                </div><!-- end row -->
-                <div class="row padding-top-50px">
-                    <div class="col-lg-12">
-                        <div class="hotel-card-wrap">
-                            <div class="hotel-card-carousel carousel-action">
-
-
-                                @foreach (var item in Model.resortList)
-                                {
-                                    <div class="card-item mb-0">
-                                        <div class="card-img">
-                                            <a href="hotel-single.html" class="d-block">
-                                                <img src="@item.PhotoThumbPath" alt="hotel-img">
-                                            </a>
-                                            <span class="badge">Bestseller</span>
-                                            <div class="add-to-wishlist icon-element" data-toggle="tooltip" data-placement="top" title="Bookmark">
-                                                <i class="la la-heart-o"></i>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title"><a href="hotel-single.html">@item.HotelName</a></h3>
-                                            <p class="card-meta hotel-address">@item.HotelAddress</p>
-                                            @*<div class="card-rating">
-                                                    <span class="badge text-white">4.4/5</span>
-                                                    <span class="review__text">Average</span>
-                                                    <span class="rating__text">(30 Reviews)</span>
-                                                </div>*@
-                                            <div class="card-price d-flex align-items-center justify-content-between">
-                                                <p>
-                                                    <span class="price__from">From</span>
-                                                    <span class="price__num">@item.OfferPrice</span>
-                                                    <span class="price__text">Per night</span>
-                                                </p>
-                                                <a href="hotel-single.html" class="btn-text">See details<i class="la la-angle-right"></i></a>
-                                            </div>
-                                        </div>
-                                    </div><!-- end card-item -->
-                                }
-
-                            </div><!-- end hotel-card-carousel -->
-                        </div>
-                    </div><!-- end col-lg-12 -->
-                </div><!-- end row -->
-            </div><!-- end container-fluid -->
-        </section><!-- end hotel-area -->
-    }
-}
-
-<!-- ================================
-        END RESORT AREA
-    ================================= -->
-<!-- ================================
-    START GUEST HOUSE AREA
-================================= -->
-
-
-@if (Model.guestHouseList != null)
-{
-    if (Model.guestHouseList.Count > 0)
-    {
-        <section class="hotel-area section-bg section-padding overflow-hidden padding-right-100px padding-left-100px">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-heading text-center">
-                            <h2 class="sec__title line-height-55">Beautiful Guest House </h2>
-                            <br> <a href="/Home/HotelList"><h5> View More</h5></a>
-                        </div><!-- end section-heading -->
-                    </div><!-- end col-lg-12 -->
-                </div><!-- end row -->
-                <div class="row padding-top-50px">
-                    <div class="col-lg-12">
-                        <div class="hotel-card-wrap">
-                            <div class="hotel-card-carousel carousel-action">
-
-
-                                @foreach (var item in Model.guestHouseList)
-                                {
-                                    <div class="card-item mb-0">
-                                        <div class="card-img">
-                                            <a href="hotel-single.html" class="d-block">
-                                                <img src="@item.PhotoThumbPath" alt="hotel-img">
-                                            </a>
-                                            <span class="badge">Bestseller</span>
-                                            <div class="add-to-wishlist icon-element" data-toggle="tooltip" data-placement="top" title="Bookmark">
-                                                <i class="la la-heart-o"></i>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title"><a href="hotel-single.html">@item.HotelName</a></h3>
-                                            <p class="card-meta hotel-address">@item.HotelAddress</p>
-                                            @*<div class="card-rating">
-                                                    <span class="badge text-white">4.4/5</span>
-                                                    <span class="review__text">Average</span>
-                                                    <span class="rating__text">(30 Reviews)</span>
-                                                </div>*@
-                                            <div class="card-price d-flex align-items-center justify-content-between">
-                                                <p>
-                                                    <span class="price__from">From</span>
-                                                    <span class="price__num">@item.OfferPrice</span>
-                                                    <span class="price__text">Per night</span>
-                                                </p>
-                                                <a href="hotel-single.html" class="btn-text">See details<i class="la la-angle-right"></i></a>
-                                            </div>
-                                        </div>
-                                    </div><!-- end card-item -->
-
-                                }
-                            </div><!-- end hotel-card-carousel -->
-                        </div>
-                    </div><!-- end col-lg-12 -->
-                </div><!-- end row -->
-            </div><!-- end container-fluid -->
-        </section><!-- end hotel-area -->
-    }
-}
-
-<!-- ================================
-        END GUEST HOUSE AREA
-    ================================= -->
-<!-- ================================
-    START LODGE AREA
-================================= -->
-
-
-@if (Model.lodgeList != null)
-{
-    if (Model.lodgeList.Count > 0)
-    {
-        <section class="hotel-area section-bg-alt section-padding overflow-hidden padding-right-100px padding-left-100px">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-heading text-center">
-                            <h2 class="sec__title line-height-55">Lodge</h2>
-                            <br> <a href="/Home/HotelList"><h5> View More</h5></a>
-                        </div><!-- end section-heading -->
-                    </div><!-- end col-lg-12 -->
-                </div><!-- end row -->
-                <div class="row padding-top-50px">
-                    <div class="col-lg-12">
-                        <div class="hotel-card-wrap">
-                            <div class="hotel-card-carousel carousel-action">
-
-
-                                @foreach (var item in Model.lodgeList)
-                                {
-                                    <div class="card-item mb-0">
-                                        <div class="card-img">
-                                            <a href="hotel-single.html" class="d-block">
-                                                <img src="@item.PhotoThumbPath" alt="hotel-img">
-                                            </a>
-                                            <span class="badge">Bestseller</span>
-                                            <div class="add-to-wishlist icon-element" data-toggle="tooltip" data-placement="top" title="Bookmark">
-                                                <i class="la la-heart-o"></i>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title"><a href="hotel-single.html">@item.HotelName</a></h3>
-                                            <p class="card-meta hotel-address">@item.HotelAddress</p>
-                                            @*<div class="card-rating">
-                                                    <span class="badge text-white">4.4/5</span>
-                                                    <span class="review__text">Average</span>
-                                                    <span class="rating__text">(30 Reviews)</span>
-                                                </div>*@
-                                            <div class="card-price d-flex align-items-center justify-content-between">
-                                                <p>
-                                                    <span class="price__from">From</span>
-                                                    <span class="price__num">@item.OfferPrice</span>
-                                                    <span class="price__text">Per night</span>
-                                                </p>
-                                                <a href="hotel-single.html" class="btn-text">See details<i class="la la-angle-right"></i></a>
-                                            </div>
-                                        </div>
-                                    </div><!-- end card-item -->
-                                }
-
-                            </div><!-- end hotel-card-carousel -->
-                        </div>
-                    </div><!-- end col-lg-12 -->
-                </div><!-- end row -->
-            </div><!-- end container-fluid -->
-        </section><!-- end hotel-area -->
-    }
-
-}
-
-<!-- ================================
-        END LODGE AREA
-    ================================= -->
-
-
-<!-- ================================
-    START CTA AREA
-================================= -->
-<section class="cta-area subscriber-area section-bg-2 padding-top-60px padding-bottom-60px">
+<section class="mobile-app padding-bottom-50px section-bg">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-7">
-                <div class="section-heading">
-                    <p class="sec__desc text-white-50 pb-1">Newsletter Sign up</p>
-                    <h2 class="sec__title font-size-30 text-white">Subscribe to Get Special Offers</h2>
-                </div><!-- end section-heading -->
-            </div><!-- end col-lg-7 -->
-            <div class="col-lg-5">
-                <div class="subscriber-box">
-                    <div class="contact-form-action">
-                        <form action="#">
-                            <div class="input-box">
-                                <label class="label-text text-white">Enter email address</label>
-                                <div class="form-group mb-0">
-                                    <span class="la la-envelope form-icon"></span>
-                                    <input class="form-control" type="email" name="email" placeholder="Email address">
-                                    <button class="theme-btn theme-btn-small submit-btn" type="submit">Subscribe</button>
-                                    <span class="font-size-14 pt-1 text-white-50"><i class="la la-lock mr-1"></i>Don't worry your information is safe with us.</span>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div><!-- end section-heading -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="mobile-app-content">
+                    <div class="section-heading">
+                        <h2 class="sec__title line-height-55">Local Connection Android App is Available!</h2>
+                    </div><!-- end section-heading -->
+                    <ul class="info-list padding-top-30px">
+                        <li class="d-flex align-items-center mb-3"><span class="la la-check icon-element flex-shrink-0 ml-0"></span> Access and change your itinerary on-the-go</li>
+                        <li class="d-flex align-items-center mb-3"><span class="la la-check icon-element flex-shrink-0 ml-0"></span> Free cancellation on select hotels</li>
+                        <li class="d-flex align-items-center mb-3"><span class="la la-check icon-element flex-shrink-0 ml-0"></span> Get real-time trip updates</li>
+                    </ul>
+                    <div class="btn-box padding-top-30px">
+                        <a href="#" class="d-inline-block mr-3">
+                            <img src="images/app-store.png" alt="">
+                        </a>
+                        <a href="#" class="d-inline-block">
+                            <img src="~/Content/WebCss/css/images/google-play.png" alt="">
+                        </a>
+                    </div><!-- end btn-box -->
+                </div>
+            </div><!-- end col-lg-6 -->
+            <div class="col-lg-6">
+                <div class="mobile-img">
+                    <img src="~/Content/WebCss/css/images/mobile-app.png" alt="mobile-img">
+                </div>
             </div><!-- end col-lg-5 -->
         </div><!-- end row -->
     </div><!-- end container -->
-</section><!-- end cta-area -->
+</section><!-- end mobile-app -->
 <!-- ================================
-    END CTA AREA
+    END MOBILE AREA
 ================================= -->
 <!-- ================================
        START CLIENTLOGO AREA
 ================================= -->
-<section class="clientlogo-area padding-top-80px padding-bottom-80px">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-heading text-center">
-                    <h2 class="sec__title font-size-35">We were featured in</h2>
-                </div><!-- end section-heading -->
-            </div><!-- end col-lg-12 -->
-        </div><!-- end row -->
-        <div class="row padding-top-10px">
-            <div class="col-lg-12">
-                <div class="client-logo">
-                    <div class="client-logo-item">
-                        <img src="images/client-logo.png" alt="brand image">
-                    </div><!-- end client-logo-item -->
-                    <div class="client-logo-item">
-                        <img src="images/client-logo2.png" alt="brand image">
-                    </div><!-- end client-logo-item -->
-                    <div class="client-logo-item">
-                        <img src="images/client-logo3.png" alt="brand image">
-                    </div><!-- end client-logo-item -->
-                    <div class="client-logo-item">
-                        <img src="images/client-logo4.png" alt="brand image">
-                    </div><!-- end client-logo-item -->
-                    <div class="client-logo-item">
-                        <img src="images/client-logo5.png" alt="brand image">
-                    </div><!-- end client-logo-item -->
-                    <div class="client-logo-item">
-                        <img src="images/client-logo6.png" alt="brand image">
-                    </div><!-- end client-logo-item -->
-                </div><!-- end client-logo -->
-            </div><!-- end col-lg-12 -->
-        </div><!-- end row -->
-    </div><!-- end container -->
+<section class="clientlogo-area padding-top-80px text-center">
 </section><!-- end clientlogo-area -->
 <!-- ================================
        START CLIENTLOGO AREA

@@ -786,8 +786,7 @@
     <Content Include="Content\img\login-back.jpg" />
     <Content Include="Content\img\login1.jpg" />
     <Content Include="Content\img\login_1.jpg" />
-    <Content Include="Content\img\logo-lg.png" />
-    <Content Include="Content\img\logo-sm.png" />
+    <Content Include="Content\img\logo1.jpg" />
     <Content Include="Content\img\logos.png" />
     <Content Include="Content\img\male-icon.png" />
     <Content Include="Content\img\male-teacher.png" />
@@ -930,9 +929,14 @@
     <Content Include="Content\WebCss\css\bootstrap.min.css" />
     <Content Include="Content\WebCss\css\daterangepicker.css" />
     <Content Include="Content\WebCss\css\flag-icon.min.css" />
+    <Content Include="Content\WebCss\css\images\banner-1.jpg" />
+    <Content Include="Content\WebCss\css\images\banner-2.jpg" />
+    <Content Include="Content\WebCss\css\images\banner-3.jpg" />
+    <Content Include="Content\WebCss\css\images\google-play.png" />
     <Content Include="Content\WebCss\css\images\layers-2x.html" />
     <Content Include="Content\WebCss\css\images\layers.html" />
     <Content Include="Content\WebCss\css\images\marker-icon.png" />
+    <Content Include="Content\WebCss\css\images\mobile-app.png" />
     <Content Include="Content\WebCss\css\jquery-ui.css" />
     <Content Include="Content\WebCss\css\jquery.fancybox.min.css" />
     <Content Include="Content\WebCss\css\leaflet.css" />
@@ -1366,6 +1370,7 @@
     <Content Include="Views\GenTourPackage\_pvPackageList.cshtml" />
     <Content Include="Views\Home\HotelDetails.cshtml" />
     <Content Include="Views\Home\HotelBookingDtl.cshtml" />
+    <Content Include="Views\Shared\_LayoutDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

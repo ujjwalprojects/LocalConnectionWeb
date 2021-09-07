@@ -13,7 +13,8 @@ namespace LocalConnWeb.ViewModels
         public List<HotelList> lodgeList { get; set; }
         public List<HotelList> guestHouseList { get; set; }
         public List<HotelList> homestayList { get; set; }
-        public List<FtHotelList> FHotelList { get; set; }
+        public List<FtHotelList_Web> FHotelList { get; set; }
+        public List<OfferList> offerLists { get; set; }
     }
 
     public class HotelDetailsVM

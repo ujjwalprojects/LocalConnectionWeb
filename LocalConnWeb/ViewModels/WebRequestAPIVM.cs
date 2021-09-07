@@ -28,13 +28,15 @@ namespace LocalConnWeb.ViewModels
         public string CityName { get; set; }
         public string CityIconPath { get; set; }
     }
-    public class FtHotelList
+    public class FtHotelList_Web
     {
-        public long FeatureID { get; set; }
         public long HotelID { get; set; }
         public string HotelName { get; set; }
+        public string HotelAddress { get; set; }
         public string PhotoThumbPath { get; set; }
-        public bool IsActive { get; set; }
+        public decimal RoomTypePrice { get; set; }
+        public decimal OfferPrice { get; set; }
+        public Int16 OverallOfferPercentage { get; set; }
     }
 
     public class HotelDtl
