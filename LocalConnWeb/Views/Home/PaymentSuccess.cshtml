@@ -1,0 +1,65 @@
+﻿@model LocalConnWeb.ViewModels.HotelDetailsVM
+@{
+    ViewBag.Title = "PaymentSuccess";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!-- ================================
+    START PAYMENT AREA
+================================= -->
+<section class="payment-area section-bg section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-box payment-received-wrap mb-0">
+                    <div class="form-title-wrap">
+                        <div class="step-bar-wrap text-center">
+                            <ul class="step-bar-list d-flex align-items-center justify-content-around">
+                                <li class="step-bar flex-grow-1 step-bar-active">
+                                    <span class="icon-element">1</span>
+                                    <p class="pt-2 color-text-2">Choose Your Room</p>
+                                </li>
+                                <li class="step-bar flex-grow-1 step-bar-active">
+                                    <span class="icon-element">2</span>
+                                    <p class="pt-2 color-text-2">Your Booking & Payment Details</p>
+                                </li>
+                                <li class="step-bar flex-grow-1 step-bar-active">
+                                    <span class="icon-element">3</span>
+                                    <p class="pt-2 color-text-2">Booking Completed!</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-content">
+                        <div class="payment-received-list">
+                            <div class="d-flex align-items-center">
+                                <i class="la la-check icon-element flex-shrink-0 mr-3 ml-0"></i>
+                                <div>
+                                    <h3 class="title pb-1">Thanks @Model.preBookDtl.CustName !</h3>
+                                    <h3 class="title">Your booking in @Model.hotelDtl.HotelName is confirmed.</h3>
+                                </div>
+                            </div>
+                            <ul class="list-items py-4">
+                                <li><i class="la la-check text-success mr-2"></i><strong class="text-black">@Model.hotelDtl.HotelName</strong> is Expecting you on <strong class="text-black">@Model.preBookDtl.BookingFrom.ToString("dd MMM yyyy")</strong></li>
+                            </ul>
+                            <h3 class="title"><a href="#" class="text-black">@Model.hotelDtl.HotelName</a></h3>
+                            <p>@Model.hotelDtl.HotelAddress</p>
+                            <p><strong class="text-black mr-1">Phone:</strong>@Model.preBookDtl.CustPhNo</p>
+                            <ul class="list-items list-items-3 list-items-4 py-4">
+                                <li><span class="text-black font-weight-bold">Your reservation</span>@Model.preBookDtl.CustDetails</li>
+                                <li><span class="text-black font-weight-bold">Check-in</span>@Model.preBookDtl.BookingFrom.ToString("dd MMM yyyy")</li>
+                                <li><span class="text-black font-weight-bold">Check-out</span>@Model.preBookDtl.BookingUpto.ToString("dd MMM yyyy")</li>
+                                <li><span class="text-black font-weight-bold">Total Amount</span>&#8377; @Model.preBookDtl.FinalFare.ToString("G29")</li>
+                            </ul>
+                        </div><!-- end card-item -->
+                    </div>
+                </div><!-- end payment-card -->
+            </div><!-- end col-lg-12 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section>
+<!-- ================================
+    END PAYMENT AREA
+================================= -->

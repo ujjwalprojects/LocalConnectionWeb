@@ -771,6 +771,7 @@
     <Content Include="Content\img\error.png" />
     <Content Include="Content\img\face1.jpg" />
     <Content Include="Content\img\face1.png" />
+    <Content Include="Content\img\failed-icon-7.png" />
     <Content Include="Content\img\female-icon.png" />
     <Content Include="Content\img\female-teacher.png" />
     <Content Include="Content\img\global-education.jpg" />
@@ -1369,6 +1370,8 @@
     <Content Include="Views\Home\HotelDetails.cshtml" />
     <Content Include="Views\Home\HotelBookingDtl.cshtml" />
     <Content Include="Views\Home\PayNow.cshtml" />
+    <Content Include="Views\Home\PaymentSuccess.cshtml" />
+    <Content Include="Views\Home\PaymentFailed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
