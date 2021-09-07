@@ -102,9 +102,8 @@ namespace LocalConnWeb.ViewModels
     {
         public string BookingID { get; set; }
         public long HotelID { get; set; }
-        [Required(ErrorMessage ="Enter Cutomer Name")]
+        [Required(ErrorMessage ="Enter Customer Name")]
         public string CustName { get; set; }
-        [Required(ErrorMessage ="Enter Customer Email")]
         public string CustEmail { get; set; }
         [Required(ErrorMessage = "Enter Customer Mobile")]
         public string CustPhNo { get; set; }

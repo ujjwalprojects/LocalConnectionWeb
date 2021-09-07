@@ -97,27 +97,39 @@
 
                         @using (Html.BeginForm("PayNow", "Home"))
                         {
-                            <div class="row form-content contact-form-action">
-                                    <div class="col-6 responsive-column">
-                                        <div class="input-box">
-                                            <label class="label-text">Guest Name</label>
-                                            <div class="form-group">
-                                                <span class="la la-user form-icon"></span>
-                                                <input class="form-control" type="text" name="text" placeholder="Your name">
-                                            </div>
-                                        </div>
-                                    </div><!-- end col-lg-6 -->
+                        <div class="row form-content contact-form-action">
+                            <div class="col-4 responsive-column">
+                                <div class="input-box">
+                                    <label class="label-text">Guest Name</label>
+                                    <div class="form-group">
+                                        <span class="la la-user form-icon"></span>
+                                        @Html.TextBoxFor(x => x.preBookDtl.CustName, new { @class = "form-control", @placeholder = "Guest Name" })
+                                        @Html.ValidationMessageFor(m => m.preBookDtl.CustName)
+                                    </div>
+                                </div>
+                            </div><!-- end col-lg-6 -->
 
-                                    <div class="col-6 responsive-column">
-                                        <div class="input-box">
-                                            <label class="label-text">Mobile No</label>
-                                            <div class="form-group">
-                                                <span class="la la-phone form-icon"></span>
-                                                <input class="form-control" type="text" placeholder="+91-8547632521">
-                                            </div>
-                                        </div>
-                                    </div><!-- end col-lg-6 -->
-                            </div><!-- end form-content -->
+                            <div class="col-4 responsive-column">
+                                <div class="input-box">
+                                    <label class="label-text">Email ID</label>
+                                    <div class="form-group">
+                                        <span class="la la-mail-bulk form-icon"></span>
+                                        @Html.TextBoxFor(x => x.preBookDtl.CustEmail, new { @class = "form-control", @placeholder = "Email ID" })
+                                        @Html.ValidationMessageFor(m => m.preBookDtl.CustEmail)
+                                    </div>
+                                </div>
+                            </div><!-- end col-lg-6 -->
+                            <div class="col-4 responsive-column">
+                                <div class="input-box">
+                                    <label class="label-text">Mobile No</label>
+                                    <div class="form-group">
+                                        <span class="la la-phone form-icon"></span>
+                                        @Html.TextBoxFor(x => x.preBookDtl.CustPhNo, new { @class = "form-control", @placeholder = "Mobile Name" })
+                                        @Html.ValidationMessageFor(m => m.preBookDtl.CustPhNo)
+                                    </div>
+                                </div>
+                            </div><!-- end col-lg-6 -->
+                        </div><!-- end form-content -->
                             @Html.TextBoxFor(x => x.preBookDtl.HotelID)
                             @Html.TextBoxFor(x => x.preBookDtl.FinalFare)
                             @Html.TextBoxFor(x => x.preBookDtl.RoomSelect)

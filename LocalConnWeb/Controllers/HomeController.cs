@@ -8,6 +8,8 @@ using LocalConnWeb.Areas.Admin.Models;
 using LocalConnWeb.CustomModels;
 using LocalConnWeb.Helpers;
 using LocalConnWeb.ViewModels;
+using Newtonsoft.Json;
+using Razorpay.Api;
 
 namespace LocalConnWeb.Controllers
 {
@@ -20,7 +22,8 @@ namespace LocalConnWeb.Controllers
         //    var groupedDests = (from s in model group s by s.StateName).ToDictionary(x => x.Key, x => x.ToList());
         //    ViewBag.Dests = groupedDests;
         //}
-
+        private string razorKey = "rzp_test_O6952intGT2qTL";
+        private string razorSecred = "P4VmQ2BVBz0x2tLOBsRlhvyY";
         public ActionResult Index()
         {
             HomePageVM obj = new HomePageVM();
@@ -58,24 +61,98 @@ namespace LocalConnWeb.Controllers
 
         public ActionResult PayNow(HotelDetailsVM obj)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Login","Account",new {Areas="" });
-            }
             HotelDetailsVM model = new HotelDetailsVM();
+            
+            //if (!(User.Identity.IsAuthenticated))
+            //{
+            //    return RedirectToAction("Login","Account",new {Areas="" });
+            //}
+            Random randomObj = new Random();
+            string transactionId = randomObj.Next(10000000, 100000000).ToString();
+            Razorpay.Api.RazorpayClient client = new Razorpay.Api.RazorpayClient(razorKey, razorSecred);
+            Dictionary<string, object> options = new Dictionary<string, object>();
+            options.Add("amount", "100");  // Amount will in paise
+            options.Add("receipt", transactionId);
+            options.Add("currency", "INR");
+            options.Add("payment_capture", "0"); // 1 - automatic  , 0 - manual
+            Razorpay.Api.Order orderResponse = client.Order.Create(options);
+            string orderId = orderResponse["id"].ToString();
+            ViewBag.RzpID = razorKey;
+            ViewBag.TransactionID = transactionId;
+            ViewBag.amount = 1;
+            ViewBag.name = obj.preBookDtl.CustName;
+            ViewBag.currency = "INR";
+            ViewBag.orderDesc = obj.preBookDtl.CustDetails;
+            ViewBag.orderid = orderId;
+            ViewBag.phone =obj.preBookDtl.CustPhNo;
             model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
             model.preBookDtl = obj.preBookDtl;
+            Session["OrderDetails"] = obj.preBookDtl;
             return View(model);
         }
     
+        [HttpPost]
+        public ActionResult PaymentComplete()
+        {
+            string paymentId = Request.Params["rzp_paymentid"];
+            // This is orderId
+            string orderId = Request.Params["rzp_orderid"];
 
+            Razorpay.Api.RazorpayClient client = new Razorpay.Api.RazorpayClient(razorKey, razorSecred);
 
+            Razorpay.Api.Payment payment = client.Payment.Fetch(paymentId);
+            PreBookingDtl obj = Session["OrderDetails"] as PreBookingDtl;
+            // This code is for capture the payment 
+            Dictionary<string, object> options = new Dictionary<string, object>();
+            options.Add("amount", payment.Attributes["amount"]);
+            Razorpay.Api.Payment paymentCaptured = payment.Capture(options);
+            string amt = paymentCaptured.Attributes["amount"];
+
+            
+
+            if (paymentCaptured.Attributes["status"] == "captured")
+            {
+                obj.BookingStatus = "Booked";
+                obj.PaymentGatewayCode = paymentId;
+                string jsonStr = JsonConvert.SerializeObject(obj);
+                string result = objAPI.PostRecordtoApI("webrequest", "PayNow", jsonStr);
+                TempData["ErrMsg"] = result;
+                return RedirectToAction("PaymentSuccess", "Home", new { BookingID = result});
+            }
+            else
+            {
+                obj.BookingStatus = "Failed";
+                //obj.PaymentGatewayCode = paymentId;
+                //string jsonStr = JsonConvert.SerializeObject(obj);
+                //string result = objAPI.PostRecordtoApI("webrequest", "PayNow", jsonStr);
+                TempData["ErrMsg"] = "Failed";
+                return RedirectToAction("PaymentFailed","Home", new { obj.HotelID });
+            }
+        }
+        public ActionResult PaymentSuccess(string BookingID= "B21000011")
+        {
+            HotelDetailsVM obj = new HotelDetailsVM();
+            obj.preBookDtl = objAPI.GetRecordByQueryString<PreBookingDtl>("webrequest", "getBookingDtl", "BookingID=" + BookingID);
+            obj.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
+            return View(obj);
+        }
+
+        public ActionResult PaymentFailed(long HotelID=8)
+        {
+            HotelDetailsVM obj = new HotelDetailsVM();
+            obj.preBookDtl = Session["OrderDetails"] as PreBookingDtl;
+            obj.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" +HotelID);
+            return View(obj);
+        }
         public ActionResult About()
         {
           
 
             return View();
         }
+
+
+
 
         public ActionResult Contact()
         {
