@@ -165,7 +165,7 @@ namespace LocalConnWeb.Controllers
             if (ModelState.IsValid)
             {
                 string jsonStr = JsonConvert.SerializeObject(model);
-                TempData["ErrMsg"] = objAPI.PostRecordtoApI("account", "register", jsonStr);
+                TempData["ErrMsg"] = objAPI.PostRecordtoApI("account", "registercustomer", jsonStr);
                 return RedirectToAction("login", "account");
             }
             // If we got this far, something failed, redisplay form

@@ -77,17 +77,13 @@ namespace LocalConnWeb.Models
     public class RegisterModel
     {
         [Required(ErrorMessage = "Enter User Email ID")]
-        [Display(Name = "Email")]
         [EmailAddress(ErrorMessage = "Enter Valid Email ID")]
         public string Email { get; set; }
-        [Display(Name = "Mobile No.")]
         public string MobileNo { get; set; }
         [Required(ErrorMessage = "Enter User Profile Name")]
-        [Display(Name = "Profile Name")]
         public string ProfileName { get; set; }
         [Required(ErrorMessage = "Select Role")]
-        [Display(Name = "Role")]
-        public string RoleName { get; set; }
+        public string Password { get; set; }
 
     }
     public class TokenModel

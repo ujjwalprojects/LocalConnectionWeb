@@ -3,62 +3,102 @@
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*<div class="text-center">
-    <a href="/home">
-       <h3>Logo</h3>
-    </a>
-</div>*@
-@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", autocomplete = "off" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
- <!-- Login Page Start -->
-<section class="peulis-login-page section_70">
+
+<!-- ================================
+    START BREADCRUMB AREA
+================================= -->
+<section class="breadcrumb-area bread-bg-10">
+    <div class="breadcrumb-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-content text-center">
+                        <div class="section-heading">
+                            <h2 class="sec__title text-white">Login</h2>
+                        </div>
+                        <span class="arrow-blink">
+                            <i class="la la-arrow-down"></i>
+                        </span>
+                    </div><!-- end breadcrumb-content -->
+                </div><!-- end col-lg-12 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end breadcrumb-wrap -->
+    <div class="bread-svg-box">
+        <svg class="bread-svg" xmlns="#" viewBox="0 0 100 10" preserveAspectRatio="none"><polygon points="100 0 50 10 0 0 0 10 100 10"></polygon></svg>
+    </div><!-- end bread-svg -->
+</section><!-- end breadcrumb-area -->
+<!-- ================================
+    END BREADCRUMB AREA
+================================= -->
+<!-- ================================
+    START CART AREA
+================================= -->
+<section class="cart-area section-padding">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="login-box login-form ">
-                    <h3>Member Login</h3>
-                    <div class="form-group">
-                        <div class="input-group">
-                            @Html.TextBoxFor(m => m.UserName, new { placeholder = "Email", @class = "form-control", autocomplete = "off" })
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="fa fa-user"></i>
-                                </span>
-                            </div>
-                        </div>
-                        @Html.ValidationMessageFor(m => m.UserName)
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            @Html.PasswordFor(m => m.Password, new { placeholder = "Password", @class = "form-control", @id = "Password" })
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="fa fa-lock"></i>
-                                </span>
-                            </div>
-                        </div>
-                        @Html.ValidationMessageFor(m => m.Password)
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary login-btn" type="submit">Login</button>
-                    </div>
-                    <div class="form-group d-flex justify-content-between text-center">
-                        <a href="/account/forgotpassword" class="text-small forgot-password text-black">Forgot Password ?</a>
-                    </div>
+            <div class="col-lg-6 offset-3">
+                <div class="cart-wrap">
 
-                    @*<div class="register_have">
-                        <p>Don't have an account? <a href="register.html">Register</a></p>
-                    </div>*@
+                    <div class="form-box">
+
+                        <div class="section-block"></div>
+                        <div class="form-title-wrap">
+                            <h3 class="title"><i class="la la-user mr-2 text-gray"></i>Login</h3>
+                        </div><!-- form-title-wrap -->
+
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", autocomplete = "off" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            <div class="row form-content contact-form-action">
+                                <div class="col-12 responsive-column">
+                                    <div class="input-box">
+                                        <label class="label-text">Mobile No</label>
+                                        <div class="form-group">
+                                            <span class="la la-phone form-icon"></span>
+                                            @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", @placeholder = "Mobile Name" })
+                                            @Html.ValidationMessageFor(m => m.UserName)
+                                        </div>
+                                    </div>
+                                    <div class="input-box">
+                                        <label class="label-text"> Password</label>
+                                        <div class="form-group">
+                                            <span class="la la-mail-bulk form-icon"></span>
+                                            @Html.PasswordFor(x => x.Password, new { @class = "form-control", @placeholder = "Password" })
+                                            @Html.ValidationMessageFor(m => m.Password)
+                                        </div>
+                                    </div>
+                                </div><!-- end col-lg-6 -->
+
+                            </div><!-- end form-content -->
+                            <div class="btn-box text-center pt-4">
+                                <input type="Submit" value="Login" class="theme-btn" />
+                            </div>
+                            <div class="row" style="padding-bottom:15px 15px;">
+                                <div class="col-6">
+                                    <a href="/account/forgotpassword" class="text-small forgot-password text-black" style="margin-left:15px;">Forgot Password ?</a>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <a href="/account/register" class="text-small forgot-password text-black" style="margin-right:15px;">Sign Up</a>
+                                </div>
+                            </div>
+
+                        }
+
+                    </div><!-- end form-box -->
+
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Login Page End -->
+            </div><!-- end cart-wrap -->
+        </div><!-- end col-lg-12 -->
+    </div><!-- end row -->
+</section><!-- end cart-area -->
+<!-- ================================
+    END CART AREA
+================================= -->
 
-}
+
+
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
 }
