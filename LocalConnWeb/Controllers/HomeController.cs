@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -54,6 +55,8 @@ namespace LocalConnWeb.Controllers
             obj.hotelPremises = objAPI.GetRecordsByID<HotelPremisesList>("webrequest", "gethotelpremises", Convert.ToInt64(id));
             obj.nearByVM = objAPI.GetRecordByQueryString<NearbyVM>("webrequest", "getnearbylist", "HotelID=" + id);
             obj.termCondVM = objAPI.GetRecordByQueryString<TermCondPolicyVM>("webrequest", "gettermncondpolicylist", "HotelID=" + id);
+            ViewBag.startDate = DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            ViewBag.endDate = DateTime.Now.AddDays(1).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
             return View(obj);
         }
 
