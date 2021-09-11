@@ -475,13 +475,13 @@
                                 @using (Html.BeginForm("HotelBookingDtl", "Home"))
                                 {
                                     @Html.HiddenFor(x => x.preBookDtl.HotelID, new { Value = Model.hotelDtl.HotelID })
-                                    @Html.TextBoxFor(x => x.preBookDtl.FinalFare, new { id = "mFinalFare" })
-                                    @Html.TextBoxFor(x => x.preBookDtl.RoomSelect, new { id = "mRoomSelect" })
-                                    @Html.TextBoxFor(x => x.preBookDtl.AdultSelect, new { id = "mAdultSelect" })
+                                    @Html.HiddenFor(x => x.preBookDtl.FinalFare, new { id = "mFinalFare" })
+                                    @Html.HiddenFor(x => x.preBookDtl.RoomSelect, new { id = "mRoomSelect" })
+                                    @Html.HiddenFor(x => x.preBookDtl.AdultSelect, new { id = "mAdultSelect" })
                                     @Html.HiddenFor(x => x.preBookDtl.ChildrenSelect, new { id = "mChildSelect" })
                                     @Html.HiddenFor(x => x.preBookDtl.BookingFrom, new { id = "mBookingFrom" })
                                     @Html.HiddenFor(x => x.preBookDtl.BookingUpto, new { id = "mBookingUpto" })
-                                    @Html.TextBoxFor(x => x.preBookDtl.CustDetails, new { id = "mCustDetails" })
+                                    @Html.HiddenFor(x => x.preBookDtl.CustDetails, new { id = "mCustDetails" })
                                     <input type="submit" value="Book Now" class="theme-btn text-center w-100 mb-2" />
                                 }
 
@@ -498,7 +498,7 @@
 <input hidden type="text" id="endDt" value="@ViewBag.endDate" />
 <input hidden type="text" id="startDt" value="@ViewBag.startDate" />
 @section Scripts{
-<script type="text/javascript">
+    <script type="text/javascript">
 
         $(document).ready(function () {
 
@@ -540,10 +540,6 @@
                 noofday = days;
             }
 
-            //function formatDate(date) {
-            //    var arr = date.split('/');
-            //    return arr[2] + "-" + arr[1] + "-" + arr[0];
-            //}
             //Room Select
 
             $('#roomSelect').on('change', function () {
@@ -601,12 +597,13 @@
                 if (btnValu == "Add") {
                     currentRow.find("#amSelBtn").val("Remove");
                     amnetiesArr.push(content);
-                    //amTotal = parseInt(amTotal) + parseInt(col2);
-                    amnSel.push(col2);
-                    if (amnSel.length > 1) {
-                        amTotal = parseInt(amnSel) + parseInt(col2);
+                    alert(amnSel.length)
+                    amTotal = parseInt(amnSel);
+                    if (amnSel.length == 1) {
+                        amTotal = parseInt(amTotal);
+                    } else {
+                        amTotal = parseInt(amTotal) + parseInt(col2);
                     }
-
                     //alert(amnSel + "Total:" + amTotal);
                 }
                 if (btnValu == "Remove") {
@@ -732,6 +729,6 @@
         });
 
 
-</script>
+    </script>
 
 }
