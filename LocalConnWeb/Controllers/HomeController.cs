@@ -159,6 +159,10 @@ namespace LocalConnWeb.Controllers
             obj.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + HotelID);
             return View(obj);
         }
+
+
+      
+    
         public ActionResult About()
         {
 

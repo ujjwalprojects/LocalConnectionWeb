@@ -1,6 +1,6 @@
-﻿@model LocalConnWeb.Models.ForgotPasswordModel
+﻿@model LocalConnWeb.Models.OTPModel
 @{
-    ViewBag.Title = "ForgotPassword";
+    ViewBag.Title = "VerifyOTP";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,7 +14,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-content text-center">
                         <div class="section-heading">
-                            <h2 class="sec__title text-white">Forgot Password</h2>
+                            <h2 class="sec__title text-white">Verify OTP</h2>
                         </div>
                         <span class="arrow-blink">
                             <i class="la la-arrow-down"></i>
@@ -56,25 +56,24 @@
                                         <label class="label-text">Mobile No</label>
                                         <div class="form-group">
                                             <span class="la la-phone form-icon"></span>
-                                            @Html.TextBoxFor(x => x.MobileNo, new { @class = "form-control", @placeholder = "Mobile No" })
+                                            @Html.LabelFor(x => x.MobileNo, new { @class = "form-control", @placeholder = "Mobile No" })
                                             @*@Html.ValidationMessageFor(m => m.MobileNo)*@
-                                        </div>
                                     </div>
                                 </div><!-- end col-lg-6 -->
                             </div><!-- end form-content -->
                             <div class="col-12 responsive-column">
                                 <div class="input-box">
-                                    <label class="label-text">Password</label>
+                                    <label class="label-text">OTP</label>
                                     <div class="form-group">
                                         <span class="la la-lock form-icon"></span>
-                                        @Html.PasswordFor(x => x.Password, new { @class = "form-control", @placeholder = "Password" })
-                                        @*@Html.ValidationMessageFor(m => m.Password)*@
+                                        @Html.TextBoxFor(x => x.OTP, new { @class = "form-control", @placeholder = "Enter OTP" })
                                     </div>
                                 </div>
                             </div><!-- end col-lg-6 -->
                             <div class="btn-box text-center pt-4">
-                                <input type="Submit" value="Forgot Password" class="theme-btn" />
+                                <input type="Submit" value="Verify OTP" class="theme-btn" />
                             </div>
+                        </div>
                         }
 
                     </div><!-- end form-box -->

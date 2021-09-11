@@ -148,4 +148,20 @@ namespace LocalConnWeb.Models
         public string OldPassword { get; set; }
         public string NewPassword { get; set; }
     }
+
+    //following app fossword reset cycles
+    public class ForgotPasswordModel
+    {
+        [Required(ErrorMessage ="Enter Mobile No")]
+        public string MobileNo { get; set; }
+        [Required(ErrorMessage ="Enter New Password")]
+        public string Password { get; set; }
+    }
+
+    public class OTPModel
+    {
+        public string MobileNo { get; set; }
+        public string Type { get; set; }
+        public string OTP { get; set; }
+    }
 }

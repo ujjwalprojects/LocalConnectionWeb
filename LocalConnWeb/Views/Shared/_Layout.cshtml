@@ -268,7 +268,7 @@
                                 </nav>
                             </div><!-- end main-menu-content -->
                             <div class="nav-btn">
-                                @if (User.Identity.IsAuthenticated)
+                                @if (ViewBag.CurrentUserName!=null)
                                 {
                                     <a href="#" class="theme-btn theme-btn-small theme-btn-transparent mr-1">Welcome @ViewBag.CurrentUserName</a>
                                 }
