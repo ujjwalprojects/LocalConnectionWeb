@@ -97,7 +97,7 @@ namespace LocalConnWeb.Controllers
             ViewBag.phone = obj.preBookDtl.CustPhNo;
             model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
             model.preBookDtl = obj.preBookDtl;
-            Session["OrderDetails"] = obj.preBookDtl;
+            Session["OrderDetails"] = obj.preBookDtl; 
             return View(model);
         }
 
