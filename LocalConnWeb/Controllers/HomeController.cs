@@ -164,7 +164,12 @@ namespace LocalConnWeb.Controllers
         }
 
 
-      
+        public ActionResult orderList()
+        {
+            OrderListVM orderList = new OrderListVM();
+            orderList.orderLists = objAPI.GetRecordsByQueryString<OrderList>("webrequest", "getorderlist", "CustPhNo=" +_sModel.PhoneNumber);
+            return View(orderList);
+        }
     
         public ActionResult About()
         {

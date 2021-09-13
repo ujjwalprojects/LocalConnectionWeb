@@ -92,6 +92,7 @@ namespace LocalConnWeb.Controllers
                         Role = token.role,
                         UserImage = token.userImage,
                         UserName = token.profileName,
+                        PhoneNumber = token.PhoneNumber
                         //Email = token.email,
                        
                     };

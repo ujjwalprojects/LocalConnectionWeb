@@ -268,15 +268,18 @@
                                 </nav>
                             </div><!-- end main-menu-content -->
                             <div class="nav-btn">
-                                @if (ViewBag.CurrentUserName!=null)
+                                @if (ViewBag.CurrentUserName != null)
                                 {
-                                    <a href="#" class="theme-btn theme-btn-small theme-btn-transparent mr-1">Welcome @ViewBag.CurrentUserName</a>
+                                        <a href="#">Welcome @ViewBag.CurrentUserName <i class="la la-angle-down"></i></a>
+                                        <ul class="dropdown-menu-item">
+                                            <li><a href="/Home/OrderList">Order List</a></li>
+                                        </ul>
                                 }
                                 else
                                 {
                                     @*<a href="/account/register" class="theme-btn theme-btn-small theme-btn-transparent mr-1">Sign Up</a>*@
                                     <a href="/account/login" class="theme-btn theme-btn-small">Login</a>
-                                 } 
+                                }
 
 
                             </div><!-- end nav-btn -->

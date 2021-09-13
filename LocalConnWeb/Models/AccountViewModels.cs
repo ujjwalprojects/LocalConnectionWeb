@@ -95,6 +95,7 @@ namespace LocalConnWeb.Models
         public string role { get; set; }
         public string userImage { get; set; }
         public string email { get; set; }
+        public string PhoneNumber { get; set; }
     }
     public class ForgotPasswordViewModel
     {
