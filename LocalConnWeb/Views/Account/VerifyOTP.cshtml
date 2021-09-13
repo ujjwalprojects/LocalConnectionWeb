@@ -1,6 +1,6 @@
-﻿@model LocalConnWeb.Models.LoginModel
+﻿@model LocalConnWeb.Models.OTPModel
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "VerifyOTP";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,7 +14,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-content text-center">
                         <div class="section-heading">
-                            <h2 class="sec__title text-white">Login</h2>
+                            <h2 class="sec__title text-white">Verify OTP</h2>
                         </div>
                         <span class="arrow-blink">
                             <i class="la la-arrow-down"></i>
@@ -44,46 +44,36 @@
 
                         <div class="section-block"></div>
                         <div class="form-title-wrap">
-                            <h3 class="title"><i class="la la-user mr-2 text-gray"></i>Login</h3>
+                            <h3 class="title"><i class="la la-user mr-2 text-gray"></i>Your information</h3>
                         </div><!-- form-title-wrap -->
 
-                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", autocomplete = "off" }))
+                        @using (Html.BeginForm())
                         {
                             @Html.AntiForgeryToken()
-                            @Html.ValidationSummary(true)
                             <div class="row form-content contact-form-action">
                                 <div class="col-12 responsive-column">
                                     <div class="input-box">
                                         <label class="label-text">Mobile No</label>
                                         <div class="form-group">
                                             <span class="la la-phone form-icon"></span>
-                                            @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", @placeholder = "Mobile Name" })
-                                            @Html.ValidationMessageFor(m => m.UserName)
-                                        </div>
-                                    </div>
-                                    <div class="input-box">
-                                        <label class="label-text"> Password</label>
-                                        <div class="form-group">
-                                            <span class="la la-mail-bulk form-icon"></span>
-                                            @Html.PasswordFor(x => x.Password, new { @class = "form-control", @placeholder = "Password" })
-                                            @Html.ValidationMessageFor(m => m.Password)
-                                        </div>
+                                            @Html.LabelFor(x => x.MobileNo, new { @class = "form-control", @placeholder = "Mobile No" })
+                                            @*@Html.ValidationMessageFor(m => m.MobileNo)*@
                                     </div>
                                 </div><!-- end col-lg-6 -->
-
                             </div><!-- end form-content -->
+                            <div class="col-12 responsive-column">
+                                <div class="input-box">
+                                    <label class="label-text">OTP</label>
+                                    <div class="form-group">
+                                        <span class="la la-lock form-icon"></span>
+                                        @Html.TextBoxFor(x => x.OTP, new { @class = "form-control", @placeholder = "Enter OTP" })
+                                    </div>
+                                </div>
+                            </div><!-- end col-lg-6 -->
                             <div class="btn-box text-center pt-4">
-                                <input type="Submit" value="Login" class="theme-btn" />
+                                <input type="Submit" value="Verify OTP" class="theme-btn" />
                             </div>
-                            <div class="row" style="padding-bottom:15px 15px;">
-                                <div class="col-6">
-                                    <a href="/account/forgotpassword" class="text-small forgot-password text-black" style="margin-left:15px;">Forgot Password ?</a>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <a href="/account/register" class="text-small forgot-password text-black" style="margin-right:15px;">Sign Up</a>
-                                </div>
-                            </div>
-
+                        </div>
                         }
 
                     </div><!-- end form-box -->
@@ -96,9 +86,3 @@
 <!-- ================================
     END CART AREA
 ================================= -->
-
-
-
-@section scripts{
-    @Scripts.Render("~/bundles/jqueryval")
-}

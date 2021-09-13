@@ -77,17 +77,13 @@ namespace LocalConnWeb.Models
     public class RegisterModel
     {
         [Required(ErrorMessage = "Enter User Email ID")]
-        [Display(Name = "Email")]
         [EmailAddress(ErrorMessage = "Enter Valid Email ID")]
         public string Email { get; set; }
-        [Display(Name = "Mobile No.")]
         public string MobileNo { get; set; }
         [Required(ErrorMessage = "Enter User Profile Name")]
-        [Display(Name = "Profile Name")]
         public string ProfileName { get; set; }
         [Required(ErrorMessage = "Select Role")]
-        [Display(Name = "Role")]
-        public string RoleName { get; set; }
+        public string Password { get; set; }
 
     }
     public class TokenModel
@@ -99,6 +95,7 @@ namespace LocalConnWeb.Models
         public string role { get; set; }
         public string userImage { get; set; }
         public string email { get; set; }
+        public string PhoneNumber { get; set; }
     }
     public class ForgotPasswordViewModel
     {
@@ -151,5 +148,21 @@ namespace LocalConnWeb.Models
         public string Email { get; set; }
         public string OldPassword { get; set; }
         public string NewPassword { get; set; }
+    }
+
+    //following app fossword reset cycles
+    public class ForgotPasswordModel
+    {
+        [Required(ErrorMessage ="Enter Mobile No")]
+        public string MobileNo { get; set; }
+        [Required(ErrorMessage ="Enter New Password")]
+        public string Password { get; set; }
+    }
+
+    public class OTPModel
+    {
+        public string MobileNo { get; set; }
+        public string Type { get; set; }
+        public string OTP { get; set; }
     }
 }

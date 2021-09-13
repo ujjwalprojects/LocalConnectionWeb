@@ -92,6 +92,7 @@ namespace LocalConnWeb.Controllers
                         Role = token.role,
                         UserImage = token.userImage,
                         UserName = token.profileName,
+                        PhoneNumber = token.PhoneNumber
                         //Email = token.email,
                        
                     };
@@ -165,7 +166,7 @@ namespace LocalConnWeb.Controllers
             if (ModelState.IsValid)
             {
                 string jsonStr = JsonConvert.SerializeObject(model);
-                TempData["ErrMsg"] = objAPI.PostRecordtoApI("account", "register", jsonStr);
+                TempData["ErrMsg"] = objAPI.PostRecordtoApI("account", "registercustomer", jsonStr);
                 return RedirectToAction("login", "account");
             }
             // If we got this far, something failed, redisplay form
@@ -198,23 +199,23 @@ namespace LocalConnWeb.Controllers
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ForgotPassword(ForgotPasswordViewModel model)
+        public ActionResult ForgotPassword(ForgotPasswordModel model)
         {
-            if (!this.IsCaptchaValid("Invalid Captcha Text"))
-            {
-                ModelState.AddModelError("", "Invalid Captcha Text");
-                return View(model);
-            }
+            //if (!this.IsCaptchaValid("Invalid Captcha Text"))
+            //{
+            //    ModelState.AddModelError("", "Invalid Captcha Text");
+            //    return View(model);
+            //}
             if (ModelState.IsValid)
             {
                 try
                 {
                     ApiConnection objApi = new ApiConnection("");
                     String Jasonstring = JsonConvert.SerializeObject(model);
-                    string result = objApi.PostRecordtoApI("account", "forgotpassword", Jasonstring);
+                    string result = objApi.PostRecordtoApI("account", "ForgotPasswordWeb", Jasonstring);
                     if (result.Contains("Success"))
                     {
-                        return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                        return RedirectToAction("VerifyOTP", "Account",new { MobileNO = model.MobileNo,Type="ForgotPass"});
                     }
                     ModelState.AddModelError("", result);
                     return View(model);
@@ -228,6 +229,39 @@ namespace LocalConnWeb.Controllers
 
             return View(model);
         }
+
+
+       public ActionResult VerifyOTP(string MobileNo="9434553166",string ForgotPass= "ForgotPass")
+        {
+            OTPModel obj = new OTPModel();
+            obj.MobileNo = MobileNo;
+            obj.Type = ForgotPass;
+            ApiConnection objApi = new ApiConnection("");
+            String Jasonstring = JsonConvert.SerializeObject(obj);
+            string result = objApi.PostRecordtoApI("account", "RequestOTPWeb", Jasonstring);
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult VerifyOTP(OTPModel obj)
+        {
+            ApiConnection objApi = new ApiConnection("");
+            String Jasonstring = JsonConvert.SerializeObject(obj);
+            string result = objApi.PostRecordtoApI("account", "VerifyOTPWeb", Jasonstring);
+            if(result== "Success")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ViewBag.Message = result;
+            }
+            return View(obj);
+        }
+
+
+
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {

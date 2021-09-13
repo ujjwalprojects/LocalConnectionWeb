@@ -47,6 +47,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Razorpay, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Razorpay.3.0.0\lib\net45\Razorpay.dll</HintPath>
     </Reference>
@@ -112,10 +115,6 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <Private>True</Private>
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
@@ -287,7 +286,6 @@
     <Compile Include="Areas\Admin\Models\utblTourPackageItinerary.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\GenLCHotelsController.cs" />
     <Compile Include="Controllers\GenTourPackageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -773,6 +771,7 @@
     <Content Include="Content\img\error.png" />
     <Content Include="Content\img\face1.jpg" />
     <Content Include="Content\img\face1.png" />
+    <Content Include="Content\img\failed-icon-7.png" />
     <Content Include="Content\img\female-icon.png" />
     <Content Include="Content\img\female-teacher.png" />
     <Content Include="Content\img\global-education.jpg" />
@@ -790,7 +789,8 @@
     <Content Include="Content\img\login-back.jpg" />
     <Content Include="Content\img\login1.jpg" />
     <Content Include="Content\img\login_1.jpg" />
-    <Content Include="Content\img\logo1.jpg" />
+    <Content Include="Content\img\logo-lg.png" />
+    <Content Include="Content\img\logo-sm.png" />
     <Content Include="Content\img\logos.png" />
     <Content Include="Content\img\male-icon.png" />
     <Content Include="Content\img\male-teacher.png" />
@@ -933,14 +933,9 @@
     <Content Include="Content\WebCss\css\bootstrap.min.css" />
     <Content Include="Content\WebCss\css\daterangepicker.css" />
     <Content Include="Content\WebCss\css\flag-icon.min.css" />
-    <Content Include="Content\WebCss\css\images\banner-1.jpg" />
-    <Content Include="Content\WebCss\css\images\banner-2.jpg" />
-    <Content Include="Content\WebCss\css\images\banner-3.jpg" />
-    <Content Include="Content\WebCss\css\images\google-play.png" />
     <Content Include="Content\WebCss\css\images\layers-2x.html" />
     <Content Include="Content\WebCss\css\images\layers.html" />
     <Content Include="Content\WebCss\css\images\marker-icon.png" />
-    <Content Include="Content\WebCss\css\images\mobile-app.png" />
     <Content Include="Content\WebCss\css\jquery-ui.css" />
     <Content Include="Content\WebCss\css\jquery.fancybox.min.css" />
     <Content Include="Content\WebCss\css\leaflet.css" />
@@ -1374,10 +1369,11 @@
     <Content Include="Views\GenTourPackage\_pvPackageList.cshtml" />
     <Content Include="Views\Home\HotelDetails.cshtml" />
     <Content Include="Views\Home\HotelBookingDtl.cshtml" />
-    <Content Include="Views\Shared\_LayoutDetails.cshtml" />
-    <Content Include="Views\GenLCHotels\SearchHotels.cshtml" />
-    <Content Include="Views\GenLCHotels\_pvSearchHotelList.cshtml" />
-    <Content Include="Views\GenLCHotels\OfferHotelList.cshtml" />
+    <Content Include="Views\Home\PayNow.cshtml" />
+    <Content Include="Views\Home\PaymentSuccess.cshtml" />
+    <Content Include="Views\Home\PaymentFailed.cshtml" />
+    <Content Include="Views\Account\VerifyOTP.cshtml" />
+    <Content Include="Views\Home\orderList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
