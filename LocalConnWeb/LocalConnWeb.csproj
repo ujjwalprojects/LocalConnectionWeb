@@ -47,6 +47,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Razorpay, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Razorpay.3.0.0\lib\net45\Razorpay.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -178,6 +181,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AboutUsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ActivityController.cs" />
     <Compile Include="Areas\Admin\Controllers\AgentConfigController.cs" />
     <Compile Include="Areas\Admin\Controllers\AmenitiesController.cs" />
@@ -204,12 +208,14 @@
     <Compile Include="Areas\Admin\Controllers\LocalitiesController.cs" />
     <Compile Include="Areas\Admin\Controllers\NotificationsController.cs" />
     <Compile Include="Areas\Admin\Controllers\PackageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PolicyController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoomsController.cs" />
     <Compile Include="Areas\Admin\Controllers\StarRatingController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatesController.cs" />
     <Compile Include="Areas\Admin\Controllers\TermController.cs" />
     <Compile Include="Areas\Admin\Controllers\TourCancelController.cs" />
     <Compile Include="Areas\Admin\Controllers\TourGuideController.cs" />
+    <Compile Include="Areas\Admin\CustomModels\AboutPolicyCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\ActivityCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\AgentCustomModels.cs" />
     <Compile Include="Areas\Admin\Controllers\TourPackageController.cs" />
@@ -238,12 +244,15 @@
     <Compile Include="Areas\Admin\CustomModels\TourGuideCustomModels.cs" />
     <Compile Include="Areas\Admin\CustomModels\TourPackageCustomModels.cs" />
     <Compile Include="Areas\Admin\Models\CountriesModel.cs" />
+    <Compile Include="Areas\Admin\Models\utblAboutU.cs" />
     <Compile Include="Areas\Admin\Models\utblAgent.cs" />
     <Compile Include="Areas\Admin\Models\utblLCFeaturedHotel.cs" />
     <Compile Include="Areas\Admin\Models\utblLCFeatureOffer.cs" />
     <Compile Include="Areas\Admin\Models\utblLCHelpPage.cs" />
     <Compile Include="Areas\Admin\Models\utblLCHotel.cs" />
+    <Compile Include="Areas\Admin\Models\utblLCHotelAmenitiesMap.cs" />
     <Compile Include="Areas\Admin\Models\utblLCHotelImage.cs" />
+    <Compile Include="Areas\Admin\Models\utblLCHotelLatLong.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstAmenitie.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstCitie.cs" />
     <Compile Include="Areas\Admin\Models\utblLCMstHomeType.cs" />
@@ -270,12 +279,15 @@
     <Compile Include="Areas\Admin\Models\utblMstTerm.cs" />
     <Compile Include="Areas\Admin\Models\utblMstTourCancellation.cs" />
     <Compile Include="Areas\Admin\Models\utblPackageOffer.cs" />
+    <Compile Include="Areas\Admin\Models\utblPolicie.cs" />
+    <Compile Include="Areas\Admin\Models\utblPolicyPoint.cs" />
     <Compile Include="Areas\Admin\Models\utblTourGuide.cs" />
     <Compile Include="Areas\Admin\Models\utblTourPackage.cs" />
     <Compile Include="Areas\Admin\Models\utblTourPackageImage.cs" />
     <Compile Include="Areas\Admin\Models\utblTourPackageItinerary.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\GenLCHotelsController.cs" />
     <Compile Include="Controllers\GenTourPackageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -297,6 +309,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\GenTourPackageCustomModels.cs" />
+    <Compile Include="ViewModels\HomePageVM.cs" />
+    <Compile Include="ViewModels\WebRequestAPIVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Antlr3.Runtime.dll" />
@@ -776,8 +790,7 @@
     <Content Include="Content\img\login-back.jpg" />
     <Content Include="Content\img\login1.jpg" />
     <Content Include="Content\img\login_1.jpg" />
-    <Content Include="Content\img\logo-lg.png" />
-    <Content Include="Content\img\logo-sm.png" />
+    <Content Include="Content\img\logo1.jpg" />
     <Content Include="Content\img\logos.png" />
     <Content Include="Content\img\male-icon.png" />
     <Content Include="Content\img\male-teacher.png" />
@@ -914,6 +927,65 @@
     <Content Include="Content\turn\turn.html4.min.js" />
     <Content Include="Content\turn\turn.min.js" />
     <Content Include="Content\turn\zoom.min.js" />
+    <Content Include="Content\WebCss\css\animate.min.css" />
+    <Content Include="Content\WebCss\css\animated-headline.css" />
+    <Content Include="Content\WebCss\css\bootstrap-select.min.css" />
+    <Content Include="Content\WebCss\css\bootstrap.min.css" />
+    <Content Include="Content\WebCss\css\daterangepicker.css" />
+    <Content Include="Content\WebCss\css\flag-icon.min.css" />
+    <Content Include="Content\WebCss\css\images\banner-1.jpg" />
+    <Content Include="Content\WebCss\css\images\banner-2.jpg" />
+    <Content Include="Content\WebCss\css\images\banner-3.jpg" />
+    <Content Include="Content\WebCss\css\images\google-play.png" />
+    <Content Include="Content\WebCss\css\images\layers-2x.html" />
+    <Content Include="Content\WebCss\css\images\layers.html" />
+    <Content Include="Content\WebCss\css\images\marker-icon.png" />
+    <Content Include="Content\WebCss\css\images\mobile-app.png" />
+    <Content Include="Content\WebCss\css\jquery-ui.css" />
+    <Content Include="Content\WebCss\css\jquery.fancybox.min.css" />
+    <Content Include="Content\WebCss\css\leaflet.css" />
+    <Content Include="Content\WebCss\css\line-awesome.css" />
+    <Content Include="Content\WebCss\css\owl.carousel.min.css" />
+    <Content Include="Content\WebCss\css\owl.theme.default.min.css" />
+    <Content Include="Content\WebCss\css\owl.video.play.html" />
+    <Content Include="Content\WebCss\css\style.css" />
+    <Content Include="Content\WebCss\fonts\la-brands-400.svg" />
+    <Content Include="Content\WebCss\fonts\la-regular-400.svg" />
+    <Content Include="Content\WebCss\fonts\la-solid-900.svg" />
+    <Content Include="Content\WebCss\js\ajax-form.js" />
+    <Content Include="Content\WebCss\js\animated-headline.js" />
+    <Content Include="Content\WebCss\js\bar-chart.js" />
+    <Content Include="Content\WebCss\js\bootstrap-select.min.js" />
+    <Content Include="Content\WebCss\js\bootstrap.min.js" />
+    <Content Include="Content\WebCss\js\chart.extension.js" />
+    <Content Include="Content\WebCss\js\chart.js" />
+    <Content Include="Content\WebCss\js\ckeditor.js" />
+    <Content Include="Content\WebCss\js\copy-text-script.js" />
+    <Content Include="Content\WebCss\js\countdown.js" />
+    <Content Include="Content\WebCss\js\dashboard.js" />
+    <Content Include="Content\WebCss\js\daterangepicker.js" />
+    <Content Include="Content\WebCss\js\jquery-3.4.1.min.js" />
+    <Content Include="Content\WebCss\js\jquery-ui.js" />
+    <Content Include="Content\WebCss\js\jquery.countTo.min.js" />
+    <Content Include="Content\WebCss\js\jquery.fancybox.min.js" />
+    <Content Include="Content\WebCss\js\jquery.filer.min.html" />
+    <Content Include="Content\WebCss\js\jquery.multi-file.min.js" />
+    <Content Include="Content\WebCss\js\jquery.ripples-min.js" />
+    <Content Include="Content\WebCss\js\jquery.sparkline.js" />
+    <Content Include="Content\WebCss\js\jquery.superslides.min.js" />
+    <Content Include="Content\WebCss\js\leaflet.js" />
+    <Content Include="Content\WebCss\js\line-chart.js" />
+    <Content Include="Content\WebCss\js\main.js" />
+    <Content Include="Content\WebCss\js\map-add.js" />
+    <Content Include="Content\WebCss\js\map.js" />
+    <Content Include="Content\WebCss\js\masonry-4.2.2.min.js" />
+    <Content Include="Content\WebCss\js\moment.min.js" />
+    <Content Include="Content\WebCss\js\navbar-sticky.js" />
+    <Content Include="Content\WebCss\js\owl.carousel.min.js" />
+    <Content Include="Content\WebCss\js\popper.min.js" />
+    <Content Include="Content\WebCss\js\quantity-input.js" />
+    <Content Include="Content\WebCss\js\superslider-script.js" />
+    <Content Include="Content\WebCss\js\total-price.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -1091,6 +1163,34 @@
     <Content Include="Areas\Admin\Views\Notifications\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Notifications\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Notifications\_pvNotificationsList.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\AddAmenitiesMap.cshtml" />
+    <Content Include="Areas\Admin\Views\AboutUs\AddEditAboutUs.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\PolicyList.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\_pvPolicyList.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\PolicyPtList.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\_pvPolicyPtList.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\AddPolicyPt.cshtml" />
+    <Content Include="Areas\Admin\Views\Policy\EditPolicyPt.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\LcCustBookingList.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\_pvLCCustBookingList.cshtml" />
+    <Content Include="Areas\Admin\Views\LCHotels\LCCustBookingDtl.cshtml" />
+    <Content Include="Content\WebCss\fonts\la-brands-400.eot" />
+    <Content Include="Content\WebCss\fonts\la-brands-400.ttf" />
+    <Content Include="Content\WebCss\fonts\la-brands-400.woff" />
+    <Content Include="Content\WebCss\fonts\la-brands-400.woff2" />
+    <Content Include="Content\WebCss\fonts\la-brands-400d41d.eot" />
+    <Content Include="Content\WebCss\fonts\la-regular-400.eot" />
+    <Content Include="Content\WebCss\fonts\la-regular-400.ttf" />
+    <Content Include="Content\WebCss\fonts\la-regular-400.woff" />
+    <Content Include="Content\WebCss\fonts\la-regular-400.woff2" />
+    <Content Include="Content\WebCss\fonts\la-regular-400d41d.eot" />
+    <Content Include="Content\WebCss\fonts\la-solid-900.eot" />
+    <Content Include="Content\WebCss\fonts\la-solid-900.ttf" />
+    <Content Include="Content\WebCss\fonts\la-solid-900.woff" />
+    <Content Include="Content\WebCss\fonts\la-solid-900.woff2" />
+    <Content Include="Content\WebCss\fonts\la-solid-900d41d.eot" />
     <None Include="Properties\PublishProfiles\API.pubxml" />
     <Content Include="Content\ckeditor\CHANGES.md" />
     <Content Include="Content\ckeditor\LICENSE.md" />
@@ -1115,6 +1215,7 @@
     <Content Include="Content\ckeditor\skins\moono-lisa\readme.md" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\TourWeb Publish.pubxml" />
+    <None Include="Properties\PublishProfiles\vwweb.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1271,6 +1372,12 @@
     <Content Include="Views\GenTourPackage\ClientDetails.cshtml" />
     <Content Include="Views\GenTourPackage\SearchPackage.cshtml" />
     <Content Include="Views\GenTourPackage\_pvPackageList.cshtml" />
+    <Content Include="Views\Home\HotelDetails.cshtml" />
+    <Content Include="Views\Home\HotelBookingDtl.cshtml" />
+    <Content Include="Views\Shared\_LayoutDetails.cshtml" />
+    <Content Include="Views\GenLCHotels\SearchHotels.cshtml" />
+    <Content Include="Views\GenLCHotels\_pvSearchHotelList.cshtml" />
+    <Content Include="Views\GenLCHotels\OfferHotelList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

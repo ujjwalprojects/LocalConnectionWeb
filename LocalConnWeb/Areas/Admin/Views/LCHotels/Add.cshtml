@@ -54,7 +54,9 @@
             </div>
 
             <div class="form-group">
+
                 @Html.LabelFor(m => m.LCHotel.HotelName, new { @class = "required" })
+                <small class="font-italic text-danger">&nbsp; Note: Please keep the Hotel Name as per the google map</small>
                 @Html.TextBoxFor(m => m.LCHotel.HotelName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.LCHotel.HotelName)
             </div>
@@ -154,6 +156,12 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LCHotel.LatLong)
+                        @Html.TextBoxFor(m => m.LCHotel.LatLong, new { @class = "form-control" })
+                    </div>
+                </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">@Html.CheckBoxFor(m => m.LCHotel.IsActive) &nbsp;Enable Hotel</label>

@@ -93,9 +93,10 @@ namespace LocalConnWeb.Controllers
                         UserImage = token.userImage,
                         UserName = token.profileName,
                         //Email = token.email,
+                       
                     };
                     Session["SessionVar"] = session_model;
-
+                    
                     AuthenticationProperties options = new AuthenticationProperties();
 
                     //options.a = true;
@@ -112,7 +113,14 @@ namespace LocalConnWeb.Controllers
 
                     Request.GetOwinContext().Authentication.SignIn(options, identity);
                     if (returnUrl != "" && returnUrl != null)
+                    {
                         return RedirectToLocal(returnUrl);
+                    }
+                    if (session_model.Role=="Customer")
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                        
                     else
                     {
                         return RedirectToAction("dashboard", "user");

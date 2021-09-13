@@ -1,0 +1,108 @@
+﻿@model LocalConnWeb.ViewModels.HotelDetailsVM
+@*<button id="rzp-button1">Pay</button>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>*@
+@*<script>
+        var options = {
+            "key": "@ViewBag.RzpID", // Enter the Key ID generated from the Dashboard
+            "amount": "@ViewBag.amount", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "@ViewBag.name",
+            "description": "@ViewBag.orderDesc",
+            "image": "https://example.com/your_logo",
+            "order_id": "@ViewBag.orderid", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+                alert(response.razorpay_payment_id);
+                alert(response.razorpay_order_id);
+                alert(response.razorpay_signature)
+            },
+            "prefill": {
+                "name": "@ViewBag.name",
+                //"email": "gaurav.kumar@example.com",
+                "contact": "@ViewBag.phone"
+            },
+            "notes": {
+                "address": "Localconnection"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.on('payment.failed', function (response) {
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+        });
+        document.getElementById('rzp-button1').onclick = function (e) {
+            rzp1.open();
+            e.preventDefault();
+        }
+    </script>*@
+
+
+<!-- // Click this button automatically when this page load using javascript -->
+<!-- You can hide this button -->
+<button id="rzp-button1" hidden>Pay</button>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+var options = {
+    "key": "@ViewBag.RzpID", // Enter the Key ID generated from the Dashboard
+    "amount": "@ViewBag.amount", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "@ViewBag.name",
+    "description": "@ViewBag.orderDesc",
+    "image": "https://example.com/your_logo", // You can give your logo url
+    "order_id": "@ViewBag.orderid",
+    "handler": function (response){
+        // After payment successfully made response will come here
+        document.getElementById('rzp_paymentid').value = response.razorpay_payment_id;
+        document.getElementById('rzp_orderid').value = response.razorpay_order_id;
+
+        // // Let's submit the form automatically
+        document.getElementById('rzp-paymentresponse').click();
+    },
+    "prefill": {
+        "name": "@ViewBag.name",
+     //"email": "gaurav.kumar@example.com",
+        "contact": "@ViewBag.phone"
+    },
+    "notes": {
+        "address": "Localconnection"
+    },
+    "theme": {
+        "color": "#F37254"
+    }
+};
+var rzp1 = new Razorpay(options);
+
+window.onload = function(){
+    document.getElementById('rzp-button1').click();
+};
+
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+</script>
+
+<!-- This form is hidden, and submit when payment successfully made -->
+@using (Html.BeginForm("PaymentComplete", "Home"))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Hidden("rzp_paymentid")
+    @Html.Hidden("rzp_orderid")
+    @*@Html.TextBoxFor(x => x.preBookDtl.HotelID)
+    @Html.TextBoxFor(x => x.preBookDtl.FinalFare)
+    @Html.TextBoxFor(x => x.preBookDtl.RoomSelect)
+    @Html.TextBoxFor(x => x.preBookDtl.AdultSelect)
+    @Html.TextBoxFor(x => x.preBookDtl.ChildrenSelect)
+    @Html.TextBoxFor(x => x.preBookDtl.BookingFrom)
+    @Html.TextBoxFor(x => x.preBookDtl.BookingUpto)
+    @Html.TextBoxFor(x => x.preBookDtl.CustDetails)*@
+    <button type="submit" id="rzp-paymentresponse" class="btn btn-primary">Submit</button>
+}

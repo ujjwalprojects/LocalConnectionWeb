@@ -107,6 +107,8 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         [Display(Name = "Child Occupant Note")]
         public string ChildOccupantNote { get; set; }
 
+        [Display(Name = "Hotel Map Latitute/Longitude")]
+        public string LatLong { get; set; }
 
         [Required(ErrorMessage = "Select to enaple hotel")]
         [Display(Name = "Enable/Disable Hotel")]
@@ -228,10 +230,13 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public List<LCNearBysTypeDD> LCNearByPointsDD { get; set; }
         public LCNearByPoints LCNearByPoints { get; set; }
         public utblLCNearByPoint NearByPoints { get; set; }
+
+        public IEnumerable<AmenitiesDD> AmenitiesDD { get; set; }
+        public List<HotelAmenitiesMapView> HotelAmenitiesMapView { get; set; }
+        public utblLCHotelAmenitiesMap HotelAmenitiesMap { get; set; }
+
         public long HotelID { get; set; }
-        //[Required(ErrorMessage = "Select Room Type")]
-        //[Display(Name = "Room Type List")]
-        //public List<long> RoomID { get; set; }
+        
     }
     public class LCHotelDD
     {
@@ -292,7 +297,8 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public IEnumerable<RoomsTypeDD> RoomTypeDD { get; set; }
         public ImageStrs ImageStrs { get; set; }
     }
-   
+    
+    //Hotel Room Type Map
     public class HotelRoomTypeMap
     {
         public long HotelID { get; set; }
@@ -305,6 +311,7 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         [Display(Name = "Room Rate")]
         public decimal RoomTypePrice { get; set; }
         public bool IsStandard { get; set; }
+        public bool IsActive { get; set; }
     }
     public class HotelRoomTypeMapView
     {
@@ -313,8 +320,9 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public string RoomType { get; set; }
         public decimal RoomTypePrice { get; set; }
         public bool IsStandard { get; set; }
-    }
+        public bool IsActive { get; set; }
 
+    }
 
     //LCHotel Terms and cancellations
     public class HotelTerms
@@ -383,5 +391,51 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public utblLCNearByPoint NearPoints { get; set; }
         public LCNearByPoints LCNearByPoints { get; set; }
         public List<LCNearBysTypeDD> LCNearByPointsDD { get; set; }
+    }
+
+    //LCHotelAmenities
+    public class AmenitiesDD
+    {
+        public long AmenitiesID { get; set; }
+        public string AmenitiesName { get; set; }
+    }
+    public class HotelAmenitiesMapView
+    {
+        public long HotelAmenitiesMapID { get; set; }
+        public long HotelID { get; set; }
+        public long AmenitiesID { get; set; }
+        public string AmenitiesName { get; set; }
+        public decimal AmenitiesBasePrice { get; set; }
+        public bool IsSelected { get; set; }
+    }
+
+    //LCCustomerBookingDetails
+    public class LCCustomerBookingAPIVM
+    {
+        public IEnumerable<LCCustomerBookingView> LCCustomerBookingView { get; set; }
+        public int TotalRecords { get; set; }
+    }
+    public class LCCustomerBookingVM
+    {
+        public IEnumerable<LCCustomerBookingView> LCCustomerBookingView { get; set; }
+        public PagingInfo PagingInfo { get; set; }
+
+    }
+    public class LCCustomerBookingView
+    {
+        public string BookingID { get; set; }
+        public string CustName { get; set; }
+        public string CustEmail { get; set; }
+        public string CustPhNo { get; set; }
+        public long HotelID { get; set; }
+        public string HotelName { get; set; }
+        public DateTime BookingFrom { get; set; }
+        public DateTime BookingUpto { get; set; }
+        public DateTime BookingDate { get; set; }
+        public string CustDetails { get; set; }
+        public string BookingStatus { get; set; }
+        public decimal FinalFare { get; set; }
+        public string paymentstatus { get; set; }
+        public DateTime PaymentDate { get; set; }
     }
 }

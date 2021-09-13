@@ -20,8 +20,8 @@ namespace LocalConnWeb.Controllers
                 TempData["ErrMsg"] = "Your login session has expired. Please login again to continue.";
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {
-                    controller = "account",
-                    action = "login",
+                    controller = "Home",
+                    action = "Index",
                     area = ""
                 }));
             }

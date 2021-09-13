@@ -1,5 +1,324 @@
-﻿@{
+﻿@model LocalConnWeb.ViewModels.HomePageVM
+@{
     ViewBag.Title = "Home Page";
 }
 
+<style>
+    .hotel-address {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+    }
 
+    .section-bg-alt {
+        background-color: #fff;
+    }
+
+    .ellipsis {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+<!-- ================================
+    START HERO-WRAPPER AREA
+================================= -->
+<section class="hero-wrapper hero-wrapper7">
+    <div class="hero-box">
+        <div id="fullscreen-slide-contain">
+            <ul class="slides-container">
+                <li><img src="~/Content/WebCss/css/images/banner-1.jpg" alt=""></li>
+                <li><img src="~/Content/WebCss/css/images/banner-2.jpg" alt=""></li>
+                <li><img src="~/Content/WebCss/css/images/banner-3.jpg" alt=""></li>
+            </ul>
+        </div><!-- End background slider -->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="hero-content pb-5 text-center">
+                        <div class="section-heading">
+                            <h2 class="sec__title font-size-70 pb-3">Are You Ready...</h2>
+                            <p class="sec__desc font-size-30 font-weight-medium">To explore new things?</p>
+                        </div>
+                    </div><!-- end hero-content -->
+                    <div class="search-fields-container">
+                        <div class="contact-form-action">
+                            <form method="get" action="/genlchotels/SearchHotels" class="row">
+                                <div class="col-lg-6 pr-0 pl-4">
+                                    <div class="input-box">
+                                        <label class="label-text">Destination</label>
+                                        <div class="form-group">
+                                            <span class="la la-map-marker form-icon"></span>
+                                            @*<input class="form-control" type="text" name="Where" placeholder="Where are you going?">*@
+                                            <input type="text" class="form-control" placeholder="Where To?" id="whereto" name="Where" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                </div><!-- end col-lg-3 -->
+                                <div class="col-lg-3 pr-0">
+                                    <div class="input-box">
+                                        <label class="label-text">Hotel Type</label>
+                                        <div class="form-group">
+                                            <div class="select-contain select-contain-shadow w-auto">
+                                                <select class="select-contain-select" name="HomeType">
+                                                    <option selected="selected">Hotel Type</option>
+                                                    @foreach (var item in ViewBag.HomeTypes)
+                                                    {
+                                                        <option value="@item.HomeTypeID">@item.HomeTypeName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- end col-lg-3 -->
+
+                                <div class="col-lg-3">
+                                    <div class="input-box">
+                                        <label class="label-text">&nbsp;</label>
+                                        <div class="form-group">
+                                            <div class="btn-box ">
+                                                <button type="submit" class="theme-btn"><i class="fa fa-map-marker"></i> Find Now</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- end col-lg-3 -->
+                            </form>
+
+                        </div>
+                    </div>
+                </div><!-- end col-lg-12 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div>
+</section><!-- end hero-wrapper -->
+<!-- ================================
+    END HERO-WRAPPER AREA
+================================= -->
+<!-- ================================
+    START FEATURE HOTELS AREA
+================================= -->
+<section class="trending-area position-relative section-bg section-padding ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-heading text-center">
+                    <h2 class="sec__title">FEATURED STAYS</h2>
+                </div><!-- end section-heading -->
+            </div><!-- end col-lg-12 -->
+        </div><!-- end row -->
+        <div class="row padding-top-50px">
+            <div class="col-lg-12">
+                <div class="trending-carousel carousel-action">
+                    @if (Model.FHotelList.Count() > 0)
+                    {
+                        foreach (var item in Model.FHotelList)
+                        {
+                            <div class="card-item trending-card mb-0">
+                                <div class="card-img">
+                                    <a href="tour-details.html" class="d-block">
+                                        <img src="@item.PhotoThumbPath" alt="@item.HotelName">
+                                    </a>
+                                    <span class="badge">Fearured</span>
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title ellipsis"><a href="tour-details.html">@item.HotelName</a></h3>
+                                    <p class="card-meta ellipsis">@item.HotelAddress</p>
+                                    <div class="card-rating">
+
+                                        @if (item.OverallOfferPercentage != 0)
+                                        {
+                                            <span class="badge text-white">@item.OverallOfferPercentage% Off</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="">&nbsp;</span>
+
+                                        }
+                                    </div>
+                                    <div class="card-price d-flex align-items-center justify-content-between">
+                                        <p>
+                                            <span class="price__num before-price color-text-3"><i class="fa fa-rupee"></i> @item.RoomTypePrice.ToString("0.00")</span><br />
+                                            <span class="price__num"><i class="fa fa-rupee"></i> @item.OfferPrice.ToString("0.00")</span>
+                                            <span class="price__text">Per night</span>
+                                        </p>
+                                        <a href="tour-details.html" class="btn-text">View details<i class="la la-angle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div><!-- end card-item -->
+                        }
+                    }
+                </div><!-- end car-carousel -->
+            </div><!-- end col-lg-12 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+    <svg class="hero-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 10 0 0 A 90 59, 0, 0, 0, 100 0 L 100 10 Z"></path></svg>
+</section><!-- end trending-area -->
+<!-- ================================
+    END FEATURE HOTELS AREA
+================================= -->
+<div class="section-block"></div>
+<!-- ================================
+    START OFFERS AREA
+================================= -->
+@if (Model.offerLists.Count() > 0)
+{
+    <section class="destination-area section--padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading text-center">
+                        <h2 class="sec__title">Today's Top Deals</h2>
+                    </div><!-- end section-heading -->
+                </div><!-- end col-lg-12 -->
+            </div><!-- end row -->
+            <div class="row padding-top-60px">
+                @foreach (var item in Model.offerLists)
+                {
+                    <div class="col-lg-6 responsive-column">
+                        <div class="card-item cruise-card">
+                            <div class="card-img">
+                                <img src="@item.OfferImagePath" alt="@item.OfferTagLine">
+                                <div class="card-body">
+                                    <h3 class="card-title mb-0"><a href="/genlchotels/offerhotellist/@item.OfferID">@item.OfferTagLine</a></h3>
+                                    <a href="/genlchotels/offerhotellist/@item.OfferID" class="btn-text text-white float-right">View Offer<i class="la la-angle-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <h3 class="card-subtitle">&nbsp;&nbsp;&nbsp;</h3>
+                            </div>
+                        </div><!-- end card-item -->
+                    </div><!-- end col-lg-6 -->
+                }
+
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </section><!-- end destination-area -->
+}
+<!-- ================================
+    END OFFERS AREA
+================================= -->
+<!-- ================================
+    START POPULAR HOTELS AREA
+================================= -->
+<section class="hotel-area section-bg section-padding overflow-hidden padding-right-100px padding-left-100px">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="section-heading">
+                    <h2 class="sec__title">Popular Hotels</h2>
+                    <p class="sec__desc pt-3">Explore the best of the hotels
+                </div><!-- end section-heading -->
+            </div><!-- end col-lg-8 -->
+            <div class="col-lg-4">
+                <div class="btn-box btn--box text-right">
+                    <a href="/genlchotels/searchhotels" class="theme-btn">Discover More <i class="la la-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div><!-- end row -->
+        <div class="row padding-top-50px">
+            <div class="col-lg-12">
+                <div class="hotel-card-wrap">
+                    <div class="hotel-card-carousel carousel-action">
+                        @if (Model.hotelList.Count() > 0)
+                        {
+                            foreach (var item in Model.hotelList)
+                            {
+                                <div class="card-item mb-0">
+                                    <div class="card-img">
+                                        <a href="hotel-single.html" class="d-block">
+                                            <img src="@item.PhotoThumbPath" alt="hotel-img">
+                                        </a>
+                                        <span class="badge">Bestseller</span>
+                                        <div class="add-to-wishlist icon-element" data-toggle="tooltip" data-placement="top" title="Bookmark">
+                                            <i class="la la-heart-o"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title ellipsis"><a href="hotel-single.html" class="">@item.HotelName</a></h3>
+                                        <p class="card-meta ellipsis">@item.HotelAddress</p>
+                                        <div class="card-rating">
+                                            @if (item.OverallOfferPercentage != 0)
+                                            {
+                                                <span class="badge text-white">@item.OverallOfferPercentage% Off</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge text-white">&nbsp;</span>
+                                            }
+                                        </div>
+                                        <div class="card-price d-flex align-items-center justify-content-between">
+                                            <p>
+                                                <span class="price__num before-price color-text-3"><i class="fa fa-rupee"></i> @item.RoomTypePrice.ToString("0.00")</span><br />
+                                                <span class="price__num"><i class="fa fa-rupee"></i> @item.OfferPrice.ToString("0.00")</span>
+                                                <span class="price__text">Per night</span>
+                                            </p>
+                                            <a href="tour-details.html" class="btn-text">Book Now<i class="la la-angle-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div><!-- end card-item -->
+                            }
+                        }
+
+                    </div><!-- end hotel-card-carousel -->
+                </div>
+            </div><!-- end col-lg-12 -->
+        </div><!-- end row -->
+    </div><!-- end container-fluid -->
+</section><!-- end hotel-area -->
+<!-- ================================
+    END HOTEL AREA
+================================= -->
+<!-- ================================
+    START MOBILE AREA
+================================= -->
+<section class="mobile-app padding-bottom-50px section-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="mobile-app-content">
+                    <div class="section-heading">
+                        <h2 class="sec__title line-height-55">Local Connection Android App is Available!</h2>
+                    </div><!-- end section-heading -->
+                    <ul class="info-list padding-top-30px">
+                        <li class="d-flex align-items-center mb-3"><span class="la la-check icon-element flex-shrink-0 ml-0"></span> Access and change your itinerary on-the-go</li>
+                        <li class="d-flex align-items-center mb-3"><span class="la la-check icon-element flex-shrink-0 ml-0"></span> Free cancellation on select hotels</li>
+                        <li class="d-flex align-items-center mb-3"><span class="la la-check icon-element flex-shrink-0 ml-0"></span> Get real-time trip updates</li>
+                    </ul>
+                    <div class="btn-box padding-top-30px">
+                        <a href="#" class="d-inline-block mr-3">
+                            <img src="images/app-store.png" alt="">
+                        </a>
+                        <a href="#" class="d-inline-block">
+                            <img src="~/Content/WebCss/css/images/google-play.png" alt="">
+                        </a>
+                    </div><!-- end btn-box -->
+                </div>
+            </div><!-- end col-lg-6 -->
+            <div class="col-lg-6">
+                <div class="mobile-img">
+                    <img src="~/Content/WebCss/css/images/mobile-app.png" alt="mobile-img">
+                </div>
+            </div><!-- end col-lg-5 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end mobile-app -->
+<!-- ================================
+    END MOBILE AREA
+================================= -->
+<!-- ================================
+       START CLIENTLOGO AREA
+================================= -->
+<section class="clientlogo-area padding-top-80px text-center"></section><!-- end clientlogo-area -->
+<!-- ================================
+       START CLIENTLOGO AREA
+================================= -->
+
+
+@section Scripts{
+
+    <script src="~/Scripts/autocomplete.js"></script>
+    <script>
+        var model = '@Html.Raw(Json.Encode(ViewBag.Where))';
+        var wheres = JSON.parse(model);
+        autocomplete(document.getElementById("whereto"), wheres);
+    </script>
+}
