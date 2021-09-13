@@ -36,12 +36,14 @@ namespace LocalConnWeb.Controllers
         {
             HomePageVM obj = new HomePageVM();
             obj.cityLists = objAPI.GetRecordsByID<CityList>("webrequest", "getcitylist", 1);
-            obj.hotelList = objAPI.GetRecordsByID<HotelList>("webrequest", "gethotellist", 3);
+            obj.hotelList = objAPI.GetRecordsByID<HotelList>("webrequest", "gethotellist", 3).Take(5).ToList();
             obj.homestayList = objAPI.GetRecordsByID<HotelList>("webrequest", "gethomestaylist", 4);
             obj.resortList = objAPI.GetRecordsByID<HotelList>("webrequest", "getresortlist", 5);
             obj.lodgeList = objAPI.GetRecordsByID<HotelList>("webrequest", "getlodgelist", 6);
             obj.guestHouseList = objAPI.GetRecordsByID<HotelList>("webrequest", "getghouselist", 7);
-            obj.FHotelList = objAPI.GetRecordsByQueryString<FtHotelList_Web>("webrequest", "getFHotelList", "Dt=" + DateTime.Now.ToString("dd MMM yyyy"));
+            obj.FHotelList = objAPI.GetRecordsByQueryString<FtHotelList_Web>("webrequest", "getFHotelList", "Dt=" + DateTime.Now);
+            obj.offerLists = objAPI.GetRecordsByQueryString<OfferList>("webrequest", "getofferlist", "Dt=" + DateTime.Now);
+            ViewBag.HomeTypes = objAPI.GetAllRecords<utblLCMstHomeType>("webrequest", "HomeTypes");
             return View(obj);
         }
 
