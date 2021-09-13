@@ -1,0 +1,54 @@
+﻿@model LocalConnWeb.ViewModels.GenLCHotelSearchModel
+<div id="DataGrid">
+    @if (Model.hotelList.Count() > 0)
+    {
+        <div class="row">
+            @foreach (var item in Model.hotelList)
+            {
+
+            <div class="col-lg-4 responsive-column">
+                <div class="card-item">
+                    <div class="card-img">
+                        <a href="tour-details.html" class="d-block">
+                            <img src="@item.PhotoThumbPath" alt="@item.PhotoCaption">
+                        </a>
+                        @*<span class="badge">Fearured</span>*@
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title ellipsis"><a href="#">@item.HotelName</a></h3>
+                        <p class="card-meta ellipsis">@item.HotelAddress</p>
+                        <div class="card-rating">
+
+                            @if (item.OverallOfferPercentage != 0)
+                            {
+                                <span class="badge text-white">@item.OverallOfferPercentage% Off</span>
+                            }
+                            else
+                            {
+                                <span class="">&nbsp;</span>
+
+                            }
+                        </div>
+                        <div class="card-price d-flex align-items-center justify-content-between">
+                            <p>
+                                <span class="price__num before-price color-text-3"><i class="fa fa-rupee"></i> @item.RoomTypePrice.ToString("0.00")</span><br />
+                                <span class="price__num"><i class="fa fa-rupee"></i> @item.OfferPrice.ToString("0.00")</span>
+                                <span class="price__text">Per night</span>
+                            </p>
+                            <a href="tour-details.html" class="btn-text">Book Now<i class="la la-angle-right"></i></a>
+                        </div>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-4 -->
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center p-2" style="margin-top:50px;">
+            <img src="~/Content/img/no_record.png" alt="no record" /><br /><br />
+            <h4 class="text-danger">Oops !!</h4>
+            <span class="text-danger">No tour packages found for your search..</span>
+        </div>
+    }
+</div>

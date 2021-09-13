@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LocalConnWeb.Areas.Admin.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -29,5 +30,20 @@ namespace LocalConnWeb.ViewModels
         public PreBookingDtl preBookDtl { get; set; }
     }
 
-  
+    public class GenLCHotelSearchModel
+    {
+        public IEnumerable<HotelList> hotelList { get; set; }
+        public IEnumerable<HotelList_Offer> hotelofferlist { get; set; }
+        public int TotalRecords { get; set; }
+        public GenLCSearchModel Search { get; set; }
+        public IEnumerable<utblLCMstHomeType> HomeTypes { get; set; }
+    }
+
+    public class GenLCSearchModel
+    {
+        public string Where { get; set; }
+        public List<long> HomeType { get; set; }
+        public int PageNo { get; set; }
+        public int PageSize { get; set; }
+    }
 }

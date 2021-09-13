@@ -47,6 +47,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Razorpay, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Razorpay.3.0.0\lib\net45\Razorpay.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -284,6 +287,7 @@
     <Compile Include="Areas\Admin\Models\utblTourPackageItinerary.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\GenLCHotelsController.cs" />
     <Compile Include="Controllers\GenTourPackageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -1371,6 +1375,9 @@
     <Content Include="Views\Home\HotelDetails.cshtml" />
     <Content Include="Views\Home\HotelBookingDtl.cshtml" />
     <Content Include="Views\Shared\_LayoutDetails.cshtml" />
+    <Content Include="Views\GenLCHotels\SearchHotels.cshtml" />
+    <Content Include="Views\GenLCHotels\_pvSearchHotelList.cshtml" />
+    <Content Include="Views\GenLCHotels\OfferHotelList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

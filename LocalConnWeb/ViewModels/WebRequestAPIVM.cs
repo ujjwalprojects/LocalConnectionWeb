@@ -22,6 +22,23 @@ namespace LocalConnWeb.ViewModels
         public bool IsActive { get; set; }
         public decimal OfferPrice { get; set; }
     }
+    public class HotelList_Offer
+    {
+        public long HotelID { get; set; }
+        public string HotelName { get; set; }
+        public decimal RoomTypePrice { get; set; }
+        public string HotelDesc { get; set; }
+        public string HotelAddress { get; set; }
+        public long HomeTypeID { get; set; }
+        public string HomeTypeName { get; set; }
+        public long HotelImageID { get; set; }
+        public bool IsHotelCover { get; set; }
+        public string PhotoThumbPath { get; set; }
+        public string PhotoCaption { get; set; }
+        public Int16 OverallOfferPercentage { get; set; }
+        public bool IsActive { get; set; }
+        public decimal OfferPrice { get; set; }
+    }
     public class CityList
     {
         public long CityID { get; set; }

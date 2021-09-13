@@ -538,6 +538,7 @@ namespace LocalConnWeb.Controllers
             string jsonStr = JsonConvert.SerializeObject(sModel);
             GenTourPackageSearchModel model = objAPI.PostRecordtoApIForRecord<GenTourPackageSearchModel>("tourpackage", "GenTourPackageSearch", jsonStr);
             model.Search = sModel;
+            
             model.TourTypes = objAPI.GetAllRecords<utblMstPackageType>("tourpackage", "tourtypes");
             if (Request.IsAjaxRequest())
             {
