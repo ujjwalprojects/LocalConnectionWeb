@@ -41,7 +41,7 @@ namespace LocalConnWeb.Controllers
             obj.resortList = objAPI.GetRecordsByID<HotelList>("webrequest", "getresortlist", 5);
             obj.lodgeList = objAPI.GetRecordsByID<HotelList>("webrequest", "getlodgelist", 6);
             obj.guestHouseList = objAPI.GetRecordsByID<HotelList>("webrequest", "getghouselist", 7);
-            obj.FHotelList = objAPI.GetRecordsByQueryString<FtHotelList>("webrequest", "getFHotelList", "Dt=" + DateTime.Now.ToString("dd MMM yyyy"));
+            obj.FHotelList = objAPI.GetRecordsByQueryString<FtHotelList_Web>("webrequest", "getFHotelList", "Dt=" + DateTime.Now.ToString("dd MMM yyyy"));
             return View(obj);
         }
 

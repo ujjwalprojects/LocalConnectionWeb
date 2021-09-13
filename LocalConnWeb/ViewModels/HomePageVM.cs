@@ -30,6 +30,11 @@ namespace LocalConnWeb.ViewModels
         public PreBookingDtl preBookDtl { get; set; }
     }
 
+    public class OrderListVM
+    {
+        public List<OrderList> orderLists { get; set; }
+    }
+
     public class GenLCHotelSearchModel
     {
         public IEnumerable<HotelList> hotelList { get; set; }
