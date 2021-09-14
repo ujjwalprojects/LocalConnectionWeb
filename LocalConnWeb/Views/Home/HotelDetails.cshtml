@@ -694,17 +694,17 @@
                         }
                 if (parseInt(noOfAdult) == 2) {
                             tPercent = (parseInt(roomBaseValue ) * parseInt(twoPercent)) / 100;
-                            var newvalue = roomBaseValue + tPercent;
+                            var newvalue = roomBaseValue - tPercent;
                             roomBaseValue = newvalue;
                         }
                 if (parseInt(noOfAdult) == 3) {
                             tPercent = (parseInt(roomBaseValue) * parseInt(threePercent)) / 100;
-                            var newvalue = parseInt(roomBaseValue) + parseInt(tPercent);
+                            var newvalue = parseInt(roomBaseValue) - parseInt(tPercent);
                             roomBaseValue = newvalue;
                         }
                 if (parseInt(noOfAdult) >= 4) {
                             tPercent = (parseInt(roomBaseValue) * parseInt(fourPercent)) / 100;
-                            var newvalue = roomBaseValue + tPercent;
+                            var newvalue = roomBaseValue - tPercent;
                             roomBaseValue = newvalue;
                 }
                 if (noofday == 0) {
