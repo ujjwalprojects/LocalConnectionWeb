@@ -26,6 +26,8 @@ namespace LocalConnWeb.ViewModels
         public NearbyVM nearByVM { get; set; }
         public TermCondPolicyVM termCondVM { get; set; }
         public PreBookingDtl preBookDtl { get; set; }
+        public string BookFrom { get; set; }
+        public string BookUpTo { get; set; }
     }
 
     public class OrderListVM
