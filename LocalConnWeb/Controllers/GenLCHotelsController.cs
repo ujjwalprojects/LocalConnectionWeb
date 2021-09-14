@@ -20,7 +20,7 @@ namespace LocalConnWeb.Controllers
             {
                 HomeType = HomeType,
                 Where = Where,
-                PageNo = PageNo,
+                PageNo = PageNo, 
                 PageSize = PageSize
             };
             ViewBag.Where = objAPI.GetAllRecords<string>("webrequest", "WhereLCNames").ToArray();
@@ -39,7 +39,7 @@ namespace LocalConnWeb.Controllers
             GenLCHotelSearchModel model = new GenLCHotelSearchModel();
             List<HotelList_Offer> modellist = objAPI.GetRecordsByID<HotelList_Offer>("webrequest", "getofferhotellist", id);
             model.hotelofferlist = modellist;
-            return View(model);
+            return View(model); 
         }
     }
 }
