@@ -63,6 +63,8 @@ namespace LocalConnWeb.Controllers
         public ActionResult HotelBookingDtl(HotelDetailsVM obj)
         {
             HotelDetailsVM model = new HotelDetailsVM();
+            obj.preBookDtl.BookingFrom = DateTime.ParseExact(obj.BookFrom, "d/M/yyyy", CultureInfo.InvariantCulture);
+            obj.preBookDtl.BookingUpto = DateTime.ParseExact(obj.BookUpTo, "d/M/yyyy", CultureInfo.InvariantCulture);
             model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
             model.preBookDtl = obj.preBookDtl;
             return View(model);

@@ -477,11 +477,11 @@
                                     @Html.HiddenFor(x => x.preBookDtl.HotelID, new { Value = Model.hotelDtl.HotelID })
                                     @Html.HiddenFor(x => x.preBookDtl.FinalFare, new { id = "mFinalFare" })
                                     @Html.HiddenFor(x => x.preBookDtl.RoomSelect, new { id = "mRoomSelect" })
-                                    @Html.TextBoxFor(x => x.preBookDtl.AdultSelect, new { id = "mAdultSelect" })
+                                    @Html.HiddenFor(x => x.preBookDtl.AdultSelect, new { id = "mAdultSelect" })
                                     @Html.HiddenFor(x => x.preBookDtl.ChildrenSelect, new { id = "mChildSelect" })
-                                    @Html.TextBoxFor(x => x.preBookDtl.BookingFrom, "{0:d MMM yyyy}", new { id = "mBookingFrom", Value = @ViewBag.startDate })
-                                    @Html.TextBoxFor(x => x.preBookDtl.BookingUpto, "{0:d MMM yyyy}", new { id = "mBookingUpto", Value = @ViewBag.endDate })
-                                    @Html.TextBoxFor(x => x.preBookDtl.CustDetails, new { id = "mCustDetails", })
+                                    @Html.TextBoxFor(x => x.BookFrom, "{0:d MMM yyyy}", new { id = "mBookingFrom", Value = @ViewBag.startDate })
+                                    @Html.TextBoxFor(x => x.BookUpTo, "{0:d MMM yyyy}", new { id = "mBookingUpto", Value = @ViewBag.endDate })
+                                    @Html.HiddenFor(x => x.preBookDtl.CustDetails, new { id = "mCustDetails", })
 
                                     <input type="submit" value="Book Now" class="theme-btn text-center w-100 mb-2" />
                                 }
@@ -512,10 +512,8 @@
             var amTotal =0;
             var amnetiesArr = [];
             var amnSel = [];
-            var eendDate = $('#mBookingUpto').val();
-            var newendDate = new Date(eendDate);
-            var sstartDate = $('#mBookingFrom').val();
-            var newstartDate = new Date(sstartDate);
+            //var eendDate = $('#mBookingUpto').val();
+            //var sstartDate = $('#mBookingFrom').val();
             $(".date-range").val($('#mBookingFrom').val() + ' - ' + $('#mBookingUpto').val());
             amnetiesArr.push(["Meals"]);
             $(window).on('scroll', function () {
@@ -535,21 +533,21 @@
                 var newdates = [];
                 newdates = $('.date-range').val().split('-');
                 var sDate = newdates[0];
-
-                var a = $.trim(sDate);
-                alert(a);
-                var strToDate = new Date(a);
-                alert(strToDate);
-                //var eDate = newdates[1];
-                //var eeDate = new Date(eDate);
-                //var diff = new Date(eeDate - strToDate);
-                //days = diff / 1000 / 60 / 60 / 24;
-                //noofday = days;
-
-
-
+                var eDate = newdates[1];
+                var StDate = formatDate(sDate);
+                var EtDate = formatDate(eDate);
+                alert(StDate,EtDate);
+                var diff = new Date(EtDate - StDate);
+                days = diff / 1000 / 60 / 60 / 24;
+                noofday = days;
+                $("#mBookingFrom").val($.trim(sDate));
+                $("#mBookingUpto").val($.trim(eDate));
             }
 
+            function formatDate(date) {
+                var startDtArr = date.split('/');
+                return fDate = new Date(startDtArr[2], startDtArr[1] - 1, startDtArr[0]);
+            }
             //Room Select
 
             $('#roomSelect').on('change', function () {
@@ -728,10 +726,8 @@
 
                 $('#mFinalFare').val(finalFare);
                 $('#mRoomSelect').val(totalRoom);
-                $('#mAdultSelect').val(noOfAdult);
-                $('#mChildSelect').val(noOfChild);
-                //$("#mBookingFrom").val(sstartDate);
-                //$("#mBookingUpto").val(eendDate);
+                $('#mAdultSelect').val($('#noAdult').val());
+                $('#mChildSelect').val($('#noChild').val());
                 $("#mCustDetails").val(amnetiesArr);
 
             }
