@@ -77,7 +77,12 @@
 
                                                         <div class="product-info line-height-24">
                                                             <span class="product-info-label">Meals:</span>
-                                                            <span class="product-info-value">@Model.preBookDtl.CustDetails</span>
+                                                            <span class="product-info-value">
+                                                                @foreach(var item in Model.amenitesDisplay)
+                                                                {
+                                                                    @item
+                                                                }
+                                                            </span>
                                                         </div><!-- end product-info -->
                                                     </div>
                                                 </div>

@@ -479,9 +479,11 @@
                                     @Html.HiddenFor(x => x.preBookDtl.RoomSelect, new { id = "mRoomSelect" })
                                     @Html.HiddenFor(x => x.preBookDtl.AdultSelect, new { id = "mAdultSelect" })
                                     @Html.HiddenFor(x => x.preBookDtl.ChildrenSelect, new { id = "mChildSelect" })
-                                    @Html.HiddenFor(x => x.preBookDtl.BookingFrom, new { id = "mBookingFrom" })
-                                    @Html.HiddenFor(x => x.preBookDtl.BookingUpto, new { id = "mBookingUpto" })
-                                    @Html.HiddenFor(x => x.preBookDtl.CustDetails, new { id = "mCustDetails" })
+                                    @Html.TextBoxFor(x => x.BookFrom, "{0:d MMM yyyy}", new { id = "mBookingFrom", Value = @ViewBag.startDate, @type = "hidden" })
+                                    @Html.TextBoxFor(x => x.BookUpTo, "{0:d MMM yyyy}", new { id = "mBookingUpto", Value = @ViewBag.endDate, @type = "hidden" })
+                                    @Html.HiddenFor(x => x.NoofDays, new { id = "mNoOfDays" })
+                                    @Html.HiddenFor(x => x.preBookDtl.CustDetails, new { id = "mCustDetails", })
+
                                     <input type="submit" value="Book Now" class="theme-btn text-center w-100 mb-2" />
                                 }
 
@@ -494,7 +496,6 @@
         </div><!-- end container -->
     </div><!-- end single-content-box -->
 </section><!-- end tour-detail-area -->
-
 <input hidden type="text" id="endDt" value="@ViewBag.endDate" />
 <input hidden type="text" id="startDt" value="@ViewBag.startDate" />
 @section Scripts{
@@ -507,12 +508,14 @@
         var globalRValue =@Model.hotelDtl.RoomTypePrice.ToString("G29");
         var noOfAdult = 1;
         var noOfChild = 0;
-        var noofday = 1;
-            var sstartDate ,eendDate;
+            var noofday = 1;
             var days = 1;
             var amTotal =0;
             var amnetiesArr = [];
             var amnSel = [];
+            //var eendDate = $('#mBookingUpto').val();
+            //var sstartDate = $('#mBookingFrom').val();
+            $(".date-range").val($('#mBookingFrom').val() + ' - ' + $('#mBookingUpto').val());
             amnetiesArr.push(["Meals"]);
             $(window).on('scroll', function () {
                 var scroll = $(window).scrollTop();
@@ -527,23 +530,30 @@
                 DateCal();
                 calculatePrice();
             });
-            DateCal();
             function DateCal() {
-
-                eendDate = @ViewBag.endDate;
-                var newendDate = new Date(eendDate);
-                sstartDate = @ViewBag.startDate;
-                var newstartDate = new Date(sstartDate);
-                $(".date-range").val($('#startDt').val() + ' - ' + $('#endDt').val());
-                var diff = new Date(newendDate - newstartDate);
+                var newdates = [];
+                newdates = $('.date-range').val().split('-');
+                var sDate = newdates[0];
+                var eDate = newdates[1];
+                var StDate = formatDate(sDate);
+                var EtDate = formatDate(eDate);
+                //alert(StDate,EtDate);
+                var diff = new Date(EtDate - StDate);
                 days = diff / 1000 / 60 / 60 / 24;
                 noofday = days;
+                $("#mNoOfDays").val(noofday);
+                $("#mBookingFrom").val($.trim(sDate));
+                $("#mBookingUpto").val($.trim(eDate));
             }
 
+            function formatDate(date) {
+                var startDtArr = date.split('/');
+                return fDate = new Date(startDtArr[2], startDtArr[1] - 1, startDtArr[0]);
+            }
             //Room Select
 
             $('#roomSelect').on('change', function () {
-                alert($('#roomSelect option:selected').val());
+                //alert($('#roomSelect option:selected').val());
                 calculatePrice();
 
             });
@@ -597,13 +607,13 @@
                 if (btnValu == "Add") {
                     currentRow.find("#amSelBtn").val("Remove");
                     amnetiesArr.push(content);
-                    alert(amnSel.length)
-                    amTotal = parseInt(amnSel);
-                    if (amnSel.length == 1) {
-                        amTotal = parseInt(amTotal);
-                    } else {
+                    //alert(amnSel.length)
+                    //if (amnSel.length == 0) {
+                    //    amTotal = parseInt(amnSel);
+                    //    amTotal = parseInt(col2);
+                    //} else {
                         amTotal = parseInt(amTotal) + parseInt(col2);
-                    }
+                    //}
                     //alert(amnSel + "Total:" + amTotal);
                 }
                 if (btnValu == "Remove") {
@@ -684,17 +694,17 @@
                         }
                 if (parseInt(noOfAdult) == 2) {
                             tPercent = (parseInt(roomBaseValue ) * parseInt(twoPercent)) / 100;
-                            var newvalue = roomBaseValue + tPercent;
+                            var newvalue = roomBaseValue - tPercent;
                             roomBaseValue = newvalue;
                         }
                 if (parseInt(noOfAdult) == 3) {
                             tPercent = (parseInt(roomBaseValue) * parseInt(threePercent)) / 100;
-                            var newvalue = parseInt(roomBaseValue) + parseInt(tPercent);
+                            var newvalue = parseInt(roomBaseValue) - parseInt(tPercent);
                             roomBaseValue = newvalue;
                         }
                 if (parseInt(noOfAdult) >= 4) {
                             tPercent = (parseInt(roomBaseValue) * parseInt(fourPercent)) / 100;
-                            var newvalue = roomBaseValue + tPercent;
+                            var newvalue = roomBaseValue - tPercent;
                             roomBaseValue = newvalue;
                 }
                 if (noofday == 0) {
@@ -716,13 +726,10 @@
                 $('#actualPrice').text(finalFare);
                 //setting values
 
-
                 $('#mFinalFare').val(finalFare);
                 $('#mRoomSelect').val(totalRoom);
-                $('#mAdultSelect').val(noOfAdult);
-                $('#mChildSelect').val(noOfChild);
-                $("#mBookingFrom").val(sstartDate);
-                $("#mBookingUpto").val(eendDate);
+                $('#mAdultSelect').val($('#noAdult').val());
+                $('#mChildSelect').val($('#noChild').val());
                 $("#mCustDetails").val(amnetiesArr);
 
             }
