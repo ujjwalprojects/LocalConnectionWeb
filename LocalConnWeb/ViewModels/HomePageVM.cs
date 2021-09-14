@@ -28,7 +28,11 @@ namespace LocalConnWeb.ViewModels
         public PreBookingDtl preBookDtl { get; set; }
         public string BookFrom { get; set; }
         public string BookUpTo { get; set; }
+        public int NoofDays { get; set; }
+        public List<string> amenitesDisplay{ get; set; }
     }
+
+ 
 
     public class OrderListVM
     {

@@ -66,6 +66,26 @@ namespace LocalConnWeb.Controllers
             obj.preBookDtl.BookingFrom = DateTime.ParseExact(obj.BookFrom, "d/M/yyyy", CultureInfo.InvariantCulture);
             obj.preBookDtl.BookingUpto = DateTime.ParseExact(obj.BookUpTo, "d/M/yyyy", CultureInfo.InvariantCulture);
             model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
+            obj.hAmenities = objAPI.GetRecordsByID<HAmenitiesList>("webrequest", "gethamenitieslist", Convert.ToInt64(obj.preBookDtl.HotelID));
+            string[] custDetail = obj.preBookDtl.CustDetails.Split(',');
+            model.amenitesDisplay = new List<string>();
+            for (int i = 0; i < custDetail.Length; i++)
+            {
+                if (custDetail[i] != "Meals")
+                {
+                    foreach(var item in obj.hAmenities)
+                    {
+                        if(item.AmenitiesName.Equals(custDetail[i].Trim()))
+                        {
+                            model.amenitesDisplay.Add(custDetail[i]+" x "+obj.preBookDtl.AdultSelect+"p"+" x "+obj.NoofDays+"d"+ ": "+item.AmenitiesBasePrice);
+                            break;
+                        }
+
+                    }
+                   
+                }
+              
+            }
             model.preBookDtl = obj.preBookDtl;
             return View(model);
         }
@@ -169,10 +189,10 @@ namespace LocalConnWeb.Controllers
         public ActionResult orderList()
         {
             OrderListVM orderList = new OrderListVM();
-            orderList.orderLists = objAPI.GetRecordsByQueryString<OrderList>("webrequest", "getorderlist", "CustPhNo=" +_sModel.PhoneNumber);
+            orderList.orderLists = objAPI.GetRecordsByQueryString<OrderList>("webrequest", "getorderlist", "CustPhNo=" + _sModel.PhoneNumber);
             return View(orderList);
         }
-    
+
         public ActionResult About()
         {
 

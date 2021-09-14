@@ -479,8 +479,9 @@
                                     @Html.HiddenFor(x => x.preBookDtl.RoomSelect, new { id = "mRoomSelect" })
                                     @Html.HiddenFor(x => x.preBookDtl.AdultSelect, new { id = "mAdultSelect" })
                                     @Html.HiddenFor(x => x.preBookDtl.ChildrenSelect, new { id = "mChildSelect" })
-                                    @Html.TextBoxFor(x => x.BookFrom, "{0:d MMM yyyy}", new { id = "mBookingFrom", Value = @ViewBag.startDate })
-                                    @Html.TextBoxFor(x => x.BookUpTo, "{0:d MMM yyyy}", new { id = "mBookingUpto", Value = @ViewBag.endDate })
+                                    @Html.TextBoxFor(x => x.BookFrom, "{0:d MMM yyyy}", new { id = "mBookingFrom", Value = @ViewBag.startDate, @type = "hidden" })
+                                    @Html.TextBoxFor(x => x.BookUpTo, "{0:d MMM yyyy}", new { id = "mBookingUpto", Value = @ViewBag.endDate, @type = "hidden" })
+                                    @Html.HiddenFor(x => x.NoofDays, new { id = "mNoOfDays" })
                                     @Html.HiddenFor(x => x.preBookDtl.CustDetails, new { id = "mCustDetails", })
 
                                     <input type="submit" value="Book Now" class="theme-btn text-center w-100 mb-2" />
@@ -536,10 +537,11 @@
                 var eDate = newdates[1];
                 var StDate = formatDate(sDate);
                 var EtDate = formatDate(eDate);
-                alert(StDate,EtDate);
+                //alert(StDate,EtDate);
                 var diff = new Date(EtDate - StDate);
                 days = diff / 1000 / 60 / 60 / 24;
                 noofday = days;
+                $("#mNoOfDays").val(noofday);
                 $("#mBookingFrom").val($.trim(sDate));
                 $("#mBookingUpto").val($.trim(eDate));
             }
@@ -551,7 +553,7 @@
             //Room Select
 
             $('#roomSelect').on('change', function () {
-                alert($('#roomSelect option:selected').val());
+                //alert($('#roomSelect option:selected').val());
                 calculatePrice();
 
             });
