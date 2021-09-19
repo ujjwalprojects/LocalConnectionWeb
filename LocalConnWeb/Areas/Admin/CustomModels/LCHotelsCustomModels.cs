@@ -79,12 +79,16 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
         public long StarRatingID { get; set; }
 
         [Required(ErrorMessage = "Enter Max Occupant Per Room")]
-        [Display(Name = "Max Occupant")]
+        [Display(Name = "Max Occupant in Hotel")]
         public Int16 MaxOccupant { get; set; }
 
         [Required(ErrorMessage = "Enter Max Room")]
-        [Display(Name = "Max Rooms")]
+        [Display(Name = "Max Rooms in Hotel ")]
         public Int16 MaxRooms { get; set; }
+
+        [Required(ErrorMessage = "Enter Occupant Per Room")]
+        [Display(Name = "Max Occupant Per Room")]
+        public Int16 MaxOccupantPerRoom { get; set; }
 
         [Required(ErrorMessage = "Enter Offer %")]
         [Display(Name = "Overall Offer Percentage")]

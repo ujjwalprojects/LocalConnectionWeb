@@ -9,29 +9,14 @@
         top: 220px;
         width: 370px;
     }
+    #map-canvas {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
 </style>
 
-<!-- ================================
-    START BREADCRUMB TOP BAR
-================================= -->
-<section class="breadcrumb-top-bar">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="breadcrumb-list breadcrumb-top-list">
-                    <ul class="list-items bg-transparent radius-none p-0">
-                        <li><a href="index.html">Home</a></li>
-                        <li>@Model.hotelDtl.HotelName</li>
-                        @*<li>Hilton Hotel and Resorts</li>*@
-                    </ul>
-                </div><!-- end breadcrumb-list -->
-            </div><!-- end col-lg-12 -->
-        </div><!-- end row -->
-    </div><!-- end container -->
-</section><!-- end breadcrumb-top-bar -->
-<!-- ================================
-    END BREADCRUMB TOP BAR
-================================= -->
+
 <!-- ================================
     START BREADCRUMB AREA
 ================================= -->
@@ -50,7 +35,7 @@
                                data-fancybox="gallery"
                                data-caption="Showing image - 01"
                                data-speed="700">
-                                <i class="la la-photo mr-2"></i>More Photos
+                                <i class="la la-photo mr-2"></i>View Images
                             </a>
                         </div>
                         @if (Model.hotelRoomImgTab != null)
@@ -73,6 +58,14 @@
 
 
                     </div><!-- end breadcrumb-btn -->
+                </div><!-- end col-lg-12 -->
+                <div class="col-lg-12">
+                    <div class="breadcrumb-list breadcrumb-top-list pb-2">
+                        <ul class="list-items bg-transparent radius-none p-0">
+                            <li><a href="/home/index">Home</a></li>
+                            <li>@Model.hotelDtl.HotelName</li>
+                        </ul>
+                    </div><!-- end breadcrumb-list -->
                 </div><!-- end col-lg-12 -->
             </div><!-- end row -->
         </div><!-- end container -->
@@ -108,114 +101,49 @@
                     <div class="single-content-wrap padding-top-60px">
                         <div id="description" class="page-scroll">
                             <div class="single-content-item pb-4">
-                                <h3 class="title font-size-26">@Model.hotelDtl.HotelName</h3>
+                                <h3 class="title font-size-28">@Model.hotelDtl.HotelName</h3>
                                 <div class="d-flex align-items-center pt-2">
                                     <p class="mr-2">@Model.hotelDtl.HotelAddress</p>
-                                    @*<p>
-                                            <span class="badge badge-warning text-white font-size-16">4.7</span>
-                                            <span>(4,209 Reviews)</span>
-                                        </p>*@
                                 </div>
                             </div><!-- end single-content-item -->
                             <div class="section-block"></div>
                             <div class="section-block"></div>
                             <div class="single-content-item padding-top-40px padding-bottom-40px">
                                 <h3 class="title font-size-20">About @Model.hotelDtl.HotelName</h3>
-                                <p class="py-3">@Model.hotelDtl.HotelDesc</p>
-                                <p>rum explicari eu qui, est enim quaerendum te. Quo harum viris id. Per ne quando dolore evertitur, pro ad cibo commune.</p>
-                            </div><!-- end single-content-item -->
+                                <p class="py-3 text-justify">@Model.hotelDtl.HotelDesc</p>
+
+                            </div>
                             <div class="section-block"></div>
 
                         </div><!-- end description -->
-                        <div class="single-content-item padding-bottom-40px">
-                            <h3 class="title font-size-20 d-flex align-items-center justify-content-between">
-                                Child Policy
-                                <a class="btn collapse-btn theme-btn-hover-gray font-size-15" data-toggle="collapse" href="#viewIncludedExample" role="button" aria-expanded="false" aria-controls="viewIncludedExample">
-                                    View<i class="la la-angle-down ml-1"></i>
-                                </a>
-                            </h3>
-                            <div class="collapse" id="viewIncludedExample">
-                                <div class="cruise-included-feature-wrap">
-                                    <div class="cruise-include-feature pt-3">
-                                        <i class="la la-star"></i>@if (Model.hotelDtl.ChildOccupantNote != null)
-                                        {@Model.hotelDtl.ChildOccupantNote }
-                                    else
-                                    {<div>Not Available</div>}
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div><!-- end single-content-item -->
-                        <div id="nearby">
-                            <section id="tabs" class="project-tab">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <nav>
-                                                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                                                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Places</a>
-                                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Transport</a>
-                                                </div>
-                                            </nav>
-                                            <div class="tab-content" id="nav-tabContent">
-                                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                                    @if (Model.nearByVM.nearbyone != null)
-                                                    {
-                                                        if (Model.nearByVM.nearbyone.Count() > 0)
-                                                        {
-                                                            foreach (var item in Model.nearByVM.nearbyone)
-                                                            {
-                                                                <div class="row">
-                                                                    <div class="col-10">
-                                                                        <i class="la la-star"></i>  @item.NearByPoints
-                                                                    </div>
-                                                                    <div class="col-md-2">
-                                                                        @item.NearByDistance
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="row">Not Available</div>
-                                                    }
-                                                </div>
-                                                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                                    @if (Model.nearByVM.nearbytwo != null)
-                                                    {
-                                                        if (Model.nearByVM.nearbytwo.Count() > 0)
-                                                        {
-                                                            foreach (var item in Model.nearByVM.nearbytwo)
-                                                            {
-                                                                <div class="row">
-                                                                    <div class="col-10">
-                                                                        <i class="la la-star"></i>  @item.NearByPoints
-                                                                    </div>
-                                                                    <div class="col-md-2">
-                                                                        @item.NearByDistance
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="row">Not Available</div>
-                                                    }
-                                                </div>
-
-                                            </div>
+                        @if (Model.hotelDtl.ChildOccupantNote != "")
+                        {
+                            <div class="single-content-item padding-bottom-40px">
+                                <h3 class="title font-size-16 d-flex align-items-center justify-content-between text-warning">
+                                    Child Policy
+                                    <a class="btn collapse-btn theme-btn-hover-gray font-size-15" data-toggle="collapse" href="#viewIncludedExample" role="button" aria-expanded="false" aria-controls="viewIncludedExample">
+                                        View<i class="la la-angle-down ml-1"></i>
+                                    </a>
+                                </h3>
+                                <div class="collapse" id="viewIncludedExample">
+                                    <div class="cruise-included-feature-wrap">
+                                        <div class="cruise-include-feature pt-3">
+                                            @Model.hotelDtl.ChildOccupantNote
                                         </div>
                                     </div>
                                 </div>
-                            </section>
-                        </div>
+                            </div><!-- end single-content-item -->
+                        }
 
+
+
+
+
+                        <div class="section-block"></div>
                         @if (Model.hAmenities != null)
                         {
                             <div id="amenities" class="page-scroll">
-                                <div class="single-content-item padding-top-40px padding-bottom-20px">
+                                <div class="single-content-item padding-top-40px">
                                     <h3 class="title font-size-20">Amenities</h3>
                                     <div class="amenities-feature-item pt-4">
                                         @if (Model.hAmenities.Count() > 0)
@@ -228,7 +156,7 @@
                                                         <div class="col-lg-4 responsive-column">
                                                             <div class="single-tour-feature d-flex align-items-center mb-3">
                                                                 <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
-                                                                    <img src="@item.AmenitiesIconPath" style="height:50px;" />
+                                                                    <img src="@item.AmenitiesIconPath" class="w-100" />
                                                                 </div>
 
                                                                 <div class="single-feature-titles">
@@ -252,7 +180,7 @@
                         <div id="itinerary" class="page-scroll">
                             <div class="section-block margin-top-40px"></div>
                             <div class="single-content-item padding-top-40px padding-bottom-40px">
-                                <h3 class="title font-size-20">Amenities Add On</h3>
+                                <h3 class="title font-size-20">Add On</h3>
                                 <div class="table-form table-responsive padding-top-30px">
                                     <table class="table" id="amenities-table">
                                         <tbody class="amenities-select">
@@ -264,11 +192,14 @@
                                                     {
                                                         <tr>
                                                             <td>
-                                                                <img src="@item.AmenitiesIconPath" style="height:50px;" />
+                                                                <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                                                    <img src="@item.AmenitiesIconPath" class="w-100" />
+                                                                </div>
+                                                                @*  <img src="@item.AmenitiesIconPath" class="grid-width-10" />*@
                                                             </td>
                                                             <td> <h3 class="title font-size-15 font-weight-medium" id="amSelName">@item.AmenitiesName </h3></td>
-                                                            <td> <h3 class="title font-size-15 font-weight-medium" id="amSelPrice">@item.AmenitiesBasePrice.ToString("G29")</h3></td>
-                                                            <td><input type="button" id="amSelBtn" class="theme-btn theme-btn-small" value="Add" /></td>
+                                                            <td> <h3 class="title font-size-15 font-weight-medium" id="amSelPrice"><i class="la la-rupee-sign"></i> @item.AmenitiesBasePrice.ToString("G29")</h3></td>
+                                                            <td><input type="button" id="amSelBtn" class="btn btn-success btn-sm" value="Add" /></td>
                                                         </tr>
                                                     }
                                                 }
@@ -276,11 +207,60 @@
 
                                         </tbody>
                                     </table>
-                                    <p class="font-size-14 line-height-26"><strong class="text-black">Please note:</strong> While we do our best to adhere to our published itineraries, they may be changed at the discretion of the captain due to weather advisories, port traffic, and any other unforeseeable circumstances.</p>
+                                    @* <p class="font-size-14 line-height-26"><strong class="text-black">Please note:</strong> While we do our best to adhere to our published itineraries, they may be changed at the discretion of the captain due to weather advisories, port traffic, and any other unforeseeable circumstances.</p>*@
                                 </div>
                             </div><!-- end single-content-item -->
                             <div class="section-block"></div>
                         </div><!-- end itinerary -->
+
+                        <div class="section-block"></div>
+                        <div id="nearby">
+                            <section id="tabs" class="project-tab pt-3">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12 p-0">
+                                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Places</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Transport</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content" id="pills-tabContent">
+                                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                                    @{ var n = 1; }
+                                                    @foreach (var item in Model.nearByVM.nearbyone)
+                                                    {
+                                                        <div class="d-flex bd-highlight pl-4 pr-4">
+                                                            <div class="p-2 bd-highlight">@n.</div>
+                                                            <div class="p-2 flex-grow-1  bd-highlight">@item.NearByPoints</div>
+                                                            <div class="p-2 bd-highlight">@item.NearByDistance</div>
+                                                        </div>
+                                                        n++;
+                                                    }
+                                                </div>
+                                                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                                    @{ var m = 1; }
+                                                    @foreach (var item in Model.nearByVM.nearbytwo)
+                                                    {
+
+                                                        <div class="d-flex bd-highlight pl-4 pr-4">
+                                                            <div class="p-2 bd-highlight">@m.</div>
+                                                            <div class="p-2 flex-grow-1  bd-highlight">@item.NearByPoints</div>
+                                                            <div class="p-2 bd-highlight">@item.NearByDistance</div>
+                                                        </div>
+                                                        m++;
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+
                         <div id="availability" class="page-scroll">
                             <div class="single-content-item padding-top-40px padding-bottom-30px">
                                 <!-- end contact-form-action -->
@@ -301,8 +281,8 @@
                                                         <div class="row padding-top-20px">
                                                             <div class="col-lg-6 responsive-column">
                                                                 <div class="single-tour-feature d-flex align-items-center mb-3">
-                                                                    <p class="text-uppercase font-size-14">
-                                                                        Per/night<strong class="mt-n1 text-black font-size-18 font-weight-black d-block">@item.RoomTypePrice.ToString("G29")</strong>
+                                                                    <p class="text-lowercase font-size-14">
+                                                                        Per/night<strong class="mt-n1 text-black font-size-18 font-weight-black d-block"><i class="la la-rupee-sign"></i> @item.RoomTypePrice.ToString("G29")</strong>
                                                                     </p>
                                                                 </div>
                                                             </div><!-- end col-lg-6 -->
@@ -314,13 +294,13 @@
                                                         @if (i == 0)
                                                         {
                                                             <div class="custom-checkbox mb-0 roomType" name="@item.RoomType" value="@item.RoomTypePrice">
-                                                                <label id="@item.RoomType" class="theme-btn theme-btn-small">Selected</label>
+                                                                <label id="@item.RoomType" class="btn btn-success btn-sm">Selected</label>
                                                             </div>
                                                         }
                                                         else
                                                         {
                                                             <div class="custom-checkbox mb-0 roomType" name="@item.RoomType" value="@item.RoomTypePrice">
-                                                                <label id="@item.RoomType" class="theme-btn theme-btn-small">Select</label>
+                                                                <label id="@item.RoomType" class="btn btn-warning btn-sm">Select</label>
                                                             </div>
                                                         }
 
@@ -404,6 +384,17 @@
                             </div><!-- end single-content-item -->
                             <div class="section-block"></div>
                         </div><!-- end faq -->
+
+                        <div class="section-block"></div>
+                        <div id="location-map" class="page-scroll">
+                            <div class="single-content-item padding-top-40px padding-bottom-40px">
+                                <h3 class="title font-size-20">Location</h3>
+                                <div class="gmaps padding-top-30px">
+                                    <div id="map-canvas"></div>
+                                </div>
+                            </div><!-- end single-content-item -->
+                            <div class="section-block"></div>
+                        </div><!-- end location-map -->
                     </div><!-- end single-content-wrap -->
                 </div><!-- end col-lg-8 -->
                 <div class="col-lg-4">
@@ -461,13 +452,13 @@
 
                                 </div>
                                 <div id="notselected">
-                                    Meals Not Selected
+                                    No Add On Selected
                                 </div>
                             </div>
-                            <div class="sidebar-widget-item">
+                            <div class="sidebar-widget-item pt-4">
                                 <div class="sidebar-book-title-wrap mb-3">
                                     @*<h3>Popular</h3>*@
-                                    <p><span class="text-form">Total</span><span class="text-value ml-2 mr-1"><span id="actualPrice"></span> </span> <span class="before-price">@Model.hotelDtl.RoomTypePrice.ToString("G29")</span></p>
+                                    <p><span class="text-form">Total</span><span class="text-value ml-2 mr-1"> <i class="la la-rupee"></i><span id="actualPrice"></span> </span> <span class="before-price"><i class="la la-rupee"></i> @Model.hotelDtl.RoomTypePrice.ToString("G29")</span></p>
                                 </div>
                             </div><!-- end sidebar-widget-item -->
                             <div class="btn-box pt-2">
@@ -499,6 +490,7 @@
 <input hidden type="text" id="endDt" value="@ViewBag.endDate" />
 <input hidden type="text" id="startDt" value="@ViewBag.startDate" />
 @section Scripts{
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -736,6 +728,42 @@
         });
 
 
+
+        function initialize() {
+            var myLatlng = new google.maps.LatLng(27.296241792837044, 88.5887073110439);
+            var mapOptions = {
+                zoom: 8,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+            //=====Initialise Default Marker    
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title: 'marker'
+                //=====You can even customize the icons here
+            });
+
+            //=====Initialise InfoWindow
+            var infowindow = new google.maps.InfoWindow({
+                content: "<B>Skyway Dr</B>"
+            });
+
+            //=====Eventlistener for InfoWindow
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.open(map, marker);
+            });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+        var mapCanvas = document.createElement("div");
+        mapCanvas.style.width = "200px";
+        mapCanvas.style.height = "200px";
     </script>
 
 }

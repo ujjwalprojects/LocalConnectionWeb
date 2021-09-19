@@ -61,14 +61,19 @@
                 @Html.ValidationMessageFor(m => m.LCHotel.HotelName)
             </div>
             <div class="form-group">
+                @Html.LabelFor(m => m.LCHotel.HotelAddress, new { @class = "required" })
+                @Html.TextBoxFor(m => m.LCHotel.HotelAddress, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LCHotel.HotelAddress)
+            </div>
+            <div class="form-group">
                 @Html.LabelFor(m => m.LCHotel.HotelDesc, new { @class = "required" })
                 @Html.TextAreaFor(m => m.LCHotel.HotelDesc, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.LCHotel.HotelDesc)
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.LCHotel.HotelAddress, new { @class = "required" })
-                @Html.TextBoxFor(m => m.LCHotel.HotelAddress, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.LCHotel.HotelAddress)
+                @Html.LabelFor(m => m.LCHotel.ChildOccupantNote, new { @class = "required" })
+                @Html.TextBoxFor(m => m.LCHotel.ChildOccupantNote, new { @class = "form-control", @placeholder = "Content should be between 20-25 words for better view in the app" })
+                @Html.ValidationMessageFor(m => m.LCHotel.ChildOccupantNote)
             </div>
 
             <div class="row">
@@ -116,14 +121,16 @@
                         @Html.ValidationMessageFor(m => m.LCHotel.MaxRooms)
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group">
-                        @Html.LabelFor(m => m.LCHotel.ChildOccupantNote, new { @class = "required" })
-                        @Html.TextAreaFor(m => m.LCHotel.ChildOccupantNote, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.LCHotel.ChildOccupantNote)
+                        @Html.LabelFor(m => m.LCHotel.MaxOccupantPerRoom, new { @class = "required" })
+                        @Html.DropDownListFor(m => m.LCHotel.MaxOccupantPerRoom, new SelectListItem[] {
+                                        new SelectListItem() { Text = "2", Value = "2" },
+                                        new SelectListItem() { Text = "3", Value = "3" },
+                             }, "--- Select Max Occupant Per Room ---", new { @class = "form-control form-control-sm", id = "maxocuperroom"})
+                        @Html.ValidationMessageFor(m => m.LCHotel.MaxOccupantPerRoom)
                     </div>
                 </div>
-
             </div>
             <div class="row">
                 <div class="col-md-3">

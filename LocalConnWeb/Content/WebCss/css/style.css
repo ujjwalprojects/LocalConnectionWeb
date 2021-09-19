@@ -3484,7 +3484,7 @@ body {
 }
 
 .bread-bg-7 {
-    background-image: url(../images/bread-bg6.jpg);
+    background-image: url(/Content/WebCss/css/images/banner-3.jpg);
 }
 
 .bread-bg-8 {
@@ -3687,15 +3687,15 @@ body {
 }
 
 .breadcrumb-top-list .list-items li {
-    color: #5d646d;
+    color: #ffffff;
 }
 
     .breadcrumb-top-list .list-items li a {
-        color: #5d646d;
+        color: #ffffff;
     }
 
     .breadcrumb-top-list .list-items li::before {
-        background-color: #5d646d;
+        background-color: #ffffff;
     }
 
 .breadcrumb-btn {

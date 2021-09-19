@@ -47,8 +47,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Razorpay, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Razorpay.3.0.0\lib\net45\Razorpay.dll</HintPath>
@@ -286,6 +287,7 @@
     <Compile Include="Areas\Admin\Models\utblTourPackageItinerary.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\GenLCHotelsController.cs" />
     <Compile Include="Controllers\GenTourPackageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -789,8 +791,6 @@
     <Content Include="Content\img\login-back.jpg" />
     <Content Include="Content\img\login1.jpg" />
     <Content Include="Content\img\login_1.jpg" />
-    <Content Include="Content\img\logo-lg.png" />
-    <Content Include="Content\img\logo-sm.png" />
     <Content Include="Content\img\logos.png" />
     <Content Include="Content\img\male-icon.png" />
     <Content Include="Content\img\male-teacher.png" />
@@ -1375,6 +1375,9 @@
     <Content Include="Views\Account\VerifyOTP.cshtml" />
     <Content Include="Views\Home\orderList.cshtml" />
     <Content Include="Views\Shared\_LayoutDetails.cshtml" />
+    <Content Include="Views\GenLCHotels\OfferHotelList.cshtml" />
+    <Content Include="Views\GenLCHotels\SearchHotels.cshtml" />
+    <Content Include="Views\GenLCHotels\_pvSearchHotelList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
