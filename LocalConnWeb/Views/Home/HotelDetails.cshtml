@@ -9,6 +9,7 @@
         top: 220px;
         width: 370px;
     }
+
     #map-canvas {
         margin: 0;
         padding: 0;
@@ -21,6 +22,7 @@
     START BREADCRUMB AREA
 ================================= -->
 <section class="breadcrumb-area bread-bg-7 py-0">
+
     <div class="breadcrumb-wrap">
         <div class="container">
             <div class="row">
@@ -85,7 +87,7 @@
                     <div class="single-content-nav" id="single-content-nav">
                         <ul>
                             <li><a data-scroll="description" href="#description" class="scroll-link active">Hotel Details</a></li>
-                            <li><a data-scroll="availability" href="#availability" class="scroll-link">Availability</a></li>
+                            <li><a data-scroll="availability" href="#availability" class="scroll-link">Rooms</a></li>
                             <li><a data-scroll="amenities" href="#amenities" class="scroll-link">Amenities</a></li>
                             <li><a data-scroll="faq" href="#faq" class="scroll-link">Terms & Conditions</a></li>
                         </ul>
@@ -177,16 +179,17 @@
                                 @*<div class="section-block"></div>*@
                             </div>
                         }
-                        <div id="itinerary" class="page-scroll">
-                            <div class="section-block margin-top-40px"></div>
-                            <div class="single-content-item padding-top-40px padding-bottom-40px">
-                                <h3 class="title font-size-20">Add On</h3>
-                                <div class="table-form table-responsive padding-top-30px">
-                                    <table class="table" id="amenities-table">
-                                        <tbody class="amenities-select">
-                                            @if (Model.hAmenities.Count() > 0)
-                                            {
-                                                foreach (var item in Model.hAmenities)
+                        @if (Model.hAmenities.Count() > 0)
+                        {
+                            <div id="itinerary" class="page-scroll">
+                                <div class="section-block margin-top-40px"></div>
+                                <div class="single-content-item padding-top-40px padding-bottom-40px">
+                                    <h3 class="title font-size-20">Enjoy meals during your stay</h3>
+                                    <div class="table-form table-responsive padding-top-30px">
+                                        <table class="table" id="amenities-table">
+                                            <tbody class="amenities-select">
+
+                                                @foreach (var item in Model.hAmenities)
                                                 {
                                                     if (item.AmenitiesBasePrice.ToString("G29") != "0")
                                                     {
@@ -203,19 +206,80 @@
                                                         </tr>
                                                     }
                                                 }
-                                            }
 
-                                        </tbody>
-                                    </table>
-                                    @* <p class="font-size-14 line-height-26"><strong class="text-black">Please note:</strong> While we do our best to adhere to our published itineraries, they may be changed at the discretion of the captain due to weather advisories, port traffic, and any other unforeseeable circumstances.</p>*@
-                                </div>
-                            </div><!-- end single-content-item -->
+
+                                            </tbody>
+                                        </table>
+                                        @* <p class="font-size-14 line-height-26"><strong class="text-black">Please note:</strong> While we do our best to adhere to our published itineraries, they may be changed at the discretion of the captain due to weather advisories, port traffic, and any other unforeseeable circumstances.</p>*@
+                                    </div>
+                                </div><!-- end single-content-item -->
+                                <div class="section-block"></div>
+                            </div><!-- end itinerary -->
+                        }
+                        @if (Model.hotelRoomLists.Count() > 0)
+                        {
                             <div class="section-block"></div>
-                        </div><!-- end itinerary -->
+                            <div id="availability" class="page-scroll">
+                                <div class="single-content-item padding-top-40px padding-bottom-30px">
+                                    <!-- end contact-form-action -->
+                                    <h3 class="title font-size-20">Choose your room</h3>
+                                    <div id="roomTypeSel">
 
-                        <div class="section-block"></div>
+                                        @{int i = 0;}
+                                        @foreach (var item in Model.hotelRoomLists)
+                                        {
+                                            <div class="cabin-type padding-top-30px">
+                                                <div class="cabin-type-item seat-selection-item d-flex">
+                                                    <div class="cabin-type-img flex-shrink-0">
+                                                        <img src="@item.PhotoThumbPath" alt="">
+                                                    </div>
+                                                    <div class="cabin-type-detail">
+                                                        <h3 class="title">@item.RoomType</h3>
+                                                        <h5 class="badge badge-info">@item.PhotoCaption</h5>
+                                                        <div class="row padding-top-20px">
+                                                            <div class="col-lg-6 responsive-column">
+                                                                <div class="single-tour-feature d-flex align-items-center mb-3">
+                                                                    <p class="text-lowercase font-size-14">
+                                                                        <strong class="mt-n1 text-black font-size-18 font-weight-black d-block"><i class="la la-rupee-sign"></i> @item.RoomTypePrice.ToString("G29")/- <small class="pull-left">Per/night</small></strong>
+                                                                    </p>
+                                                                </div>
+                                                            </div><!-- end col-lg-6 -->
+
+                                                        </div><!-- end row -->
+
+                                                    </div>
+                                                    <div class="cabin-price">
+                                                        @if (i == 0)
+                                                        {
+                                                            <div class="custom-checkbox mb-0 roomType" name="@item.RoomType" value="@item.RoomTypePrice">
+                                                                <label id="@item.RoomType" class="btn btn-success btn-sm">Selected</label>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="custom-checkbox mb-0 roomType" name="@item.RoomType" value="@item.RoomTypePrice">
+                                                                <label id="@item.RoomType" class="btn btn-warning btn-sm">Select</label>
+                                                            </div>
+                                                        }
+
+                                                    </div>
+                                                </div><!-- end cabin-type-item -->
+                                            </div>
+                                            { i++; }
+
+                                        }
+
+
+                                    </div>
+                                    <!-- end cabin-type -->
+                                </div><!-- end single-content-item -->
+                                <div class="section-block"></div>
+                            </div><!-- end location-map -->
+                        }
+
                         <div id="nearby">
                             <section id="tabs" class="project-tab pt-3">
+                                <h3 class="title font-size-20 pb-4">What's nearby</h3>
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-md-12 p-0">
@@ -261,62 +325,7 @@
                         </div>
 
 
-                        <div id="availability" class="page-scroll">
-                            <div class="single-content-item padding-top-40px padding-bottom-30px">
-                                <!-- end contact-form-action -->
-                                <h3 class="title font-size-20">Rooms</h3>
-                                <div id="roomTypeSel">
-                                    @if (Model.hotelRoomLists.Count() > 0)
-                                    {
-                                        int i = 0;
-                                        foreach (var item in Model.hotelRoomLists)
-                                        {
-                                            <div class="cabin-type padding-top-30px">
-                                                <div class="cabin-type-item seat-selection-item d-flex">
-                                                    <div class="cabin-type-img flex-shrink-0">
-                                                        <img src="@item.PhotoThumbPath" alt="">
-                                                    </div>
-                                                    <div class="cabin-type-detail">
-                                                        <h3 class="title">@item.RoomType</h3>
-                                                        <div class="row padding-top-20px">
-                                                            <div class="col-lg-6 responsive-column">
-                                                                <div class="single-tour-feature d-flex align-items-center mb-3">
-                                                                    <p class="text-lowercase font-size-14">
-                                                                        Per/night<strong class="mt-n1 text-black font-size-18 font-weight-black d-block"><i class="la la-rupee-sign"></i> @item.RoomTypePrice.ToString("G29")</strong>
-                                                                    </p>
-                                                                </div>
-                                                            </div><!-- end col-lg-6 -->
 
-                                                        </div><!-- end row -->
-
-                                                    </div>
-                                                    <div class="cabin-price">
-                                                        @if (i == 0)
-                                                        {
-                                                            <div class="custom-checkbox mb-0 roomType" name="@item.RoomType" value="@item.RoomTypePrice">
-                                                                <label id="@item.RoomType" class="btn btn-success btn-sm">Selected</label>
-                                                            </div>
-                                                        }
-                                                        else
-                                                        {
-                                                            <div class="custom-checkbox mb-0 roomType" name="@item.RoomType" value="@item.RoomTypePrice">
-                                                                <label id="@item.RoomType" class="btn btn-warning btn-sm">Select</label>
-                                                            </div>
-                                                        }
-
-                                                    </div>
-                                                </div><!-- end cabin-type-item -->
-                                            </div>
-                                            { i++; }
-
-                                        }
-
-                                    }
-                                </div>
-                                <!-- end cabin-type -->
-                            </div><!-- end single-content-item -->
-                            <div class="section-block"></div>
-                        </div><!-- end location-map -->
                         <!-- start Terms and condition -->
                         <div id="faq" class="page-scroll">
                             <div class="single-content-item padding-top-40px padding-bottom-40px">
@@ -384,17 +393,16 @@
                             </div><!-- end single-content-item -->
                             <div class="section-block"></div>
                         </div><!-- end faq -->
-
-                        <div class="section-block"></div>
-                        <div id="location-map" class="page-scroll">
-                            <div class="single-content-item padding-top-40px padding-bottom-40px">
-                                <h3 class="title font-size-20">Location</h3>
-                                <div class="gmaps padding-top-30px">
-                                    <div id="map-canvas"></div>
-                                </div>
-                            </div><!-- end single-content-item -->
-                            <div class="section-block"></div>
-                        </div><!-- end location-map -->
+                        @*<div class="section-block"></div>
+                            <div id="location-map" class="page-scroll">
+                                <div class="single-content-item padding-top-40px padding-bottom-40px">
+                                    <h3 class="title font-size-20">Location</h3>
+                                    <div class="gmaps padding-top-30px">
+                                        <div id="map-canvas"></div>
+                                    </div>
+                                </div><!-- end single-content-item -->
+                                <div class="section-block"></div>
+                            </div><!-- end location-map -->*@
                     </div><!-- end single-content-wrap -->
                 </div><!-- end col-lg-8 -->
                 <div class="col-lg-4">
@@ -490,7 +498,7 @@
 <input hidden type="text" id="endDt" value="@ViewBag.endDate" />
 <input hidden type="text" id="startDt" value="@ViewBag.startDate" />
 @section Scripts{
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    @*<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>*@
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -738,7 +746,7 @@
             }
             var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-            //=====Initialise Default Marker    
+            //=====Initialise Default Marker
             var marker = new google.maps.Marker({
                 position: myLatlng,
                 map: map,

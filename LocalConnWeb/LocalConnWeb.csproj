@@ -933,9 +933,14 @@
     <Content Include="Content\WebCss\css\bootstrap.min.css" />
     <Content Include="Content\WebCss\css\daterangepicker.css" />
     <Content Include="Content\WebCss\css\flag-icon.min.css" />
+    <Content Include="Content\WebCss\css\images\banner-1.jpg" />
+    <Content Include="Content\WebCss\css\images\internet-img.png" />
     <Content Include="Content\WebCss\css\images\layers-2x.html" />
     <Content Include="Content\WebCss\css\images\layers.html" />
     <Content Include="Content\WebCss\css\images\marker-icon.png" />
+    <Content Include="Content\WebCss\css\images\mobile-app.png" />
+    <Content Include="Content\WebCss\css\images\payment-img.png" />
+    <Content Include="Content\WebCss\css\images\UIP-img.png" />
     <Content Include="Content\WebCss\css\jquery-ui.css" />
     <Content Include="Content\WebCss\css\jquery.fancybox.min.css" />
     <Content Include="Content\WebCss\css\leaflet.css" />
@@ -1378,6 +1383,7 @@
     <Content Include="Views\GenLCHotels\OfferHotelList.cshtml" />
     <Content Include="Views\GenLCHotels\SearchHotels.cshtml" />
     <Content Include="Views\GenLCHotels\_pvSearchHotelList.cshtml" />
+    <Content Include="Views\Home\_pvCitiesMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

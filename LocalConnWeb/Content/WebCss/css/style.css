@@ -3464,23 +3464,23 @@ body {
 }
 
 .bread-bg-2 {
-    background-image: url(../images/bread-bg2.jpg);
+    background-image: url(/Content/WebCss/css/images/banner-3.jpg);
 }
 
 .bread-bg-3 {
-    background-image: url(../images/bread-bg3.jpg);
+    background-image: url(/Content/WebCss/css/images/banner-3.jpg);
 }
 
 .bread-bg-4 {
-    background-image: url(../images/bread-bg4.jpg);
+    background-image: url(/Content/WebCss/css/images/banner-3.jpg);
 }
 
 .bread-bg-5 {
-    background-image: url(../images/team-cta-bg.jpg);
+    background-image: url(/Content/WebCss/css/images/banner-3.jpg);
 }
 
 .bread-bg-6 {
-    background-image: url(../images/bread-bg5.jpg);
+    background-image: url(/Content/WebCss/css/images/banner-3.jpg);
 }
 
 .bread-bg-7 {
@@ -3488,15 +3488,15 @@ body {
 }
 
 .bread-bg-8 {
-    background-image: url(../images/bread-bg7.jpg);
+    background-image: url(/Content/WebCss/css/images/banner-3.jpg);
 }
 
 .bread-bg-9 {
-    background-image: url(../images/bread-bg8.jpg);
+    background-image: url(/Content/WebCss/css/images/banner-3.jpg);
 }
 
 .bread-bg-10 {
-    background-image: url(../images/bread-bg9.jpg);
+    background-image: url(/Content/WebCss/css/images/banner-3.jpg);
 }
 
 .bread-svg {
@@ -4069,6 +4069,8 @@ body {
 
 .logo {
     z-index: 2;
+    padding: 10px;
+}
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {

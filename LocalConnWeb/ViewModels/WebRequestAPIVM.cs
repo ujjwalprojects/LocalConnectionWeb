@@ -121,7 +121,11 @@ namespace LocalConnWeb.ViewModels
         public long HotelID { get; set; }
         [Required(ErrorMessage ="Enter Customer Name")]
         public string CustName { get; set; }
+        [Required(ErrorMessage = "Enter Customer Email")]
+        [RegularExpression("^[a-z0-9_\\+-]+(\\.[a-z0-9_\\+-]+)*@[a-z0-9-]+(\\.[a-z0-9]+)*\\.([a-z]{2,4})$", ErrorMessage = "Please Enter Valid email address")]
         public string CustEmail { get; set; }
+        [StringLength(15, ErrorMessage = "Please Enter Valid Phone No.", MinimumLength = 10)]
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Please enter valid phone number")]
         [Required(ErrorMessage = "Enter Customer Mobile")]
         public string CustPhNo { get; set; }
         public string RoomSelect { get; set; }

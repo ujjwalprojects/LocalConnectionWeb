@@ -1,0 +1,12 @@
+﻿@model LocalConnWeb.ViewModels.HomePageVM
+
+<ul class="dropdown-menu-item">
+    @if (Model.cityLists.Count() > 0)
+    {
+        foreach (var item in Model.cityLists)
+        {
+            <li><a href="/GenLCHotels/SearchHotels?Where=@item.CityName">@item.CityName</a></li>
+
+        }
+    }
+</ul>

@@ -32,129 +32,347 @@
     END BREADCRUMB AREA
 ================================= -->
 <!-- ================================
-    START CART AREA
+    START BOOKING AREA
 ================================= -->
-<section class="cart-area section-padding">
+<section class="booking-area padding-top-100px padding-bottom-70px">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="cart-wrap">
-                 
-                    <div class="form-box">
-                        <div class="table-form table-responsive mb-3">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Hotel</th>
-                                        <th scope="col">Price</th>
+            <div class="col-lg-8">
+                <div class="form-box">
+                    <div class="form-title-wrap">
+                        <h3 class="title">Your Personal Information</h3>
+                    </div><!-- form-title-wrap -->
+                    <div class="form-content ">
+                        <div class="contact-form-action">
+                            <form method="post" action="/home/paynow">
+                                @Html.HiddenFor(x => x.preBookDtl.HotelID)
+                                @Html.HiddenFor(x => x.preBookDtl.FinalFare)
+                                @Html.HiddenFor(x => x.preBookDtl.RoomSelect)
+                                @Html.HiddenFor(x => x.preBookDtl.AdultSelect)
+                                @Html.HiddenFor(x => x.preBookDtl.ChildrenSelect)
+                                @Html.HiddenFor(x => x.preBookDtl.BookingFrom)
+                                @Html.HiddenFor(x => x.preBookDtl.BookingUpto)
+                                @Html.HiddenFor(x => x.preBookDtl.CustDetails)
+                                <div class="row">
+                                    <div class="col-lg-12 responsive-column">
+                                        <div class="input-box">
+                                            <label class="label-text">Guest Name</label>
+                                            <div class="form-group">
+                                                <span class="la la-user form-icon"></span>
+                                                @Html.TextBoxFor(x => x.preBookDtl.CustName, new { @class = "form-control", @placeholder = "Guest Name" })
+                                                @Html.ValidationMessageFor(m => m.preBookDtl.CustName)
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-lg-6 -->
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="input-box">
+                                            <label class="label-text">Your Email</label>
+                                            <div class="form-group">
+                                                <span class="la la-envelope-o form-icon"></span>
+                                                @Html.TextBoxFor(x => x.preBookDtl.CustEmail, new { @class = "form-control", @placeholder = "Email ID" })
+                                                @Html.ValidationMessageFor(m => m.preBookDtl.CustEmail)
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-lg-6 -->
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="input-box">
+                                            <label class="label-text">Phone Number</label>
+                                            <div class="form-group">
+                                                <span class="la la-phone form-icon"></span>
+                                                @Html.TextBoxFor(x => x.preBookDtl.CustPhNo, new { @class = "form-control", @placeholder = "Mobile Name" })
+                                                @Html.ValidationMessageFor(m => m.preBookDtl.CustPhNo)
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-lg-6 -->
+                                    <div class="col-lg-12">
+                                        <div class="btn-box">
+                                            <button class="theme-btn float-right" type="submit">Confirm Booking</button>
+                                        </div>
+                                    </div><!-- end col-lg-12 -->
+                                </div>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="table-content product-content d-flex align-items-center">
-                                                <a href="room-details.html" class="d-block">
-                                                    <img src="@Model.hotelDtl.PhotoThumbPath" alt="" class="flex-shrink-0">
-                                                </a>
-                                                <div class="product-content">
-                                                    <a href="room-details.html" class="title">@Model.hotelDtl.HotelName</a>
-                                                    <div class="product-info-wrap">
-                                                        <div class="product-info line-height-24">
-                                                            <span class="product-info-label">Reservation:</span>
-                                                            <span class="product-info-value">
-                                                                <span class="product-check-in">@Model.preBookDtl.BookingFrom.ToString("dd MMM yyyy")</span>
-                                                                <span class="product-mark">/</span>
-                                                                <span class="product-check-out">@Model.preBookDtl.BookingUpto.ToString("dd MMM yyyy")</span>
-                                                                <span class="product-nights">(1 night)</span>
-                                                            </span>
-                                                        </div><!-- end product-info -->
-                                                        <div class="product-info line-height-24">
-                                                            <span class="product-info-label">Guests:</span>
-                                                            <span class="product-info-value">@Model.preBookDtl.AdultSelect Adult(s)</span>
-                                                            <span class="product-info-value">@Model.preBookDtl.ChildrenSelect Child(s)</span>
-                                                        </div><!-- end product-info -->
+                            </form>
+                        </div><!-- end contact-form-action -->
+                    </div><!-- end form-content -->
+                </div><!-- end form-box -->
+                <div class="form-box">
+                    <div class="form-title-wrap">
+                        <h3 class="title">Payment Options</h3>
+                    </div><!-- form-title-wrap -->
+                    <div class="form-content">
+                        <div class="section-tab check-mark-tab text-center pb-4">
+                            <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link border-primary" id="credit-card-tab" data-toggle="tab" href="#credit-card" role="tab" aria-controls="credit-card" aria-selected="false">
+                                        @*<i class="la la-check icon-element"></i>*@
+                                        <img src="~/Content/WebCss/css/images/payment-img.png" alt="">
+                                        <span class="d-block pt-2 ">Payment with <br />debit/credit card</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link  border-primary" id="paypal-tab" data-toggle="tab" href="#paypal" role="tab" aria-controls="paypal" aria-selected="true">
+                                        @*<i class="la la-check icon-element"></i>*@
+                                        <img src="~/Content/WebCss/css/images/UIP-img.png" alt="">
+                                        <span class="d-block pt-2 "><br />Payment with UPI</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link  border-primary" id="payoneer-tab" data-toggle="tab" href="#payoneer" role="tab" aria-controls="payoneer" aria-selected="true">
+                                        @*<i class="la la-check icon-element"></i>*@
+                                        <img src="~/Content/WebCss/css/images/internet-img.png" alt="">
+                                        <span class="d-block pt-2">Payment with <br />Internet Banking</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div><!-- end section-tab -->
 
-                                                        <div class="product-info line-height-24">
-                                                            <span class="product-info-label">Meals:</span>
-                                                            <span class="product-info-value">
-                                                                @foreach(var item in Model.amenitesDisplay)
-                                                                {
-                                                                    @item
-                                                                }
-                                                            </span>
-                                                        </div><!-- end product-info -->
+                    </div><!-- end form-content -->
+                </div><!-- end form-box -->
+            </div><!-- end col-lg-8 -->
+            <div class="col-lg-4">
+                <div class="form-box booking-detail-form">
+                    <div class="form-title-wrap">
+                        <h3 class="title">Booking Details</h3>
+                    </div><!-- end form-title-wrap -->
+                    <div class="form-content">
+                        <div class="card-item shadow-none radius-none mb-0">
+                            <div class="card-img pb-4">
+                                <a href="hotel-single.html" class="d-block">
+                                    <img src="@Model.hotelDtl.PhotoThumbPath" alt="@Model.hotelDtl.HotelName">
+                                </a>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h3 class="card-title">@Model.hotelDtl.HotelName</h3>
+                                        <p class="card-meta">@Model.hotelDtl.HotelAddress</p>
+                                    </div>
+                                    <div>
+                                        <a href="/home/hoteldetails/@Model.hotelDtl.HotelID" class="btn ml-1"><i class="la la-edit" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>
+                                    </div>
+                                </div>
+                                @*<div class="card-rating">
+                                        <span class="badge text-white">4.4/5</span>
+                                        <span class="review__text">Average</span>
+                                        <span class="rating__text">(30 Reviews)</span>
+                                    </div>*@
+                                <div class="section-block"></div>
+                                <ul class="list-items list-items-2 py-2">
+                                    <li><span>Check in:</span>@Model.preBookDtl.BookingFrom.ToString("dd MMM yyyy")</li>
+                                    <li><span>Check out:</span>@Model.preBookDtl.BookingUpto.ToString("dd MMM yyyy")</li>
+                                </ul>
+                                <div class="section-block"></div>
+                                <h3 class="card-title pt-3 pb-2 font-size-15"><a href="hotel-single.html">Order Details</a></h3>
+                                <div class="section-block"></div>
+                                <ul class="list-items list-items-2 py-3">
+                                    <li><span>Room Type:</span>@Model.hotelDtl.DefaultRoomType</li>
+                                    <li><span>Room:</span>@Model.preBookDtl.RoomSelect</li>
+                                    <li><span>Adults:</span>@Model.preBookDtl.AdultSelect Adult(s)</li>
+                                    <li><span>Child:</span>@Model.preBookDtl.ChildrenSelect Child(s)</li>
+                                    <li><span>Stay:</span>4 Nights</li>
+                                    @foreach (var item in Model.amenitesDisplay)
+                                    {
+                                        <li><span>Add On:</span>@item</li>
+                                    }
+                                </ul>
+                                <div class="section-block"></div>
+                                <ul class="list-items list-items-2 pt-3">
+
+                                    @*<li><span>Sub Total:</span>$240</li>
+                                        <li><span>Taxes And Fees:</span>$5</li>*@
+                                    <li class="text-primary"><span>Total Price:</span><h3><i class="la la-rupee"></i>@Model.preBookDtl.FinalFare</h3></li>
+                                </ul>
+                            </div>
+                        </div><!-- end card-item -->
+                    </div><!-- end form-content -->
+                </div><!-- end form-box -->
+            </div><!-- end col-lg-4 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end booking-area -->
+<!-- ================================
+    END BOOKING AREA
+================================= -->
+
+<div class="section-block"></div>
+<!-- ================================
+    START INFO AREA
+================================= -->
+<section class="info-area info-bg padding-top-90px padding-bottom-70px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 responsive-column">
+                <a href="#" class="icon-box icon-layout-2 d-flex">
+                    <div class="info-icon flex-shrink-0 bg-rgb text-color-2">
+                        <i class="la la-phone"></i>
+                    </div><!-- end info-icon-->
+                    <div class="info-content">
+                        <h4 class="info__title">Need Help? Contact us</h4>
+                        <p class="info__desc">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                        </p>
+                    </div><!-- end info-content -->
+                </a><!-- end icon-box -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <a href="#" class="icon-box icon-layout-2 d-flex">
+                    <div class="info-icon flex-shrink-0 bg-rgb-2 text-color-3">
+                        <i class="la la-money"></i>
+                    </div><!-- end info-icon-->
+                    <div class="info-content">
+                        <h4 class="info__title">Payments</h4>
+                        <p class="info__desc">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                        </p>
+                    </div><!-- end info-content -->
+                </a><!-- end icon-box -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <a href="#" class="icon-box icon-layout-2 d-flex">
+                    <div class="info-icon flex-shrink-0 bg-rgb-3 text-color-4">
+                        <i class="la la-times"></i>
+                    </div><!-- end info-icon-->
+                    <div class="info-content">
+                        <h4 class="info__title">Cancel Policy</h4>
+                        <p class="info__desc">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                        </p>
+                    </div><!-- end info-content -->
+                </a><!-- end icon-box -->
+            </div><!-- end col-lg-4 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end info-area -->
+<!-- ================================
+    END INFO AREA
+================================= -->
+<!-- ================================
+    START CART AREA
+================================= -->
+@*<section class="cart-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="cart-wrap">
+
+                        <div class="form-box">
+                            <div class="table-form table-responsive mb-3">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Hotel</th>
+                                            <th scope="col">Price</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">
+                                                <div class="table-content product-content d-flex align-items-center">
+                                                    <a href="room-details.html" class="d-block">
+                                                        <img src="@Model.hotelDtl.PhotoThumbPath" alt="" class="flex-shrink-0">
+                                                    </a>
+                                                    <div class="product-content">
+                                                        <a href="room-details.html" class="title">@Model.hotelDtl.HotelName</a>
+                                                        <div class="product-info-wrap">
+                                                            <div class="product-info line-height-24">
+                                                                <span class="product-info-label">Reservation:</span>
+                                                                <span class="product-info-value">
+                                                                    <span class="product-check-in">@Model.preBookDtl.BookingFrom.ToString("dd MMM yyyy")</span>
+                                                                    <span class="product-mark">/</span>
+                                                                    <span class="product-check-out">@Model.preBookDtl.BookingUpto.ToString("dd MMM yyyy")</span>
+                                                                    <span class="product-nights">(1 night)</span>
+                                                                </span>
+                                                            </div><!-- end product-info -->
+                                                            <div class="product-info line-height-24">
+                                                                <span class="product-info-label">Guests:</span>
+                                                                <span class="product-info-value">@Model.preBookDtl.AdultSelect Adult(s)</span>
+                                                                <span class="product-info-value">@Model.preBookDtl.ChildrenSelect Child(s)</span>
+                                                            </div><!-- end product-info -->
+
+                                                            <div class="product-info line-height-24">
+                                                                <span class="product-info-label">Meals:</span>
+                                                                <span class="product-info-value">
+                                                                    @foreach (var item in Model.amenitesDisplay)
+                                                                    {
+                                                                        @item
+                                                                    }
+                                                                </span>
+                                                            </div><!-- end product-info -->
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </th>
-                                        <td>@Model.preBookDtl.FinalFare</td>
+                                            </th>
+                                            <td>@Model.preBookDtl.FinalFare</td>
 
 
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="section-block"></div>
-                        <div class="form-title-wrap">
-                            <h3 class="title"><i class="la la-user mr-2 text-gray"></i>Your information</h3>
-                        </div><!-- form-title-wrap -->
-
-                        @using (Html.BeginForm("PayNow", "Home"))
-                        {
-                        <div class="row form-content contact-form-action">
-                            <div class="col-4 responsive-column">
-                                <div class="input-box">
-                                    <label class="label-text">Guest Name</label>
-                                    <div class="form-group">
-                                        <span class="la la-user form-icon"></span>
-                                        @Html.TextBoxFor(x => x.preBookDtl.CustName, new { @class = "form-control", @placeholder = "Guest Name" })
-                                        @Html.ValidationMessageFor(m => m.preBookDtl.CustName)
-                                    </div>
-                                </div>
-                            </div><!-- end col-lg-6 -->
-
-                            <div class="col-4 responsive-column">
-                                <div class="input-box">
-                                    <label class="label-text">Email ID</label>
-                                    <div class="form-group">
-                                        <span class="la la-mail-bulk form-icon"></span>
-                                        @Html.TextBoxFor(x => x.preBookDtl.CustEmail, new { @class = "form-control", @placeholder = "Email ID" })
-                                        @Html.ValidationMessageFor(m => m.preBookDtl.CustEmail)
-                                    </div>
-                                </div>
-                            </div><!-- end col-lg-6 -->
-                            <div class="col-4 responsive-column">
-                                <div class="input-box">
-                                    <label class="label-text">Mobile No</label>
-                                    <div class="form-group">
-                                        <span class="la la-phone form-icon"></span>
-                                        @Html.TextBoxFor(x => x.preBookDtl.CustPhNo, new { @class = "form-control", @placeholder = "Mobile Name" })
-                                        @Html.ValidationMessageFor(m => m.preBookDtl.CustPhNo)
-                                    </div>
-                                </div>
-                            </div><!-- end col-lg-6 -->
-                        </div><!-- end form-content -->
-                            @Html.TextBoxFor(x => x.preBookDtl.HotelID)
-                            @Html.TextBoxFor(x => x.preBookDtl.FinalFare)
-                            @Html.TextBoxFor(x => x.preBookDtl.RoomSelect)
-                            @Html.TextBoxFor(x => x.preBookDtl.AdultSelect)
-                            @Html.TextBoxFor(x => x.preBookDtl.ChildrenSelect)
-                            @Html.TextBoxFor(x => x.preBookDtl.BookingFrom)
-                            @Html.TextBoxFor(x => x.preBookDtl.BookingUpto)
-                            @Html.TextBoxFor(x => x.preBookDtl.CustDetails)
-                            <div class="btn-box text-right pt-4">
-                                <input type="Submit" value="Pay Now" class="theme-btn" />
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                        }
+                            <div class="section-block"></div>
+                            <div class="form-title-wrap">
+                                <h3 class="title"><i class="la la-user mr-2 text-gray"></i>Your information</h3>
+                            </div><!-- form-title-wrap -->
 
-                    </div><!-- end form-box -->
-                    
-                </div>
+                            @using (Html.BeginForm("PayNow", "Home"))
+                            {
+                                <div class="row form-content contact-form-action">
+                                    <div class="col-4 responsive-column">
+                                        <div class="input-box">
+                                            <label class="label-text">Guest Name</label>
+                                            <div class="form-group">
+                                                <span class="la la-user form-icon"></span>
+                                                @Html.TextBoxFor(x => x.preBookDtl.CustName, new { @class = "form-control", @placeholder = "Guest Name" })
+                                                @Html.ValidationMessageFor(m => m.preBookDtl.CustName)
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-lg-6 -->
+
+                                    <div class="col-4 responsive-column">
+                                        <div class="input-box">
+                                            <label class="label-text">Email ID</label>
+                                            <div class="form-group">
+                                                <span class="la la-mail-bulk form-icon"></span>
+                                                @Html.TextBoxFor(x => x.preBookDtl.CustEmail, new { @class = "form-control", @placeholder = "Email ID" })
+                                                @Html.ValidationMessageFor(m => m.preBookDtl.CustEmail)
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-lg-6 -->
+                                    <div class="col-4 responsive-column">
+                                        <div class="input-box">
+                                            <label class="label-text">Mobile No</label>
+                                            <div class="form-group">
+                                                <span class="la la-phone form-icon"></span>
+                                                @Html.TextBoxFor(x => x.preBookDtl.CustPhNo, new { @class = "form-control", @placeholder = "Mobile Name" })
+                                                @Html.ValidationMessageFor(m => m.preBookDtl.CustPhNo)
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-lg-6 -->
+                                </div><!-- end form-content -->
+                                @Html.TextBoxFor(x => x.preBookDtl.HotelID)
+                                @Html.TextBoxFor(x => x.preBookDtl.FinalFare)
+                                @Html.TextBoxFor(x => x.preBookDtl.RoomSelect)
+                                @Html.TextBoxFor(x => x.preBookDtl.AdultSelect)
+                                @Html.TextBoxFor(x => x.preBookDtl.ChildrenSelect)
+                                @Html.TextBoxFor(x => x.preBookDtl.BookingFrom)
+                                @Html.TextBoxFor(x => x.preBookDtl.BookingUpto)
+                                @Html.TextBoxFor(x => x.preBookDtl.CustDetails)
+                                <div class="btn-box text-right pt-4">
+                                    <input type="Submit" value="Pay Now" class="theme-btn" />
+                                </div>
+                            }
+
+                        </div><!-- end form-box -->
+
+                    </div>
                 </div><!-- end cart-wrap -->
             </div><!-- end col-lg-12 -->
         </div><!-- end row -->
-</section><!-- end cart-area -->
+    </section>*@<!-- end cart-area -->
 <!-- ================================
     END CART AREA
 ================================= -->
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

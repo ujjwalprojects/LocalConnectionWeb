@@ -41,7 +41,7 @@ namespace LocalConnWeb.Controllers
             obj.resortList = objAPI.GetRecordsByID<HotelList>("webrequest", "getresortlist", 5);
             obj.lodgeList = objAPI.GetRecordsByID<HotelList>("webrequest", "getlodgelist", 6);
             obj.guestHouseList = objAPI.GetRecordsByID<HotelList>("webrequest", "getghouselist", 7);
-            obj.FHotelList = objAPI.GetRecordsByQueryString<FtHotelList_Web>("webrequest", "getFHotelList", "Dt=" + DateTime.Now);
+            obj.FHotelList = objAPI.GetAllRecords<FtHotelList_Web>("webrequest", "getFHotelList");
             obj.offerLists = objAPI.GetRecordsByQueryString<OfferList>("webrequest", "getofferlist", "Dt=" + DateTime.Now);
             ViewBag.HomeTypes = objAPI.GetAllRecords<utblLCMstHomeType>("webrequest", "HomeTypes");
             return View(obj);
@@ -79,7 +79,7 @@ namespace LocalConnWeb.Controllers
                     {
                         if(item.AmenitiesName.Equals(custDetail[i].Trim()))
                         {
-                            model.amenitesDisplay.Add(custDetail[i]+" x "+obj.preBookDtl.AdultSelect+"p"+" x "+obj.NoofDays+"d"+ ": "+item.AmenitiesBasePrice);
+                            model.amenitesDisplay.Add(custDetail[i]+" x "+obj.preBookDtl.AdultSelect+"p"+" x "+obj.NoofDays+"d"+ ": "+item.AmenitiesBasePrice.ToString("Rs 0.0"));
                             break;
                         }
 
@@ -203,13 +203,22 @@ namespace LocalConnWeb.Controllers
         }
 
 
-
+       
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+
+
+        public ActionResult RenderCitiesMenuView()
+        {
+            HomePageVM model = new HomePageVM();
+            model.cityLists = objAPI.GetAllRecords<CityList>("webrequest", "getcitylist");
+            return PartialView("_pvCitiesMenu", model);
         }
     }
 }
