@@ -49,33 +49,55 @@
                         <div class="card-img">
                             <a href="" class="d-block">
                                 <img src="@item.PhotoThumbPath" alt="cruise-img">
-                                <span class="badge">@item.BookingStatus</span>
+                                @if (item.BookingStatus == "Booked")
+                                {
+                                    <span class="badge">@item.BookingStatus</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-failed">@item.BookingStatus</span>
+                                }
                             </a>
                         </div>
+
                         <div class="card-body">
-                            <img src="images/royal-caribbean.png" alt="" class="cruise-logo">
-                            <h3 class="card-title"><a href="cruise-details.html"></a></h3>
-                            <p class="card-meta">Departing San Juan</p>
+                            <h3 class="card-title ellipsis"><a href="hotel-single.html">@item.HotelName</a></h3>
+                            <p class="card-meta">@item.HotelAddress</p>
                             <div class="card-rating">
-                                <span class="badge text-white">4.4/5</span>
-                                <span class="review__text">Very good</span>
-                                <span class="rating__text">(30 Reviews)</span>
+                                <span class="badge text-white"><i class="la la-star"></i></span>
+                                <span class="review__text">@item.CustName</span><br />
+                                <span class="rating__text">(@item.CustEmail | @item.CustPhNo)</span>
                             </div>
                             <div class="card-price d-flex align-items-center justify-content-between">
                                 <p>
-                                    <span class="price__from">From</span>
-                                    <span class="price__num">$399.00</span>
+                                    <span class="price__from">Booking Amount:</span>
+                                    <span class="price__num"><i class="la la-rupee"></i> @item.FinalFare.ToString("0.")/-</span>
+                                    <span class="price__text font-size-11">Per night</span>
                                 </p>
-                                <a href="cruise-details.html" class="btn-text">Read details<i class="la la-angle-right"></i></a>
                             </div>
                         </div>
+
+                        <div class="card-body">
+                            <h3 class="card-title ellipsis"><a href="hotel-single.html">Booking Details</a></h3>
+                            <div class="card-rating">
+                                <span class="badge text-white">Booking Date: @item.BookingFrom - @item.BookingUpto</span><br />
+                                <span class="review__text">Booked on: @item.BookingDate</span><br />
+                                <span class="rating__text">Room Details: @item.CustDetails</span>
+                            </div>
+                        </div>
+
+
+
                     </div><!-- end card-item -->
+
+
+
                 }
 
 
             </div><!-- end col-lg-8 -->
         </div><!-- end row -->
-      
+
     </div><!-- end container -->
 </section><!-- end card-area -->
 <!-- ================================

@@ -31,8 +31,15 @@
                         </div>
                         <div class="card-price d-flex align-items-center justify-content-between">
                             <p>
-                                <span class="price__num before-price color-text-3"><i class="fa fa-rupee"></i> @item.RoomTypePrice.ToString("0.00")</span><br />
-                                <span class="price__num"><i class="fa fa-rupee"></i> @item.OfferPrice.ToString("0.00")</span>
+                                @if (item.OverallOfferPercentage != 0)
+                                {
+                                    <span class="price__num before-price color-text-3"><i class="la la-rupee"></i> @item.RoomTypePrice.ToString("0.00")</span><br />
+                                }
+                                else
+                                {
+                                    <br />
+                                }
+                                <span class="price__num"><i class="la la-rupee"></i> @item.OfferPrice.ToString("0.00")</span>
                                 <span class="price__text">Per night</span>
                             </p>
                             <a href="/home/hoteldetails/@item.HotelID" class="btn-text">Book Now<i class="la la-angle-right"></i></a>

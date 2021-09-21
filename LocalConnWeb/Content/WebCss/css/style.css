@@ -5373,7 +5373,27 @@ body {
             -o-transition: all 0.3s;
             transition: all 0.3s;
         }
-
+        .card-item .card-img .badge-failed {
+            position: absolute;
+            background-color: #f46666;
+            top: -10px;
+            left: 20px;
+            padding: 0px 11px;
+            font-size: 12px;
+            text-transform: uppercase;
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            border-radius: 30px;
+            font-weight: 500;
+            z-index: 1;
+            color: #fff;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            -ms-transition: all 0.3s;
+            -o-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+    
         .card-item .card-img .badge-ribbon {
             left: auto;
             right: 20px;
@@ -7436,6 +7456,10 @@ body {
 }
 
     .hotel-card-carousel-2 .card-item .card-img .badge {
+        top: 20px;
+    }
+
+    .hotel-card-carousel-2 .card-item .card-img .badge-failed {
         top: 20px;
     }
 

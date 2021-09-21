@@ -934,6 +934,9 @@
     <Content Include="Content\WebCss\css\daterangepicker.css" />
     <Content Include="Content\WebCss\css\flag-icon.min.css" />
     <Content Include="Content\WebCss\css\images\banner-1.jpg" />
+    <Content Include="Content\WebCss\css\images\banner-2.jpg" />
+    <Content Include="Content\WebCss\css\images\banner-3.jpg" />
+    <Content Include="Content\WebCss\css\images\google-play.png" />
     <Content Include="Content\WebCss\css\images\internet-img.png" />
     <Content Include="Content\WebCss\css\images\layers-2x.html" />
     <Content Include="Content\WebCss\css\images\layers.html" />

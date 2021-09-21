@@ -8,6 +8,7 @@
         position: fixed;
         top: 220px;
         width: 370px;
+        z-index: 1000;
     }
 
     #map-canvas {
@@ -19,20 +20,35 @@
 
 
 <!-- ================================
+    START ROOM DETAIL BREAD
+================================= -->
+<section class="room-detail-bread">
+    <div class="full-width-slider carousel-action">
+        @if (Model.hotelRoomImgTab.roomImgList.Count > 0)
+        {
+            foreach (var item in Model.hotelRoomImgTab.roomImgList)
+            {
+                <div class="full-width-slide-item">
+                    <img src="@item.PhotoNormalPath" alt="">
+                </div><!-- end full-width-slide-item -->
+            }
+        }
+    </div><!-- end full-width-slider -->
+</section><!-- end room-detail-bread -->
+<!-- ================================
+    END ROOM DETAIL BREAD
+================================= -->
+<!-- ================================
     START BREADCRUMB AREA
 ================================= -->
-<section class="breadcrumb-area bread-bg-7 py-0">
-
+@*<section class="breadcrumb-area bread-bg-7 py-0">
     <div class="breadcrumb-wrap">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-btn">
                         <div class="btn-box">
-                            @*<a class="theme-btn" data-fancybox="video" data-src="https://www.youtube.com/watch?v=5u1WISBbo5I"
-                                   data-speed="700">
-                                    <i class="la la-video-camera mr-2"></i>Video
-                                </a>*@
+                           
                             <a class="theme-btn" data-src="@Model.hotelDtl.PhotoThumbPath"
                                data-fancybox="gallery"
                                data-caption="Showing image - 01"
@@ -72,7 +88,7 @@
             </div><!-- end row -->
         </div><!-- end container -->
     </div><!-- end breadcrumb-wrap -->
-</section><!-- end breadcrumb-area -->
+</section><!-- end breadcrumb-area -->*@
 <!-- ================================
     END BREADCRUMB AREA
 ================================= -->
@@ -99,7 +115,14 @@
     <div class="single-content-box">
         <div class="container">
             <div class="row">
+
                 <div class="col-lg-8">
+                    <div class="breadcrumb-list breadcrumb-top-list pb-2 pt-2">
+                        <ul class="list-items bg-transparent radius-none p-0">
+                            <li class="text-black-50"><a href="/home/index" class="text-black-50">Home</a> > </li>
+                            <li class="text-black-50">@Model.hotelDtl.HotelName</li>
+                        </ul>
+                    </div><!-- end breadcrumb-list -->
                     <div class="single-content-wrap padding-top-60px">
                         <div id="description" class="page-scroll">
                             <div class="single-content-item pb-4">
@@ -297,7 +320,7 @@
                                                     @foreach (var item in Model.nearByVM.nearbyone)
                                                     {
                                                         <div class="d-flex bd-highlight pl-4 pr-4">
-                                                            <div class="p-2 bd-highlight">@n.</div>
+                                                            <div class="p-2 bd-highlight"><i class="la la-star"></i></div>
                                                             <div class="p-2 flex-grow-1  bd-highlight">@item.NearByPoints</div>
                                                             <div class="p-2 bd-highlight">@item.NearByDistance</div>
                                                         </div>
@@ -310,7 +333,7 @@
                                                     {
 
                                                         <div class="d-flex bd-highlight pl-4 pr-4">
-                                                            <div class="p-2 bd-highlight">@m.</div>
+                                                            <div class="p-2 bd-highlight"><i class="la la-star"></i></div>
                                                             <div class="p-2 flex-grow-1  bd-highlight">@item.NearByPoints</div>
                                                             <div class="p-2 bd-highlight">@item.NearByDistance</div>
                                                         </div>
@@ -394,15 +417,15 @@
                             <div class="section-block"></div>
                         </div><!-- end faq -->
                         @*<div class="section-block"></div>
-                            <div id="location-map" class="page-scroll">
-                                <div class="single-content-item padding-top-40px padding-bottom-40px">
-                                    <h3 class="title font-size-20">Location</h3>
-                                    <div class="gmaps padding-top-30px">
-                                        <div id="map-canvas"></div>
-                                    </div>
-                                </div><!-- end single-content-item -->
-                                <div class="section-block"></div>
-                            </div><!-- end location-map -->*@
+            <div id="location-map" class="page-scroll">
+                <div class="single-content-item padding-top-40px padding-bottom-40px">
+                    <h3 class="title font-size-20">Location</h3>
+                    <div class="gmaps padding-top-30px">
+                        <div id="map-canvas"></div>
+                    </div>
+                </div><!-- end single-content-item -->
+                <div class="section-block"></div>
+            </div><!-- end location-map -->*@
                     </div><!-- end single-content-wrap -->
                 </div><!-- end col-lg-8 -->
                 <div class="col-lg-4">
