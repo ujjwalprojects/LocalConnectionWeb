@@ -120,7 +120,6 @@
                                     <div class="form-group">
                                         <span class="la la-mail-bulk form-icon"></span>
                                         @Html.TextBoxFor(x => x.preBookDtl.CustEmail, new { @class = "form-control", @placeholder = "Email ID" })
-                                        @Html.ValidationMessageFor(m => m.preBookDtl.CustEmail)
                                     </div>
                                 </div>
                             </div><!-- end col-lg-6 -->
@@ -130,19 +129,18 @@
                                     <div class="form-group">
                                         <span class="la la-phone form-icon"></span>
                                         @Html.TextBoxFor(x => x.preBookDtl.CustPhNo, new { @class = "form-control", @placeholder = "Mobile Name" })
-                                        @Html.ValidationMessageFor(m => m.preBookDtl.CustPhNo)
                                     </div>
                                 </div>
                             </div><!-- end col-lg-6 -->
                         </div><!-- end form-content -->
-                            @Html.TextBoxFor(x => x.preBookDtl.HotelID)
-                            @Html.TextBoxFor(x => x.preBookDtl.FinalFare)
-                            @Html.TextBoxFor(x => x.preBookDtl.RoomSelect)
-                            @Html.TextBoxFor(x => x.preBookDtl.AdultSelect)
-                            @Html.TextBoxFor(x => x.preBookDtl.ChildrenSelect)
-                            @Html.TextBoxFor(x => x.preBookDtl.BookingFrom)
-                            @Html.TextBoxFor(x => x.preBookDtl.BookingUpto)
-                            @Html.TextBoxFor(x => x.preBookDtl.CustDetails)
+                            @Html.HiddenFor(x => x.preBookDtl.HotelID)
+                            @Html.HiddenFor(x => x.preBookDtl.FinalFare)
+                            @Html.HiddenFor(x => x.preBookDtl.RoomSelect)
+                            @Html.HiddenFor(x => x.preBookDtl.AdultSelect)
+                            @Html.HiddenFor(x => x.preBookDtl.ChildrenSelect)
+                            @Html.HiddenFor(x => x.preBookDtl.BookingFrom)
+                            @Html.HiddenFor(x => x.preBookDtl.BookingUpto)
+                            @Html.HiddenFor(x => x.preBookDtl.CustDetails)
                             <div class="btn-box text-right pt-4">
                                 <input type="Submit" value="Pay Now" class="theme-btn" />
                             </div>

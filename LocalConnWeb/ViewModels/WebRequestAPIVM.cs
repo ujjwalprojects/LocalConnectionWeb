@@ -53,6 +53,7 @@ namespace LocalConnWeb.ViewModels
         public Int16 TwoOccupantPercentage { get; set; }
         public Int16 ThreeOccupantPercentage { get; set; }
         public Int16 FourPlusOccupantPercentage { get; set; }
+        public Int16 MaxOccupantPerRoom { get; set; }
         public string ChildOccupantNote { get; set; }
         public bool IsActive { get; set; }
         public string LatLong { get; set; }
