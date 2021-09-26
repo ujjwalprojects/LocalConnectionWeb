@@ -204,43 +204,38 @@
                                 @*<div class="section-block"></div>*@
                             </div>
                         }
-                        @if (Model.hAmenities.Count() > 0)
-                        {
-                            <div id="itinerary" class="page-scroll">
-                                <div class="section-block margin-top-40px"></div>
-                                <div class="single-content-item padding-top-40px padding-bottom-40px">
-                                    <h3 class="title font-size-20">Enjoy meals during your stay</h3>
-                                    <div class="table-form table-responsive padding-top-30px">
-                                        <table class="table" id="amenities-table">
-                                            <tbody class="amenities-select">
-
-                                                @foreach (var item in Model.hAmenities)
+                        <div id="itinerary" class="page-scroll">
+                            <div class="section-block margin-top-40px"></div>
+                            <div class="single-content-item padding-top-40px padding-bottom-40px">
+                                <h3 class="title font-size-20">Amenities Add On</h3>
+                                <div class="table-form table-responsive padding-top-30px">
+                                    <table class="table" id="amenities-table">
+                                        <tbody class="amenities-select">
+                                            @if (Model.hAmenities.Count() > 0)
+                                            {
+                                                foreach (var item in Model.hAmenities)
                                                 {
                                                     if (item.AmenitiesBasePrice.ToString("G29") != "0")
                                                     {
                                                         <tr>
                                                             <td>
-                                                                <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
-                                                                    <img src="@item.AmenitiesIconPath" class="w-100" />
-                                                                </div>
-                                                                @*  <img src="@item.AmenitiesIconPath" class="grid-width-10" />*@
+                                                                <img src="@item.AmenitiesIconPath" style="height:50px;" />
                                                             </td>
                                                             <td> <h3 class="title font-size-15 font-weight-medium" id="amSelName">@item.AmenitiesName </h3></td>
-                                                            <td> <h3 class="title font-size-15 font-weight-medium" id="amSelPrice"><i class="la la-rupee-sign"></i> @item.AmenitiesBasePrice.ToString("G29")</h3></td>
-                                                            <td><input type="button" id="amSelBtn" class="btn btn-success btn-sm" value="Add" /></td>
+                                                            <td> <h3 class="title font-size-15 font-weight-medium" id="amSelPrice">@item.AmenitiesBasePrice.ToString("G29")</h3></td>
+                                                            <td><input type="button" id="amSelBtn" class="theme-btn theme-btn-small" value="Add" /></td>
                                                         </tr>
                                                     }
                                                 }
+                                            }
 
-
-                                            </tbody>
-                                        </table>
-                                        @* <p class="font-size-14 line-height-26"><strong class="text-black">Please note:</strong> While we do our best to adhere to our published itineraries, they may be changed at the discretion of the captain due to weather advisories, port traffic, and any other unforeseeable circumstances.</p>*@
-                                    </div>
-                                </div><!-- end single-content-item -->
-                                <div class="section-block"></div>
-                            </div><!-- end itinerary -->
-                        }
+                                        </tbody>
+                                    </table>
+                                    <p class="font-size-14 line-height-26"><strong class="text-black">Please note:</strong> While we do our best to adhere to our published itineraries, they may be changed at the discretion of the captain due to weather advisories, port traffic, and any other unforeseeable circumstances.</p>
+                                </div>
+                            </div><!-- end single-content-item -->
+                            <div class="section-block"></div>
+                        </div><!-- end itinerary -->
                         @if (Model.hotelRoomLists.Count() > 0)
                         {
                             <div class="section-block"></div>
@@ -419,15 +414,15 @@
                             <div class="section-block"></div>
                         </div><!-- end faq -->
                         @*<div class="section-block"></div>
-                            <div id="location-map" class="page-scroll">
-                                <div class="single-content-item padding-top-40px padding-bottom-40px">
-                                    <h3 class="title font-size-20">Location</h3>
-                                    <div class="gmaps padding-top-30px">
-                                        <div id="map-canvas"></div>
-                                    </div>
-                                </div><!-- end single-content-item -->
-                                <div class="section-block"></div>
-                            </div><!-- end location-map -->*@
+        <div id="location-map" class="page-scroll">
+            <div class="single-content-item padding-top-40px padding-bottom-40px">
+                <h3 class="title font-size-20">Location</h3>
+                <div class="gmaps padding-top-30px">
+                    <div id="map-canvas"></div>
+                </div>
+            </div><!-- end single-content-item -->
+            <div class="section-block"></div>
+        </div><!-- end location-map -->*@
                     </div><!-- end single-content-wrap -->
                 </div><!-- end col-lg-8 -->
                 <div class="col-lg-4">
