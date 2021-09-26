@@ -430,32 +430,33 @@
                                                 <input class="date-range form-control" type="text" name="daterange">
                                             </div>
                                         </div>
-                                        <div class="input-box">
+                                        @*<div class="input-box">
                                             <label class="label-text">Rooms</label>
                                             <div class="form-group">
                                                 <div class="select-contain w-auto">
-                                                    @*<select class="select-contain-select">
-                                                            @for (int i = 1; i <= Model.hotelDtl.MaxRooms; i++)
-                                                            {
-                                                                <option value="@i">@i Room</option>
-                                                            }
-                                                        </select>*@
-
-                                                    <select class="select-rop" id="roomSelect">
+                                                    <select class="form-control" id="roomSelect">
                                                         @for (int i = 1; i <= Model.hotelDtl.MaxRooms; i++)
                                                         {
-                                                            <option value="@i">@i Room</option>
+                                                            <option value="@i">@i</option>
                                                         }
                                                     </select>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>*@
                                     </div>
                                 </div>
                             </div><!-- end sidebar-widget-item -->
                             <div class="sidebar-widget-item">
                                 <div class="qty-box mb-2 d-flex align-items-center justify-content-between">
-                                    <label class="font-size-16">Adults <span>Age 18+</span></label>
+                                    <label class="font-size-16">Rooms</label>
+                                    <div class="qtyBtn d-flex align-items-center">
+                                        <div class="qtyDec" id="roomDec"><i class="la la-minus"></i></div>
+                                        <input type="text" name="qtyInput" value="1" id="norooms">
+                                        <div class="qtyInc" id="roomInc"><i class="la la-plus"></i></div>
+                                    </div>
+                                </div><!-- end qty-box -->
+                                <div class="qty-box mb-2 d-flex align-items-center justify-content-between">
+                                    <label class="font-size-16">Adults <small class="text-secondary">[Age 18+]</small></label>
                                     <div class="qtyBtn d-flex align-items-center">
                                         <div class="qtyDec" id="adultDec"><i class="la la-minus"></i></div>
                                         <input type="text" name="qtyInput" value="1" id="noAdult">
@@ -573,11 +574,17 @@
                 calculatePrice();
 
             });
-            var maxOccPerRoom = $('#maxOPerRoom').val();
-            var maxAdult =@Model.hotelDtl.MaxOccupant;
-            var preVal = parseInt($('#roomSelect').val());
-            var newAVal = parseInt($('#noAdult').val())
+
+
+              var maxOccPerRoom = $('#maxOPerRoom').val();
+                var maxAdult =@Model.hotelDtl.MaxOccupant;
+            var preVal = parseInt($('#norooms').val());
+                var newAVal = parseInt($('#noAdult').val())
+
             $("#adultInc").click(function () {
+
+
+
                 newAVal = parseInt(newAVal) + 1;
                 if (parseInt(newAVal) > parseInt(maxAdult)) {
                     $('#noAdult').val(maxAdult);
@@ -591,38 +598,79 @@
                     if (parseInt(newAVal) > 2) {
                         if (parseInt(newAVal) % parseInt(maxOccPerRoom) != 0) {
                             preVal = parseInt(preVal) + 1;
-                            $("#roomSelect option[value=" + preVal+"]").attr('selected', 'selected');
+                            //$("#roomSelect option[value=" + preVal + "]").attr('selected', 'selected');
+                            $('#norooms').val(preVal);
                         }
                     }
 
                 }
 
-                    //case when maxperson is 3
+                //case when maxperson is 3
                 if (parseInt(maxOccPerRoom) == 3) {
                     if (parseInt(newAVal) > 3) {
-                        if (parseInt(preVal) % parseInt(maxOccPerRoom) == 0) {
-                            if (parseInt(newAVal) % parseInt(maxOccPerRoom) != 0) {
+                        if (parseInt(newAVal-1) % parseInt(maxOccPerRoom) == 0) {
+                            if (parseInt(newAVal) % parseInt(maxOccPerRoom) == 1) {
                                 preVal = parseInt(preVal) + 1;
-                                $("#roomSelect option[value=" + preVal + "]").attr('selected', 'selected');
+                                //$("#roomSelect option[value=" + preVal + "]").attr('selected', 'selected');
+                                $('#norooms').val(preVal);
                             }
 
                         }
                     }
 
                 }
+
+
                 calculatePrice();
             });
             $("#adultDec").click(function () {
-                newAVal = parseInt(newAVal) - 1;
-                //var preVal = parseInt($('#roomSelect').val());
-                if (parseInt(newAVal) > parseInt(maxAdult)) {
-                    $('#noAdult').val(maxAdult);
-                } else if (parseInt(newAVal) != 0){
-                        $('#noAdult').val(newAVal);
+
+                if (newAVal > 1) {
+                    newAVal = parseInt(newAVal) - 1;
                 }
-                $('#mAdultSelect').val(newAVal);
+            
+                //var preVal = parseInt($('#roomSelect').val());
+                if (parseInt(newAVal) < parseInt(maxAdult) && parseInt(newAVal) >= 1) {
+                    $('#noAdult').val(newAVal);
+                    $('#mAdultSelect').val(newAVal);
+                } else if (parseInt(newAVal) == 0) {
+                    $('#noAdult').val(newAVal + 1);
+                    $('#mAdultSelect').val(newAVal + 1);
+            }
+
+
+                //case when maxperson per room is 2
+                if (parseInt(maxOccPerRoom) == 2) {
+                    if (parseInt(newAVal) >= 2) {
+                        if (parseInt(newAVal) % parseInt(maxOccPerRoom) == 0) {
+                            preVal = parseInt(preVal) - 1;
+                            $('#norooms').val(preVal);
+
+                        }
+                    }
+                }
+
+
+                //case when maxperson is 3
+                if (parseInt(maxOccPerRoom) == 3) {
+                    if (parseInt(newAVal) >= 3) {
+                        if (parseInt(newAVal+1) % parseInt(maxOccPerRoom) == 1) {
+                            if (parseInt(newAVal) % parseInt(maxOccPerRoom) == 0) {
+                                preVal = parseInt(preVal) - 1;
+                                //$("#roomSelect option[value=" + preVal + "]").attr('selected', 'selected');
+                                $('#norooms').val(preVal);
+                            }
+
+                        }
+                    }
+
+                }
+
                 calculatePrice();
             });
+
+
+
             //child
              $("#childInc").click(function () {
                 var newAVal = parseInt($('#noChild').val()) + 1;
@@ -667,7 +715,7 @@
                 for (var i = 0; i < amnSel.length; i++) {
                     amTotal += amnSel[i] << 0;
                 }
-               
+
                 if (amnetiesArr.length < 2) {
                     $('#parentHolder').hide();
                     $('#notselected').show();
@@ -677,7 +725,7 @@
                 }
 
                    $("#parentHolder").text(amnetiesArr);
-              
+
                 calculatePrice();
             });
 
