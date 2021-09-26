@@ -1,5 +1,7 @@
 ﻿@model LocalConnWeb.ViewModels.HotelDetailsVM
 @{
+    /**/
+
     ViewBag.Title = "HotelDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -42,53 +44,53 @@
     START BREADCRUMB AREA
 ================================= -->
 @*<section class="breadcrumb-area bread-bg-7 py-0">
-    <div class="breadcrumb-wrap">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb-btn">
-                        <div class="btn-box">
-                           
-                            <a class="theme-btn" data-src="@Model.hotelDtl.PhotoThumbPath"
-                               data-fancybox="gallery"
-                               data-caption="Showing image - 01"
-                               data-speed="700">
-                                <i class="la la-photo mr-2"></i>View Images
-                            </a>
-                        </div>
-                        @if (Model.hotelRoomImgTab != null)
-                        {
-                            if (Model.hotelRoomImgTab.roomImgList.Count > 0)
+        <div class="breadcrumb-wrap">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="breadcrumb-btn">
+                            <div class="btn-box">
+
+                                <a class="theme-btn" data-src="@Model.hotelDtl.PhotoThumbPath"
+                                   data-fancybox="gallery"
+                                   data-caption="Showing image - 01"
+                                   data-speed="700">
+                                    <i class="la la-photo mr-2"></i>View Images
+                                </a>
+                            </div>
+                            @if (Model.hotelRoomImgTab != null)
                             {
-                                foreach (var item in Model.hotelRoomImgTab.roomImgList)
+                                if (Model.hotelRoomImgTab.roomImgList.Count > 0)
                                 {
-                                    <a class="d-none"
-                                       data-fancybox="gallery"
-                                       data-src="@item.PhotoNormalPath"
-                                       data-caption="@item.HotelPremName"
-                                       data-speed="700"></a>
+                                    foreach (var item in Model.hotelRoomImgTab.roomImgList)
+                                    {
+                                        <a class="d-none"
+                                           data-fancybox="gallery"
+                                           data-src="@item.PhotoNormalPath"
+                                           data-caption="@item.HotelPremName"
+                                           data-speed="700"></a>
+                                    }
+
+
                                 }
-
-
                             }
-                        }
 
 
 
-                    </div><!-- end breadcrumb-btn -->
-                </div><!-- end col-lg-12 -->
-                <div class="col-lg-12">
-                    <div class="breadcrumb-list breadcrumb-top-list pb-2">
-                        <ul class="list-items bg-transparent radius-none p-0">
-                            <li><a href="/home/index">Home</a></li>
-                            <li>@Model.hotelDtl.HotelName</li>
-                        </ul>
-                    </div><!-- end breadcrumb-list -->
-                </div><!-- end col-lg-12 -->
-            </div><!-- end row -->
-        </div><!-- end container -->
-    </div><!-- end breadcrumb-wrap -->
-</section><!-- end breadcrumb-area -->*@
+                        </div><!-- end breadcrumb-btn -->
+                    </div><!-- end col-lg-12 -->
+                    <div class="col-lg-12">
+                        <div class="breadcrumb-list breadcrumb-top-list pb-2">
+                            <ul class="list-items bg-transparent radius-none p-0">
+                                <li><a href="/home/index">Home</a></li>
+                                <li>@Model.hotelDtl.HotelName</li>
+                            </ul>
+                        </div><!-- end breadcrumb-list -->
+                    </div><!-- end col-lg-12 -->
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </div><!-- end breadcrumb-wrap -->
+    </section><!-- end breadcrumb-area -->*@
 <!-- ================================
     END BREADCRUMB AREA
 ================================= -->
@@ -417,15 +419,15 @@
                             <div class="section-block"></div>
                         </div><!-- end faq -->
                         @*<div class="section-block"></div>
-            <div id="location-map" class="page-scroll">
-                <div class="single-content-item padding-top-40px padding-bottom-40px">
-                    <h3 class="title font-size-20">Location</h3>
-                    <div class="gmaps padding-top-30px">
-                        <div id="map-canvas"></div>
-                    </div>
-                </div><!-- end single-content-item -->
-                <div class="section-block"></div>
-            </div><!-- end location-map -->*@
+                            <div id="location-map" class="page-scroll">
+                                <div class="single-content-item padding-top-40px padding-bottom-40px">
+                                    <h3 class="title font-size-20">Location</h3>
+                                    <div class="gmaps padding-top-30px">
+                                        <div id="map-canvas"></div>
+                                    </div>
+                                </div><!-- end single-content-item -->
+                                <div class="section-block"></div>
+                            </div><!-- end location-map -->*@
                     </div><!-- end single-content-wrap -->
                 </div><!-- end col-lg-8 -->
                 <div class="col-lg-4">
@@ -442,26 +444,33 @@
                                                 <input class="date-range form-control" type="text" name="daterange">
                                             </div>
                                         </div>
-                                        <div class="input-box">
-                                            <label class="label-text">Rooms</label>
-                                            <div class="form-group">
-                                                <div class="select-contain w-auto">
-                                                    <select class="select-contain-select" id="roomSelect">
-                                                        @*<option value="0">Select Rooms</option>*@
-                                                        @for (int i = 1; i <= Model.hotelDtl.MaxRooms; i++)
-                                                        {
-                                                            <option value="@i">@i Room</option>
-                                                        }
-                                                    </select>
+                                        @*<div class="input-box">
+                                                <label class="label-text">Rooms</label>
+                                                <div class="form-group">
+                                                    <div class="select-contain w-auto">
+                                                        <select class="form-control" id="roomSelect">
+                                                            @for (int i = 1; i <= Model.hotelDtl.MaxRooms; i++)
+                                                            {
+                                                                <option value="@i">@i</option>
+                                                            }
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </div>*@
                                     </div>
                                 </div>
                             </div><!-- end sidebar-widget-item -->
                             <div class="sidebar-widget-item">
                                 <div class="qty-box mb-2 d-flex align-items-center justify-content-between">
-                                    <label class="font-size-16">Adults <span>Age 18+</span></label>
+                                    <label class="font-size-16">Rooms</label>
+                                    <div class="qtyBtn d-flex align-items-center">
+                                        <div class="qtyDec" id="roomDec"><i class="la la-minus"></i></div>
+                                        <input type="text" name="qtyInput" value="1" id="norooms">
+                                        <div class="qtyInc" id="roomInc"><i class="la la-plus"></i></div>
+                                    </div>
+                                </div><!-- end qty-box -->
+                                <div class="qty-box mb-2 d-flex align-items-center justify-content-between">
+                                    <label class="font-size-16">Adults <small class="text-secondary">[Age 18+]</small></label>
                                     <div class="qtyBtn d-flex align-items-center">
                                         <div class="qtyDec" id="adultDec"><i class="la la-minus"></i></div>
                                         <input type="text" name="qtyInput" value="1" id="noAdult">
@@ -483,17 +492,17 @@
 
                                 </div>
                                 <div id="notselected">
-                                    No Add On Selected
+                                    Meals Not Selected
                                 </div>
                             </div>
-                            <div class="sidebar-widget-item pt-4">
+                            <div class="sidebar-widget-item">
                                 <div class="sidebar-book-title-wrap mb-3">
                                     @*<h3>Popular</h3>*@
-                                    <p><span class="text-form">Total</span><span class="text-value ml-2 mr-1"> <i class="la la-rupee"></i><span id="actualPrice"></span> </span> <span class="before-price"><i class="la la-rupee"></i> @Model.hotelDtl.RoomTypePrice.ToString("G29")</span></p>
+                                    <p><span class="text-form">Total</span><span class="text-value ml-2 mr-1"><span id="actualPrice"></span> </span> <span class="before-price">@Model.hotelDtl.RoomTypePrice.ToString("G29")</span></p>
                                 </div>
                             </div><!-- end sidebar-widget-item -->
                             <div class="btn-box pt-2">
-
+                                @Html.HiddenFor(x => x.hotelDtl.MaxOccupantPerRoom, new { Value = Model.hotelDtl.MaxOccupantPerRoom, id = "maxOPerRoom" })
                                 @using (Html.BeginForm("HotelBookingDtl", "Home"))
                                 {
                                     @Html.HiddenFor(x => x.preBookDtl.HotelID, new { Value = Model.hotelDtl.HotelID })
@@ -521,7 +530,6 @@
 <input hidden type="text" id="endDt" value="@ViewBag.endDate" />
 <input hidden type="text" id="startDt" value="@ViewBag.startDate" />
 @section Scripts{
-    @*<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>*@
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -581,29 +589,102 @@
 
             });
 
-            $("#adultInc").click(function () {
-                var maxAdult =@Model.hotelDtl.MaxOccupant;
-                var newAVal = parseInt($('#noAdult').val()) + 1;
 
+              var maxOccPerRoom = $('#maxOPerRoom').val();
+                var maxAdult =@Model.hotelDtl.MaxOccupant;
+            var preVal = parseInt($('#norooms').val());
+                var newAVal = parseInt($('#noAdult').val())
+
+            $("#adultInc").click(function () {
+
+
+
+                newAVal = parseInt(newAVal) + 1;
                 if (parseInt(newAVal) > parseInt(maxAdult)) {
                     $('#noAdult').val(maxAdult);
                 } else {
                     $('#noAdult').val(newAVal);
                 }
                 $('#mAdultSelect').val(newAVal);
+
+                //case when maxperson per room is 2
+                if (parseInt(maxOccPerRoom) == 2) {
+                    if (parseInt(newAVal) > 2) {
+                        if (parseInt(newAVal) % parseInt(maxOccPerRoom) != 0) {
+                            preVal = parseInt(preVal) + 1;
+                            //$("#roomSelect option[value=" + preVal + "]").attr('selected', 'selected');
+                            $('#norooms').val(preVal);
+                        }
+                    }
+
+                }
+
+                //case when maxperson is 3
+                if (parseInt(maxOccPerRoom) == 3) {
+                    if (parseInt(newAVal) > 3) {
+                        if (parseInt(newAVal-1) % parseInt(maxOccPerRoom) == 0) {
+                            if (parseInt(newAVal) % parseInt(maxOccPerRoom) == 1) {
+                                preVal = parseInt(preVal) + 1;
+                                //$("#roomSelect option[value=" + preVal + "]").attr('selected', 'selected');
+                                $('#norooms').val(preVal);
+                            }
+
+                        }
+                    }
+
+                }
+
+
                 calculatePrice();
             });
             $("#adultDec").click(function () {
-                var maxAdult =@Model.hotelDtl.MaxOccupant;
-                var newAVal = parseInt($('#noAdult').val())-1;
-                if (parseInt(newAVal) > parseInt(maxAdult)) {
-                    $('#noAdult').val(maxAdult);
-                } else if (parseInt(newAVal) != 0){
-                        $('#noAdult').val(newAVal);
+
+                if (newAVal > 1) {
+                    newAVal = parseInt(newAVal) - 1;
                 }
-                $('#mAdultSelect').val(newAVal);
+
+                //var preVal = parseInt($('#roomSelect').val());
+                if (parseInt(newAVal) < parseInt(maxAdult) && parseInt(newAVal) >= 1) {
+                    $('#noAdult').val(newAVal);
+                    $('#mAdultSelect').val(newAVal);
+                } else if (parseInt(newAVal) == 0) {
+                    $('#noAdult').val(newAVal + 1);
+                    $('#mAdultSelect').val(newAVal + 1);
+            }
+
+
+                //case when maxperson per room is 2
+                if (parseInt(maxOccPerRoom) == 2) {
+                    if (parseInt(newAVal) >= 2) {
+                        if (parseInt(newAVal) % parseInt(maxOccPerRoom) == 0) {
+                            preVal = parseInt(preVal) - 1;
+                            $('#norooms').val(preVal);
+
+                        }
+                    }
+                }
+
+
+                //case when maxperson is 3
+                if (parseInt(maxOccPerRoom) == 3) {
+                    if (parseInt(newAVal) >= 3) {
+                        if (parseInt(newAVal+1) % parseInt(maxOccPerRoom) == 1) {
+                            if (parseInt(newAVal) % parseInt(maxOccPerRoom) == 0) {
+                                preVal = parseInt(preVal) - 1;
+                                //$("#roomSelect option[value=" + preVal + "]").attr('selected', 'selected');
+                                $('#norooms').val(preVal);
+                            }
+
+                        }
+                    }
+
+                }
+
                 calculatePrice();
             });
+
+
+
             //child
              $("#childInc").click(function () {
                 var newAVal = parseInt($('#noChild').val()) + 1;
@@ -630,28 +711,25 @@
                 if (btnValu == "Add") {
                     currentRow.find("#amSelBtn").val("Remove");
                     amnetiesArr.push(content);
-                    //alert(amnSel.length)
-                    //if (amnSel.length == 0) {
-                    //    amTotal = parseInt(amnSel);
-                    //    amTotal = parseInt(col2);
-                    //} else {
-                        amTotal = parseInt(amTotal) + parseInt(col2);
-                    //}
-                    //alert(amnSel + "Total:" + amTotal);
+                    amnSel.push(col2);
+                        //amTotal = parseInt(amTotal) + parseInt(col2);
                 }
                 if (btnValu == "Remove") {
                     currentRow.find("#amSelBtn").val("Add");
-                    //amnetiesArr.pop([col1 + "-x"])
                     amnSel = $.grep(amnSel, function (value) {
                         return value != col2;
                     });
                     amnetiesArr = $.grep(amnetiesArr, function (value) {
                         return value != content;
                     });
-                    //amTotal = parseInt(amTotal) - parseInt(col2 * parseInt($('#noAdult').val()));
-                    amTotal = parseInt(amTotal) - parseInt(col2 * parseInt($('#noAdult').val()));
-                    //alert(amnSel + "Total:" + amTotal);
+                    //var subAmt = parseInt(col2) * parseInt($('#noAdult').val());
+                    //amTotal = parseInt(amTotal) - parseInt(subAmt);
                 }
+                amTotal = 0;
+                for (var i = 0; i < amnSel.length; i++) {
+                    amTotal += amnSel[i] << 0;
+                }
+
                 if (amnetiesArr.length < 2) {
                     $('#parentHolder').hide();
                     $('#notselected').show();
@@ -699,18 +777,20 @@
                 var twoPercent = @Model.hotelDtl.TwoOccupantPercentage;
                 var threePercent = @Model.hotelDtl.ThreeOccupantPercentage;
                 var fourPercent = @Model.hotelDtl.FourPlusOccupantPercentage;
-                if (parseInt(totalRoom) > 1) {
-                    roomBaseValue = parseInt(roomBaseValue) * parseInt(totalRoom);
-                    actValue = roomBaseValue;
-                } else {
-                    actValue = roomBaseValue;
-                }
-                if (parseInt(noofday)  > 1) {
-                    roomBaseValue = parseInt(roomBaseValue) * parseInt(noofday);
-                    actValue = roomBaseValue;
-                } else {
-                    actValue = roomBaseValue;
-                }
+                //if (parseInt(totalRoom) > 1) {
+                //    roomBaseValue = parseInt(roomBaseValue) * parseInt(totalRoom);
+                //    actValue = roomBaseValue;
+                //} else {
+                //    actValue = roomBaseValue;
+                //}
+                //if (parseInt(noofday)  > 1) {
+                //    roomBaseValue = parseInt(roomBaseValue) * parseInt(noofday);
+                //    actValue = roomBaseValue;
+                //} else {
+                //    actValue = roomBaseValue;
+                //}
+                roomBaseValue = roomBaseValue * noOfAdult * noofday;
+                actValue = roomBaseValue;
                 if (parseInt(overAll) > 0) {
                     var newvalue = parseInt(roomBaseValue) * parseInt(overAll) / 100;
                             roomBaseValue = actValue - newvalue;
@@ -759,42 +839,6 @@
         });
 
 
-
-        function initialize() {
-            var myLatlng = new google.maps.LatLng(27.296241792837044, 88.5887073110439);
-            var mapOptions = {
-                zoom: 8,
-                center: myLatlng,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            }
-            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-            //=====Initialise Default Marker
-            var marker = new google.maps.Marker({
-                position: myLatlng,
-                map: map,
-                title: 'marker'
-                //=====You can even customize the icons here
-            });
-
-            //=====Initialise InfoWindow
-            var infowindow = new google.maps.InfoWindow({
-                content: "<B>Skyway Dr</B>"
-            });
-
-            //=====Eventlistener for InfoWindow
-            google.maps.event.addListener(marker, 'click', function () {
-                infowindow.open(map, marker);
-            });
-        }
-
-        google.maps.event.addDomListener(window, 'load', initialize);
-
-
-
-        var mapCanvas = document.createElement("div");
-        mapCanvas.style.width = "200px";
-        mapCanvas.style.height = "200px";
     </script>
 
 }
