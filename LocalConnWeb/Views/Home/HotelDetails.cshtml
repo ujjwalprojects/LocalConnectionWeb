@@ -493,10 +493,10 @@
                             <div class="sidebar-widget-item">
                                 <div class="sidebar-book-title-wrap mb-3">
                                     @*<h3>Popular</h3>*@
-                                    <p><span class="text-form">Total</span><span class="text-value ml-2 mr-1"><span id="actualPrice"></span> </span> <span class="before-price">@Model.hotelDtl.RoomTypePrice.ToString("G29")</span></p>
+                                    <p><span class="text-form">Total</span><span class="text-value ml-2 mr-1"><i class="la la-rupee"></i><span id="actualPrice"></span> </span> <i class="la la-rupee-sign"></i><span class="before-price">@Model.hotelDtl.RoomTypePrice.ToString("G29")</span></p>
                                 </div>
                             </div><!-- end sidebar-widget-item -->
-                            <div class="btn-box pt-2">
+                            <div class="btn-box pt-2"> 
                                 @Html.HiddenFor(x => x.hotelDtl.MaxOccupantPerRoom, new { Value = Model.hotelDtl.MaxOccupantPerRoom, id = "maxOPerRoom" })
                                 @using (Html.BeginForm("HotelBookingDtl", "Home"))
                                 {
@@ -566,7 +566,8 @@
                 //alert(StDate,EtDate);
                 var diff = new Date(EtDate - StDate);
                 days = diff / 1000 / 60 / 60 / 24;
-                noofday = days;
+                noofday = days
+                //alert(noofday);
                 $("#mNoOfDays").val(noofday);
                 $("#mBookingFrom").val($.trim(sDate));
                 $("#mBookingUpto").val($.trim(eDate));
@@ -584,11 +585,26 @@
 
             });
 
+            
 
-              var maxOccPerRoom = $('#maxOPerRoom').val();
-                var maxAdult =@Model.hotelDtl.MaxOccupant;
+
+            var maxOccPerRoom = $('#maxOPerRoom').val();
+            var maxAdult =@Model.hotelDtl.MaxOccupant;
             var preVal = parseInt($('#norooms').val());
-                var newAVal = parseInt($('#noAdult').val())
+            var newAVal = parseInt($('#noAdult').val())
+
+            $("#roomInc").click(function () {
+                preVal += 1;
+                $('#norooms').val(preVal);
+                calculatePrice();
+            });
+
+            $("#roomDec").click(function () {
+                preVal -= 1;
+                $('#norooms').val(preVal);
+                calculatePrice();
+            });
+
 
             $("#adultInc").click(function () {
 
@@ -773,12 +789,12 @@
                 var twoPercent = @Model.hotelDtl.TwoOccupantPercentage;
                 var threePercent = @Model.hotelDtl.ThreeOccupantPercentage;
                 var fourPercent = @Model.hotelDtl.FourPlusOccupantPercentage;
-                //if (parseInt(totalRoom) > 1) {
-                //    roomBaseValue = parseInt(roomBaseValue) * parseInt(totalRoom);
-                //    actValue = roomBaseValue;
-                //} else {
-                //    actValue = roomBaseValue;
-                //}
+                if (parseInt(totalRoom) > 1) {
+                    roomBaseValue = parseInt(roomBaseValue) * parseInt(totalRoom);
+                    actValue = roomBaseValue;
+                } else {
+                    actValue = roomBaseValue;
+                }
                 //if (parseInt(noofday)  > 1) {
                 //    roomBaseValue = parseInt(roomBaseValue) * parseInt(noofday);
                 //    actValue = roomBaseValue;

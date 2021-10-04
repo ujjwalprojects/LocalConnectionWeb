@@ -89,10 +89,10 @@
                                 </div><!-- end col-lg-6 -->
 
                             </div><!-- end form-content -->
-                            <div class="btn-box text-center p-4"style="padding-bottom:15px;">
+                            <div class="btn-box text-center p-4" style="padding-bottom:15px;">
                                 <input type="Submit" value="Sign Up" class="theme-btn" />
                             </div>
-                         
+
 
                         }
 
@@ -106,9 +106,12 @@
 <!-- ================================
     END CART AREA
 ================================= -->
+@*error message*@
+<div id="ErrMsg" style="display:none;">
+    <input type="hidden" id="ErrMsgHiddenField" name="ErrMsg" value="@TempData["ErrMsg"]" />
+</div>
+@section Scripts
+{
 
-
-
-@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

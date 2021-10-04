@@ -69,6 +69,8 @@ namespace LocalConnWeb.Controllers
             obj.preBookDtl.BookingUpto = DateTime.ParseExact(obj.BookUpTo, "d/M/yyyy", CultureInfo.InvariantCulture);
             model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
             obj.hAmenities = objAPI.GetRecordsByID<HAmenitiesList>("webrequest", "gethamenitieslist", Convert.ToInt64(obj.preBookDtl.HotelID));
+            if(obj.NoofDays==0)
+            { obj.NoofDays = 1; }
             string[] custDetail = obj.preBookDtl.CustDetails.Split(',');
             model.amenitesDisplay = new List<string>();
             for (int i = 0; i < custDetail.Length; i++)
@@ -79,7 +81,7 @@ namespace LocalConnWeb.Controllers
                     {
                         if(item.AmenitiesName.Equals(custDetail[i].Trim()))
                         {
-                            model.amenitesDisplay.Add(custDetail[i]+" x "+obj.preBookDtl.AdultSelect+"p"+" x "+obj.NoofDays+"d"+ ": "+item.AmenitiesBasePrice.ToString("Rs 0.0"));
+                            model.amenitesDisplay.Add(custDetail[i]+" x "+obj.preBookDtl.AdultSelect+"p"+" x "+obj.NoofDays+"d"+ ": "+item.AmenitiesBasePrice.ToString("Rs 0."));
                             break;
                         }
 
@@ -91,11 +93,10 @@ namespace LocalConnWeb.Controllers
             model.preBookDtl = obj.preBookDtl;
             return View(model);
         }
-
+        [HttpPost]
         public ActionResult PayNow(HotelDetailsVM obj)
         {
             HotelDetailsVM model = new HotelDetailsVM();
-
             if (!(User.Identity.IsAuthenticated))
             {
                 return RedirectToAction("Login", "Account", new { Areas = "" });
@@ -121,7 +122,11 @@ namespace LocalConnWeb.Controllers
             ViewBag.phone = obj.preBookDtl.CustPhNo;
             model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
             model.preBookDtl = obj.preBookDtl;
-            Session["OrderDetails"] = obj.preBookDtl; 
+            //model.preBookDtl.BookingID = "TEst001";
+            //model.preBookDtl.FinalFare = 200;
+            //model.preBookDtl.BookingStatus = "Booked";
+            //string jsonStr = JsonConvert.SerializeObject(model.preBookDtl);
+            //TempData["ErrMsg"] = objAPI.PostRecordtoApI("webrequest", "SendEmail", jsonStr);
             return View(model);
         }
 
@@ -135,7 +140,8 @@ namespace LocalConnWeb.Controllers
             Razorpay.Api.RazorpayClient client = new Razorpay.Api.RazorpayClient(razorKey, razorSecred);
 
             Razorpay.Api.Payment payment = client.Payment.Fetch(paymentId);
-            PreBookingDtl obj = Session["OrderDetails"] as PreBookingDtl;
+            PreBookingDtl obj = new PreBookingDtl();
+            obj = Session["OrderDetails"] as PreBookingDtl;
             // This code is for capture the payment 
             Dictionary<string, object> options = new Dictionary<string, object>();
             options.Add("amount", payment.Attributes["amount"]);
@@ -172,6 +178,8 @@ namespace LocalConnWeb.Controllers
             HotelDetailsVM obj = new HotelDetailsVM();
             obj.preBookDtl = objAPI.GetRecordByQueryString<PreBookingDtl>("webrequest", "getBookingDtl", "BookingID=" + BookingID);
             obj.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
+            string jsonStr = JsonConvert.SerializeObject(obj.preBookDtl);
+            TempData["ErrMsg"] = objAPI.PostRecordtoApI("webrequest", "SendEmail", jsonStr);
             return View(obj);
         }
 
@@ -184,6 +192,8 @@ namespace LocalConnWeb.Controllers
             HotelDetailsVM obj = new HotelDetailsVM();
             obj.preBookDtl = Session["OrderDetails"] as PreBookingDtl;
             obj.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + HotelID);
+            string jsonStr = JsonConvert.SerializeObject(obj.preBookDtl);
+            TempData["ErrMsg"] = objAPI.PostRecordtoApI("webrequest", "SendEmail", jsonStr);
             return View(obj);
         }
 

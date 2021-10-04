@@ -1,4 +1,7 @@
 ﻿@model LocalConnWeb.ViewModels.HotelDetailsVM
+
+
+
 @*<button id="rzp-button1">Pay</button>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>*@
 @*<script>
@@ -104,5 +107,5 @@ document.getElementById('rzp-button1').onclick = function(e){
     @Html.TextBoxFor(x => x.preBookDtl.BookingFrom)
     @Html.TextBoxFor(x => x.preBookDtl.BookingUpto)
     @Html.TextBoxFor(x => x.preBookDtl.CustDetails)*@
-    <button type="submit" id="rzp-paymentresponse" class="btn btn-primary">Submit</button>
+    <button type="submit" id="rzp-paymentresponse" class="btn btn-primary d-none">Submit</button>
 }

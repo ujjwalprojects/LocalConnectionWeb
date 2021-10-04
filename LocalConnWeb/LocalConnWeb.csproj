@@ -1220,6 +1220,7 @@
     <None Include="Properties\PublishProfiles\TourWeb Publish.pubxml" />
     <None Include="Properties\PublishProfiles\vwweb.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\invoketoastr.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />

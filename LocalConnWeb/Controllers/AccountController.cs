@@ -15,6 +15,7 @@ using System.Net.Http;
 using System.Configuration;
 using CaptchaMvc.HtmlHelpers;
 using LocalConnWeb.Areas.Admin.CustomModels;
+using LocalConnWeb.ViewModels;
 
 namespace LocalConnWeb.Controllers
 {
@@ -167,7 +168,20 @@ namespace LocalConnWeb.Controllers
             {
                 string jsonStr = JsonConvert.SerializeObject(model);
                 TempData["ErrMsg"] = objAPI.PostRecordtoApI("account", "registercustomer", jsonStr);
-                return RedirectToAction("login", "account");
+                if(TempData["ErrMsg"].ToString() == "Success")
+                {
+                    //TempData["ErrMsg"] = "Registration Successful.";
+                    TempData["Type"] = "success";
+                    TempData["Message"] = "Registration Successful.";
+                    return RedirectToAction("login", "account");
+                }
+                else
+                {
+                    TempData["Type"] = "error";
+                    TempData["Message"] = "Registration Failure: " + TempData["ErrMsg"].ToString();
+                    return View(model);
+                }
+                
             }
             // If we got this far, something failed, redisplay form
             return View(model);

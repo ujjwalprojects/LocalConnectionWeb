@@ -27,8 +27,9 @@
     <link rel="stylesheet" href="~/Content/WebCss/css/flag-icon.min.css">
     <link rel="stylesheet" href="~/Content/WebCss/css/style.css">
     <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
     @*<link href="~/Content/font-awesome.min.css" rel="stylesheet" />*@
-    @Scripts.Render("~/bundles/modernizr")
+   
 
 </head>
 <body>
@@ -162,12 +163,44 @@
                                 </nav>
                             </div><!-- end main-menu-content -->
                             <div class="nav-btn">
-                                @if (ViewBag.CurrentUserName != null)
+                                @if ((string)@ViewBag.CurrentUserName != null && User.IsInRole("Admin"))
                                 {
-                                    <a href="#">Welcome @ViewBag.CurrentUserName <i class="la la-angle-down"></i></a>
-                                    <ul class="dropdown-menu-item">
-                                        <li><a href="/Home/OrderList">Order List</a></li>
-                                    </ul>
+                                    <div class="row">
+                                        <div id="inst-section" class="col-md-12">
+                                            <div class="dropdown float-right p-2">
+                                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Welcome @ViewBag.CurrentUserName
+                                                </button>
+                                                <div class="dropdown-menu w-50" aria-labelledby="dropdownMenuButton">
+                                                    <a href="/user/dashboard" class="dropdown-item"><i class="la la-dashboard"></i> &nbsp;&nbsp;Dashboard</a>
+                                                    <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
+                                                        @Html.AntiForgeryToken()
+                                                        <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item"><i class="la la-lock-open"></i> &nbsp;&nbsp;Log Out</a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                else if ((string)@ViewBag.CurrentUserName != null && User.IsInRole("Customer"))
+                                {
+                                    <div class="row">
+                                        <div id="inst-section" class="col-md-12">
+                                            <div class="dropdown float-right p-2">
+                                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Welcome @ViewBag.CurrentUserName
+                                                </button>
+                                                <div class="dropdown-menu w-50" aria-labelledby="dropdownMenuButton">
+                                                    <a href="/Home/OrderList" class="dropdown-item"><i class="la la-list"></i> &nbsp;&nbsp;Order List</a>
+                                                    <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
+                                                        @Html.AntiForgeryToken()
+                                                        <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item"><i class="la la-lock-open"></i> &nbsp;&nbsp;Log Out</a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 }
                                 else
                                 {
@@ -247,17 +280,17 @@
                     </div><!-- end footer-item -->
                 </div><!-- end col-lg-3 -->
                 @*<div class="col-lg-3 responsive-column">
-                    <div class="footer-item">
-                        <h4 class="title curve-shape pb-3 margin-bottom-20px" data-text="curvs">Other Links</h4>
-                        <ul class="list-items list--items">
-                            <li><a href="#">USA Vacation Packages</a></li>
-                            <li><a href="#">USA Flights</a></li>
-                            <li><a href="#">USA Hotels</a></li>
-                            <li><a href="#">USA Car Hire</a></li>
-                            <li><a href="#">Create an Account</a></li>
-                        </ul>
-                    </div><!-- end footer-item -->
-                </div><!-- end col-lg-3 -->*@
+                        <div class="footer-item">
+                            <h4 class="title curve-shape pb-3 margin-bottom-20px" data-text="curvs">Other Links</h4>
+                            <ul class="list-items list--items">
+                                <li><a href="#">USA Vacation Packages</a></li>
+                                <li><a href="#">USA Flights</a></li>
+                                <li><a href="#">USA Hotels</a></li>
+                                <li><a href="#">USA Car Hire</a></li>
+                                <li><a href="#">Create an Account</a></li>
+                            </ul>
+                        </div><!-- end footer-item -->
+                    </div><!-- end col-lg-3 -->*@
                 <div class="col-lg-3 responsive-column">
                     <div class="footer-item">
                         <h4 class="title curve-shape pb-3 margin-bottom-20px" data-text="curvs">Payment Methods</h4>
@@ -271,7 +304,7 @@
                 <div class="col-lg-12">
                     <div class="copy-right padding-top-30px text-center">
                         <p class="copy__desc">
-                            &copy; Copyright LocalConnection 2021. 
+                            &copy; Copyright LocalConnection 2021.
                             @*Developed<span class="la la-heart"></span> by <a href="#">Cunick Technologies</a>*@
                         </p>
                     </div><!-- end copy-right -->
@@ -282,7 +315,37 @@
     <!-- ================================
            START FOOTER AREA
     ================================= -->
+    @*error message*@
+    <div class="row">
+        <div id="toastr-type" data-msg="@TempData["Type"]"></div>
+        <div id="toastr-message" data-msg="@TempData["Message"]"></div>
+    </div>
+    <div id="ajax-backdrop" class="fade in" style="background-color: rgb(0, 0, 0); bottom: 0px; left: 0px; position: fixed; right: 0px; top: 0px; z-index: 10000; opacity: 0.4; display: none;"></div>
+    <div class="modal modal-styled" id="myErroMsgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-google">
+                    <h4 class="modal-title" id="myErroModalLabel"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="CloseMyModal()"><span aria-hidden="true">&times;</span></button>
+
+                </div>
+                <div class="modal-body">
+                    <h4 id="Msg"></h4>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10 text-right" style="padding-right: 0;">
+                        <input type="button" id="myErroMsgModalNoButton" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="CloseMyModal()" value="Cancel" />
+                        <input type="button" id="myErroMsgModalYesButton" value="Yes" class="btn btn-info btn-sm hidden" onclick="OkMyModal()" />
+                    </div>
+                </div>
+                <input type="hidden" id="eventSender" name="name" value=" " />
+            </div>
+        </div>
+    </div>
+
+
     <!-- Template JS Files -->
+    <script src="~/Scripts/popper.min.js"></script>
     <script src="~/Content/WebCss/js/jquery-3.4.1.min.js"></script>
     <script src="~/Content/WebCss/js/jquery-ui.js"></script>
     <script src="~/Content/WebCss/js/popper.min.js"></script>
@@ -299,7 +362,8 @@
     <script src="~/Content/WebCss/js/jquery.superslides.min.js"></script>
     <script src="~/Content/WebCss/js/superslider-script.js"></script>
     <script src="~/Content/WebCss/js/main.js"></script>
-
+    <script src="~/Scripts/toastr.js"></script>
+    <script src="~/Scripts/invoketoastr.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("scripts", required: false)
