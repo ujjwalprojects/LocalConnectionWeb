@@ -42,7 +42,14 @@
                                 <span class="price__num"><i class="la la-rupee"></i> @item.OfferPrice.ToString("0.00")</span>
                                 <span class="price__text">Per night</span>
                             </p>
-                            <a href="/home/hoteldetails/@item.HotelID" class="btn-text">Book Now<i class="la la-angle-right"></i></a>
+                            @if (User.Identity.Name != "")
+                            {
+                                <a href="/home/hoteldetails/@item.HotelID" class="btn-text">Book Now<i class="la la-angle-right"></i></a>
+                            }
+                            else
+                            {
+                                <a href="#" class="theme-btn theme-btn-small" data-toggle="modal" data-target="#loginPopupForm">Book Now</a>
+                            }
                         </div>
                     </div>
                 </div><!-- end card-item -->

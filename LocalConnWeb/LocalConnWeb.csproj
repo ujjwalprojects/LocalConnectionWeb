@@ -790,6 +790,7 @@
     <Content Include="Content\img\loading.gif" />
     <Content Include="Content\img\login-back.jpg" />
     <Content Include="Content\img\login1.jpg" />
+    <Content Include="Content\img\LOGINbg.png" />
     <Content Include="Content\img\login_1.jpg" />
     <Content Include="Content\img\logos.png" />
     <Content Include="Content\img\male-icon.png" />

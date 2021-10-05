@@ -414,15 +414,15 @@
                             <div class="section-block"></div>
                         </div><!-- end faq -->
                         @*<div class="section-block"></div>
-        <div id="location-map" class="page-scroll">
-            <div class="single-content-item padding-top-40px padding-bottom-40px">
-                <h3 class="title font-size-20">Location</h3>
-                <div class="gmaps padding-top-30px">
-                    <div id="map-canvas"></div>
-                </div>
-            </div><!-- end single-content-item -->
-            <div class="section-block"></div>
-        </div><!-- end location-map -->*@
+                            <div id="location-map" class="page-scroll">
+                                <div class="single-content-item padding-top-40px padding-bottom-40px">
+                                    <h3 class="title font-size-20">Location</h3>
+                                    <div class="gmaps padding-top-30px">
+                                        <div id="map-canvas"></div>
+                                    </div>
+                                </div><!-- end single-content-item -->
+                                <div class="section-block"></div>
+                            </div><!-- end location-map -->*@
                     </div><!-- end single-content-wrap -->
                 </div><!-- end col-lg-8 -->
                 <div class="col-lg-4">
@@ -496,7 +496,7 @@
                                     <p><span class="text-form">Total</span><span class="text-value ml-2 mr-1"><i class="la la-rupee"></i><span id="actualPrice"></span> </span> <i class="la la-rupee-sign"></i><span class="before-price">@Model.hotelDtl.RoomTypePrice.ToString("G29")</span></p>
                                 </div>
                             </div><!-- end sidebar-widget-item -->
-                            <div class="btn-box pt-2"> 
+                            <div class="btn-box pt-2">
                                 @Html.HiddenFor(x => x.hotelDtl.MaxOccupantPerRoom, new { Value = Model.hotelDtl.MaxOccupantPerRoom, id = "maxOPerRoom" })
                                 @using (Html.BeginForm("HotelBookingDtl", "Home"))
                                 {
@@ -510,7 +510,15 @@
                                     @Html.HiddenFor(x => x.NoofDays, new { id = "mNoOfDays" })
                                     @Html.HiddenFor(x => x.preBookDtl.CustDetails, new { id = "mCustDetails", })
 
-                                    <input type="submit" value="Book Now" class="theme-btn text-center w-100 mb-2" />
+                                    if (User.Identity.Name != "")
+                                    {
+                                        <input type="submit" value="Book Now" class="theme-btn text-center w-100 mb-2" />
+                                    }
+                                    else
+                                    {
+                                        <a href="/home/hoteldetails/@Model.hotelDtl.HotelID" class="open-homeEvents theme-btn theme-btn-small" data-toggle="modal" data-target="#loginPopupForm">Book Now</a>
+                                    }
+
                                 }
 
                             </div>
@@ -585,7 +593,7 @@
 
             });
 
-            
+
 
 
             var maxOccPerRoom = $('#maxOPerRoom').val();
@@ -600,9 +608,11 @@
             });
 
             $("#roomDec").click(function () {
-                preVal -= 1;
-                $('#norooms').val(preVal);
-                calculatePrice();
+                if (preVal > 1) {
+                    preVal -= 1;
+                    $('#norooms').val(preVal);
+                    calculatePrice();
+                }
             });
 
 
@@ -853,4 +863,11 @@
 
     </script>
 
+    @*click event set the value of one anchor tag to login model anchor tag*@
+    <script type="text/javascript">
+        $(document).on("click", ".open-homeEvents", function () {
+            var link = $(this).attr('href')
+            $(".modal-body #eventId").attr("href", link);
+        });
+    </script>
 }

@@ -24,7 +24,7 @@
                 {
                     <div class="row">
                         @foreach (var item in Model.hotelofferlist)
-                        { 
+                        {
 
                             <div class="col-lg-4 responsive-column">
                                 <div class="card-item">
@@ -55,7 +55,14 @@
                                                 <span class="price__num"><i class="fa fa-rupee"></i> @item.OfferPrice.ToString("0.00")</span>
                                                 <span class="price__text">Per night</span>
                                             </p>
-                                            <a href="tour-details.html" class="btn-text">Book Now<i class="la la-angle-right"></i></a>
+                                            @if (User.Identity.Name != "")
+                                            {
+                                                <a href="/home/hoteldetails/@item.HotelID" class="btn-text">Book Now<i class="la la-angle-right"></i></a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/home/hoteldetails/@item.HotelID" class="open-homeEvents theme-btn theme-btn-small" data-toggle="modal" data-target="#loginPopupForm">Book Now</a>
+                                            }
                                         </div>
                                     </div>
                                 </div><!-- end card-item -->
@@ -75,3 +82,18 @@
         </div><!-- end row -->
     </div><!-- end container -->
 </section><!-- end card-area -->
+
+
+
+@section Scripts{
+
+  
+    @*click event set the value of one anchor tag to login model anchor tag*@
+    <script type="text/javascript">
+        $(document).on("click", ".open-homeEvents", function () {
+            var link = $(this).attr('href')
+            $(".modal-body #eventId").attr("href", link);
+        });
+    </script>
+
+}
