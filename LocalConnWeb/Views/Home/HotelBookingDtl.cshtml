@@ -45,21 +45,24 @@
                     <div class="form-content ">
                         <div class="contact-form-action">
                             <form method="post" action="/home/paynow">
-                                @Html.HiddenFor(x => x.preBookDtl.HotelID)
-                                @Html.HiddenFor(x => x.preBookDtl.FinalFare)
-                                @Html.HiddenFor(x => x.preBookDtl.RoomSelect)
-                                @Html.HiddenFor(x => x.preBookDtl.AdultSelect)
-                                @Html.HiddenFor(x => x.preBookDtl.ChildrenSelect)
-                                @Html.HiddenFor(x => x.preBookDtl.BookingFrom)
-                                @Html.HiddenFor(x => x.preBookDtl.BookingUpto)
-                                @Html.HiddenFor(x => x.preBookDtl.CustDetails)
+                                @Html.HiddenFor(x => x.preBookDtls.HotelID)
+                                @Html.HiddenFor(x => x.preBookDtls.FinalFare)
+                                @Html.HiddenFor(x => x.preBookDtls.RoomSelect)
+                                @Html.HiddenFor(x => x.preBookDtls.AdultSelect)
+                                @Html.HiddenFor(x => x.preBookDtls.ChildrenSelect)
+                                @Html.HiddenFor(x => x.preBookDtls.BookingFrom)
+                                @Html.HiddenFor(x => x.preBookDtls.BookingUpto)
+                                @Html.HiddenFor(x => x.preBookDtls.CustDetails)
+                                @Html.HiddenFor(x => x.selectedRoomType)
+
+
                                 <div class="row">
                                     <div class="col-lg-12 responsive-column">
                                         <div class="input-box">
                                             <label class="label-text">Guest Name</label>
                                             <div class="form-group">
                                                 <span class="la la-user form-icon"></span>
-                                                @Html.TextBoxFor(x => x.preBookDtl.CustName, new { @class = "form-control", @placeholder = "Guest Name" })
+                                                @Html.TextBoxFor(x => x.preBookDtls.CustName, new { @class = "form-control", @placeholder = "Guest Name" })
                                                 @Html.ValidationMessageFor(m => m.preBookDtl.CustName)
                                             </div>
                                         </div>
@@ -69,7 +72,7 @@
                                             <label class="label-text">Your Email</label>
                                             <div class="form-group">
                                                 <span class="la la-envelope-o form-icon"></span>
-                                                @Html.TextBoxFor(x => x.preBookDtl.CustEmail, new { @class = "form-control", @placeholder = "Email ID" })
+                                                @Html.TextBoxFor(x => x.preBookDtls.CustEmail, new { @class = "form-control", @placeholder = "Email ID" })
                                                 @Html.ValidationMessageFor(m => m.preBookDtl.CustEmail)
                                             </div>
                                         </div>
@@ -79,7 +82,7 @@
                                             <label class="label-text">Phone Number</label>
                                             <div class="form-group">
                                                 <span class="la la-phone form-icon"></span>
-                                                @Html.TextBoxFor(x => x.preBookDtl.CustPhNo, new { @class = "form-control", @placeholder = "Mobile Name" })
+                                                @Html.TextBoxFor(x => x.preBookDtls.CustPhNo, new { @class = "form-control", @placeholder = "Mobile Name" })
                                                 @Html.ValidationMessageFor(m => m.preBookDtl.CustPhNo)
                                             </div>
                                         </div>
@@ -90,15 +93,15 @@
                                 </div>
                                 <div class="row alert alert-secondary p-2">
                                     <div class="col-md-8 col-sm-12">
-                                        <h3 class="text-primary pt-2"><i class="la la-rupee"></i>Total Price: @Model.preBookDtl.FinalFare/-</h3>
+                                        <h3 class="text-primary pt-2"><i class="la la-rupee"></i>Total Price: @Model.preBookDtls.FinalFare/-</h3>
                                     </div>   <!-- end col-lg-8 -->
                                     <div class="col-md-4 col-sm-12">
                                         <div class="btn-box">
                                             @if (!(User.Identity.IsAuthenticated))
                                             {
-                                            <button class="theme-btn float-right" type="submit">
-                                                Login to book your stay
-                                            </button>
+                                                <button class="theme-btn float-right" type="submit">
+                                                    Login to book your stay
+                                                </button>
                                             }
                                             else
                                             {
@@ -176,17 +179,17 @@
                                     </div>*@
                                 <div class="section-block"></div>
                                 <ul class="list-items list-items-2 py-2">
-                                    <li><span>Check in:</span>@Model.preBookDtl.BookingFrom.ToString("dd MMM yyyy")</li>
-                                    <li><span>Check out:</span>@Model.preBookDtl.BookingUpto.ToString("dd MMM yyyy")</li>
+                                    <li><span>Check in:</span>@Model.preBookDtls.BookingFrom.ToString("dd MMM yyyy")</li>
+                                    <li><span>Check out:</span>@Model.preBookDtls.BookingUpto.ToString("dd MMM yyyy")</li>
                                 </ul>
                                 <div class="section-block"></div>
                                 <h3 class="card-title pt-3 pb-2 font-size-15"><a href="hotel-single.html">Order Details</a></h3>
                                 <div class="section-block"></div>
                                 <ul class="list-items list-items-2 py-3">
-                                    <li><span>Room Type:</span>@Model.hotelDtl.DefaultRoomType</li>
-                                    <li><span>Room:</span>@Model.preBookDtl.RoomSelect</li>
-                                    <li><span>Adults:</span>@Model.preBookDtl.AdultSelect Adult(s)</li>
-                                    <li><span>Child:</span>@Model.preBookDtl.ChildrenSelect Child(s)</li>
+                                    <li><span>Room Type:</span>@Model.selectedRoomType</li>
+                                    <li><span>Room:</span>@Model.preBookDtls.RoomSelect</li>
+                                    <li><span>Adults:</span>@Model.preBookDtls.AdultSelect Adult(s)</li>
+                                    <li><span>Child:</span>@Model.preBookDtls.ChildrenSelect Child(s)</li>
                                     @*<li><span>Stay:</span>4 Nights</li>*@
                                     @foreach (var item in Model.amenitesDisplay)
                                     {
@@ -206,7 +209,7 @@
 
                                     @*<li><span>Sub Total:</span>$240</li>
                                         <li><span>Taxes And Fees:</span>$5</li>*@
-                                    <li class="text-primary"><span>Total Price:</span><h3><i class="la la-rupee"></i>@Model.preBookDtl.FinalFare</h3></li>
+                                    <li class="text-primary"><span>Total Price:</span><h3><i class="la la-rupee"></i>@Model.preBookDtls.FinalFare</h3></li>
                                 </ul>
                             </div>
                         </div><!-- end card-item -->

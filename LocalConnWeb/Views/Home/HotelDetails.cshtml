@@ -493,7 +493,10 @@
                             <div class="sidebar-widget-item">
                                 <div class="sidebar-book-title-wrap mb-3">
                                     @*<h3>Popular</h3>*@
-                                    <p><span class="text-form">Total</span><span class="text-value ml-2 mr-1"><i class="la la-rupee"></i><span id="actualPrice"></span> </span> <i class="la la-rupee-sign"></i><span class="before-price">@Model.hotelDtl.RoomTypePrice.ToString("G29")</span></p>
+                                    <p>
+                                        <span class="text-form">Total</span><span class="text-value ml-2 mr-1"><i class="la la-rupee"></i><span id="actualPrice"></span> </span>
+                                        <i class="la la-rupee-sign"></i><span class="before-price" id="baseprice"></span>
+                                    </p>
                                 </div>
                             </div><!-- end sidebar-widget-item -->
                             <div class="btn-box pt-2">
@@ -509,6 +512,8 @@
                                     @Html.TextBoxFor(x => x.BookUpTo, "{0:d MMM yyyy}", new { id = "mBookingUpto", Value = @ViewBag.endDate, @type = "hidden" })
                                     @Html.HiddenFor(x => x.NoofDays, new { id = "mNoOfDays" })
                                     @Html.HiddenFor(x => x.preBookDtl.CustDetails, new { id = "mCustDetails", })
+                                    @Html.HiddenFor(x => x.selectedRoomType, new { id = "mCustSelRoomType", })
+
 
                                     if (User.Identity.Name != "")
                                     {
@@ -536,7 +541,11 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            $('#baseprice').val(@Model.hotelDtl.RoomTypePrice.ToString("G29"));
 
+        var defaultRoomType = $('.roomType').attr('name');
+            $('#mCustSelRoomType').val(defaultRoomType);
+        
         $('#parentHolder').hide();
         $('#notselected').show();
         var globalRValue =@Model.hotelDtl.RoomTypePrice.ToString("G29");
@@ -597,66 +606,69 @@
 
 
             var maxOccPerRoom = $('#maxOPerRoom').val();
+            var maxRoom = @Model.hotelDtl.MaxRooms;
             var maxAdult =@Model.hotelDtl.MaxOccupant;
             var preVal = parseInt($('#norooms').val());
             var newAVal = parseInt($('#noAdult').val())
 
             $("#roomInc").click(function () {
-                preVal += 1;
-                $('#norooms').val(preVal);
-                calculatePrice();
+                if (preVal < maxRoom) {
+                    preVal += 1;
+                    $('#norooms').val(preVal);
+                    calculatePrice2();
+                }
+
             });
 
             $("#roomDec").click(function () {
                 if (preVal > 1) {
                     preVal -= 1;
                     $('#norooms').val(preVal);
-                    calculatePrice();
+                    calculatePrice2();
                 }
             });
 
 
             $("#adultInc").click(function () {
-
-
-
-                newAVal = parseInt(newAVal) + 1;
-                if (parseInt(newAVal) > parseInt(maxAdult)) {
-                    $('#noAdult').val(maxAdult);
-                } else {
-                    $('#noAdult').val(newAVal);
-                }
-                $('#mAdultSelect').val(newAVal);
-
-                //case when maxperson per room is 2
-                if (parseInt(maxOccPerRoom) == 2) {
-                    if (parseInt(newAVal) > 2) {
-                        if (parseInt(newAVal) % parseInt(maxOccPerRoom) != 0) {
-                            preVal = parseInt(preVal) + 1;
-                            //$("#roomSelect option[value=" + preVal + "]").attr('selected', 'selected');
-                            $('#norooms').val(preVal);
-                        }
+                if (preVal < maxRoom) {
+                    newAVal = parseInt(newAVal) + 1;
+                    if (parseInt(newAVal) > parseInt(maxAdult)) {
+                        $('#noAdult').val(maxAdult);
+                    } else {
+                        $('#noAdult').val(newAVal);
                     }
+                    $('#mAdultSelect').val(newAVal);
 
-                }
-
-                //case when maxperson is 3
-                if (parseInt(maxOccPerRoom) == 3) {
-                    if (parseInt(newAVal) > 3) {
-                        if (parseInt(newAVal-1) % parseInt(maxOccPerRoom) == 0) {
-                            if (parseInt(newAVal) % parseInt(maxOccPerRoom) == 1) {
+                    //case when maxperson per room is 2
+                    if (parseInt(maxOccPerRoom) == 2) {
+                        if (parseInt(newAVal) > 2) {
+                            if (parseInt(newAVal) % parseInt(maxOccPerRoom) != 0) {
                                 preVal = parseInt(preVal) + 1;
                                 //$("#roomSelect option[value=" + preVal + "]").attr('selected', 'selected');
                                 $('#norooms').val(preVal);
                             }
-
                         }
+
                     }
 
+                    //case when maxperson is 3
+                    if (parseInt(maxOccPerRoom) == 3) {
+                        if (parseInt(newAVal) > 3) {
+                            if (parseInt(newAVal - 1) % parseInt(maxOccPerRoom) == 0) {
+                                if (parseInt(newAVal) % parseInt(maxOccPerRoom) == 1) {
+                                    preVal = parseInt(preVal) + 1;
+                                    //$("#roomSelect option[value=" + preVal + "]").attr('selected', 'selected');
+                                    $('#norooms').val(preVal);
+                                }
+
+                            }
+                        }
+
+                    }
+
+
+                    calculatePrice();
                 }
-
-
-                calculatePrice();
             });
             $("#adultDec").click(function () {
 
@@ -771,6 +783,7 @@
             $('.roomType').on("click", function (e) {
 
                 var selRoom = $(this).attr('name');
+                $('#mCustSelRoomType').val(selRoom);
 
                 //alert(selRoom + parseInt($(this).attr('value')));
                 $('#roomTypeSel').find('label').each(function () {
@@ -799,50 +812,182 @@
                 var twoPercent = @Model.hotelDtl.TwoOccupantPercentage;
                 var threePercent = @Model.hotelDtl.ThreeOccupantPercentage;
                 var fourPercent = @Model.hotelDtl.FourPlusOccupantPercentage;
-                if (parseInt(totalRoom) > 1) {
-                    roomBaseValue = parseInt(roomBaseValue) * parseInt(totalRoom);
-                    actValue = roomBaseValue;
-                } else {
-                    actValue = roomBaseValue;
-                }
+                //if (parseInt(totalRoom) > 1) {
+                //    roomBaseValue = parseInt(roomBaseValue) * parseInt(totalRoom);
+                //    actValue = roomBaseValue;
+                //} else {
+                //    actValue = roomBaseValue;
+                //}
                 //if (parseInt(noofday)  > 1) {
                 //    roomBaseValue = parseInt(roomBaseValue) * parseInt(noofday);
                 //    actValue = roomBaseValue;
                 //} else {
                 //    actValue = roomBaseValue;
+                //} 
+                if (totalRoom >= noOfAdult) {
+                    roomActualValue = roomBaseValue * totalRoom * noofday;
+                    roomBaseValue = roomBaseValue * totalRoom * noofday;
+
+
+                    actValue = roomBaseValue;
+                    if (parseInt(overAll) > 0) {
+                        var newvalue = parseInt(roomBaseValue) * parseInt(overAll) / 100;
+                        roomBaseValue = actValue - newvalue;
+                    }
+                    //if (parseInt(noOfAdult) == 2) {
+                    //    tPercent = (parseInt(roomBaseValue) * parseInt(twoPercent)) / 100;
+                    //    var newvalue = roomBaseValue - tPercent;
+                    //    roomBaseValue = newvalue;
+                    //}
+                    //if (parseInt(noOfAdult) == 3) {
+                    //    tPercent = (parseInt(roomBaseValue) * parseInt(threePercent)) / 100;
+                    //    var newvalue = parseInt(roomBaseValue) - parseInt(tPercent);
+                    //    roomBaseValue = newvalue;
+                    //}
+                    //if (parseInt(noOfAdult) >= 4) {
+                    //    tPercent = (parseInt(roomBaseValue) * parseInt(fourPercent)) / 100;
+                    //    var newvalue = roomBaseValue - tPercent;
+                    //    roomBaseValue = newvalue;
+                    //}
+                    if (noofday == 0) {
+                        //alert("Please Select Date");
+                        noofday = 1;
+                    }
+
+
+                    if (parseInt(amTotal) != 0) {
+                        if (noOfAdult == 1) {
+                            noOfAdult = 0;
+                            amTotal = parseInt(noofday) * parseInt(amTotal) + parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild) * parseInt(amTotal);
+                        }
+                        else {
+                            amTotal = (parseInt(noofday) * parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild));
+                        }
+                    }
+
+                    var finalFare = parseInt(roomBaseValue) + parseInt(amTotal);
+                }
+                else {
+                    roomActualValue = roomBaseValue * noOfAdult * noofday;
+                    roomBaseValue = roomBaseValue * noOfAdult * noofday;
+
+                    actValue = roomBaseValue;
+                    if (parseInt(overAll) > 0) {
+                        var newvalue = parseInt(roomBaseValue) * parseInt(overAll) / 100;
+                        roomBaseValue = actValue - newvalue;
+                    }
+
+                    if (parseInt(noOfAdult) == 2) {
+                        tPercent = (parseInt(roomBaseValue) * parseInt(twoPercent)) / 100;
+                        var newvalue = roomBaseValue - tPercent;
+                        roomBaseValue = newvalue;
+                    }
+                    //if (parseInt(noOfAdult) == 3) {
+                    //    tPercent = (parseInt(roomBaseValue) * parseInt(threePercent)) / 100;
+                    //    var newvalue = parseInt(roomBaseValue) - parseInt(tPercent);
+                    //    roomBaseValue = newvalue;
+                    //}
+                    //if (parseInt(noOfAdult) >= 4) {
+                    //    tPercent = (parseInt(roomBaseValue) * parseInt(fourPercent)) / 100;
+                    //    var newvalue = roomBaseValue - tPercent;
+                    //    roomBaseValue = newvalue;
+                    //}
+                    if (noofday == 0) {
+                        //alert("Please Select Date");
+                        noofday = 1;
+                    }
+
+
+                    if (parseInt(amTotal) != 0) {
+                        if (noOfAdult == 1) {
+                            noOfAdult = 0;
+                            amTotal = parseInt(noofday) * parseInt(amTotal) + parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild) * parseInt(amTotal);
+                        }
+                        else {
+                            amTotal = (parseInt(noofday) * parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild));
+                        }
+                    }
+
+                    var finalFare = parseInt(roomBaseValue) + parseInt(amTotal);
+                }
+              
+               
+               
+                        //alert(finalFare);
+                $('#actualPrice').text(finalFare);
+                //setting values
+
+                $('#mFinalFare').val(finalFare);
+                $('#mRoomSelect').val(totalRoom);
+                $('#mAdultSelect').val($('#noAdult').val());
+                $('#mChildSelect').val($('#noChild').val());
+                $("#mCustDetails").val(amnetiesArr);
+                $('#baseprice').text(roomActualValue);
+            }
+
+
+
+
+            function calculatePrice2() {
+                var roomBaseValue = globalRValue;
+                //var totalRoom = $('#roomSelect option:selected').val();
+                var totalRoom = $('#norooms').val();
+                noOfAdult = $('#noAdult').val();
+                noOfChild = $('#noChild').val();
+                var tPercent = 0;
+                var actValue = 0;
+                var overAll = @Model.hotelDtl.OverallOfferPercentage;
+                var twoPercent = @Model.hotelDtl.TwoOccupantPercentage;
+                var threePercent = @Model.hotelDtl.ThreeOccupantPercentage;
+                var fourPercent = @Model.hotelDtl.FourPlusOccupantPercentage;
+                //if (parseInt(totalRoom) > 1) {
+                //    roomBaseValue = parseInt(roomBaseValue) * parseInt(totalRoom);
+                //    actValue = roomBaseValue;
+                //} else {
+                //    actValue = roomBaseValue;
                 //}
-                roomBaseValue = roomBaseValue * noOfAdult * noofday;
+                //if (parseInt(noofday)  > 1) {
+                //    roomBaseValue = parseInt(roomBaseValue) * parseInt(noofday);
+                //    actValue = roomBaseValue;
+                //} else {
+                //    actValue = roomBaseValue;
+                //} 
+                roomActualValue = roomBaseValue * totalRoom * noofday;
+                roomBaseValue = roomBaseValue * totalRoom * noofday;
+               
                 actValue = roomBaseValue;
                 if (parseInt(overAll) > 0) {
                     var newvalue = parseInt(roomBaseValue) * parseInt(overAll) / 100;
                             roomBaseValue = actValue - newvalue;
                         }
-                if (parseInt(noOfAdult) == 2) {
-                            tPercent = (parseInt(roomBaseValue ) * parseInt(twoPercent)) / 100;
-                            var newvalue = roomBaseValue - tPercent;
-                            roomBaseValue = newvalue;
-                        }
-                if (parseInt(noOfAdult) == 3) {
-                            tPercent = (parseInt(roomBaseValue) * parseInt(threePercent)) / 100;
-                            var newvalue = parseInt(roomBaseValue) - parseInt(tPercent);
-                            roomBaseValue = newvalue;
-                        }
-                if (parseInt(noOfAdult) >= 4) {
-                            tPercent = (parseInt(roomBaseValue) * parseInt(fourPercent)) / 100;
-                            var newvalue = roomBaseValue - tPercent;
-                            roomBaseValue = newvalue;
-                }
+                //if (parseInt(noOfAdult) == 2) {
+                //            tPercent = (parseInt(roomBaseValue ) * parseInt(twoPercent)) / 100;
+                //            var newvalue = roomBaseValue - tPercent;
+                //            roomBaseValue = newvalue;
+                //        }
+                //if (parseInt(noOfAdult) == 3) {
+                //            tPercent = (parseInt(roomBaseValue) * parseInt(threePercent)) / 100;
+                //            var newvalue = parseInt(roomBaseValue) - parseInt(tPercent);
+                //            roomBaseValue = newvalue;
+                //        }
+                //if (parseInt(noOfAdult) >= 4) {
+                //            tPercent = (parseInt(roomBaseValue) * parseInt(fourPercent)) / 100;
+                //            var newvalue = roomBaseValue - tPercent;
+                //            roomBaseValue = newvalue;
+                //}
                 if (noofday == 0) {
                     //alert("Please Select Date");
                     noofday = 1;
                 }
+
+
                 if (parseInt(amTotal) != 0) {
                     if (noOfAdult == 1) {
                         noOfAdult = 0;
                         amTotal = parseInt(noofday) * parseInt(amTotal) + parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild) * parseInt(amTotal) ;
                     }
                     else {
-                        amTotal = parseInt(noofday) * parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild) * parseInt(amTotal);
+                        amTotal = (parseInt(noofday) * parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild));
                     }
                 }
 
@@ -856,8 +1001,10 @@
                 $('#mAdultSelect').val($('#noAdult').val());
                 $('#mChildSelect').val($('#noChild').val());
                 $("#mCustDetails").val(amnetiesArr);
-
+                $('#baseprice').text(roomActualValue);
             }
+
+
         });
 
 

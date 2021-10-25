@@ -147,7 +147,7 @@
                                             <span class="price__num"><i class="la la-rupee"></i> @item.OfferPrice.ToString("0.00")</span>
                                             <span class="price__text">Per night</span>
                                         </p>
-                                        @if (User.Identity.Name != "")
+                                        @if (User.Identity.Name != "" && User.Identity.IsAuthenticated == true)
                                         {
                                             <a href="/home/hoteldetails/@item.HotelID" class="btn-text">Book Now<i class="la la-angle-right"></i></a>
                                         }

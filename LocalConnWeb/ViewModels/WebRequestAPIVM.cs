@@ -135,11 +135,34 @@ namespace LocalConnWeb.ViewModels
         public DateTime BookingFrom { get; set; }
         public DateTime BookingUpto { get; set; }
         public DateTime BookingDate { get; set; }
+        //
         public string CustDetails { get; set; }
         public string BookingStatus { get; set; }
         public decimal FinalFare { get; set; }
         public string PaymentGatewayCode { get; set; }
+        public string UserID { get; set; }
+        public string UserName { get; set; }
     }
+
+    public class PreBookingTransDtl
+    {
+        public string BookingID { get; set; }
+        public long HotelID { get; set; }
+        public string CustName { get; set; }
+        public string CustEmail { get; set; }
+        public string CustPhNo { get; set; }
+        public DateTime BookingFrom { get; set; }
+        public DateTime BookingUpto { get; set; }
+        public DateTime BookingDate { get; set; }
+        public string CustDetails { get; set; }
+        public string BookingStatus { get; set; }
+        public decimal FinalFare { get; set; }
+        public string PaymentGatewayCode { get; set; }
+        public string HotelName { get; set; }
+        public string UserID { get; set; }
+        public string UserName { get; set; }
+    }
+
     public class OrderList
     {
         public string BookingID { get; set; }

@@ -1389,6 +1389,7 @@
     <Content Include="Views\GenLCHotels\SearchHotels.cshtml" />
     <Content Include="Views\GenLCHotels\_pvSearchHotelList.cshtml" />
     <Content Include="Views\Home\_pvCitiesMenu.cshtml" />
+    <Content Include="Views\Home\orderDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

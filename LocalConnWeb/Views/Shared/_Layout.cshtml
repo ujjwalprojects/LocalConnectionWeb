@@ -202,12 +202,33 @@
                                         </div>
                                     </div>
                                 }
-                                else
+                                else if (User.Identity.IsAuthenticated)
                                 {
+                                    <div class="row">
+                                        <div id="inst-section" class="col-md-12">
+                                            <div class="dropdown float-right p-2">
+                                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Welcome Guest User
+                                                </button>
+                                                <div class="dropdown-menu w-50" aria-labelledby="dropdownMenuButton">
+                                                    <a href="/Home/OrderList" class="dropdown-item"><i class="la la-list"></i> &nbsp;&nbsp;Order List</a>
+                                                    <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
+                                                        @Html.AntiForgeryToken()
+                                                        <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item"><i class="la la-lock-open"></i> &nbsp;&nbsp;Log Out</a>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @*<a href="/account/register" class="theme-btn theme-btn-small theme-btn-transparent mr-1">Sign Up</a>*@
-                                    <a href="/account/login" class="theme-btn theme-btn-small">Login</a>
+                                    @*<a href="/account/login" class="theme-btn theme-btn-small">Login</a>*@
                                     @*<a href="#" class="theme-btn theme-btn-small" data-toggle="modal" data-target="#loginPopupForm">Login</a>*@
                                 }
+                                else
+                                {
+                                    <a href="/account/login" class="theme-btn theme-btn-small">Login</a>
+                                }
+
 
 
                             </div><!-- end nav-btn -->

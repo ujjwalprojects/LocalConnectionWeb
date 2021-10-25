@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using LocalConnWeb.Areas.Admin.CustomModels;
 using LocalConnWeb.Areas.Admin.Models;
 using LocalConnWeb.CustomModels;
@@ -26,6 +27,10 @@ namespace LocalConnWeb.Controllers
             {
                 SessionModel sessionModel = Session["SessionVar"] as SessionModel;
                 ViewBag.CurrentUserName = sessionModel.UserName;
+            }
+            else
+            {
+                HttpContext.GetOwinContext().Authentication.SignOut();
             }
 
         }
@@ -65,11 +70,15 @@ namespace LocalConnWeb.Controllers
         public ActionResult HotelBookingDtl(HotelDetailsVM obj)
         {
             HotelDetailsVM model = new HotelDetailsVM();
+            
             obj.preBookDtl.BookingFrom = DateTime.ParseExact(obj.BookFrom, "d/M/yyyy", CultureInfo.InvariantCulture);
             obj.preBookDtl.BookingUpto = DateTime.ParseExact(obj.BookUpTo, "d/M/yyyy", CultureInfo.InvariantCulture);
             model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
             obj.hAmenities = objAPI.GetRecordsByID<HAmenitiesList>("webrequest", "gethamenitieslist", Convert.ToInt64(obj.preBookDtl.HotelID));
-            if(obj.NoofDays==0)
+            string noOfRooms = obj.preBookDtl.RoomSelect;
+            string noOfAdults = obj.preBookDtl.AdultSelect;
+            string noOfChild = obj.preBookDtl.ChildrenSelect;
+            if (obj.NoofDays == 0)
             { obj.NoofDays = 1; }
             string[] custDetail = obj.preBookDtl.CustDetails.Split(',');
             model.amenitesDisplay = new List<string>();
@@ -77,20 +86,26 @@ namespace LocalConnWeb.Controllers
             {
                 if (custDetail[i] != "Meals")
                 {
-                    foreach(var item in obj.hAmenities)
+                    foreach (var item in obj.hAmenities)
                     {
-                        if(item.AmenitiesName.Equals(custDetail[i].Trim()))
+                        if (item.AmenitiesName.Equals(custDetail[i].Trim()))
                         {
-                            model.amenitesDisplay.Add(custDetail[i]+" x "+obj.preBookDtl.AdultSelect+"p"+" x "+obj.NoofDays+"d"+ ": "+item.AmenitiesBasePrice.ToString("Rs 0."));
+                            model.amenitesDisplay.Add(custDetail[i] + " x " + obj.preBookDtl.AdultSelect + "p" + " x " + obj.NoofDays + "d" + ": " + item.AmenitiesBasePrice.ToString("Rs 0."));
                             break;
                         }
 
                     }
-                   
                 }
-              
+
             }
-            model.preBookDtl = obj.preBookDtl;
+            string amenitiesdtlstostring = string.Join(" || ", model.amenitesDisplay);
+
+         
+            obj.preBookDtl.CustDetails = noOfRooms + "Room("+obj.selectedRoomType+") " + noOfAdults + "(Adult(s)) " + noOfChild + "(Child(s)) " + "{ " + amenitiesdtlstostring + " }";
+             
+
+            model.preBookDtls = obj.preBookDtl;
+            model.selectedRoomType = obj.selectedRoomType;
             return View(model);
         }
         [HttpPost]
@@ -115,13 +130,14 @@ namespace LocalConnWeb.Controllers
             ViewBag.RzpID = razorKey;
             ViewBag.TransactionID = transactionId;
             ViewBag.amount = 1;
-            ViewBag.name = obj.preBookDtl.CustName;
+            ViewBag.name = obj.preBookDtls.CustName;
             ViewBag.currency = "INR";
-            ViewBag.orderDesc = obj.preBookDtl.CustDetails;
+            ViewBag.orderDesc = obj.preBookDtls.CustDetails;
             ViewBag.orderid = orderId;
-            ViewBag.phone = obj.preBookDtl.CustPhNo;
-            model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
-            model.preBookDtl = obj.preBookDtl;
+            ViewBag.phone = obj.preBookDtls.CustPhNo;
+            model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtls.HotelID);
+            model.preBookDtls = obj.preBookDtls;
+            Session["OrderDetails"] = obj.preBookDtls;
             //model.preBookDtl.BookingID = "TEst001";
             //model.preBookDtl.FinalFare = 200;
             //model.preBookDtl.BookingStatus = "Booked";
@@ -152,16 +168,32 @@ namespace LocalConnWeb.Controllers
 
             if (paymentCaptured.Attributes["status"] == "captured")
             {
-                obj.BookingStatus = "Booked";
-                obj.PaymentGatewayCode = paymentId;
-                string jsonStr = JsonConvert.SerializeObject(obj);
+                PreBookingDtl paymodel = new PreBookingDtl();
+                paymodel.CustName = obj.CustName;
+                paymodel.CustEmail = obj.CustEmail;
+                paymodel.AdultSelect = obj.AdultSelect;
+                paymodel.BookingDate = obj.BookingDate;
+                paymodel.BookingFrom = obj.BookingFrom;
+                paymodel.BookingUpto = obj.BookingUpto;
+                paymodel.ChildrenSelect = obj.ChildrenSelect;
+                paymodel.CustDetails = obj.CustDetails;
+                paymodel.CustPhNo = obj.CustPhNo;
+                paymodel.FinalFare = obj.FinalFare;
+                paymodel.HotelID = obj.HotelID;
+                paymodel.RoomSelect = obj.RoomSelect;
+                paymodel.BookingStatus = "Booked";
+                paymodel.PaymentGatewayCode = paymentId;
+                paymodel.UserID = _sModel.UserID;
+                paymodel.UserName = _sModel.UserName;
+                string jsonStr = JsonConvert.SerializeObject(paymodel);
                 string result = objAPI.PostRecordtoApI("webrequest", "PayNow", jsonStr);
                 TempData["ErrMsg"] = result;
                 return RedirectToAction("PaymentSuccess", "Home", new { BookingID = result });
             }
             else
             {
-                obj.BookingStatus = "Failed";
+                PreBookingDtl paymodel = new PreBookingDtl();
+                paymodel.BookingStatus = "Failed";
                 //obj.PaymentGatewayCode = paymentId;
                 //string jsonStr = JsonConvert.SerializeObject(obj);
                 //string result = objAPI.PostRecordtoApI("webrequest", "PayNow", jsonStr);
@@ -179,7 +211,8 @@ namespace LocalConnWeb.Controllers
             obj.preBookDtl = objAPI.GetRecordByQueryString<PreBookingDtl>("webrequest", "getBookingDtl", "BookingID=" + BookingID);
             obj.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
             string jsonStr = JsonConvert.SerializeObject(obj.preBookDtl);
-            TempData["ErrMsg"] = objAPI.PostRecordtoApI("webrequest", "SendEmail", jsonStr);
+            //TempData["ErrMsg"] = objAPI.PostRecordtoApI("webrequest", "SendEmail", jsonStr);
+            //TempData["ErrMsg"] = objAPI.PostRecordtoApI("webrequest", "SendEmailAdmin", jsonStr);
             return View(obj);
         }
 
@@ -193,7 +226,7 @@ namespace LocalConnWeb.Controllers
             obj.preBookDtl = Session["OrderDetails"] as PreBookingDtl;
             obj.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + HotelID);
             string jsonStr = JsonConvert.SerializeObject(obj.preBookDtl);
-            TempData["ErrMsg"] = objAPI.PostRecordtoApI("webrequest", "SendEmail", jsonStr);
+            //TempData["ErrMsg"] = objAPI.PostRecordtoApI("webrequest", "SendEmail", jsonStr);
             return View(obj);
         }
 
@@ -201,8 +234,16 @@ namespace LocalConnWeb.Controllers
         public ActionResult orderList()
         {
             OrderListVM orderList = new OrderListVM();
-            orderList.orderLists = objAPI.GetRecordsByQueryString<OrderList>("webrequest", "getorderlist", "CustPhNo=" + "1234567890");
+            orderList.orderLists = objAPI.GetRecordsByQueryString<OrderList>("webrequest", "getorderlist", "UserID=" + _sModel.UserID);
             return View(orderList);
+        }
+
+        public ActionResult orderDetails(string id)
+        {
+            HotelDetailsVM obj = new HotelDetailsVM();
+            obj.preBookDtl = objAPI.GetRecordByQueryString<PreBookingDtl>("webrequest", "getBookingDtl", "BookingID=" + id);
+            obj.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
+            return View(obj);
         }
 
         public ActionResult About()
@@ -213,7 +254,7 @@ namespace LocalConnWeb.Controllers
         }
 
 
-       
+
 
         public ActionResult Contact()
         {

@@ -28,10 +28,12 @@ namespace LocalConnWeb.ViewModels
         public NearbyVM nearByVM { get; set; }
         public TermCondPolicyVM termCondVM { get; set; }
         public PreBookingDtl preBookDtl { get; set; }
+        public PreBookingDtl preBookDtls { get; set; }
         public string BookFrom { get; set; }
         public string BookUpTo { get; set; }
         public int NoofDays { get; set; }
         public List<string> amenitesDisplay{ get; set; }
+        public string  selectedRoomType { get; set; }
     }
 
  
