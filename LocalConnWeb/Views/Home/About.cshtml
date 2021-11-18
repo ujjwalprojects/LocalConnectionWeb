@@ -1,93 +1,34 @@
-﻿@{
+﻿@model LocalConnWeb.ViewModels.AboutUsDetails
+@{
     ViewBag.Title = "About";
+    Layout = "~/Views/Shared/_LayoutDetails.cshtml";
 }
-<section class="peulis-breadcrumb-area">
+@*<section class="peulis-breadcrumb-area">
     <div class="breadcrumb-top">
         <div class="container">
             <div class="col-lg-12">
                 <div class="breadcrumb-box">
                     <h2>ABOUT US</h2>
-                    @*<ul class="breadcrumb-inn">
-                        <li><a href="/">Home</a></li>
-                        <li class="active"><a href="#">Search Tour Packages</a></li>
-                    </ul>*@
                 </div>
             </div>
         </div>
     </div>
-</section>
+</section>*@
 <section class="peulis-tour-page-area section_70">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4">
-                <div class="sidebar-widget">
-                    <div class="single-sidebar">
-                        <h3>About Us</h3>
-                        <div class="clearfix">
-                       <ul style="list-style:none;">
-                           <li><i class="fa fa-hand-o-right"></i>&nbsp;<a href="#"> Why Us</a></li>
-                           <li><i class="fa fa-hand-o-right"></i>&nbsp;<a href="#">Why Touring</a></li>
-                           <li><i class="fa fa-hand-o-right"></i>&nbsp;<a href="#">Reviews</a></li>
-                           <li><i class="fa fa-hand-o-right"></i>&nbsp;<a href="#">Travel Insurance</a></li>
-                           <li><i class="fa fa-hand-o-right"></i>&nbsp;<a href="#">Program</a></li>
-                       </ul>
-                               
-                        </div>
-                    </div>
-                    <div class="single-sidebar">
-                        <div class="quick_contact">
-                            <h4>Quick Contact</h4>
-                            <p>
-                                <i class="fa fa-phone"></i>
-                                1 562 867 5309
-                            </p>
-                            <p>
-                                <i class="fa fa-envelope"></i>
-                                info@example.com
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-8">
+            <div class="col-lg-12 m-5">
                 <div class="tour-page-right" style="line-height:2;">
                     <p>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; At Offroads Travel, we believe that every traveler has unique needs, objectives and expectations for their travel plan.
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </p>
-                    <h4>Curiosity is the key……..</h4>
+                    <h4>About Local Connection...</h4>
 
                     <p>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;……and that’s been true since the beginning. Offroads Travel was established in the year 2018 and is one of the best Sikkim Travel Companies located in Gangtok, Sikkim.
-                        We run our business with the understanding that travel should make us defenders of a place, not a means of its deterioration. We know that travel can profoundly benefit both the visitor and the visited.
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @Model.AboutContent
                     </p>
-                    <p>
-                        We have experiences and resources to design and implement a customized trip only catering to our clients’ needs. Our clients will be able to experience the captivating culture, history, and languages with our unique products for each destination. We have a team of professional specialists with various backgrounds and extensive experience in the travel industry providing Offroads Travel with the necessary skill levels as a one-stop shop for all your travel needs.
-                        Offroads Travel is privately-owned, financially stable and innovative with a history of personalized services, effectively proven cost-containment packages and fully established national representation.
-
-                    </p>
-                    <p>
-                        Offroads Travel is privately-owned, financially stable and innovative with a history of personalized services, effectively proven cost-containment packages and fully established national representation.
-                    </p>
-                    <p>
-                        At Offroads Travel - we remain committed to doing everything possible to create lasting memories. From itineraries which reflect your interests, budget and time to carefully selected and knowledgeable guides, means of transportation and handpicked comfortable accommodations we strive to give you value for your money. All this while we haven’t overlooked your desire to sample and enjoy the artistic and culinary delights of cultures beyond your own.
-                    </p>
-                    <p>
-                        We believe that travelling sustainably and consciously matters. We are committed towards protecting the communities we visit, the wildlife we interact with and the planet we all share. We respect local cultures and champion traditional heritage, working together with the local communities and artisans we visit. At the end of the day, we believe that travel is the ultimate form of education - one best served with a heaping side of meaningful interaction and memorable conversation.
-                    </p>
-                    <p class="col-md-12 text-center">
-                        <b>Welcome. We're delighted to meet you.</b>
-                    </p>
-                    <p style="padding-top:10px;">
-                        <h5>OUR MISSION STATEMENT</h5>
-                        <ul style="list-style:none">
-                            <li><b><i class="fa  fa-share"></i>&nbsp;Travel –</b> We deliver boundless memories!!</li>
-                            <li><b><i class="fa  fa-share"></i>&nbsp;To Our Clients –</b> Provide superior quality services, high quality packages and pricing that will exceed the expectations of our valued customers.</li>
-                            <li><b><i class="fa  fa-share"></i>&nbsp;To Our Suppliers –</b> Commitment to mutual growth and success and strengthen our long lasting business partnership.</li>
-                        </ul>
-                    </p>
-                    
                 </div>
-             
+
             </div>
         </div>
     </div>

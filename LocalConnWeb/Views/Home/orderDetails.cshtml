@@ -88,7 +88,12 @@
 
                             </div>
                             <div class="card-price d-flex align-items-center justify-content-between">
-                                <a href="/home/orderdetails/" class="theme-btn">Confirm Cancellation</a>
+                                <form method="post" action="/home/orderdetails">
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(m => m.preBookDtl.BookingID)
+                                    <button type="submit" class="theme-btn">Confirm Cancellation</button>
+                                </form>
+                                @*<a href="/home/orderdetails/" class="theme-btn">Confirm Cancellation</a>*@
                                 <a href="/home/orderlist" class="theme-btn">Back</a>
                             </div>
                         </div>

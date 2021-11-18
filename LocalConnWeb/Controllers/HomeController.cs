@@ -34,7 +34,8 @@ namespace LocalConnWeb.Controllers
             }
 
         }
-        private string razorKey = "rzp_test_O6952intGT2qTL";
+        //private string razorKey = "rzp_test_O6952intGT2qTL";
+        private string razorKey = "rzp_live_Qox25hx7v1i7PX";
         private string razorSecred = "P4VmQ2BVBz0x2tLOBsRlhvyY";
 
         public ActionResult Index()
@@ -70,7 +71,7 @@ namespace LocalConnWeb.Controllers
         public ActionResult HotelBookingDtl(HotelDetailsVM obj)
         {
             HotelDetailsVM model = new HotelDetailsVM();
-            
+
             obj.preBookDtl.BookingFrom = DateTime.ParseExact(obj.BookFrom, "d/M/yyyy", CultureInfo.InvariantCulture);
             obj.preBookDtl.BookingUpto = DateTime.ParseExact(obj.BookUpTo, "d/M/yyyy", CultureInfo.InvariantCulture);
             model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
@@ -100,9 +101,9 @@ namespace LocalConnWeb.Controllers
             }
             string amenitiesdtlstostring = string.Join(" || ", model.amenitesDisplay);
 
-         
-            obj.preBookDtl.CustDetails = noOfRooms + "Room("+obj.selectedRoomType+") " + noOfAdults + "(Adult(s)) " + noOfChild + "(Child(s)) " + "{ " + amenitiesdtlstostring + " }";
-             
+
+            obj.preBookDtl.CustDetails = noOfRooms + "Room(" + obj.selectedRoomType + ") " + noOfAdults + "(Adult(s)) " + noOfChild + "(Child(s)) " + "{ " + amenitiesdtlstostring + " }";
+
 
             model.preBookDtls = obj.preBookDtl;
             model.selectedRoomType = obj.selectedRoomType;
@@ -245,16 +246,21 @@ namespace LocalConnWeb.Controllers
             obj.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
             return View(obj);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult orderDetails(HotelDetailsVM model)
+        {
+            string jsonStr = JsonConvert.SerializeObject(model.preBookDtl.BookingID);
+            TempData["ErrMsg"] = objAPI.PostRecordUsingQueryString("webrequest", "cancelbooking", "BookingID="+ model.preBookDtl.BookingID);
+            return RedirectToAction("orderList", "home", new { Area = "" });
+        }
 
         public ActionResult About()
         {
-
-
-            return View();
+            AboutUsDetails model = new AboutUsDetails();
+            model = objAPI.GetRecord<AboutUsDetails>("webrequest", "getaboutusdtl");
+            return View(model);
         }
-
-
-
 
         public ActionResult Contact()
         {

@@ -352,7 +352,7 @@
                                 <h3 class="title font-size-20">Terms & Condition</h3>
                                 <div class="accordion accordion-item padding-top-30px" id="accordionExample2">
                                     <div class="card">
-                                        <div class="card-header" id="faqHeadingFour">
+                                        <div class="card-header" id="faqHeadingFive">
                                             <h2 class="mb-0">
                                                 <button class="btn btn-link d-flex align-items-center justify-content-end flex-row-reverse font-size-16" type="button" data-toggle="collapse" data-target="#faqCollapseFour" aria-expanded="true" aria-controls="faqCollapseFour">
                                                     <span class="ml-3">Terms & Condition</span>
@@ -361,7 +361,7 @@
                                                 </button>
                                             </h2>
                                         </div>
-                                        <div id="faqCollapseFour" class="collapse show" aria-labelledby="faqHeadingFour" data-parent="#accordionExample2">
+                                        <div id="faqCollapseFour" class="collapse show" aria-labelledby="faqHeadingFive" data-parent="#accordionExample2">
                                             <div class="card-body d-flex">
                                                 @if (Model.termCondVM.termPolicyList != null)
                                                 {
@@ -457,7 +457,7 @@
                             </div><!-- end sidebar-widget-item -->
                             <div class="sidebar-widget-item">
                                 <div class="qty-box mb-2 d-flex align-items-center justify-content-between">
-                                    <label class="font-size-16">Rooms</label>
+                                    <label class="font-size-16">Rooms <small class="text-secondary">[@Model.hotelDtl.MaxOccupantPerRoom] Occupants/Room</small></label>
                                     <div class="qtyBtn d-flex align-items-center">
                                         <div class="qtyDec" id="roomDec"><i class="la la-minus"></i></div>
                                         <input type="text" name="qtyInput" value="1" id="norooms">
@@ -486,8 +486,8 @@
                                 <div id="parentHolder">
 
                                 </div>
-                                <div id="notselected">
-                                    Meals Not Selected
+                                <div id="notselected" class="text-secondary">
+                                    <small class="font-italic">Meals Not Selected</small>
                                 </div>
                             </div>
                             <div class="sidebar-widget-item">
@@ -545,7 +545,7 @@
 
         var defaultRoomType = $('.roomType').attr('name');
             $('#mCustSelRoomType').val(defaultRoomType);
-        
+
         $('#parentHolder').hide();
         $('#notselected').show();
         var globalRValue =@Model.hotelDtl.RoomTypePrice.ToString("G29");
@@ -615,7 +615,7 @@
                 if (preVal < maxRoom) {
                     preVal += 1;
                     $('#norooms').val(preVal);
-                    calculatePrice2();
+                    calculatePrice();
                 }
 
             });
@@ -624,13 +624,13 @@
                 if (preVal > 1) {
                     preVal -= 1;
                     $('#norooms').val(preVal);
-                    calculatePrice2();
+                    calculatePrice();
                 }
             });
 
 
             $("#adultInc").click(function () {
-                if (preVal < maxRoom) {
+                if (preVal <= maxAdult) {
                     newAVal = parseInt(newAVal) + 1;
                     if (parseInt(newAVal) > parseInt(maxAdult)) {
                         $('#noAdult').val(maxAdult);
@@ -643,12 +643,13 @@
                     if (parseInt(maxOccPerRoom) == 2) {
                         if (parseInt(newAVal) > 2) {
                             if (parseInt(newAVal) % parseInt(maxOccPerRoom) != 0) {
-                                preVal = parseInt(preVal) + 1;
-                                //$("#roomSelect option[value=" + preVal + "]").attr('selected', 'selected');
-                                $('#norooms').val(preVal);
+                                if (parseInt(preVal) < parseInt(maxRoom)) {
+                                    preVal = parseInt(preVal) + 1;
+                                    //$("#roomSelect option[value=" + preVal + "]").attr('selected', 'selected');
+                                    $('#norooms').val(preVal);
+                                }
                             }
                         }
-
                     }
 
                     //case when maxperson is 3
@@ -656,11 +657,12 @@
                         if (parseInt(newAVal) > 3) {
                             if (parseInt(newAVal - 1) % parseInt(maxOccPerRoom) == 0) {
                                 if (parseInt(newAVal) % parseInt(maxOccPerRoom) == 1) {
-                                    preVal = parseInt(preVal) + 1;
-                                    //$("#roomSelect option[value=" + preVal + "]").attr('selected', 'selected');
-                                    $('#norooms').val(preVal);
+                                    if (parseInt(preVal) < parseInt(maxRoom)) {
+                                        preVal = parseInt(preVal) + 1;
+                                        //$("#roomSelect option[value=" + preVal + "]").attr('selected', 'selected');
+                                        $('#norooms').val(preVal);
+                                    }
                                 }
-
                             }
                         }
 
@@ -690,8 +692,15 @@
                 if (parseInt(maxOccPerRoom) == 2) {
                     if (parseInt(newAVal) >= 2) {
                         if (parseInt(newAVal) % parseInt(maxOccPerRoom) == 0) {
-                            preVal = parseInt(preVal) - 1;
-                            $('#norooms').val(preVal);
+                            if (parseInt(newAVal) > 1 && parseInt(preVal) > 1) {
+                                preVal = parseInt(preVal) - 1;
+                                $('#norooms').val(preVal);
+                            }
+                            else {
+                                preVal = 1;
+                                $('#norooms').val(preVal);
+                            }
+                       
 
                         }
                     }
@@ -703,9 +712,10 @@
                     if (parseInt(newAVal) >= 3) {
                         if (parseInt(newAVal+1) % parseInt(maxOccPerRoom) == 1) {
                             if (parseInt(newAVal) % parseInt(maxOccPerRoom) == 0) {
-                                preVal = parseInt(preVal) - 1;
-                                //$("#roomSelect option[value=" + preVal + "]").attr('selected', 'selected');
-                                $('#norooms').val(preVal);
+                                if (parseInt(newAVal) > 1 && parseInt(preVal) > 1) {
+                                    preVal = parseInt(preVal) - 1;
+                                    $('#norooms').val(preVal);
+                                }
                             }
 
                         }
@@ -812,169 +822,162 @@
                 var twoPercent = @Model.hotelDtl.TwoOccupantPercentage;
                 var threePercent = @Model.hotelDtl.ThreeOccupantPercentage;
                 var fourPercent = @Model.hotelDtl.FourPlusOccupantPercentage;
-                //if (parseInt(totalRoom) > 1) {
-                //    roomBaseValue = parseInt(roomBaseValue) * parseInt(totalRoom);
-                //    actValue = roomBaseValue;
-                //} else {
-                //    actValue = roomBaseValue;
-                //}
-                //if (parseInt(noofday)  > 1) {
-                //    roomBaseValue = parseInt(roomBaseValue) * parseInt(noofday);
-                //    actValue = roomBaseValue;
-                //} else {
-                //    actValue = roomBaseValue;
-                //} 
-                if (totalRoom >= noOfAdult) {
-                    roomActualValue = roomBaseValue * totalRoom * noofday;
-                    roomBaseValue = roomBaseValue * totalRoom * noofday;
 
+                var roomBaseValueforSingle = roomBaseValue * 1;
+                var newvaluesingle = 0;
+                var newvaluedouble = 0;
+                roomActualValue = 0;
+                actValue = roomBaseValue;
 
+                if (totalRoom >= parseInt(noOfAdult)) {
+                    roomActualValue = parseInt(roomBaseValue) * totalRoom * noofday;
+                    roomBaseValue = parseInt(roomBaseValue)  * totalRoom * noofday;
                     actValue = roomBaseValue;
                     if (parseInt(overAll) > 0) {
-                        var newvalue = parseInt(roomBaseValue) * parseInt(overAll) / 100;
+                        var newvalue = roomBaseValue * parseInt(overAll) / 100;
                         roomBaseValue = actValue - newvalue;
                     }
-                    //if (parseInt(noOfAdult) == 2) {
-                    //    tPercent = (parseInt(roomBaseValue) * parseInt(twoPercent)) / 100;
-                    //    var newvalue = roomBaseValue - tPercent;
-                    //    roomBaseValue = newvalue;
-                    //}
-                    //if (parseInt(noOfAdult) == 3) {
-                    //    tPercent = (parseInt(roomBaseValue) * parseInt(threePercent)) / 100;
-                    //    var newvalue = parseInt(roomBaseValue) - parseInt(tPercent);
-                    //    roomBaseValue = newvalue;
-                    //}
-                    //if (parseInt(noOfAdult) >= 4) {
-                    //    tPercent = (parseInt(roomBaseValue) * parseInt(fourPercent)) / 100;
-                    //    var newvalue = roomBaseValue - tPercent;
-                    //    roomBaseValue = newvalue;
-                    //}
-                    if (noofday == 0) {
-                        //alert("Please Select Date");
-                        noofday = 1;
-                    }
-
-
-                    if (parseInt(amTotal) != 0) {
-                        if (noOfAdult == 1) {
-                            noOfAdult = 0;
-                            amTotal = parseInt(noofday) * parseInt(amTotal) + parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild) * parseInt(amTotal);
-                        }
-                        else {
-                            amTotal = (parseInt(noofday) * parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild));
-                        }
-                    }
-
-                    var finalFare = parseInt(roomBaseValue) + parseInt(amTotal);
                 }
                 else {
-                    roomActualValue = roomBaseValue * noOfAdult * noofday;
-                    roomBaseValue = roomBaseValue * noOfAdult * noofday;
-
-                    actValue = roomBaseValue;
+                    roomActualValue = roomBaseValue * parseInt(noOfAdult) * noofday;
                     if (parseInt(overAll) > 0) {
                         var newvalue = parseInt(roomBaseValue) * parseInt(overAll) / 100;
-                        roomBaseValue = actValue - newvalue;
+                        roomBaseValue = parseInt(roomBaseValue) - newvalue;
+                        newvaluesingle = (parseInt(roomBaseValueforSingle) - parseInt(roomBaseValueforSingle) * parseInt(overAll) / 100);
                     }
+                    if (parseInt(noOfAdult) % parseInt(maxOccPerRoom) == 0 && parseInt(maxOccPerRoom) == 2) {
 
-                    if (parseInt(noOfAdult) == 2) {
                         tPercent = (parseInt(roomBaseValue) * parseInt(twoPercent)) / 100;
                         var newvalue = roomBaseValue - tPercent;
-                        roomBaseValue = newvalue;
+                        roomBaseValue = newvalue * parseInt(noOfAdult) * noofday;
                     }
-                    //if (parseInt(noOfAdult) == 3) {
-                    //    tPercent = (parseInt(roomBaseValue) * parseInt(threePercent)) / 100;
-                    //    var newvalue = parseInt(roomBaseValue) - parseInt(tPercent);
-                    //    roomBaseValue = newvalue;
-                    //}
-                    //if (parseInt(noOfAdult) >= 4) {
-                    //    tPercent = (parseInt(roomBaseValue) * parseInt(fourPercent)) / 100;
-                    //    var newvalue = roomBaseValue - tPercent;
-                    //    roomBaseValue = newvalue;
-                    //}
-                    if (noofday == 0) {
-                        //alert("Please Select Date");
-                        noofday = 1;
-                    }
+                    //maxOccupant 2 per room
+                    if (parseInt(maxOccPerRoom) == 2) {
+                        if (parseInt(noOfAdult) >= totalRoom) {
+                            var diff = parseInt(noOfAdult) - totalRoom;
+                            var multipleval = 1;
+                            if (diff == 0) {
+                                roomBaseValue = newvaluesingle * parseInt(noOfAdult) * noofday;
+                            }
+                            else if (parseInt(noOfAdult) - parseInt(totalRoom) >= 2) {
+                                var valF, valS, valT, normalRoom = 0, modRoom = 0;
+                                var newval = newvaluesingle * 2;
+                                newvaluedouble = newval - ((newval * parseInt(twoPercent)) / 100);
+                                valF = parseInt(noOfAdult) - parseInt(totalRoom);
 
-
-                    if (parseInt(amTotal) != 0) {
-                        if (noOfAdult == 1) {
-                            noOfAdult = 0;
-                            amTotal = parseInt(noofday) * parseInt(amTotal) + parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild) * parseInt(amTotal);
+                                if (parseInt(noOfAdult) / parseInt(totalRoom) >= 2) {
+                                    valS = valF - parseInt(totalRoom);
+                                    normalRoom = valS * newvaluesingle;
+                                    modRoom = parseInt(totalRoom) * newvaluedouble;
+                                    roomBaseValue = normalRoom + modRoom;
+                                }
+                                else if (parseInt(noOfAdult) / parseInt(totalRoom) <= 2) {
+                                    valS = parseInt(totalRoom) - valF;
+                                    normalRoom = valS * newvaluesingle;
+                                    modRoom = valF * newvaluedouble;
+                                    roomBaseValue = normalRoom + modRoom;
+                                }
+                                else if (parseInt(noOfAdult) / parseInt(totalRoom) == 2) {
+                                    roomBaseValue = parseInt(totalRoom) * newvaluedouble;
+                                }
+                                else {
+                                    roomBaseValue = parseInt(totalRoom) * newvaluesingle;
+                                }
+                            }
+                            else {
+                                multipleval = diff * 2
+                                var groupnoofAdults = parseInt(noOfAdult) - multipleval;
+                                var roomBaseValueformultipleoftwo = newvaluesingle * multipleval * noofday;
+                                tPercent = (parseInt(roomBaseValueformultipleoftwo) * parseInt(twoPercent)) / 100;
+                                var newvalue = roomBaseValueformultipleoftwo - tPercent;
+                                roomBaseValue = newvalue + (newvaluesingle * groupnoofAdults * noofday);
+                            }
+                        }
+                        else if (parseInt(noOfAdult) < totalRoom && totalRoom >= 2) {
+                            roomBaseValue = newvaluesingle * totalRoom * noofday;
                         }
                         else {
-                            amTotal = (parseInt(noofday) * parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild));
+                            roomBaseValue = newvaluesingle * parseInt(noOfAdult) * noofday;
                         }
                     }
+                    else if (parseInt(noOfAdult) > parseInt(maxOccPerRoom)) {
+                        roomBaseValue = newvaluesingle * parseInt(noOfAdult) * noofday;
+                    }
 
-                    var finalFare = parseInt(roomBaseValue) + parseInt(amTotal);
-                }
-              
-               
-               
-                        //alert(finalFare);
-                $('#actualPrice').text(finalFare);
-                //setting values
+                    //maxOccupant per room 3
+                    if (parseInt(maxOccPerRoom) == 3) {
+                        var valF, valS, valT, normalRoom = 0, modRoom = 0, percentTwo, percentThree;
+                        var newvalTwo = newvaluesingle * 2;
+                        var newvalThree = newvaluesingle * 3;
+                        percentTwo = parseInt(twoPercent);
+                        percentThree = parseInt(threePercent);
+                        newvaluedouble = newvalTwo - newvalTwo * parseInt(twoPercent) / 100;
+                        newvalueTriple = newvalThree - newvalThree * parseInt(threePercent) / 100;
+                        valF = parseInt(noOfAdult) - parseInt(totalRoom);
 
-                $('#mFinalFare').val(finalFare);
-                $('#mRoomSelect').val(totalRoom);
-                $('#mAdultSelect').val($('#noAdult').val());
-                $('#mChildSelect').val($('#noChild').val());
-                $("#mCustDetails").val(amnetiesArr);
-                $('#baseprice').text(roomActualValue);
-            }
-
-
-
-
-            function calculatePrice2() {
-                var roomBaseValue = globalRValue;
-                //var totalRoom = $('#roomSelect option:selected').val();
-                var totalRoom = $('#norooms').val();
-                noOfAdult = $('#noAdult').val();
-                noOfChild = $('#noChild').val();
-                var tPercent = 0;
-                var actValue = 0;
-                var overAll = @Model.hotelDtl.OverallOfferPercentage;
-                var twoPercent = @Model.hotelDtl.TwoOccupantPercentage;
-                var threePercent = @Model.hotelDtl.ThreeOccupantPercentage;
-                var fourPercent = @Model.hotelDtl.FourPlusOccupantPercentage;
-                //if (parseInt(totalRoom) > 1) {
-                //    roomBaseValue = parseInt(roomBaseValue) * parseInt(totalRoom);
-                //    actValue = roomBaseValue;
-                //} else {
-                //    actValue = roomBaseValue;
-                //}
-                //if (parseInt(noofday)  > 1) {
-                //    roomBaseValue = parseInt(roomBaseValue) * parseInt(noofday);
-                //    actValue = roomBaseValue;
-                //} else {
-                //    actValue = roomBaseValue;
-                //} 
-                roomActualValue = roomBaseValue * totalRoom * noofday;
-                roomBaseValue = roomBaseValue * totalRoom * noofday;
-               
-                actValue = roomBaseValue;
-                if (parseInt(overAll) > 0) {
-                    var newvalue = parseInt(roomBaseValue) * parseInt(overAll) / 100;
-                            roomBaseValue = actValue - newvalue;
+                        if (parseInt(noOfAdult) > parseInt(totalRoom)) {
+                            var value = parseFloat(parseInt(noOfAdult) / totalRoom);
+                            if (value == 1) {
+                                roomBaseValue = newvalueTriple * parseInt(totalRoom) * noofday;
+                            }
+                            else if (value > 1 && value < 2) {
+                                valS = parseInt(totalRoom) - valF;
+                                normalRoom = valS * newvaluesingle;
+                                modRoom = valF * newvaluedouble;
+                                roomBaseValue = (normalRoom + modRoom) * noofday;
+                            }
+                            else if (value == 2) {
+                                roomBaseValue = parseInt(totalRoom) * newvaluedouble * noofday;
+                            }
+                            else if (value > 2 && value < 3) {
+                                valS = valF - parseInt(totalRoom) ;
+                                if (percentThree == 0) {
+                                    normalRoom = valS * newvaluesingle;
+                                    modRoom = parseInt(totalRoom) * newvaluedouble;
+                                }
+                                else {
+                                    valT = parseInt(totalRoom) - valS;
+                                    normalRoom = valS * newvalueTriple;
+                                    modRoom = valT * newvaluedouble;
+                                }
+                                roomBaseValue = (normalRoom + modRoom) * noofday;
+                            }
+                            else if (value == 3) {
+                                if (percentThree == 0) {
+                                    normalRoom = parseInt(totalRoom) * newvaluedouble;
+                                    modRoom = parseInt(totalRoom) * newvaluesingle;
+                                    roomBaseValue = normalRoom + modRoom;
+                                }
+                                else {
+                                    roomBaseValue = (parseInt(totalRoom) * newvalueTriple) * noofday;
+                                }
+                            }
+                            else if (value > 3) {
+                                valS = valF - parseInt(totalRoom);
+                                valT = valS - parseInt(totalRoom);
+                                if (percentThree == 0) {
+                                    normalRoom = valS * newvaluesingle;
+                                    modRoom = parseInt(totalRoom) * newvaluedouble;
+                                }
+                                else {
+                                    normalRoom = valT * newvaluesingle;
+                                    modRoom = parseInt(totalRoom) * newvalueTriple;
+                                }
+                                roomBaseValue = (normalRoom + modRoom) * noofday;
+                            }
+                            else {
+                                roomBaseValue = parseInt(totalRoom) * newvaluesingle * noofday;
+                            }
                         }
-                //if (parseInt(noOfAdult) == 2) {
-                //            tPercent = (parseInt(roomBaseValue ) * parseInt(twoPercent)) / 100;
-                //            var newvalue = roomBaseValue - tPercent;
-                //            roomBaseValue = newvalue;
-                //        }
-                //if (parseInt(noOfAdult) == 3) {
-                //            tPercent = (parseInt(roomBaseValue) * parseInt(threePercent)) / 100;
-                //            var newvalue = parseInt(roomBaseValue) - parseInt(tPercent);
-                //            roomBaseValue = newvalue;
-                //        }
-                //if (parseInt(noOfAdult) >= 4) {
-                //            tPercent = (parseInt(roomBaseValue) * parseInt(fourPercent)) / 100;
-                //            var newvalue = roomBaseValue - tPercent;
-                //            roomBaseValue = newvalue;
-                //}
+                        else {
+                            roomBaseValue = parseInt(totalRoom) * newvaluesingle * noofday;
+                        }
+                    }
+                }
+
+
+
+
                 if (noofday == 0) {
                     //alert("Please Select Date");
                     noofday = 1;
@@ -984,7 +987,7 @@
                 if (parseInt(amTotal) != 0) {
                     if (noOfAdult == 1) {
                         noOfAdult = 0;
-                        amTotal = parseInt(noofday) * parseInt(amTotal) + parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild) * parseInt(amTotal) ;
+                        amTotal = (parseInt(noofday) * parseInt(amTotal)) + (parseInt(noOfAdult) * parseInt(amTotal)) + (parseInt(noOfChild) * parseInt(amTotal));
                     }
                     else {
                         amTotal = (parseInt(noofday) * parseInt(noOfAdult) * parseInt(amTotal) + parseInt(noOfChild));
@@ -992,6 +995,10 @@
                 }
 
                 var finalFare = parseInt(roomBaseValue) + parseInt(amTotal);
+                //}
+
+
+
                         //alert(finalFare);
                 $('#actualPrice').text(finalFare);
                 //setting values
@@ -1003,8 +1010,6 @@
                 $("#mCustDetails").val(amnetiesArr);
                 $('#baseprice').text(roomActualValue);
             }
-
-
         });
 
 

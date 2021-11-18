@@ -74,10 +74,7 @@
                                     <span class="price__num"><i class="la la-rupee"></i> @item.FinalFare.ToString("0.")/-</span>
                                     <span class="price__text font-size-11">Per night</span>
                                 </p>
-                                @if (item.IsValidCancel == 0)
-                                {
-                                    <a href="/home/orderdetails/@item.BookingID" class="theme-btn">Cancel Booking</a>
-                                }
+                              
                             </div>
                         </div>
 
@@ -87,8 +84,12 @@
                                 <span class="badge text-white">Booking Date: @item.BookingFrom - @item.BookingUpto</span><br />
                                 <span class="review__text">Booked on: @item.BookingDate</span><br />
                                 <span class="rating__text">Room Details: @item.CustDetails</span>
-                             
+
                             </div>
+                            @if (item.IsValidCancel == 0 && item.BookingStatus != "Cancelled")
+                            {
+                                <a href="/home/orderdetails/@item.BookingID" class="theme-btn">Cancel Booking</a>
+                            }
                         </div>
 
                     
