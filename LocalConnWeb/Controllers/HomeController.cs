@@ -35,8 +35,8 @@ namespace LocalConnWeb.Controllers
 
         }
         //private string razorKey = "rzp_test_O6952intGT2qTL";
-        private string razorKey = "rzp_live_Qox25hx7v1i7PX";
-        private string razorSecred = "P4VmQ2BVBz0x2tLOBsRlhvyY";
+        private string razorKey = "rzp_live_st9W6cjqvYYTrO";
+        private string razorSecred = "0GnAx9umE3DnA0LdKJMBlLfy";
 
         public ActionResult Index()
         {
@@ -112,6 +112,7 @@ namespace LocalConnWeb.Controllers
         [HttpPost]
         public ActionResult PayNow(HotelDetailsVM obj)
         {
+
             HotelDetailsVM model = new HotelDetailsVM();
             if (!(User.Identity.IsAuthenticated))
             {
@@ -122,7 +123,7 @@ namespace LocalConnWeb.Controllers
             string transactionId = randomObj.Next(10000000, 100000000).ToString();
             Razorpay.Api.RazorpayClient client = new Razorpay.Api.RazorpayClient(razorKey, razorSecred);
             Dictionary<string, object> options = new Dictionary<string, object>();
-            options.Add("amount", "100");  // Amount will in paise
+            options.Add("amount", (obj.preBookDtls.FinalFare * 100));  // Amount will in paise
             options.Add("receipt", transactionId);
             options.Add("currency", "INR");
             options.Add("payment_capture", "0"); // 1 - automatic  , 0 - manual
@@ -130,12 +131,13 @@ namespace LocalConnWeb.Controllers
             string orderId = orderResponse["id"].ToString();
             ViewBag.RzpID = razorKey;
             ViewBag.TransactionID = transactionId;
-            ViewBag.amount = 1;
+            ViewBag.amount = obj.preBookDtls.FinalFare;
             ViewBag.name = obj.preBookDtls.CustName;
             ViewBag.currency = "INR";
-            ViewBag.orderDesc = obj.preBookDtls.CustDetails;
+            ViewBag.orderDesc = _sModel.UserName ?? obj.preBookDtls.CustName;
             ViewBag.orderid = orderId;
             ViewBag.phone = obj.preBookDtls.CustPhNo;
+            ViewBag.email = _sModel.Email ?? obj.preBookDtls.CustEmail;
             model.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtls.HotelID);
             model.preBookDtls = obj.preBookDtls;
             Session["OrderDetails"] = obj.preBookDtls;
@@ -145,6 +147,9 @@ namespace LocalConnWeb.Controllers
             //string jsonStr = JsonConvert.SerializeObject(model.preBookDtl);
             //TempData["ErrMsg"] = objAPI.PostRecordtoApI("webrequest", "SendEmail", jsonStr);
             return View(model);
+
+
+
         }
 
         [HttpPost]
@@ -219,13 +224,13 @@ namespace LocalConnWeb.Controllers
 
         public ActionResult PaymentFailed(long HotelID)
         {
-            if (!(User.Identity.IsAuthenticated))
-            {
-                return RedirectToAction("Login", "Account", new { Areas = "" });
-            }
+            //if (!(User.Identity.IsAuthenticated))
+            //{
+            //    return RedirectToAction("Login", "Account", new { Areas = "" });
+            //}
             HotelDetailsVM obj = new HotelDetailsVM();
             obj.preBookDtl = Session["OrderDetails"] as PreBookingDtl;
-            obj.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + HotelID);
+            obj.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + 2);
             string jsonStr = JsonConvert.SerializeObject(obj.preBookDtl);
             //TempData["ErrMsg"] = objAPI.PostRecordtoApI("webrequest", "SendEmail", jsonStr);
             return View(obj);
@@ -242,6 +247,7 @@ namespace LocalConnWeb.Controllers
         public ActionResult orderDetails(string id)
         {
             HotelDetailsVM obj = new HotelDetailsVM();
+
             obj.preBookDtl = objAPI.GetRecordByQueryString<PreBookingDtl>("webrequest", "getBookingDtl", "BookingID=" + id);
             obj.hotelDtl = objAPI.GetRecordByQueryString<HotelDtl>("webrequest", "gethoteldtl", "HotelID=" + obj.preBookDtl.HotelID);
             return View(obj);
@@ -269,7 +275,16 @@ namespace LocalConnWeb.Controllers
             return View();
         }
 
+        public ActionResult PageNotFound()
+        {
+            return View();
+        }
+        public ActionResult Error(int id)
+        {
+            ViewBag.StatusCode = id;
 
+            return View();
+        }
 
         public ActionResult RenderCitiesMenuView()
         {

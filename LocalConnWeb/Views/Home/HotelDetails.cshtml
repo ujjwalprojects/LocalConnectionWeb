@@ -117,7 +117,6 @@
     <div class="single-content-box">
         <div class="container">
             <div class="row">
-
                 <div class="col-lg-8">
                     <div class="breadcrumb-list breadcrumb-top-list pb-2 pt-2">
                         <ul class="list-items bg-transparent radius-none p-0">
@@ -344,8 +343,6 @@
                             </section>
                         </div>
 
-
-
                         <!-- start Terms and condition -->
                         <div id="faq" class="page-scroll">
                             <div class="single-content-item padding-top-40px padding-bottom-40px">
@@ -426,7 +423,9 @@
                     </div><!-- end single-content-wrap -->
                 </div><!-- end col-lg-8 -->
                 <div class="col-lg-4">
-                    <div class="sidebar single-content-sidebar mb-0">
+                  
+
+                    <div class="sidebar single-content-sidebar mb-0 ">
                         <div class="sidebar-widget single-content-widget">
                             <input type="hidden" value="@Model.hotelDtl.MaxRooms" id="maxRoomHidden" />
                             <div class="sidebar-widget-item">
@@ -439,19 +438,6 @@
                                                 <input class="date-range form-control" type="text" name="daterange">
                                             </div>
                                         </div>
-                                        @*<div class="input-box">
-                                                <label class="label-text">Rooms</label>
-                                                <div class="form-group">
-                                                    <div class="select-contain w-auto">
-                                                        <select class="form-control" id="roomSelect">
-                                                            @for (int i = 1; i <= Model.hotelDtl.MaxRooms; i++)
-                                                            {
-                                                                <option value="@i">@i</option>
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>*@
                                     </div>
                                 </div>
                             </div><!-- end sidebar-widget-item -->
@@ -560,15 +546,15 @@
             //var sstartDate = $('#mBookingFrom').val();
             $(".date-range").val($('#mBookingFrom').val() + ' - ' + $('#mBookingUpto').val());
             amnetiesArr.push(["Meals"]);
-            $(window).on('scroll', function () {
-                var scroll = $(window).scrollTop();
-                if (scroll > 500) {
-                    $(".sidebar").addClass("fixed-side");
-                } else {
-                    $(".sidebar").removeClass("fixed-side");
-                }
-                lastScroll = scroll;
-            });
+            //$(window).on('scroll', function () {
+            //    var scroll = $(window).scrollTop();
+            //    if (scroll > 500) {
+            //        $(".sidebar").addClass("fixed-side");
+            //    } else {
+            //        $(".sidebar").removeClass("fixed-side");
+            //    }
+            //    lastScroll = scroll;
+            //});
             $('.date-range').on('change', function () {
                 DateCal();
                 calculatePrice();

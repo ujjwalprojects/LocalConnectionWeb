@@ -37,7 +37,7 @@
                 <div class="col-lg-12">
                     <div class="hero-content pb-5 text-center">
                         <div class="section-heading">
-                            <h2 class="sec__title font-size-70 pb-3">Are You Ready...</h2>
+                            <h2 class="sec__title font-size-70 pb-3">Are You <span class="text-warning">Ready...</span></h2>
                             <p class="sec__desc font-size-30 font-weight-medium">To explore new things?</p>
                         </div>
                     </div><!-- end hero-content -->
@@ -96,7 +96,7 @@
 <!-- ================================
     START FEATURE HOTELS AREA
 ================================= -->
-<section class="trending-area position-relative section-bg section-padding ">
+<section class="trending-area position-relative section-bg-2 section-padding ">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -114,13 +114,33 @@
                         {
                             <div class="card-item trending-card mb-0">
                                 <div class="card-img">
-                                    <a href="tour-details.html" class="d-block">
+                                    @if (User.Identity.Name != "")
+                                    {
+                                    <a href="/home/hoteldetails/@item.HotelID" class="d-block">  <img src="@item.PhotoThumbPath" alt="@item.HotelName"></a>
+                                    }
+                                    else
+                                    {
+                                    <a href="/home/hoteldetails/@item.HotelID" class="open-homeEvents d-block" data-toggle="modal" data-target="#loginPopupForm">  <img src="@item.PhotoThumbPath" alt="@item.HotelName"></a>
+                                    }
+                                    @*<a href="tour-details.html" class="d-block">
                                         <img src="@item.PhotoThumbPath" alt="@item.HotelName">
-                                    </a>
+                                    </a>*@
                                     <span class="badge">Fearured</span>
                                 </div>
                                 <div class="card-body">
-                                    <h3 class="card-title ellipsis"><a href="tour-details.html">@item.HotelName</a></h3>
+                                    <h3 class="card-title ellipsis">
+                                        @if (User.Identity.Name != "")
+                                        {
+                                            <a href="/home/hoteldetails/@item.HotelID" class="">@item.HotelName</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/home/hoteldetails/@item.HotelID" class="open-homeEvents" data-toggle="modal" data-target="#loginPopupForm">@item.HotelName</a>
+                                        }
+
+
+                                        @*<a href="tour-details.html">@item.HotelName</a>*@
+                                    </h3>
                                     <p class="card-meta ellipsis">@item.HotelAddress</p>
                                     <div class="card-rating">
 
@@ -239,16 +259,36 @@
                             {
                                 <div class="card-item mb-0">
                                     <div class="card-img">
-                                        <a href="hotel-single.html" class="d-block">
+                                        @if (User.Identity.Name != "")
+                                        {
+                                            <a href="/home/hoteldetails/@item.HotelID" class="d-block">  <img src="@item.PhotoThumbPath" alt="@item.HotelName"></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/home/hoteldetails/@item.HotelID" class="open-homeEvents d-block" data-toggle="modal" data-target="#loginPopupForm">  <img src="@item.PhotoThumbPath" alt="@item.HotelName"></a>
+                                        }
+                                        @*<a href="hotel-single.html" class="d-block">
                                             <img src="@item.PhotoThumbPath" alt="hotel-img">
-                                        </a>
+                                        </a>*@
                                         <span class="badge">Bestseller</span>
                                         <div class="add-to-wishlist icon-element" data-toggle="tooltip" data-placement="top" title="Bookmark">
                                             <i class="la la-heart-o"></i>
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <h3 class="card-title ellipsis"><a href="hotel-single.html" class="">@item.HotelName</a></h3>
+                                        <h3 class="card-title ellipsis">
+                                            @if (User.Identity.Name != "")
+                                            {
+                                            <a href="/home/hoteldetails/@item.HotelID" class="">@item.HotelName</a>
+                                            }
+                                            else
+                                            {
+                                            <a href="/home/hoteldetails/@item.HotelID" class="open-homeEvents" data-toggle="modal" data-target="#loginPopupForm">@item.HotelName</a>
+                                            }
+
+
+                                            @*<a href="hotel-single.html" class="">@item.HotelName</a>*@
+                                        </h3>
                                         <p class="card-meta ellipsis">@item.HotelAddress</p>
                                         <div class="card-rating">
                                             @if (item.OverallOfferPercentage != 0)
@@ -300,7 +340,7 @@
 <!-- ================================
     START MOBILE AREA
 ================================= -->
-<section class="mobile-app padding-bottom-50px section-bg">
+<section class="mobile-app padding-bottom-50px section-bg pt-4">
     <div class="container">
         <div class="row">
             <div class="col-lg-6">

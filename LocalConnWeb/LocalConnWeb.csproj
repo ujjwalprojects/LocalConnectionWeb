@@ -765,6 +765,7 @@
     <Content Include="Content\home-style.css" />
     <Content Include="Content\img\1.png" />
     <Content Include="Content\img\ajax-loader.gif" />
+    <Content Include="Content\img\appicon.png" />
     <Content Include="Content\img\award.png" />
     <Content Include="Content\img\banner-menu1.png" />
     <Content Include="Content\img\banner-menu2.png" />
@@ -774,6 +775,7 @@
     <Content Include="Content\img\face1.jpg" />
     <Content Include="Content\img\face1.png" />
     <Content Include="Content\img\failed-icon-7.png" />
+    <Content Include="Content\img\featured-bg.jpg" />
     <Content Include="Content\img\female-icon.png" />
     <Content Include="Content\img\female-teacher.png" />
     <Content Include="Content\img\global-education.jpg" />
@@ -1390,6 +1392,8 @@
     <Content Include="Views\GenLCHotels\_pvSearchHotelList.cshtml" />
     <Content Include="Views\Home\_pvCitiesMenu.cshtml" />
     <Content Include="Views\Home\orderDetails.cshtml" />
+    <Content Include="Views\Home\PageNotFound.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

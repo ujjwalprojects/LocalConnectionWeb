@@ -1,0 +1,28 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Response.StatusCode = (int)@ViewBag.StatusCode;
+}
+<html>
+<head>
+    <title>Error</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="page-wrap d-flex flex-row align-items-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 text-center">
+                    <span class="display-1 d-block">@ViewBag.StatusCode</span>
+                    <div class="mb-4 lead">Opps..!! Something went wrong, please contact administrator.</div>
+                    <a href="/Home/Index" class="btn btn-link">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+</body>
+</html>
+

@@ -82,82 +82,52 @@
                                         <li>
                                             <a href="/home/contact">Contact</a>
                                         </li>
-                                        @*<li>
-                                            <a href="/home/contact">Terms & Condition</a>
-                                        </li>*@
+                                        <li>
+                                            @if ((string)@ViewBag.CurrentUserName != null && User.IsInRole("Admin"))
+                                            {
+                                                <a href="#" class="text-primary">Welcome @ViewBag.CurrentUserName <i class="la la-angle-down"></i></a>
+                                                <ul class="dropdown-menu-item">
+                                                    <li>  <a href="/user/dashboard" class="dropdown-item  text-primary">Dashboard<i class="la la-dashboard"></i></a></li>
+                                                    <li>
+                                                        <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
+                                                            @Html.AntiForgeryToken()
+                                                            <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item text-primary">Log Out<i class="la la-lock-open float-left"></i></a>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+
+                                            }
+                                            else if ((string)@ViewBag.CurrentUserName != null && User.IsInRole("Customer"))
+                                            {
+                                                <a href="#" class="text-primary">Welcome @ViewBag.CurrentUserName <i class="la la-angle-down"></i></a>
+                                                <ul class="dropdown-menu-item">
+                                                    <li> <a href="/Home/OrderList" class="dropdown-item text-primary">Order List<i class="la la-list float-left"></i></a></li>
+                                                    <li>
+                                                        <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
+                                                            @Html.AntiForgeryToken()
+                                                            <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item text-primary">Log Out<i class="la la-lock-open float-left"></i></a>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            }
+                                            else if (User.Identity.IsAuthenticated)
+                                            {
+                                                @Html.Action("logoff", "account", new { @Area = "" })
+                                            }
+                                            else
+                                            {
+                                                <a href="/account/login" class="text-primary">Login|Register</a>
+                                            }
+
+                                        </li>
                                     </ul>
                                 </nav>
                             </div><!-- end main-menu-content -->
-                            <div class="nav-btn">
-                                @if ((string)@ViewBag.CurrentUserName != null && User.IsInRole("Admin"))
-                                {
-                                    <div class="row">
-                                        <div id="inst-section" class="col-md-12">
-                                            <div class="dropdown float-right p-2">
-                                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Welcome @ViewBag.CurrentUserName
-                                                </button>
-                                                <div class="dropdown-menu w-50" aria-labelledby="dropdownMenuButton">
-                                                    <a href="/user/dashboard" class="dropdown-item"><i class="la la-dashboard"></i> &nbsp;&nbsp;Dashboard</a>
-                                                    <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
-                                                        @Html.AntiForgeryToken()
-                                                        <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item"><i class="la la-lock-open"></i> &nbsp;&nbsp;Log Out</a>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                }
-                                else if ((string)@ViewBag.CurrentUserName != null && User.IsInRole("Customer"))
-                                {
-                                    <div class="row">
-                                        <div id="inst-section" class="col-md-12">
-                                            <div class="dropdown float-right p-2">
-                                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Welcome @ViewBag.CurrentUserName
-                                                </button>
-                                                <div class="dropdown-menu w-50" aria-labelledby="dropdownMenuButton">
-                                                    <a href="/Home/OrderList" class="dropdown-item"><i class="la la-list"></i> &nbsp;&nbsp;Order List</a>
-                                                    <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
-                                                        @Html.AntiForgeryToken()
-                                                        <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item"><i class="la la-lock-open"></i> &nbsp;&nbsp;Log Out</a>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                                else if (User.Identity.IsAuthenticated)
-                                {
-                                    <div class="row">
-                                        <div id="inst-section" class="col-md-12">
-                                            <div class="dropdown float-right p-2">
-                                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Welcome Guest User
-                                                </button>
-                                                <div class="dropdown-menu w-50" aria-labelledby="dropdownMenuButton">
-                                                    <a href="/Home/OrderList" class="dropdown-item"><i class="la la-list"></i> &nbsp;&nbsp;Order List</a>
-                                                    <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
-                                                        @Html.AntiForgeryToken()
-                                                        <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item"><i class="la la-lock-open"></i> &nbsp;&nbsp;Log Out</a>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @*<a href="/account/register" class="theme-btn theme-btn-small theme-btn-transparent mr-1">Sign Up</a>*@
-                                    @*<a href="/account/login" class="theme-btn theme-btn-small">Login</a>*@
-                                    @*<a href="#" class="theme-btn theme-btn-small" data-toggle="modal" data-target="#loginPopupForm">Login</a>*@
-                                }
-                                else
-                                {
-                                    <a href="/account/login" class="theme-btn theme-btn-small">Login</a>
-                                }
+                            @*<div class="nav-btn">
+                                
 
 
-
-                            </div><!-- end nav-btn -->
+                            </div>*@<!-- end nav-btn -->
                         </div><!-- end menu-wrapper -->
                     </div><!-- end col-lg-12 -->
                 </div><!-- end row -->

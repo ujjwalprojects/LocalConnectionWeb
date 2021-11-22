@@ -29,13 +29,27 @@
                             <div class="col-lg-4 responsive-column">
                                 <div class="card-item">
                                     <div class="card-img">
-                                        <a href="tour-details.html" class="d-block">
-                                            <img src="@item.PhotoThumbPath" alt="@item.PhotoCaption">
-                                        </a>
+                                        @if (User.Identity.Name != "")
+                                        {
+                                            <a href="/home/hoteldetails/@item.HotelID" class="d-block">  <img src="@item.PhotoThumbPath" alt="@item.HotelName"></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/home/hoteldetails/@item.HotelID" class="open-homeEvents d-block" data-toggle="modal" data-target="#loginPopupForm">  <img src="@item.PhotoThumbPath" alt="@item.HotelName"></a>
+                                        }
                                         <span class="badge">@item.HomeTypeName</span>
                                     </div>
                                     <div class="card-body">
-                                        <h3 class="card-title ellipsis"><a href="#">@item.HotelName</a></h3>
+                                        <h3 class="card-title ellipsis">
+                                            @if (User.Identity.Name != "")
+                                            {
+                                                <a href="/home/hoteldetails/@item.HotelID" class="">@item.HotelName</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/home/hoteldetails/@item.HotelID" class="open-homeEvents" data-toggle="modal" data-target="#loginPopupForm">@item.HotelName</a>
+                                            }
+                                        </h3>
                                         <p class="card-meta ellipsis">@item.HotelAddress</p>
                                         <div class="card-rating">
 

@@ -529,6 +529,7 @@ namespace LocalConnWeb.Controllers
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();

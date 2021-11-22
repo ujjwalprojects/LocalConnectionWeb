@@ -54,28 +54,30 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             try
             {
                 ViewBag.ActiveURL = "/Admin/Bannerlist";
-                model.Banner = new utblMstBanner();
-                Random rand = new Random();
-                string name = "Banner_" + DateTime.Now.ToString("yyyyMMdd") + "_" + rand.Next(50) + ".webp";
-                bool isValidFile = FileTypeCheck.DataImage(model.cropper.PhotoNormal);
-                if (!isValidFile)
-                {
-                    TempData["ErrMsg"] = "Please Select A Valid Image File!";
-                    return View(model);
-                }
-                string normal_result = SaveImage(model.cropper.PhotoNormal, name);
-                if (normal_result.Contains("Error"))
-                {
-                    TempData["ErrMsg"] = normal_result;
-                    return RedirectToAction("BannerList", "Banner");
-                }
-                else
-                {
-                    model.Banner.BannerPath = "/Uploads/Banner/" + normal_result;
-                }
+                //model.Banner = new utblMstBanner();
+                //Random rand = new Random();
+                //string name = "Banner_" + DateTime.Now.ToString("yyyyMMdd") + "_" + rand.Next(50) + ".jpg";
+                //bool isValidFile = FileTypeCheck.DataImage(model.cropper.PhotoNormal);
+                //if (!isValidFile)
+                //{
+                //    TempData["ErrMsg"] = "Please Select A Valid Image File!";
+                //    return View(model);
+                //}
+                //string normal_result = SaveImage(model.cropper.PhotoNormal, name);
+                //if (normal_result.Contains("Error"))
+                //{
+                //    TempData["ErrMsg"] = normal_result;
+                //    return RedirectToAction("BannerList", "Banner");
+                //}
+                //else
+                //{
+                //    model.Banner.BannerPath = FileUrl + "/Uploads/Banner/" + normal_result;
+                //}
 
                 if (ModelState.IsValid)
                 {
+                    model.Banner = new utblMstBanner();
+                    model.Banner.BannerPath = model.cropper.PhotoNormal;
                     string jsonStr = JsonConvert.SerializeObject(model.Banner);
                     TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "saveBanner", jsonStr);
                     return RedirectToAction("BannerList", "Banner", new { Area = "Admin" });
@@ -113,36 +115,45 @@ namespace LocalConnWeb.Areas.Admin.Controllers
             {
                 ViewBag.ActiveURL = "/Admin/bannerlist";
 
-                if (model.cropper.PhotoNormal != null)
-                {
-                    bool isValidFile = FileTypeCheck.DataImage(model.cropper.PhotoNormal);
-                    //bool isValidThumb = FileTypeCheck.DataImage(model.cropper.PhotoThumb);
-                    if (!isValidFile)
-                    {
-                        TempData["ErrMsg"] = "Please Select A Valid Image File!";
-                        return View();
-                    }
-                    Random rand = new Random();
-                    string name = "Banner_" + DateTime.Now.ToString("yyyyMMdd") + "_" + rand.Next(50) + ".webp";
-                    string normal_result = SaveImage(model.cropper.PhotoNormal, name);
-                    if (normal_result.Contains("Error"))
-                    {
-                        TempData["ErrMsg"] = "Please Select A Valid Image File!";
-                        return View();
-                    }
-                    else
-                    {
-                        model.Banner.BannerPath = "/Uploads/Banner/" + normal_result;
-                    }
-                }
-                else
-                {
-                    model.Banner.BannerPath = model.Banner.BannerPath;
-                }
+                //if (model.cropper.PhotoNormal != null)
+                //{
+                //    bool isValidFile = FileTypeCheck.DataImage(model.cropper.PhotoNormal);
+                //    //bool isValidThumb = FileTypeCheck.DataImage(model.cropper.PhotoThumb);
+                //    if (!isValidFile)
+                //    {
+                //        TempData["ErrMsg"] = "Please Select A Valid Image File!";
+                //        return View();
+                //    }
+                //    Random rand = new Random();
+                //    string name = "Banner_" + DateTime.Now.ToString("yyyyMMdd") + "_" + rand.Next(50) + ".jpg";
+                //    string normal_result = SaveImage(model.cropper.PhotoNormal, name);
+                //    if (normal_result.Contains("Error"))
+                //    {
+                //        TempData["ErrMsg"] = "Please Select A Valid Image File!";
+                //        return View();
+                //    }
+                //    else
+                //    {
+                //        model.Banner.BannerPath = FileUrl + "/Uploads/Banner/" + normal_result;
+                //    }
+                //}
+                //else
+                //{
+                //    model.Banner.BannerPath = model.Banner.BannerPath;
+                //}
 
 
                 if (ModelState.IsValid)
                 {
+                    if (model.cropper.PhotoNormal != null)
+                    {
+                        model.Banner.BannerPath = model.cropper.PhotoNormal;
+
+                    }
+                    else
+                    {
+                        model.Banner.BannerPath = model.Banner.BannerPath;
+                    }
                     string jsonStr = JsonConvert.SerializeObject(model.Banner);
                     TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "savebanner", jsonStr);
                     return RedirectToAction("BannerList", "Banner", new { Area = "Admin" });

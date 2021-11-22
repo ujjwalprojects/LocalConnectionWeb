@@ -76,13 +76,63 @@
                                         <li>
                                             <a href="/home/contact">Contact</a>
                                         </li>
-                                        @*<li>
-                                            <a href="/home/contact">Terms & Condition</a>
-                                        </li>*@
+                                        <li>
+                                            @if ((string)@ViewBag.CurrentUserName != null && User.IsInRole("Admin"))
+                                            {
+
+                                                <a href="#" class="text-primary">Welcome @ViewBag.CurrentUserName <i class="la la-angle-down"></i></a>
+                                                <ul class="dropdown-menu-item">
+                                                    <li>  <a href="/user/dashboard" class="dropdown-item  text-primary">Dashboard<i class="la la-dashboard"></i></a></li>
+                                                    <li>
+                                                        <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
+                                                            @Html.AntiForgeryToken()
+                                                            <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item text-primary">Log Out<i class="la la-lock-open float-left"></i></a>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+
+                                            }
+                                            else if ((string)@ViewBag.CurrentUserName != null && User.IsInRole("Customer"))
+                                            {
+
+                                                <a href="#" class="text-primary">Welcome @ViewBag.CurrentUserName <i class="la la-angle-down"></i></a>
+                                                <ul class="dropdown-menu-item">
+                                                    <li> <a href="/Home/OrderList" class="dropdown-item text-primary">Order List<i class="la la-list float-left"></i></a></li>
+                                                    <li>
+                                                        <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
+                                                            @Html.AntiForgeryToken()
+                                                            <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item text-primary">Log Out<i class="la la-lock-open float-left"></i></a>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+
+                                            }
+                                            else if (User.Identity.IsAuthenticated)
+                                            {
+                                                @Html.Action("logoff", "account", new { @Area = "" })
+                                                @*<a href="#" class="text-primary">Welcome Guest User <i class="la la-angle-down"></i></a>
+                                                <ul class="dropdown-menu-item">
+                                                    <li>
+                                                        <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
+                                                            @Html.AntiForgeryToken()
+                                                            <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item text-primary">Log Out<i class="la la-lock-open float-left"></i></a>
+                                                        </form>
+                                                    </li>
+                                                </ul>*@
+
+                                                @*<a href="/account/register" class="theme-btn theme-btn-small theme-btn-transparent mr-1">Sign Up</a>*@
+                                                @*<a href="/account/login" class="theme-btn theme-btn-small">Login</a>*@
+                                                @*<a href="#" class="theme-btn theme-btn-small" data-toggle="modal" data-target="#loginPopupForm">Login</a>*@
+                                            }
+                                            else
+                                            {
+                                                <a href="/account/login" class="text-primary">Login|Register</a>
+                                            }
+                                        </li>
                                     </ul>
                                 </nav>
                             </div><!-- end main-menu-content -->
-                            <div class="nav-btn">
+                            @*<div class="nav-btn">
                                 @if ((string)@ViewBag.CurrentUserName != null && User.IsInRole("Admin"))
                                 {
                                     <div class="row">
@@ -140,9 +190,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @*<a href="/account/register" class="theme-btn theme-btn-small theme-btn-transparent mr-1">Sign Up</a>*@
-                                    @*<a href="/account/login" class="theme-btn theme-btn-small">Login</a>*@
-                                    @*<a href="#" class="theme-btn theme-btn-small" data-toggle="modal" data-target="#loginPopupForm">Login</a>*@
+                                   
                                 }
                                 else
                                 {
@@ -151,7 +199,8 @@
 
 
 
-                            </div><!-- end nav-btn -->
+                            </div>*@
+                        <!-- end nav-btn -->
                         </div><!-- end menu-wrapper -->
                     </div><!-- end col-lg-12 -->
                 </div><!-- end row -->
@@ -236,8 +285,8 @@
                 <div class="col-lg-3 responsive-column">
                     <div class="footer-item">
                         <h4 class="title curve-shape pb-3 margin-bottom-20px" data-text="curvs">Payment Methods</h4>
-                        <p class="footer__desc pb-3">Pay any way you choose, we support all payment options.</p>
-                        <img src="images/payment-img.png" alt="">
+                        @*<p class="footer__desc pb-3">Pay any way you choose, we support all payment options.</p>*@
+                        <img src="~/Content/WebCss/css/images/payment-img.png" alt="Payment Methods">
                     </div><!-- end footer-item -->
                 </div><!-- end col-lg-3 -->
             </div><!-- end row -->

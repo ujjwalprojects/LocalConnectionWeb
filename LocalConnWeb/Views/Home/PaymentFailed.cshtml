@@ -36,25 +36,29 @@
                     <div class="form-content">
                         <div class="payment-received-list">
                             <div class="d-flex align-items-center">
-                                <i class="la la-check icon-element flex-shrink-0 mr-3 ml-0"></i>
+                                <i class="la la-chevron-circle-right icon-element flex-shrink-0 mr-3 ml-0"></i>
                                 <div>
-                                    <h3 class="title">Your booking in @Model.hotelDtl.HotelName has Failed.</h3>
+                                    <h3 class="title pb-1">Dear, @Model.preBookDtl.CustName </h3>
+                                    <h3 class="title">We regret to inform you that your booking proccess has been failed.</h3>
                                 </div>
                             </div>
-                            <ul class="list-items py-4">
-                                <li><i class="la la-check text-success mr-2"></i><strong class="text-black">@Model.hotelDtl.HotelName</strong> is Expecting you on <strong class="text-black">@Model.preBookDtl.BookingFrom.ToString("dd MMM yyyy")</strong></li>
-                            </ul>
+                        <br />
                             <h3 class="title"><a href="#" class="text-black">@Model.hotelDtl.HotelName</a></h3>
                             <p>@Model.hotelDtl.HotelAddress</p>
-                            <p><strong class="text-black mr-1">Phone:</strong>+ 00 222 44 5678</p>
+                            <p><strong class="text-black mr-1">Phone:</strong> @Model.preBookDtl.CustPhNo</p>
                             <ul class="list-items list-items-3 list-items-4 py-4">
                                 <li><span class="text-black font-weight-bold">Your reservation</span>@Model.preBookDtl.CustDetails</li>
                                 <li><span class="text-black font-weight-bold">Check-in</span>@Model.preBookDtl.BookingFrom.ToString("dd MMM yyyy")</li>
                                 <li><span class="text-black font-weight-bold">Check-out</span>@Model.preBookDtl.BookingUpto.ToString("dd MMM yyyy")</li>
                                 <li><span class="text-black font-weight-bold">Total Amount</span>&#8377; @Model.preBookDtl.FinalFare.ToString("G29")</li>
                             </ul>
-                            <div class="btn-box">
-                                <a href="#" class="theme-btn border-0 text-white bg-7">Start from the beginning</a>
+                            <div class="btn-box d-flex">
+                              
+                            </div>
+                            <div class="d-flex flex-row-reverse bd-highlight">
+                                <div class="p-2 bd-highlight">  <a href="/home/index" class="theme-btn border-0 text-white bg-7 float-right">OK</a></div>
+                                <div class="p-2 bd-highlight font-italic">Inconvenience regreted. Please initiate your booking again..!!</div>
+
                             </div>
                         </div><!-- end card-item -->
                     </div>

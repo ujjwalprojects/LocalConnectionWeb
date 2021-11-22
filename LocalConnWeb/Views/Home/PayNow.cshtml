@@ -58,7 +58,7 @@ var options = {
     "currency": "INR",
     "name": "@ViewBag.name",
     "description": "@ViewBag.orderDesc",
-    "image": "https://example.com/your_logo", // You can give your logo url
+    "image": "/Content/img/appicon.png", // You can give your logo url
     "order_id": "@ViewBag.orderid",
     "handler": function (response){
         // After payment successfully made response will come here
@@ -70,7 +70,7 @@ var options = {
     },
     "prefill": {
         "name": "@ViewBag.name",
-     //"email": "gaurav.kumar@example.com",
+        "email": "@ViewBag.email",
         "contact": "@ViewBag.phone"
     },
     "notes": {
