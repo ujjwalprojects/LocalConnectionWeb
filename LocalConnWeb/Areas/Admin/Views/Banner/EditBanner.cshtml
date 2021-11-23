@@ -14,8 +14,8 @@
     .cropper-preview {
         margin-left: auto;
         margin-right: auto;
-        height: 200px;
-        width: 300px;
+        height: 1280px;
+        width: 720px;
         overflow: hidden;
         margin-top: 8px;
         margin-bottom: 4px;
@@ -44,7 +44,7 @@
                                 <div class="col-md-12">
                                     <div class="thumbnail text-center">
                                         <div id="imgPhotoThumb">
-                                            <img src="@Model.Banner.BannerPath" alt="Add Photo" class="img-rounded text-center" style="width: 382px; height: 234px; vertical-align: middle" />
+                                            <img src="@Model.Banner.BannerPath" alt="Add Photo" class="img-rounded text-center" style="width: 128px; height: 72px; vertical-align: middle" />
                                         </div>
                                     </div>
                                     <div style="width: 100%; margin-top: 2px; ">
@@ -159,7 +159,7 @@
                 var $dataScaleX = $('#dataScaleX');
                 var $dataScaleY = $('#dataScaleY');
                 var options = {
-                    aspectRatio: 3 / 2,
+                    aspectRatio: 16 / 9,
                     preview: '.cropper-preview',
                     crop: function (e) {
                         $dataX.val(Math.round(e.x));
@@ -233,13 +233,13 @@
 
                 $("#getDataURL").click(function () {
                     var dataURLNormal = $image.cropper("getDataURL", {
-                        width: 1440,
-                        height: 960
+                        width: 1280,
+                        height: 720
                     }, "image/jpeg", 0.8);
 
 
                     $(PhotoNormal).text(dataURLNormal);
-                    $(imgPhotoThumb).html('<img class="img-fluid" style="width:720px;height:480px;" src="' + dataURLNormal + '">');
+                    $(imgPhotoThumb).html('<img class="img-fluid" style="width:128px;height:72px;" src="' + dataURLNormal + '">');
                     $('#photo-modal').modal('hide');
                 });
             }());

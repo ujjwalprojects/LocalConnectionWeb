@@ -27,9 +27,19 @@
     <div class="hero-box">
         <div id="fullscreen-slide-contain">
             <ul class="slides-container">
-                <li><img src="~/Content/WebCss/css/images/banner-1.jpg" alt=""></li>
-                <li><img src="~/Content/WebCss/css/images/banner-2.jpg" alt=""></li>
-                <li><img src="~/Content/WebCss/css/images/banner-3.jpg" alt=""></li>
+                @if (Model.bannerlist.Count > 0)
+                {
+                    foreach (var item in Model.bannerlist)
+                    {
+                        <li><img src="@item.BannerPath" alt="banners"></li>
+                    }
+                }
+                else
+                {
+                    <li><img src="~/Content/WebCss/css/images/banner-1.jpg" alt=""></li>
+                    <li><img src="~/Content/WebCss/css/images/banner-2.jpg" alt=""></li>
+                    <li><img src="~/Content/WebCss/css/images/banner-3.jpg" alt=""></li>
+                }
             </ul>
         </div><!-- End background slider -->
         <div class="container">

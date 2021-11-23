@@ -78,6 +78,8 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                 {
                     model.Banner = new utblMstBanner();
                     model.Banner.BannerPath = model.cropper.PhotoNormal;
+                    model.Banner.UserID = _sModel.UserID;
+                    model.Banner.TransDate = DateTime.Now.Date;
                     string jsonStr = JsonConvert.SerializeObject(model.Banner);
                     TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "saveBanner", jsonStr);
                     return RedirectToAction("BannerList", "Banner", new { Area = "Admin" });
@@ -154,6 +156,8 @@ namespace LocalConnWeb.Areas.Admin.Controllers
                     {
                         model.Banner.BannerPath = model.Banner.BannerPath;
                     }
+                    model.Banner.UserID = _sModel.UserID;
+                    model.Banner.TransDate = DateTime.Now.Date;
                     string jsonStr = JsonConvert.SerializeObject(model.Banner);
                     TempData["ErrMsg"] = objAPI.PostRecordtoApI("configuration", "savebanner", jsonStr);
                     return RedirectToAction("BannerList", "Banner", new { Area = "Admin" });
@@ -170,9 +174,9 @@ namespace LocalConnWeb.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteBanner(long BannerID)
+        public ActionResult Delete(long id)
         {
-            TempData["ErrMsg"] = objAPI.DeleteRecordByKey("configuration", "deletebanner", BannerID.ToString(), "BannerID");
+            TempData["ErrMsg"] = objAPI.DeleteRecordByKey("configuration", "deletebanner", id.ToString(), "BannerID");
             return RedirectToAction("Bannerlist", "Banner", new { Area = "Admin" });
         }
         private string SaveImage(string imageStr, string name)

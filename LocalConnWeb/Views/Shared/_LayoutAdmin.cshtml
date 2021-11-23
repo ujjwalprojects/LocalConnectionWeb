@@ -85,13 +85,13 @@
                                 <div class="profile-image">
                                     <img src="~/Content/img/face1.png" alt="profile image">
                                     @*@if (ViewBag.UserImageSrc == null || (string)ViewBag.UserImageSrc == "")
-                                        {
-                                            <img src="~/Content/img/face1.png" alt="profile image">
-                                        }
-                                        else
-                                        {
-                                            <img src="@ViewBag.UserImageSrc" alt="Profile image" />
-                                        }*@
+                        {
+                            <img src="~/Content/img/face1.png" alt="profile image">
+                        }
+                        else
+                        {
+                            <img src="@ViewBag.UserImageSrc" alt="Profile image" />
+                        }*@
                                 </div>
                                 <div class="text-wrapper">
                                     <p class="profile-name">@ViewBag.CurrentUserName</p>
@@ -107,6 +107,12 @@
                         <a class="nav-link" href="/user/dashboard">
                             <i class="menu-icon fa fa-dashboard"></i>
                             <span class="menu-title">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/banner/bannerlist">
+                            <i class="menu-icon fa fa-image"></i>
+                            <span class="menu-title">Website Banner</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -150,34 +156,17 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/admin/policy/policyptlist">Policy Points</a>
                                 </li>
-                                @*<li class="nav-item">
-                                        <a class="nav-link" href="/admin/package/packagelist">Package Type</a>
-                                    </li>*@
-                                @*<li class="nav-item">
-                                        <a class="nav-link" href="/admin/inclusions/inclusionlist">Inclusions</a>
-                                    </li>*@
-                                @*<li class="nav-item">
-                                        <a class="nav-link" href="/admin/exclusion/exclusionlist">Exclusions</a>
-                                    </li>*@
-                                @*<li class="nav-item">
-                                        <a class="nav-link" href="/admin/itineraries/ItineraryList">Itinerary</a>
-                                    </li>*@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/admin/term/termlist">Terms & Condition</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/admin/tourcancel/tourcancellist">Tour Cancellation</a>
                                 </li>
-                                <li class="nav-item">
-                                        <a class="nav-link" href="/admin/banner/bannerlist">Banners</a>
-                                    </li>
-                                @*<li class="nav-item">
-                                        <a class="nav-link" href="/admin/activity/activitylist">Adventure Activity</a>
-                                    </li>*@
+                               
                             </ul>
                         </div>
                     </li>
-              
+
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#hotel" aria-expanded="false" aria-controls="auth">
                             <i class="menu-icon fa fa-building"></i>
@@ -187,8 +176,8 @@
                         <div class="collapse sub-div" id="hotel">
                             <ul class="nav flex-column sub-menu">
                                 @*<li class="nav-item">
-                                        <a class="nav-link" href="/admin/hoteltype">Hotel Types</a>
-                                    </li>*@
+                        <a class="nav-link" href="/admin/hoteltype">Hotel Types</a>
+                    </li>*@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/admin/lchotels/index">Hotels </a>
                                 </li>
@@ -205,8 +194,8 @@
                                     <a class="nav-link" href="/admin/helppage/index">Help Page</a>
                                 </li>
                                 @*<li class="nav-item">
-                                    <a class="nav-link" href="/admin/lchotels/LcCustBookingList">Customer Bookings</a>
-                                </li>*@
+                        <a class="nav-link" href="/admin/lchotels/LcCustBookingList">Customer Bookings</a>
+                    </li>*@
                             </ul>
                         </div>
                     </li>
@@ -217,109 +206,109 @@
                         </a>
                     </li>
                     @*<li class="nav-item">
-                            <a class="nav-link" data-toggle="collapse" href="#cab" aria-expanded="false" aria-controls="auth">
-                                <i class="menu-icon fa fa-car"></i>
-                                <span class="menu-title">Cab Management</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="collapse sub-div" id="cab">
-                                <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/admin/cabtype">Cab Types</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/admin/cabhead">Cab Heads</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/admin/cabdriver">Cab Drivers</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/admin/cab">Cabs </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>*@
+            <a class="nav-link" data-toggle="collapse" href="#cab" aria-expanded="false" aria-controls="auth">
+                <i class="menu-icon fa fa-car"></i>
+                <span class="menu-title">Cab Management</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse sub-div" id="cab">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/cabtype">Cab Types</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/cabhead">Cab Heads</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/cabdriver">Cab Drivers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/cab">Cabs </a>
+                    </li>
+                </ul>
+            </div>
+        </li>*@
                     @*<li class="nav-item">
-                            <a class="nav-link" data-toggle="collapse" href="#package" aria-expanded="false" aria-controls="auth">
-                                <i class="menu-icon fa fa-asterisk"></i>
-                                <span class="menu-title">Package Management</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="collapse sub-div" id="package">
-                                <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/admin/package/PackageOfferList">Package Offer</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/admin/lchoteloffers/hotelOfferList">Hotel Offer</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/admin/cabhead">Cab Heads</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/admin/cabdriver">Cab Drivers</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/admin/cab">Cabs </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>*@
+            <a class="nav-link" data-toggle="collapse" href="#package" aria-expanded="false" aria-controls="auth">
+                <i class="menu-icon fa fa-asterisk"></i>
+                <span class="menu-title">Package Management</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse sub-div" id="package">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/package/PackageOfferList">Package Offer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/lchoteloffers/hotelOfferList">Hotel Offer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/cabhead">Cab Heads</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/cabdriver">Cab Drivers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/cab">Cabs </a>
+                    </li>
+                </ul>
+            </div>
+        </li>*@
 
                     @*<li class="nav-item">
-                            <a class="nav-link" href="/admin/tourpackage">
-                                <i class="menu-icon fa fa-plane"></i>
-                                <span class="menu-title">Tour Package</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/tourguide">
-                                <i class="menu-icon fa fa-map"></i>
-                                <span class="menu-title">Tour Guides</span>
-                            </a>
-                        </li>*@
+            <a class="nav-link" href="/admin/tourpackage">
+                <i class="menu-icon fa fa-plane"></i>
+                <span class="menu-title">Tour Package</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/tourguide">
+                <i class="menu-icon fa fa-map"></i>
+                <span class="menu-title">Tour Guides</span>
+            </a>
+        </li>*@
                     @*<li class="nav-item">
-                            <a class="nav-link" href="/master/academicsession">
-                                <i class="menu-icon fa fa-calendar-plus-o"></i>
-                                <span class="menu-title">Academic Session</span>
-                            </a>
-                        </li>*@
+            <a class="nav-link" href="/master/academicsession">
+                <i class="menu-icon fa fa-calendar-plus-o"></i>
+                <span class="menu-title">Academic Session</span>
+            </a>
+        </li>*@
                     @*<li class="nav-item">
-                            <a class="nav-link" href="pages/tables/basic-table.html">
-                                <i class="menu-icon fa fa-table"></i>
-                                <span class="menu-title">Tables</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="pages/icons/font-awesome.html">
-                                <i class="menu-icon fa fa-sticky-note"></i>
-                                <span class="menu-title">Icons</span>
-                            </a>
-                        </li>*@
+            <a class="nav-link" href="pages/tables/basic-table.html">
+                <i class="menu-icon fa fa-table"></i>
+                <span class="menu-title">Tables</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="pages/icons/font-awesome.html">
+                <i class="menu-icon fa fa-sticky-note"></i>
+                <span class="menu-title">Icons</span>
+            </a>
+        </li>*@
 
                     @*<li class="nav-item">
-                            <a class="nav-link" href="/admin/tourpackage/enquiries">
-                                <i class="menu-icon fa fa-podcast"></i>
-                                <span class="menu-title">Client Enquiries</span>
-                            </a>
-                        </li>*@
+            <a class="nav-link" href="/admin/tourpackage/enquiries">
+                <i class="menu-icon fa fa-podcast"></i>
+                <span class="menu-title">Client Enquiries</span>
+            </a>
+        </li>*@
                     @*<li class="nav-item">
-                            <a class="nav-link" data-toggle="collapse" href="#upload" aria-expanded="false" aria-controls="upload">
-                                <i class="menu-icon fa fa-database"></i>
-                                <span class="menu-title">User Management</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="collapse sub-div" id="upload">
-                                <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/master/User/Register">Register User </a>
-                                    </li>
-                                    <li class="nav-item">
-                                            <a class="nav-link" href="/master/data/teacherupload"> Teacher </a>
-                                        </li>
-                                </ul>
-                            </div>
-                        </li>*@
+            <a class="nav-link" data-toggle="collapse" href="#upload" aria-expanded="false" aria-controls="upload">
+                <i class="menu-icon fa fa-database"></i>
+                <span class="menu-title">User Management</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse sub-div" id="upload">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/master/User/Register">Register User </a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link" href="/master/data/teacherupload"> Teacher </a>
+                        </li>
+                </ul>
+            </div>
+        </li>*@
                     <li class="nav-item d-lg-block d-xl-none d-md-block d-sm-block">
                         <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
                             @Html.AntiForgeryToken()

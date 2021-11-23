@@ -49,6 +49,7 @@ namespace LocalConnWeb.Controllers
             obj.guestHouseList = objAPI.GetRecordsByID<HotelList>("webrequest", "getghouselist", 7);
             obj.FHotelList = objAPI.GetAllRecords<FtHotelList_Web>("webrequest", "getFHotelList");
             obj.offerLists = objAPI.GetRecordsByQueryString<OfferList>("webrequest", "getofferlist", "Dt=" + DateTime.Now);
+            obj.bannerlist = objAPI.GetAllRecords<utblMstBanner>("webrequest", "genbannerlist");
             ViewBag.HomeTypes = objAPI.GetAllRecords<utblLCMstHomeType>("webrequest", "HomeTypes");
             return View(obj);
         }

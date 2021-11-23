@@ -13,5 +13,7 @@ namespace LocalConnWeb.Areas.Admin.Models
         [Required(ErrorMessage="Select Banner Image")]
         [Display(Name="Banner")]
         public string BannerPath { get; set; }
+        public string UserID { get; set; }
+        public DateTime TransDate { get; set; }
     }
 }

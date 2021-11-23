@@ -112,7 +112,11 @@
                                             }
                                             else if (User.Identity.IsAuthenticated)
                                             {
-                                                @Html.Action("logoff", "account", new { @Area = "" })
+                                                using (Html.BeginForm("LogOff", "account", new { @Area = "" }, FormMethod.Post))
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                }
+                                                <a href="/account/login" class="text-primary">Login|Register</a>
                                             }
                                             else
                                             {

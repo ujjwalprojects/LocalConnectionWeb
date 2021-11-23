@@ -10,6 +10,8 @@ namespace LocalConnWeb.Areas.Admin.CustomModels
     {
         public long BannerID { get; set; }
         public string BannerPath { get; set; }
+        public string UserID { get; set; }
+        public DateTime TransDate { get; set; }
     }
 
     public class BannerAPIVM

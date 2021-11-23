@@ -27,10 +27,11 @@
                             </form>
                         </div>
                         <div class="">
-                            <form method="get" action="@Url.Action("DeleteBanner", "Banner", new { Area = "Admin" })" data-otf-ajax="true" data-otf-target="#DataGrid" style="display:inline-block">
+                            <form method="post" action="@Url.Action("Delete", "Banner", new { Area = "Admin" })" data-otf-ajax="true" data-otf-target="#DataGrid" style="display:inline-block">
                                 @Html.Hidden("BannerID", item.BannerID)
-                                <a class=" text-success" title="Delete Banner Information" name="@item.BannerID" href="@Url.Action("DeleteBanner", "Banner", new { Area = "Admin", BannerID = item.BannerID })">
-                                    <small> <i class="fa fa-trash"></i>&nbsp; Delete</small>
+                                @Html.AntiForgeryToken()
+                                <a href="/admin/banner/Delete/@item.BannerID" class="delete" title="Delete" data-record="@item.BannerID">
+                                    <i class="fa fa-trash text-dark"></i>
                                 </a>
                             </form>
                         </div>

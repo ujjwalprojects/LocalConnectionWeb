@@ -1,4 +1,5 @@
-﻿using LocalConnWeb.Areas.Admin.Models;
+﻿using LocalConnWeb.Areas.Admin.CustomModels;
+using LocalConnWeb.Areas.Admin.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace LocalConnWeb.ViewModels
         public List<HotelList> homestayList { get; set; }
         public List<FtHotelList_Web> FHotelList  { get; set; }
         public List<OfferList> offerLists { get; set; }
+        public List<utblMstBanner> bannerlist { get; set; }
     }
 
     public class HotelDetailsVM

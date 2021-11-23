@@ -29,7 +29,7 @@
     <link href="~/Content/Site.css" rel="stylesheet" />
     <link href="~/Content/toastr.min.css" rel="stylesheet" />
     @*<link href="~/Content/font-awesome.min.css" rel="stylesheet" />*@
-   
+
 
 </head>
 <body>
@@ -109,20 +109,11 @@
                                             }
                                             else if (User.Identity.IsAuthenticated)
                                             {
-                                                @Html.Action("logoff", "account", new { @Area = "" })
-                                                @*<a href="#" class="text-primary">Welcome Guest User <i class="la la-angle-down"></i></a>
-                                                <ul class="dropdown-menu-item">
-                                                    <li>
-                                                        <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
-                                                            @Html.AntiForgeryToken()
-                                                            <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item text-primary">Log Out<i class="la la-lock-open float-left"></i></a>
-                                                        </form>
-                                                    </li>
-                                                </ul>*@
-
-                                                @*<a href="/account/register" class="theme-btn theme-btn-small theme-btn-transparent mr-1">Sign Up</a>*@
-                                                @*<a href="/account/login" class="theme-btn theme-btn-small">Login</a>*@
-                                                @*<a href="#" class="theme-btn theme-btn-small" data-toggle="modal" data-target="#loginPopupForm">Login</a>*@
+                                                using (Html.BeginForm("LogOff", "account", new { @Area = "" }, FormMethod.Post))
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                }
+                                                <a href="/account/login" class="text-primary">Login|Register</a>
                                             }
                                             else
                                             {
@@ -132,75 +123,7 @@
                                     </ul>
                                 </nav>
                             </div><!-- end main-menu-content -->
-                            @*<div class="nav-btn">
-                                @if ((string)@ViewBag.CurrentUserName != null && User.IsInRole("Admin"))
-                                {
-                                    <div class="row">
-                                        <div id="inst-section" class="col-md-12">
-                                            <div class="dropdown float-right p-2">
-                                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Welcome @ViewBag.CurrentUserName
-                                                </button>
-                                                <div class="dropdown-menu w-50" aria-labelledby="dropdownMenuButton">
-                                                    <a href="/user/dashboard" class="dropdown-item"><i class="la la-dashboard"></i> &nbsp;&nbsp;Dashboard</a>
-                                                    <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
-                                                        @Html.AntiForgeryToken()
-                                                        <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item"><i class="la la-lock-open"></i> &nbsp;&nbsp;Log Out</a>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                }
-                                else if ((string)@ViewBag.CurrentUserName != null && User.IsInRole("Customer"))
-                                {
-                                    <div class="row">
-                                        <div id="inst-section" class="col-md-12">
-                                            <div class="dropdown float-right p-2">
-                                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Welcome @ViewBag.CurrentUserName
-                                                </button>
-                                                <div class="dropdown-menu w-50" aria-labelledby="dropdownMenuButton">
-                                                    <a href="/Home/OrderList" class="dropdown-item"><i class="la la-list"></i> &nbsp;&nbsp;Order List</a>
-                                                    <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
-                                                        @Html.AntiForgeryToken()
-                                                        <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item"><i class="la la-lock-open"></i> &nbsp;&nbsp;Log Out</a>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                                else if (User.Identity.IsAuthenticated)
-                                {
-                                    <div class="row">
-                                        <div id="inst-section" class="col-md-12">
-                                            <div class="dropdown float-right p-2">
-                                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Welcome Guest User
-                                                </button>
-                                                <div class="dropdown-menu w-50" aria-labelledby="dropdownMenuButton">
-                                                    <a href="/Home/OrderList" class="dropdown-item"><i class="la la-list"></i> &nbsp;&nbsp;Order List</a>
-                                                    <form method="post" action="@Url.Action("logoff", "account", new { @Area = "" })" id="logOut">
-                                                        @Html.AntiForgeryToken()
-                                                        <a href="javascript:document.getElementById('logOut').submit()" class="dropdown-item"><i class="la la-lock-open"></i> &nbsp;&nbsp;Log Out</a>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   
-                                }
-                                else
-                                {
-                                    <a href="/account/login" class="theme-btn theme-btn-small">Login</a>
-                                }
-
-
-
-                            </div>*@
-                        <!-- end nav-btn -->
+                            <!-- end nav-btn -->
                         </div><!-- end menu-wrapper -->
                     </div><!-- end col-lg-12 -->
                 </div><!-- end row -->
@@ -220,28 +143,28 @@
     ================================= -->
     <section class="footer-area section-bg padding-top-40px padding-bottom-30px">
         @*<div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <div class="term-box footer-item">
-                        <ul class="list-items list--items d-flex align-items-center">
-                            <li><a href="#">Terms & Conditions</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Help Center</a></li>
-                        </ul>
-                    </div>
-                </div><!-- end col-lg-8 -->
-                <div class="col-lg-4">
-                    <div class="footer-social-box text-right">
-                        <ul class="social-profile">
-                            <li><a href="#"><i class="lab la-facebook-f"></i></a></li>
-                            <li><a href="#"><i class="lab la-twitter"></i></a></li>
-                            <li><a href="#"><i class="lab la-instagram"></i></a></li>
-                            <li><a href="#"><i class="lab la-linkedin-in"></i></a></li>
-                        </ul>
-                    </div>
-                </div><!-- end col-lg-4 -->
-            </div><!-- end row -->
-        </div>*@
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <div class="term-box footer-item">
+                            <ul class="list-items list--items d-flex align-items-center">
+                                <li><a href="#">Terms & Conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Help Center</a></li>
+                            </ul>
+                        </div>
+                    </div><!-- end col-lg-8 -->
+                    <div class="col-lg-4">
+                        <div class="footer-social-box text-right">
+                            <ul class="social-profile">
+                                <li><a href="#"><i class="lab la-facebook-f"></i></a></li>
+                                <li><a href="#"><i class="lab la-twitter"></i></a></li>
+                                <li><a href="#"><i class="lab la-instagram"></i></a></li>
+                                <li><a href="#"><i class="lab la-linkedin-in"></i></a></li>
+                            </ul>
+                        </div>
+                    </div><!-- end col-lg-4 -->
+                </div><!-- end row -->
+            </div>*@
         <div class="section-block mt-4 mb-5"></div>
         <div class="container">
             <div class="row">
@@ -265,7 +188,7 @@
                         <ul class="list-items list--items">
                             <li><a href="/home/about">About us</a></li>
                             @*<li><a href="services.html">Terms and conditions</a></li>
-                            <li><a href="#">Guest Policies</a></li>*@
+                                <li><a href="#">Guest Policies</a></li>*@
                             <li><a href="/home/contact">Support</a></li>
                         </ul>
                     </div><!-- end footer-item -->
@@ -342,7 +265,7 @@
                     <div class="modal-header">
                         <div>
                             @*<h5 class="modal-title title" id="exampleModalLongTitle2">Login</h5>*@
-                            <img src="~/Content/img/logos.png" style="width: 50%;height:auto;"/>
+                            <img src="~/Content/img/logos.png" style="width: 50%;height:auto;" />
                             <p class="font-size-14">Hello! Welcome to Local Connection</p>
                         </div>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
